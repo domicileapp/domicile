@@ -10,7 +10,7 @@ class GreetingControllerTest {
 
     @Test
     void greet_return_hello_name() {
-        String actual = greetingController.Greet("Dennis2");
+        String actual = greetingController.Greet("Dennis");
         assertEquals(actual, "Hello Dennis");
     }
 }
