@@ -25,3 +25,4 @@ Execution of semantic-release will determine if a new version number is required
 3. changelog
 4. git
 5. github
+
