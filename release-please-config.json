@@ -51,6 +51,14 @@
       "versioning": "default",
       "prerelease": true,
       "pull-request-title-pattern": "chore${scope}: release ${component} ${version}"
+    },
+    "app": {
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": true,
+      "draft": false,
+      "versioning": "default",
+      "prerelease": true,
+      "pull-request-title-pattern": "chore${scope}: release ${component} ${version}"
     }
   }
 }
