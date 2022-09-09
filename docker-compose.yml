@@ -13,17 +13,17 @@ services:
     networks:
       - main
 
-  auth:
-    image: quay.io/keycloak/keycloak:19.0.1
-    restart: 'no'
-    ports:
-      - "8080:8080"
-    environment:
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
-    networks:
-      - main
-    command: start-dev
+  # auth:
+  #   image: quay.io/keycloak/keycloak:19.0.1
+  #   restart: 'no'
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     KEYCLOAK_ADMIN: admin
+  #     KEYCLOAK_ADMIN_PASSWORD: admin
+  #   networks:
+  #     - main
+  #   command: start-dev
 
   # api:
   #   image: node:latest
@@ -57,3 +57,4 @@ networks:
 
 volumes:
   db-data:
+    external: true
