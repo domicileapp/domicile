@@ -36,7 +36,7 @@ jobs:
 
       - name: Run ESLint for App
         run: npx eslint app
-          --config .eslintrc.js
+          --config app/.eslintrc.js
           --ext .js,.jsx,.ts,.tsx
           --format @microsoft/eslint-formatter-sarif 
           --output-file eslint-results.sarif
@@ -44,7 +44,7 @@ jobs:
 
       - name: Run ESLint for API
         run: npx eslint api
-          --config .eslintrc.js
+          --config api/.eslintrc.js
           --ext .js,.jsx,.ts,.tsx
           --format @microsoft/eslint-formatter-sarif 
           --output-file eslint-results.sarif
