@@ -25,18 +25,18 @@ services:
       - main
     command: start-dev
 
-  api:
-    image: node:latest
-    build: ./api
-    command: sh -c "ls & yarn && yarn dev"
-    restart: 'no'
-    ports:
-      - "4000:4000"
-    depends_on:
-      - db
-    networks:
-      - main
-    working_dir: /domicile/api
+  # api:
+  #   image: node:latest
+  #   build: ./api
+  #   command: sh -c "ls & yarn && yarn dev"
+  #   restart: 'no'
+  #   ports:
+  #     - "4000:4000"
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - main
+  #   working_dir: /domicile/api
 
   # app:
   #   image: node:latest
