@@ -1,0 +1,59 @@
+---
+version: "3"
+
+services:
+  db:
+    image: postgres:latest
+    restart: 'no'
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: P@ssw0rd
+      POSTGRES_USER: domicile
+    networks:
+      - main
+
+  auth:
+    image: quay.io/keycloak/keycloak:19.0.1
+    restart: 'no'
+    ports:
+      - "8080:8080"
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    networks:
+      - main
+    command: start-dev
+
+  api:
+    image: node:latest
+    build: ./api
+    command: sh -c "ls & yarn && yarn dev"
+    restart: 'no'
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+    networks:
+      - main
+    working_dir: /domicile/api
+
+  # app:
+  #   image: node:latest
+  #   build: ./app
+  #   command: sh -c "ls & yarn && yarn dev"
+  #   restart: 'no'
+  #   ports:
+  #     - "9000:9000"
+  #   depends_on:
+  #     - api
+  #   networks:
+  #     - main
+  #   working_dir: /domicile/app
+
+networks:
+  main:
+    driver: bridge
+
+volumes:
+  db-data:
