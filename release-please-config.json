@@ -18,12 +18,17 @@
     },
     {
       "type": "chore",
-      "section": "Miscellaneous",
+      "section": "Chores",
       "hidden": false
     },
     {
-      "type": "infra",
-      "section": "Infrastructure",
+      "type": "build",
+      "section": "Build",
+      "hidden": false
+    },
+    {
+      "type": "docs",
+      "section": "Documentation",
       "hidden": false
     }
   ],
