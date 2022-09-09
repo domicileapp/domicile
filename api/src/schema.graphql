@@ -3,13 +3,16 @@
 # ------------------------------------------------------
 
 type Task {
-  id: Int!
+  id: ID!
   title: String!
 }
 
 type User {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  id: ID!
+  name: String!
+  username: String!
+  email: String!
+  password: String!
 }
 
 type Recipe {
@@ -18,10 +21,10 @@ type Recipe {
 }
 
 type Query {
-  tasks: [Task!]!
+  tasks: [Task!]
   task(id: Int!): Task!
-  users: [User!]!
-  user(id: Int!): User!
+  users(offset: Int = 0, limit: Int = 25): [User!]!
+  user(id: Float!): User!
   recipes: [Recipe!]!
   recipe(id: Int!): Recipe!
 }
@@ -31,8 +34,8 @@ type Mutation {
   updateTask(updateTaskInput: UpdateTaskInput!): Task!
   removeTask(id: Int!): Task!
   createUser(createUserInput: CreateUserInput!): User!
-  updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(id: Int!): User!
+  updateUser(id: String!, updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Float!): User!
   createRecipe(createRecipeInput: CreateRecipeInput!): Recipe!
   updateRecipe(updateRecipeInput: UpdateRecipeInput!): Recipe!
   removeRecipe(id: Int!): Recipe!
@@ -48,14 +51,17 @@ input UpdateTaskInput {
 }
 
 input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  name: String!
+  email: String!
+  username: String!
+  password: String!
 }
 
 input UpdateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  name: String
+  email: String
+  username: String
+  password: String
 }
 
 input CreateRecipeInput {

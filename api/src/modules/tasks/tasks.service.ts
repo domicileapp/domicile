@@ -18,11 +18,11 @@ export class TasksService {
   }
 
   findAll() {
-    return `This action returns all tasks`
+    return this.taskRepository.find({})
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} task`
+  findById(id: number) {
+    return this.taskRepository.findOneByOrFail({ id })
   }
 
   update(id: number, updateTaskInput: UpdateTaskInput) {

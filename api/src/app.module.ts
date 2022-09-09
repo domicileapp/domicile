@@ -22,6 +22,7 @@ import { Task } from './modules/tasks/entities/task.entity'
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       autoSchemaFile: join(process.cwd(), 'src/schema.graphql'),
+      installSubscriptionHandlers: true,
     }),
     ConfigModule.forRoot({
       isGlobal: true,
