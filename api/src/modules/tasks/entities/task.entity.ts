@@ -1,7 +1,14 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql'
+import { Field, Int, ObjectType } from '@nestjs/graphql'
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
+@Entity('tasks')
 @ObjectType()
 export class Task {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number
+  @PrimaryGeneratedColumn()
+  @Field(() => Int)
+  id: number
+
+  @Column()
+  @Field({ nullable: false })
+  title: string
 }

@@ -10,7 +10,7 @@ export class RecipesResolver {
 
   @Mutation(() => Recipe)
   createRecipe(
-    @Args('createRecipeInput') createRecipeInput: CreateRecipeInput,
+    @Args('createRecipeInput') createRecipeInput: CreateRecipeInput
   ) {
     return this.recipesService.create(createRecipeInput)
   }
@@ -27,7 +27,7 @@ export class RecipesResolver {
 
   @Mutation(() => Recipe)
   updateRecipe(
-    @Args('updateRecipeInput') updateRecipeInput: UpdateRecipeInput,
+    @Args('updateRecipeInput') updateRecipeInput: UpdateRecipeInput
   ) {
     return this.recipesService.update(updateRecipeInput.id, updateRecipeInput)
   }

@@ -4,4 +4,5 @@ import { ObjectType, Field, Int } from '@nestjs/graphql'
 export class Recipe {
   @Field(() => Int, { description: 'Example field (placeholder)' })
   exampleField: number
+  source: string
 }
