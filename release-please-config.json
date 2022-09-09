@@ -44,7 +44,7 @@
     }
   ],
   "packages": {
-    ".": {
+    "api": {
       "bump-minor-pre-major": true,
       "bump-patch-for-minor-pre-major": true,
       "draft": false,
