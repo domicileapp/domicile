@@ -1,9 +1,15 @@
-import { Injectable } from '@nestjs/common'
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { UserInputError } from 'apollo-server-core'
 import * as bcrypt from 'bcrypt'
 import { Repository } from 'typeorm'
+import { AuthService } from '../common/auth.service'
 import { CreateUserInput } from './dto/create-user.input'
+import { LoginUserInput } from './dto/login.input'
 import { UpdateUserInput } from './dto/update-user.input'
 import { UsersArgs } from './dto/users.args'
 import { User } from './entities/user.entity'
@@ -12,7 +18,8 @@ import { User } from './entities/user.entity'
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private readonly usersRepository: Repository<User>
+    private readonly usersRepository: Repository<User>,
+    private readonly authService: AuthService
   ) {}
 
   public async findAll(usersArgs: UsersArgs): Promise<User[]> {
@@ -32,11 +39,23 @@ export class UsersService {
     return user
   }
 
-  public async create(createUserInput: CreateUserInput): Promise<User> {
-    createUserInput.password = bcrypt.hashSync(createUserInput.password, 8)
+  public async findUserByEmail(email: string): Promise<User> {
+    const user = await this.usersRepository.findOneByOrFail({ email })
 
-    const user = this.usersRepository.create({ ...createUserInput })
-    return this.usersRepository.save(user)
+    if (!user) {
+      throw new NotFoundException(`User not found with ${email}`)
+    }
+
+    return user
+  }
+
+  public async create(createUserInput: CreateUserInput): Promise<User> {
+    const saltOrRounds = 10
+    const password = createUserInput.password
+
+    createUserInput.password = await bcrypt.hash(password, saltOrRounds)
+    const user = this.usersRepository.save(createUserInput)
+    return user
   }
 
   public async update(
@@ -59,5 +78,18 @@ export class UsersService {
   public async remove(id: number): Promise<any> {
     const user = await this.findOneById(id)
     return this.usersRepository.remove(user)
+  }
+
+  public async login(loginUserInput: LoginUserInput) {
+    const user = await this.authService.validateUser(
+      loginUserInput.email,
+      loginUserInput.password
+    )
+
+    if (!user) {
+      throw new BadRequestException(`Email or password is invalid.`)
+    }
+
+    return this.authService.generateUserCredentials(user)
   }
 }

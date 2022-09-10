@@ -5,6 +5,8 @@ import { User } from './entities/user.entity'
 import { UsersArgs } from './dto/users.args'
 import { CreateUserInput } from './dto/create-user.input'
 import { UpdateUserInput } from './dto/update-user.input'
+import { LoggedUserOutput } from './dto/logged-user.output'
+import { LoginUserInput } from './dto/login.input'
 
 @Resolver()
 export class UsersResolver {
@@ -18,9 +20,6 @@ export class UsersResolver {
   @Query(() => User)
   public async user(@Args('id') id: number): Promise<User> {
     const user = await this.usersService.findOneById(id)
-    // if (!user) {
-    //   throw new UserInputError(id)
-    // }
     return user
   }
 
@@ -42,5 +41,10 @@ export class UsersResolver {
   @Mutation(() => User)
   public async removeUser(@Args('id') id: number): Promise<any> {
     return this.usersService.remove(id)
+  }
+
+  @Mutation(() => LoggedUserOutput)
+  loginUser(@Args('loginUserInput') loginUserInput: LoginUserInput) {
+    return this.usersService.login(loginUserInput)
   }
 }

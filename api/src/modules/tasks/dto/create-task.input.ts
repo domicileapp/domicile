@@ -1,7 +1,9 @@
 import { InputType, Field } from '@nestjs/graphql'
+import { IsString } from 'class-validator'
 
 @InputType()
 export class CreateTaskInput {
-  @Field({ nullable: false })
+  @IsString()
+  @Field()
   title: string
 }

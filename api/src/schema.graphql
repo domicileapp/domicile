@@ -12,7 +12,11 @@ type User {
   name: String!
   username: String!
   email: String!
-  password: String!
+}
+
+type LoggedUserOutput {
+  """Generated access token for the user"""
+  access_token: String!
 }
 
 type Recipe {
@@ -36,6 +40,7 @@ type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(id: String!, updateUserInput: UpdateUserInput!): User!
   removeUser(id: Float!): User!
+  loginUser(loginUserInput: LoginUserInput!): LoggedUserOutput!
   createRecipe(createRecipeInput: CreateRecipeInput!): Recipe!
   updateRecipe(updateRecipeInput: UpdateRecipeInput!): Recipe!
   removeRecipe(id: Int!): Recipe!
@@ -62,6 +67,11 @@ input UpdateUserInput {
   email: String
   username: String
   password: String
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
 }
 
 input CreateRecipeInput {
