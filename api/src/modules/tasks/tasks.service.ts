@@ -25,11 +25,11 @@ export class TasksService {
     return this.taskRepository.findOneByOrFail({ id })
   }
 
-  update(id: number, updateTaskInput: UpdateTaskInput) {
-    return `This action updates a #${id} task`
-  }
+  // update(id: number, updateTaskInput: UpdateTaskInput) {
+  //   return `This action updates a #${id} task`
+  // }
 
-  remove(id: number) {
-    return `This action removes a #${id} task`
-  }
+  // remove(id: number) {
+  //   return `This action removes a #${id} task`
+  // }
 }
