@@ -3,9 +3,13 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "editorconfig.editorconfig",
-    "vue.volar",
     "wayou.vscode-todo-highlight",
-    "apollographql.vscode-apollo"
+    "apollographql.vscode-apollo",
+    "pkief.material-icon-theme",
+    "ionutvmi.path-autocomplete",
+    "abdelaziz18003.quasar-snippets",
+    "ms-vscode-remote.remote-containers",
+    "Vue.volar"
   ],
   "unwantedRecommendations": [
     "octref.vetur",
