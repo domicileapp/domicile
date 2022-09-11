@@ -1,9 +1,8 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
-import { UsersService } from '../users/users.service'
-
+import { UsersService } from 'src/users/users.service'
 import * as bcrypt from 'bcrypt'
-import { User } from '../users/entities/user.entity'
+import { User } from 'src/users/entities/user.entity'
 
 @Injectable()
 export class AuthService {
@@ -21,15 +20,14 @@ export class AuthService {
         return user
       }
     }
-
-    return user
+    return null
   }
 
   async generateUserCredentials(user: User) {
     const payload = {
       email: user.email,
       name: user.name,
-      // role: user.role,
+      username: user.username,
       sub: user.id,
     }
 

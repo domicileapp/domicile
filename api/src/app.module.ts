@@ -5,16 +5,18 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { join } from 'path'
 import { ConfigModule } from '@nestjs/config'
 
-import { TasksModule } from './modules/tasks/tasks.module'
-import { RecipesModule } from './modules/recipes/recipes.module'
-import { UsersModule } from './modules/users/users.module'
+import { TasksModule } from './tasks/tasks.module'
+import { RecipesModule } from './recipes/recipes.module'
+import { UsersModule } from './users/users.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { Task } from './modules/tasks/entities/task.entity'
+import { Task } from './tasks/entities/task.entity'
+import { AuthModule } from './common/auth.module'
 
 @Module({
   imports: [
-    TasksModule,
-    RecipesModule,
+    AuthModule,
+    // TasksModule,
+    // RecipesModule,
     UsersModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,

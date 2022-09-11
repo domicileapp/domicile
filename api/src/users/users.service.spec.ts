@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing'
+import { CreateUserInput } from './dto/create-user.input'
 import { UsersService } from './users.service'
 
 describe('UsersService', () => {

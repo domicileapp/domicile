@@ -7,11 +7,14 @@ import { CreateUserInput } from './dto/create-user.input'
 import { UpdateUserInput } from './dto/update-user.input'
 import { LoggedUserOutput } from './dto/logged-user.output'
 import { LoginUserInput } from './dto/login.input'
+import { UseGuards } from '@nestjs/common'
+import { JwtAuthGuard } from '../common/auth/guards/jwt-auth.guard'
 
 @Resolver()
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Query(() => [User])
   public async users(@Args() usersArgs: UsersArgs): Promise<User[]> {
     return this.usersService.findAll(usersArgs)
