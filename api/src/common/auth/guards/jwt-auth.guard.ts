@@ -11,6 +11,9 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     return request
   }
 
+  /*
+   * @todo test
+   */
   handleRequest(err: any, user: any, info: any) {
     if (err || !user) {
       throw (
