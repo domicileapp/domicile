@@ -1,4 +1,4 @@
-name: Release
+name: release
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
   
 jobs:
-  release:
+  create-pr:
     runs-on: ubuntu-latest
     steps:
       - uses: google-github-actions/release-please-action@v3
