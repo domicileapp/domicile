@@ -1,4 +1,4 @@
-repo:
+component/core:
 - '*'
 
 component/api:
