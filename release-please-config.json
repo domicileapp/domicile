@@ -48,6 +48,7 @@
       "jsonpath": "$.version"
     }
   ],
+  "pull-release-header": "Automated release PR",
   "packages": {
     ".": {
       "bump-minor-pre-major": true,
