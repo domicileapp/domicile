@@ -27,8 +27,10 @@ services:
 
   # api:
   #   image: node:latest
-  #   build: ./api
-  #   command: sh -c "ls & yarn && yarn dev"
+  #   build: 
+  #     context: ./api
+  #     dockerfile: Dockerfile.dev
+  #   command: sh -c "yarn && yarn dev"
   #   restart: 'no'
   #   ports:
   #     - "4000:4000"
@@ -36,7 +38,8 @@ services:
   #     - db
   #   networks:
   #     - main
-  #   working_dir: /domicile/api
+  #   volumes:
+  #     - ./api:/domicile/api
 
   # app:
   #   image: node:latest
