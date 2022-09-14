@@ -57,7 +57,7 @@
       "versioning": "default",
       "prerelease": true,
       "pull-request-title-pattern": "chore: release ${version}",
-      "pull-release-header": "Automated release PR"
+      "pull-request-header": "Automated release PR"
     }
   }
 }
