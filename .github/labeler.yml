@@ -1,0 +1,8 @@
+repo:
+- '*'
+
+component::api:
+- api/*
+
+component::app:
+- app/*
