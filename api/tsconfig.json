@@ -19,7 +19,7 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@/*": ["src/*"],
-      "@auth/*": ["src/common/auth/*"]
+      "@auth/*": ["src/auth/*"]
     }
   }
 }

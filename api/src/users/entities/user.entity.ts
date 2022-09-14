@@ -1,42 +1,46 @@
-import { RefreshToken } from '@auth/entities/refresh-token.entity'
 import {
   Column,
   CreateDateColumn,
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from 'typeorm'
-// import { Post } from '../../posts/entities/post.entity'
 
-@Entity({ name: 'users' })
+import { Article } from '../../article/entities/article.entity'
+
+@Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
   id: number
 
-  @Column()
-  username: string
+  @Column({ length: 100 })
+  name: string
 
   @Column()
   password: string
 
-  @Column({ name: 'first_name', nullable: true })
-  firstName: string
+  @Unique('username', ['username'])
+  @Column({ length: 200 })
+  username: string
 
-  @Column({ name: 'last_name', nullable: true })
-  lastName: string
+  @Column('simple-array')
+  roles: string[]
 
-  // @OneToMany(() => Post, (post) => post.author, { cascade: true })
-  // posts: Post[]
+  @Column()
+  isAccountDisabled: boolean
 
-  @OneToMany(() => RefreshToken, (refreshToken) => refreshToken.user, {
-    cascade: true,
-  })
-  refreshTokens: RefreshToken[]
+  @Unique('email', ['email'])
+  @Column({ length: 200 })
+  email: string
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: 'createdAt', nullable: true })
   createdAt: Date
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn({ name: 'updatedAt', nullable: true })
   updatedAt: Date
+
+  @OneToMany(() => Article, (article) => article.author)
+  articles: Article[]
 }
