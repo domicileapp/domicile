@@ -5,12 +5,13 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { join } from 'path'
 import { ConfigModule } from '@nestjs/config'
 
-import { TasksModule } from './tasks/tasks.module'
-import { RecipesModule } from './recipes/recipes.module'
+import { TasksModule } from '@/tasks/tasks.module'
+import { RecipesModule } from '@/recipes/recipes.module'
 import { UsersModule } from './users/users.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { Task } from './tasks/entities/task.entity'
-import { AuthModule } from './common/auth.module'
+import { AuthModule } from '@auth/auth.module'
+import { User } from './users/entities/user.entity'
 
 @Module({
   imports: [
@@ -31,12 +32,12 @@ import { AuthModule } from './common/auth.module'
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.DB_HOST,
-      port: 5432,
-      username: process.env.DB_USER,
-      password: process.env.DB_PASS,
-      database: process.env.DB_NAME,
-      entities: [Task],
+      host: process.env.DATABASE_HOST,
+      port: +process.env.DATABASE_PORT,
+      username: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
+      entities: [Task, User],
       autoLoadEntities: true,
       synchronize: true,
     }),

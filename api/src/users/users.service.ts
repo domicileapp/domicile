@@ -1,95 +1,63 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { UserInputError } from 'apollo-server-core'
-import * as bcrypt from 'bcrypt'
 import { Repository } from 'typeorm'
-import { AuthService } from '../common/auth/auth.service'
-import { CreateUserInput } from './dto/create-user.input'
-import { LoginUserInput } from './dto/login.input'
+import { UpdateUserDto } from './dto/update-user.dto'
 import { UpdateUserInput } from './dto/update-user.input'
-import { UsersArgs } from './dto/users.args'
 import { User } from './entities/user.entity'
+
+interface FindAllArgs {
+  relations?: string[]
+}
+
+interface FindOneArgs extends FindAllArgs {
+  id?: number
+  username?: string
+  postId?: number
+}
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private readonly usersRepository: Repository<User>,
-    private readonly authService: AuthService
+    private usersRepository: Repository<User>
   ) {}
 
-  public async findAll(usersArgs: UsersArgs): Promise<User[]> {
-    const { limit, offset } = usersArgs
-    return this.usersRepository.find({
-      skip: offset,
-      take: limit,
-    })
+  create(createUserInput: Partial<User>) {
+    return this.usersRepository.save(createUserInput)
   }
 
-  public async findOneById(id: number): Promise<User> {
-    const user = await this.usersRepository.findOneByOrFail({ id })
+  findAll(args?: FindAllArgs) {
+    return this.usersRepository.find(args)
+  }
 
-    if (!user) {
-      throw new UserInputError(`User #${id} not found`)
+  async findOne({ id, username, postId }: FindOneArgs) {
+    if (id) {
+      return await this.usersRepository.findOneBy({ id })
+    } else if (username) {
+      return await this.usersRepository
+        .createQueryBuilder()
+        .where('LOWER(username) = LOWER(:username)', { username })
+        .getOne()
     }
-    return user
-  }
-
-  public async findUserByEmail(email: string): Promise<User> {
-    const user = await this.usersRepository.findOneByOrFail({ email })
-
-    if (!user) {
-      throw new NotFoundException(`User not found with ${email}`)
+    // else if (postId) {
+    //   return await this.usersRepository.findOne({
+    //     join: { alias: 'users', innerJoin: { posts: 'users.posts' } },
+    //     where: (qb) => {
+    //       qb.where('posts.id = :postId', { postId })
+    //     },
+    //   })
+    // }
+    else {
+      throw new Error('One of ID or username must be provided.')
     }
-
-    return user
   }
 
-  public async create(createUserInput: CreateUserInput): Promise<User> {
-    const saltOrRounds = 10
-    const password = createUserInput.password
-
-    createUserInput.password = await bcrypt.hash(password, saltOrRounds)
-    const user = this.usersRepository.save(createUserInput)
-    return user
+  async update(id: number, updateUserInput: UpdateUserInput | UpdateUserDto) {
+    return this.usersRepository.save({ id, ...updateUserInput })
   }
 
-  public async update(
-    id: string,
-    updateUserInput: UpdateUserInput
-  ): Promise<User> {
-    updateUserInput.password = bcrypt.hashSync(updateUserInput.password, 8)
-
-    const user = await this.usersRepository.preload({
-      id: +id,
-      ...updateUserInput,
-    })
-
-    if (!user) {
-      throw new UserInputError(`User #${id} not found`)
-    }
-    return this.usersRepository.save(user)
-  }
-
-  public async remove(id: number): Promise<any> {
-    const user = await this.findOneById(id)
-    return this.usersRepository.remove(user)
-  }
-
-  public async login(loginUserInput: LoginUserInput) {
-    const user = await this.authService.validateUser(
-      loginUserInput.email,
-      loginUserInput.password
-    )
-
-    if (!user) {
-      throw new BadRequestException(`Email or password is invalid.`)
-    }
-
-    return this.authService.generateUserCredentials(user)
+  async remove(id: number) {
+    const res = await this.usersRepository.delete(id)
+    return res.affected === 1
   }
 }

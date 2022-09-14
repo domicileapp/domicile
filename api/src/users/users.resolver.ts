@@ -1,53 +1,63 @@
-// import { UserInputError } from 'apollo-server-express'
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { UsersService } from './users.service'
-import { User } from './entities/user.entity'
-import { UsersArgs } from './dto/users.args'
-import { CreateUserInput } from './dto/create-user.input'
-import { UpdateUserInput } from './dto/update-user.input'
-import { LoggedUserOutput } from './dto/logged-user.output'
-import { LoginUserInput } from './dto/login.input'
+import { Selections } from '@jenyus-org/nestjs-graphql-utils'
 import { UseGuards } from '@nestjs/common'
-import { JwtAuthGuard } from '../common/auth/guards/jwt-auth.guard'
+import {
+  Args,
+  Int,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql'
+import { UserInputError } from 'apollo-server-express'
+// import { PostObject } from 'src/posts/dto/post.object'
+// import { PostsService } from 'src/posts/posts.service'
+import { GqlCurrentUser } from '@auth/decorator/gql-current-user.decorator'
+import { GqlAuthGuard } from '@auth/guards/gql-auth.guard'
+import { UpdateUserInput } from './dto/update-user.input'
+import { UserObject } from './dto/user.object'
+import { User } from './entities/user.entity'
+import { UsersService } from './users.service'
 
-@Resolver()
+@Resolver(() => UserObject)
 export class UsersResolver {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService // private postsService: PostsService
+  ) {}
 
-  @UseGuards(JwtAuthGuard)
-  @Query(() => [User])
-  public async users(@Args() usersArgs: UsersArgs): Promise<User[]> {
-    return this.usersService.findAll(usersArgs)
+  @Query(() => [UserObject])
+  users(@Selections('user', ['posts']) relations: string[]) {
+    return this.usersService.findAll({ relations })
   }
 
-  @Query(() => User)
-  public async user(@Args('id') id: number): Promise<User> {
-    const user = await this.usersService.findOneById(id)
+  @Query(() => UserObject)
+  user(
+    @Args('id', { type: () => Int, nullable: true }) id?: number,
+    @Args('username', { nullable: true }) username?: string
+  ) {
+    if (!id && !username) {
+      throw new UserInputError('Arguments must be one of ID or username.')
+    }
+    return this.usersService.findOne({ id, username })
+  }
+
+  @Mutation(() => UserObject)
+  updateProfile(@Args('input') input: UpdateUserInput) {
+    return this.usersService.update(input.id, input)
+  }
+
+  @Query(() => UserObject)
+  @UseGuards(GqlAuthGuard)
+  me(@GqlCurrentUser() user: User) {
     return user
   }
 
-  @Mutation(() => User)
-  public async createUser(
-    @Args('createUserInput') createUserInput: CreateUserInput
-  ): Promise<User> {
-    return await this.usersService.create(createUserInput)
-  }
-
-  @Mutation(() => User)
-  public async updateUser(
-    @Args('id') id: string,
-    @Args('updateUserInput') updateUserInput: UpdateUserInput
-  ): Promise<User> {
-    return await this.usersService.update(id, updateUserInput)
-  }
-
-  @Mutation(() => User)
-  public async removeUser(@Args('id') id: number): Promise<any> {
-    return this.usersService.remove(id)
-  }
-
-  @Mutation(() => LoggedUserOutput)
-  loginUser(@Args('loginUserInput') loginUserInput: LoginUserInput) {
-    return this.usersService.login(loginUserInput)
-  }
+  // @ResolveField(() => [PostObject])
+  // async posts(@Parent() user: User) {
+  //   if (user.posts && user.posts.length) {
+  //     return user.posts
+  //   }
+  //   const { id } = user
+  //   return this.postsService.findAll({ authorId: id })
+  // }
 }

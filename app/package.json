@@ -12,25 +12,24 @@
     "dev": "quasar dev"
   },
   "dependencies": {
-    "@quasar/extras": "1.15.3",
-    "pinia": "2.0.22",
-    "postcss": "8.4.16",
-    "quasar": "2.7.7",
-    "vue": "3.2.39",
-    "vue-router": "4.1.5"
+    "@quasar/extras": "^1.15.3",
+    "pinia": "^2.0.22",
+    "postcss": "^8.4.16",
+    "quasar": "^2.8.0",
+    "vue": "^3.2.39",
+    "vue-router": "^4.1.5"
   },
   "devDependencies": {
-    "@quasar/app-vite": "1.0.6",
-    "@types/node": "18.7.18",
-    "@typescript-eslint/eslint-plugin": "5.37.0",
-    "@typescript-eslint/parser": "5.37.0",
-    "autoprefixer": "10.4.10",
-    "eslint": "8.23.1",
-    "eslint-config-prettier": "8.5.0",
-    "eslint-plugin-vue": "9.4.0",
-    "mkcert": "1.5.1",
-    "prettier": "2.7.1",
-    "typescript": "4.8.3"
+    "@quasar/app-vite": "^1.1.0",
+    "@types/node": "^18.7.18",
+    "@typescript-eslint/eslint-plugin": "^5.37.0",
+    "@typescript-eslint/parser": "^5.37.0",
+    "autoprefixer": "^10.4.10",
+    "eslint": "^8.23.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-vue": "^9.4.0",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.3"
   },
   "engines": {
     "node": "^18 || ^16 || ^14.19"

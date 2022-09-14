@@ -1,26 +1,42 @@
-import { ObjectType, Field, ID, HideField } from '@nestjs/graphql'
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { RefreshToken } from '@auth/entities/refresh-token.entity'
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm'
+// import { Post } from '../../posts/entities/post.entity'
 
-@Entity('users')
-@ObjectType()
+@Entity({ name: 'users' })
 export class User {
-  @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number
 
-  @Field()
-  @Column()
-  name: string
-
-  @Field()
   @Column()
   username: string
 
-  @Field()
   @Column()
-  email: string
-
-  @Column()
-  @HideField()
   password: string
+
+  @Column({ name: 'first_name', nullable: true })
+  firstName: string
+
+  @Column({ name: 'last_name', nullable: true })
+  lastName: string
+
+  // @OneToMany(() => Post, (post) => post.author, { cascade: true })
+  // posts: Post[]
+
+  @OneToMany(() => RefreshToken, (refreshToken) => refreshToken.user, {
+    cascade: true,
+  })
+  refreshTokens: RefreshToken[]
+
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date
 }

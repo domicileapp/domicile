@@ -3,44 +3,59 @@
 # ------------------------------------------------------
 
 type User {
-  id: ID!
-  name: String!
+  id: Int!
   username: String!
-  email: String!
+  firstName: String
+  lastName: String
 }
 
-type LoggedUserOutput {
-  """Generated access token for the user"""
-  access_token: String!
+type LoginUserPayload {
+  user: User!
+  accessToken: String!
+  refreshToken: String!
+}
+
+type RefreshTokenPayload {
+  user: User!
+  accessToken: String!
+}
+
+type RegisterUserPayload {
+  user: User!
+  accessToken: String!
+  refreshToken: String!
 }
 
 type Query {
-  users(offset: Int = 0, limit: Int = 25): [User!]!
-  user(id: Float!): User!
+  users: [User!]!
+  user(id: Int, username: String): User!
+  me: User!
 }
 
 type Mutation {
-  createUser(createUserInput: CreateUserInput!): User!
-  updateUser(id: String!, updateUserInput: UpdateUserInput!): User!
-  removeUser(id: Float!): User!
-  loginUser(loginUserInput: LoginUserInput!): LoggedUserOutput!
+  login(input: LoginUserInput!): LoginUserPayload!
+  refreshToken(input: RefreshTokenInput!): RefreshTokenPayload!
+  register(input: RegisterUserInput!): RegisterUserPayload!
+  updateProfile(input: UpdateUserInput!): User!
 }
 
-input CreateUserInput {
-  name: String!
-  email: String!
+input LoginUserInput {
+  username: String!
+  password: String!
+}
+
+input RefreshTokenInput {
+  refreshToken: String!
+}
+
+input RegisterUserInput {
   username: String!
   password: String!
 }
 
 input UpdateUserInput {
-  name: String
-  email: String
+  id: Int!
   username: String
-  password: String
-}
-
-input LoginUserInput {
-  email: String!
-  password: String!
+  firstName: String
+  lastName: String
 }
