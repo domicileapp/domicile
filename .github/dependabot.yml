@@ -5,8 +5,13 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-  - package-ecosystem: "terraform"
+  - package-ecosystem: "npm"
     target-branch: "dev"
-    directory: "/"
+    directory: "/api"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "npm"
+    target-branch: "dev"
+    directory: "/app"
     schedule:
       interval: "daily"
