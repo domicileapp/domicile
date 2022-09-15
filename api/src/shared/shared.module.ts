@@ -1,12 +1,12 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { Module } from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core'
+import { TypeOrmModule } from '@nestjs/typeorm'
 
-import { configModuleOptions } from './configs/module-options';
-import { AllExceptionsFilter } from './filters/all-exceptions.filter';
-import { LoggingInterceptor } from './interceptors/logging.interceptor';
-import { AppLoggerModule } from './logger/logger.module';
+import { configModuleOptions } from './configs/module-options'
+import { AllExceptionsFilter } from './filters/all-exceptions.filter'
+import { LoggingInterceptor } from './interceptors/logging.interceptor'
+import { AppLoggerModule } from './logger/logger.module'
 
 @Module({
   imports: [
@@ -15,7 +15,7 @@ import { AppLoggerModule } from './logger/logger.module';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        type: 'mysql',
+        type: 'postgres',
         host: configService.get<string>('database.host'),
         port: configService.get<number | undefined>('database.port'),
         database: configService.get<string>('database.name'),
@@ -26,7 +26,7 @@ import { AppLoggerModule } from './logger/logger.module';
         // This is used to typecast server date/time values to JavaScript Date object and vice versa.
         timezone: 'Z',
         synchronize: false,
-        debug: configService.get<string>('env') === 'development',
+        debug: configService.get<string>('env') === 'dev',
       }),
     }),
     AppLoggerModule,

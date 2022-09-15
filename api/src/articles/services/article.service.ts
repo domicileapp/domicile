@@ -1,5 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { plainToClass } from 'class-transformer'
+import { Repository } from 'typeorm'
 
 import { Action } from '../../shared/acl/action.constant'
 import { Actor } from '../../shared/acl/actor.constant'
@@ -13,13 +14,12 @@ import {
 } from '../dtos/article-input.dto'
 import { ArticleOutput } from '../dtos/article-output.dto'
 import { Article } from '../entities/article.entity'
-import { ArticleRepository } from '../repositories/article.repository'
 import { ArticleAclService } from './article-acl.service'
 
 @Injectable()
 export class ArticleService {
   constructor(
-    private repository: ArticleRepository,
+    private articleRepository: Repository<Article>,
     private userService: UserService,
     private aclService: ArticleAclService,
     private readonly logger: AppLogger
@@ -48,8 +48,7 @@ export class ArticleService {
 
     article.author = plainToClass(User, user)
 
-    this.logger.log(ctx, `calling ${ArticleRepository.name}.save`)
-    const savedArticle = await this.repository.save(article)
+    const savedArticle = await this.articleRepository.save(article)
 
     return plainToClass(ArticleOutput, savedArticle, {
       excludeExtraneousValues: true,
@@ -70,8 +69,7 @@ export class ArticleService {
       throw new UnauthorizedException()
     }
 
-    this.logger.log(ctx, `calling ${ArticleRepository.name}.findAndCount`)
-    const [articles, count] = await this.repository.findAndCount({
+    const [articles, count] = await this.articleRepository.findAndCount({
       where: {},
       take: limit,
       skip: offset,
@@ -92,8 +90,7 @@ export class ArticleService {
 
     const actor: Actor = ctx.user
 
-    this.logger.log(ctx, `calling ${ArticleRepository.name}.getById`)
-    const article = await this.repository.getById(id)
+    const article = await this.articleRepository.findOneBy({ id })
 
     const isAllowed = this.aclService
       .forActor(actor)
@@ -114,8 +111,7 @@ export class ArticleService {
   ): Promise<ArticleOutput> {
     this.logger.log(ctx, `${this.updateArticle.name} was called`)
 
-    this.logger.log(ctx, `calling ${ArticleRepository.name}.getById`)
-    const article = await this.repository.getById(articleId)
+    const article = await this.articleRepository.findOneBy({ id: articleId })
 
     const actor: Actor = ctx.user
 
@@ -131,8 +127,7 @@ export class ArticleService {
       ...plainToClass(Article, input),
     }
 
-    this.logger.log(ctx, `calling ${ArticleRepository.name}.save`)
-    const savedArticle = await this.repository.save(updatedArticle)
+    const savedArticle = await this.articleRepository.save(updatedArticle)
 
     return plainToClass(ArticleOutput, savedArticle, {
       excludeExtraneousValues: true,
@@ -142,8 +137,7 @@ export class ArticleService {
   async deleteArticle(ctx: RequestContext, id: number): Promise<void> {
     this.logger.log(ctx, `${this.deleteArticle.name} was called`)
 
-    this.logger.log(ctx, `calling ${ArticleRepository.name}.getById`)
-    const article = await this.repository.getById(id)
+    const article = await this.articleRepository.findOneBy({ id })
 
     const actor: Actor = ctx.user
 
@@ -154,7 +148,6 @@ export class ArticleService {
       throw new UnauthorizedException()
     }
 
-    this.logger.log(ctx, `calling ${ArticleRepository.name}.remove`)
-    await this.repository.remove(article)
+    await this.articleRepository.remove(article)
   }
 }

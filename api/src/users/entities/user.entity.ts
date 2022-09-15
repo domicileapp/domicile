@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import {
   Column,
   CreateDateColumn,
@@ -8,7 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 
-import { Article } from '../../article/entities/article.entity'
+import { Article } from '../../articles/entities/article.entity'
 
 @Entity('users')
 export class User {
