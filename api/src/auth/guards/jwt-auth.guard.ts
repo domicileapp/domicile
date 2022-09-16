@@ -1,29 +1,45 @@
 import {
   ExecutionContext,
+  HttpException,
+  HttpStatus,
   Injectable,
-  UnauthorizedException,
 } from '@nestjs/common'
+import { Reflector } from '@nestjs/core'
 import { AuthGuard } from '@nestjs/passport'
-import { Observable } from 'rxjs'
+import * as jwt from 'jsonwebtoken'
+import { IS_PUBLIC_KEY } from '../decorators/public.decorator'
 
-import { STRATEGY_JWT_AUTH } from '../constants/strategy.constant'
+const HTTP_STATUS_TOKEN_EXPIRED = 498
 
 @Injectable()
-export class JwtAuthGuard extends AuthGuard(STRATEGY_JWT_AUTH) {
-  canActivate(
-    context: ExecutionContext
-  ): boolean | Promise<boolean> | Observable<boolean> {
-    // Add your custom authentication logic here
-    // for example, call super.logIn(request) to establish a session.
+export class JwtAuthGuard extends AuthGuard('jwt') {
+  constructor(private reflector: Reflector) {
+    super()
+  }
+
+  canActivate(context: ExecutionContext) {
+    const isPublic = this.reflector.get(IS_PUBLIC_KEY, context.getHandler())
+    if (isPublic) {
+      return true
+    }
     return super.canActivate(context)
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   handleRequest(err, user, info) {
-    // You can throw an exception based on either "info" or "err" arguments
-    if (err || !user) {
-      throw err || new UnauthorizedException(`${info}`)
+    if (info instanceof jwt.TokenExpiredError) {
+      throw new HttpException('Token expired', HTTP_STATUS_TOKEN_EXPIRED)
     }
+
+    if (err || !user) {
+      throw new HttpException(
+        {
+          status: HttpStatus.UNAUTHORIZED,
+          error: 'Unauthorized user',
+        },
+        HttpStatus.UNAUTHORIZED
+      )
+    }
+
     return user
   }
 }

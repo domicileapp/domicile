@@ -1,28 +1,35 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { PassportStrategy } from '@nestjs/passport';
-import { ExtractJwt, Strategy } from 'passport-jwt';
-
-import { STRATEGY_JWT_REFRESH } from '../constants/strategy.constant';
-import { UserRefreshTokenClaims } from '../dtos/auth-token-output.dto';
+import { Inject, Injectable } from '@nestjs/common'
+import { ConfigType } from '@nestjs/config'
+import { PassportStrategy } from '@nestjs/passport'
+import { Request } from 'express'
+import { ExtractJwt, Strategy } from 'passport-jwt'
+import config from '../../config'
+import { UsersService } from '../../users/users.service'
+import { PayloadToken } from '../models/token.model'
 
 @Injectable()
-export class JwtRefreshStrategy extends PassportStrategy(
+export class JwtRefreshTokenStrategy extends PassportStrategy(
   Strategy,
-  STRATEGY_JWT_REFRESH,
+  'jwt-refresh-token'
 ) {
-  constructor(private readonly configService: ConfigService) {
+  constructor(
+    @Inject(config.KEY)
+    private configService: ConfigType<typeof config>,
+    private readonly userService: UsersService
+  ) {
     super({
-      jwtFromRequest: ExtractJwt.fromBodyField('refreshToken'),
-      secretOrKey: configService.get<string>('jwt.publicKey'),
-      algorithms: ['RS256'],
-    });
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey: configService.jwt.jwtRefreshSecret,
+      passReqToCallback: true,
+    })
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  async validate(payload: any): Promise<UserRefreshTokenClaims> {
-    // Passport automatically creates a user object, based on the value we return from the validate() method,
-    // and assigns it to the Request object as req.user
-    return { id: payload.sub };
+  async validate(request: Request, payload: PayloadToken) {
+    const refreshToken = request.headers.authorization.split(' ')[1]
+
+    return this.userService.getUserIfRefreshTokenMatches(
+      refreshToken,
+      payload.id
+    )
   }
 }

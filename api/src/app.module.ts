@@ -1,15 +1,49 @@
 import { Module } from '@nestjs/common'
-
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
-// import { ArticleModule } from './article/article.module'
-import { AuthModule } from './auth/auth.module'
-import { SharedModule } from './shared/shared.module'
-import { UserModule } from '@/users/user.module'
+import { ConfigModule, ConfigType } from '@nestjs/config'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import Joi from 'joi'
+import { AuthModule } from '@/auth/auth.module'
+import config from '@/config'
+import { enviroments } from '@/environments'
+import { UsersModule } from '@/users/users.module'
 
 @Module({
-  imports: [SharedModule, UserModule, AuthModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: enviroments[process.env.NODE_ENV] || '.env',
+      load: [config],
+      isGlobal: true,
+      validationSchema: Joi.object({
+        JWT_SECRET: Joi.string().required(),
+        JWT_REFRESH_SECRET: Joi.string().required(),
+        ACCESS_TOKEN_EXPIRATION: Joi.string().required(),
+        REFRESH_TOKEN_EXPIRATION: Joi.string().required(),
+      }),
+      validationOptions: {
+        // when true, stops validation on the first error, otherwise returns all the errors found. Defaults to true.
+        abortEarly: false,
+      },
+    }),
+    TypeOrmModule.forRootAsync({
+      inject: [config.KEY],
+      useFactory: (configService: ConfigType<typeof config>) => {
+        return {
+          type: 'postgres',
+          host: configService.postgres.host,
+          port: configService.postgres.port,
+          database: configService.postgres.name,
+          username: configService.postgres.user,
+          password: configService.postgres.password,
+          autoLoadEntities: true,
+          keepConnectionAlive: true,
+          synchronize: true,
+        }
+      },
+    }),
+    UsersModule,
+    AuthModule,
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
