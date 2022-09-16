@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigType } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import Joi from 'joi'
+import * as Joi from 'joi'
 import { AuthModule } from '@/auth/auth.module'
 import config from '@/config'
 import { enviroments } from '@/environments'
