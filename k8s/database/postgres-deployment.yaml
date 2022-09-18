@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: domicile-db
+spec:
+  selector:
+    matchLabels:
+      app: domicile
+  template:
+    metadata:
+      labels:
+        app: domicile
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:latest
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: domicile-db-config
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: domicile-db-volume
+      volumes:
+        - name: domicile-db-volume
+          persistentVolumeClaim:
+            claimName: domicile-db-pv-claim

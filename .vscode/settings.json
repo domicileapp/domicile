@@ -14,5 +14,8 @@
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "git.alwaysSignOff": true,
-  "github.gitAuthentication": true
+  "github.gitAuthentication": true,
+  "conventionalCommits.scopes": [
+    "infra"
+  ]
 }
