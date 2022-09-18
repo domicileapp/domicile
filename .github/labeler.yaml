@@ -12,3 +12,10 @@ component/infra:
 
 component/infra/database:
 - k8s/database/*
+
+component/infra/app:
+- k8s/app/*
+
+component/infra/api:
+- k8s/api/*
+
