@@ -12,8 +12,13 @@
       "hidden": false
     },
     {
+      "type": "perf",
+      "section": "Performance improvements",
+      "hidden": false
+    },
+    {
       "type": "fix",
-      "section": "Fixes",
+      "section": "Bug fixes",
       "hidden": false
     },
     {
@@ -23,7 +28,7 @@
     },
     {
       "type": "build",
-      "section": "Build",
+      "section": "Build & tests",
       "hidden": false
     },
     {
