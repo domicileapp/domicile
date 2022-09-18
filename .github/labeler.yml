@@ -6,3 +6,9 @@ component/api:
 
 component/app:
 - app/*
+
+component/infra:
+- k8s/*
+
+component/infra/database:
+- k8s/database/*
