@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: domicile-api
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: domicile
+  template:
+    metadata:
+      labels:
+        app: domicile
+    spec:
+      containers:
+        - name: domicile-api
+          image: ghcr.io/patrickblackjr/domicile-api:dev
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 9000

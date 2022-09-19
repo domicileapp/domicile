@@ -7,4 +7,9 @@ spec:
   selector:
     app: domicile
   ports:
-    - port: 5432
+    - name: database
+      port: 5432
+    - name: api
+      port: 3000
+    - name: app
+      port: 9000
