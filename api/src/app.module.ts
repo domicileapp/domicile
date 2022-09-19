@@ -6,6 +6,7 @@ import { AuthModule } from '@/auth/auth.module'
 import config from '@/config'
 import { enviroments } from '@/environments'
 import { UsersModule } from '@/users/users.module'
+import { TodoModule } from './todo/todo.module'
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { UsersModule } from '@/users/users.module'
     }),
     UsersModule,
     AuthModule,
+    TodoModule,
   ],
   controllers: [],
   providers: [],

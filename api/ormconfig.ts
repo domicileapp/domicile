@@ -15,4 +15,5 @@ module.exports = {
     migrationsDir: './src/db/migrations',
   },
   ssl: false,
+  synchronize: true,
 }

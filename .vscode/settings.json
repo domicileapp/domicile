@@ -16,6 +16,7 @@
   "git.alwaysSignOff": true,
   "github.gitAuthentication": true,
   "conventionalCommits.scopes": [
-    "infra"
+    "infra",
+    "api"
   ]
 }
