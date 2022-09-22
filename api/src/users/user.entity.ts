@@ -1,40 +1,16 @@
-import * as bcrypt from 'bcrypt'
-import { BeforeInsert, Column, Entity } from 'typeorm'
-import { Role } from '@/auth/models/roles.model'
-import { DefaultEntity } from '@/common/entities/default.entity'
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
-@Entity('users')
-export class User extends DefaultEntity {
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn()
+  public id?: number
+
   @Column({ unique: true })
-  email: string
+  public email: string
 
-  @Column({ select: false })
-  password: string
+  @Column()
+  public name: string
 
-  @Column({ select: false, nullable: true, name: 'refresh_token' })
-  refreshToken: string
-
-  @Column({
-    name: 'first_name',
-  })
-  firstName: string
-
-  @Column({
-    name: 'last_name',
-  })
-  lastName: string
-
-  @Column({
-    type: 'enum',
-    enum: Role,
-    default: Role.USER,
-  })
-  role: Role
-
-  @BeforeInsert()
-  async hashPassword() {
-    if (this.password) {
-      this.password = await bcrypt.hash(this.password, 10)
-    }
-  }
+  @Column()
+  public password: string
 }
