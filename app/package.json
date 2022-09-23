@@ -15,7 +15,7 @@
     "@quasar/extras": "^1.15.3",
     "pinia": "^2.0.22",
     "postcss": "^8.4.16",
-    "quasar": "^2.8.0",
+    "quasar": "^2.8.4",
     "vue": "^3.2.39",
     "vue-router": "^4.1.5"
   },
