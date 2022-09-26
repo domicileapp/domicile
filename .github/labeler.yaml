@@ -4,6 +4,9 @@ component/core:
 component/api:
 - api/*
 
+component/api/todos:
+- api/todos/*
+
 component/app:
 - app/*
 
