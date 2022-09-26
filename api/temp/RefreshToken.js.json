@@ -1,0 +1,100 @@
+{
+  "data": {
+    "propertyOrder": {},
+    "properties": {
+      "user": {
+        "name": "user",
+        "reference": "m:1",
+        "cascade": [
+          "persist"
+        ],
+        "onDelete": "CASCADE",
+        "type": "User",
+        "joinColumns": [
+          "user_id"
+        ]
+      },
+      "revoked": {
+        "name": "revoked",
+        "reference": "scalar",
+        "getter": false,
+        "setter": false,
+        "type": "boolean",
+        "fieldNames": [
+          "is_revoked"
+        ]
+      },
+      "expires": {
+        "name": "expires",
+        "reference": "scalar",
+        "getter": false,
+        "setter": false,
+        "type": "Date"
+      }
+    },
+    "props": [
+      {
+        "name": "user",
+        "reference": "m:1",
+        "cascade": [
+          "persist"
+        ],
+        "onDelete": "CASCADE",
+        "type": "User",
+        "joinColumns": [
+          "user_id"
+        ]
+      },
+      {
+        "name": "revoked",
+        "reference": "scalar",
+        "getter": false,
+        "setter": false,
+        "type": "boolean",
+        "fieldNames": [
+          "is_revoked"
+        ]
+      },
+      {
+        "name": "expires",
+        "reference": "scalar",
+        "getter": false,
+        "setter": false,
+        "type": "Date"
+      }
+    ],
+    "primaryKeys": [],
+    "filters": {},
+    "hooks": {},
+    "indexes": [],
+    "uniques": [],
+    "checks": [],
+    "concurrencyCheckKeys": {},
+    "className": "RefreshToken",
+    "path": "./dist/auth/entities/refresh-token.entity.js",
+    "collection": "refresh_tokens",
+    "name": "RefreshToken",
+    "abstract": false,
+    "constructorParams": [],
+    "toJsonParams": [],
+    "extends": "BaseEntity",
+    "useCache": true,
+    "relations": [
+      {
+        "name": "user",
+        "reference": "m:1",
+        "cascade": [
+          "persist"
+        ],
+        "onDelete": "CASCADE",
+        "type": "User",
+        "joinColumns": [
+          "user_id"
+        ]
+      }
+    ]
+  },
+  "origin": "./dist/auth/entities/refresh-token.entity.js",
+  "hash": "f2147c14119704d08b8b1cf081f2a298",
+  "version": "5.4.2"
+}

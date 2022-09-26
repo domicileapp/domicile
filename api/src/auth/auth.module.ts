@@ -1,30 +1,30 @@
+import { MikroOrmModule } from '@mikro-orm/nestjs'
 import { Module } from '@nestjs/common'
-import { AuthService } from './auth.service'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { JwtModule } from '@nestjs/jwt'
+import { PassportModule } from '@nestjs/passport'
 import { UsersModule } from '../users/users.module'
 import { AuthController } from './auth.controller'
-import { PassportModule } from '@nestjs/passport'
-import { LocalStrategy } from './local.strategy'
-import { JwtModule } from '@nestjs/jwt'
-import { ConfigModule, ConfigService } from '@nestjs/config'
-import { JwtStrategy } from './jwt.strategy'
+import { AuthService } from './auth.service'
+import { RefreshToken } from './entities/refresh-token.entity'
+import { JwtStrategy } from './strategies/jwt.strategy'
+import { LocalStrategy } from './strategies/local.strategy'
 
 @Module({
+  controllers: [AuthController],
   imports: [
-    UsersModule,
     PassportModule,
-    ConfigModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
-      inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        secret: configService.get('JWT_SECRET'),
-        signOptions: {
-          expiresIn: `${configService.get('JWT_EXPIRATION_TIME')}s`,
-        },
+        secret: configService.get<string>('auth.jwtKey'),
+        signOptions: { expiresIn: '15m' },
       }),
+      inject: [ConfigService],
     }),
+    UsersModule,
+    MikroOrmModule.forFeature([RefreshToken]),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],
-  controllers: [AuthController],
 })
 export class AuthModule {}

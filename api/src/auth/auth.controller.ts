@@ -1,52 +1,81 @@
-import {
-  Body,
-  Req,
-  Controller,
-  HttpCode,
-  Post,
-  UseGuards,
-  Res,
-  Get,
-} from '@nestjs/common'
-import { Response } from 'express'
+import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common'
+import { ApiBody, ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger'
+import { UserDto } from '../users/dto/user.dto'
 import { AuthService } from './auth.service'
-import RegisterDto from './dto/register.dto'
-import RequestWithUser from './requestWithUser.interface'
-import { LocalAuthGuard } from './local-auth.guard'
-import JwtAuthGuard from './jwt-auth.guard'
+import { LoginUserBody } from './dto/login-user.body'
+import { LoginUserResponse } from './dto/login-user.response'
+import { RefreshTokenBody } from './dto/refresh-token.body'
+import { RefreshTokenResponse } from './dto/refresh-token.response'
+import { RegisterUserBody } from './dto/register-user.body'
+import { RegisterUserResponse } from './dto/register-user.response'
+import { LocalAuthGuard } from './guards/local-auth.guard'
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
-  @Post('register')
-  async register(@Body() registrationData: RegisterDto) {
-    return this.authService.register(registrationData)
-  }
-
-  @HttpCode(200)
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  async logIn(@Req() request: RequestWithUser, @Res() response: Response) {
-    const { user } = request
-    const cookie = this.authService.getCookieWithJwtToken(user.id)
-    response.setHeader('Set-Cookie', cookie)
-    user.password = undefined
-    return response.send(user)
+  @ApiBody({ type: LoginUserBody })
+  @ApiOkResponse({
+    description: 'User has been logged in.',
+    type: LoginUserResponse,
+  })
+  async login(@Request() req: any) {
+    const accessToken = await this.authService.generateAccessToken(req.user)
+    const refreshToken = await this.authService.generateRefreshToken(
+      req.user,
+      60 * 60 * 24 * 30,
+    )
+
+    const payload = new LoginUserResponse()
+    payload.user = new UserDto(req.user)
+    payload.accessToken = accessToken
+    payload.refreshToken = refreshToken
+
+    return payload
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Post('logout')
-  async logOut(@Res() response: Response) {
-    response.setHeader('Set-Cookie', this.authService.getCookieForLogOut())
-    return response.sendStatus(200)
+  @Post('refresh')
+  @ApiOkResponse({
+    description: 'Generates a new access token.',
+    type: RefreshTokenResponse,
+  })
+  async refresh(@Body() refreshInput: RefreshTokenBody) {
+    const { user, token } =
+      await this.authService.createAccessTokenFromRefreshToken(
+        refreshInput.refreshToken,
+      )
+
+    const payload = new RefreshTokenResponse()
+    payload.user = new UserDto(user)
+    payload.accessToken = token
+
+    return payload
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get()
-  authenticate(@Req() request: RequestWithUser) {
-    const user = request.user
-    user.password = undefined
-    return user
+  @Post('register')
+  @ApiCreatedResponse({
+    description: 'User has been registered.',
+    type: RegisterUserResponse,
+  })
+  async register(@Body() registerInput: RegisterUserBody) {
+    const user = await this.authService.register(
+      registerInput.username,
+      registerInput.password,
+    )
+
+    const accessToken = await this.authService.generateAccessToken(user)
+    const refreshToken = await this.authService.generateRefreshToken(
+      user,
+      60 * 60 * 24 * 30,
+    )
+
+    const payload = new RegisterUserResponse()
+    payload.user = new UserDto(user)
+    payload.accessToken = accessToken
+    payload.refreshToken = refreshToken
+
+    return payload
   }
 }

@@ -4,42 +4,65 @@ import {
   Delete,
   Get,
   Param,
-  Patch,
   Post,
+  Put,
+  UnauthorizedException,
   UseGuards,
 } from '@nestjs/common'
-import PostsService from './posts.service'
-import CreatePostDto from './dto/createPost.dto'
-import UpdatePostDto from './dto/updatePost.dto'
-import JwtAuthGuard from '../auth/jwt-auth.guard'
+import { CurrentUser } from 'src/auth/decorator/current-user.decorator'
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard'
+import { User } from 'src/users/entities/user.entity'
+import { CreatePostDto } from './dto/create-post.dto'
+import { UpdatePostDto } from './dto/update-post.dto'
+import { PostsService } from './posts.service'
 
 @Controller('posts')
-export default class PostsController {
+export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  create(@CurrentUser() user: User, @Body() createPostDto: CreatePostDto) {
+    return this.postsService.create(user.id, createPostDto)
+  }
+
   @Get()
-  getAllPosts() {
-    return this.postsService.getAllPosts()
+  findAll() {
+    return this.postsService.findAll()
   }
 
   @Get(':id')
-  getPostById(@Param('id') id: string) {
-    return this.postsService.getPostById(Number(id))
+  findOne(@Param('id') id: string) {
+    return this.postsService.findOne({ id: +id })
   }
 
-  @Post()
   @UseGuards(JwtAuthGuard)
-  async createPost(@Body() post: CreatePostDto) {
-    return this.postsService.createPost(post)
+  @Put(':id')
+  async update(
+    @CurrentUser() user: User,
+    @Param('id') id: string,
+    @Body() updatePostDto: UpdatePostDto,
+  ) {
+    const post = await this.postsService.findOne({
+      id: +id,
+      relations: ['author'],
+    })
+    if (post.author.id !== user.id) {
+      throw new UnauthorizedException("You aren't the author of this post.")
+    }
+    return this.postsService.update(+id, updatePostDto)
   }
 
-  @Patch(':id')
-  async updatePost(@Param('id') id: string, @Body() post: UpdatePostDto) {
-    return this.postsService.updatePost(Number(id), post)
-  }
-
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  async deletePost(@Param('id') id: string) {
-    return this.postsService.deletePost(Number(id))
+  async remove(@CurrentUser() user: User, @Param('id') id: string) {
+    const post = await this.postsService.findOne({
+      id: +id,
+      relations: ['author'],
+    })
+    if (post.author.id !== user.id) {
+      throw new UnauthorizedException("You aren't the author of this post.")
+    }
+    return this.postsService.remove(+id)
   }
 }

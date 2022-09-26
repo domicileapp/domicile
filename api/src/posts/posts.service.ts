@@ -1,48 +1,59 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
-import CreatePostDto from './dto/createPost.dto'
-import Post from './post.entity'
-import UpdatePostDto from './dto/updatePost.dto'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { EntityRepository, FilterQuery } from '@mikro-orm/core'
+import { InjectRepository } from '@mikro-orm/nestjs'
+import { Injectable } from '@nestjs/common'
+import { CreatePostDto } from './dto/create-post.dto'
+import { UpdatePostDto } from './dto/update-post.dto'
+import { Post } from './entities/post.entity'
+
+interface FindAllArgs {
+  relations?: string[]
+  authorId?: number
+}
+
+interface FindOneArgs extends FindAllArgs {
+  id: number
+}
 
 @Injectable()
-export default class PostsService {
+export class PostsService {
   constructor(
     @InjectRepository(Post)
-    private postsRepository: Repository<Post>,
+    private postsRepository: EntityRepository<Post>,
   ) {}
 
-  getAllPosts() {
-    return this.postsRepository.find()
+  async create(authorId: number, createPostInput: CreatePostDto) {
+    const post = this.postsRepository.create({
+      author: {
+        id: authorId,
+      },
+      ...createPostInput,
+    })
+    await this.postsRepository.persistAndFlush(post)
+    return post
   }
 
-  async getPostById(id: number) {
-    const post = await this.postsRepository.findOneBy({ id })
-    if (post) {
-      return post
+  findAll(args?: FindAllArgs) {
+    const { authorId } = args
+    let where: FilterQuery<Post> = {}
+    if (authorId) {
+      where = { ...where, author: { id: authorId } }
     }
-    throw new HttpException('Post not found', HttpStatus.NOT_FOUND)
+    return this.postsRepository.find(where)
   }
 
-  async createPost(post: CreatePostDto) {
-    const newPost = await this.postsRepository.create(post)
-    await this.postsRepository.save(newPost)
-    return newPost
+  findOne({ id }: FindOneArgs) {
+    return this.postsRepository.findOne(id)
   }
 
-  async updatePost(id: number, post: UpdatePostDto) {
-    await this.postsRepository.update(id, post)
-    const updatedPost = await this.postsRepository.findOneBy({ id })
-    if (updatedPost) {
-      return updatedPost
-    }
-    throw new HttpException('Post not found', HttpStatus.NOT_FOUND)
+  async update(id: number, updatePostInput: UpdatePostDto) {
+    const post = await this.postsRepository.findOne(id)
+    this.postsRepository.assign(post, updatePostInput)
+    await this.postsRepository.flush()
+    return post
   }
 
-  async deletePost(id: number) {
-    const deleteResponse = await this.postsRepository.delete(id)
-    if (!deleteResponse.affected) {
-      throw new HttpException('Post not found', HttpStatus.NOT_FOUND)
-    }
+  async remove(id: number) {
+    await this.postsRepository.removeAndFlush({ id })
+    return true
   }
 }

@@ -1,31 +1,44 @@
-import { Module } from '@nestjs/common'
-import { PostsModule } from './posts/posts.module'
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  OnModuleInit,
+} from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import * as Joi from 'joi'
-import { DatabaseModule } from './db/database.module'
+import { MikroOrmMiddleware, MikroOrmModule } from '@mikro-orm/nestjs'
+import { AppController } from './app.controller'
+import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
+import configuration from './config/configuration'
 import { UsersModule } from './users/users.module'
+import { PostsModule } from './posts/posts.module'
+import { MikroORM } from '@mikro-orm/core'
 
 @Module({
   imports: [
-    PostsModule,
     ConfigModule.forRoot({
-      validationSchema: Joi.object({
-        POSTGRES_HOST: Joi.string().required(),
-        POSTGRES_PORT: Joi.number().required(),
-        POSTGRES_USER: Joi.string().required(),
-        POSTGRES_PASSWORD: Joi.string().required(),
-        POSTGRES_DB: Joi.string().required(),
-        JWT_SECRET: Joi.string().required(),
-        JWT_EXPIRATION_TIME: Joi.string().required(),
-        PORT: Joi.number(),
-      }),
+      isGlobal: true,
+      load: [configuration],
     }),
-    DatabaseModule,
-    AuthModule,
+    MikroOrmModule.forRoot(),
     UsersModule,
+    AuthModule,
+    PostsModule,
   ],
-  controllers: [],
-  providers: [],
+  controllers: [AppController],
+  providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule, OnModuleInit {
+  constructor(private readonly orm: MikroORM) {}
+
+  async onModuleInit(): Promise<void> {
+    await this.orm.getMigrator().up()
+  }
+
+  // for some reason the auth middlewares in profile and article modules are fired before the request context one,
+  // so they would fail to access contextual EM. by registering the middleware directly in AppModule, we can get
+  // around this issue
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(MikroOrmMiddleware).forRoutes('*')
+  }
+}

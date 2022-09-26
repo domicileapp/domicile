@@ -1,12 +1,14 @@
-import { Module } from '@nestjs/common';
-import PostsController from './posts.controller';
-import PostsService from './posts.service';
-import Post from './post.entity';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { MikroOrmModule } from '@mikro-orm/nestjs'
+import { forwardRef, Module } from '@nestjs/common'
+import { UsersModule } from 'src/users/users.module'
+import { Post } from './entities/post.entity'
+import { PostsController } from './posts.controller'
+import { PostsService } from './posts.service'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Post])],
   controllers: [PostsController],
+  imports: [MikroOrmModule.forFeature([Post]), forwardRef(() => UsersModule)],
   providers: [PostsService],
+  exports: [PostsService],
 })
 export class PostsModule {}

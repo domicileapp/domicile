@@ -1,41 +1,59 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
-import { User } from './user.entity'
-import CreateUserDto from './dto/createUser.dto'
+import { EntityRepository, expr } from '@mikro-orm/core'
+import { InjectRepository } from '@mikro-orm/nestjs'
+import { Injectable } from '@nestjs/common'
+import { UpdateProfileDto } from './dto/update-profile.dto'
+import { User } from './entities/user.entity'
+
+interface FindAllArgs {
+  relations?: string[]
+}
+
+interface FindOneArgs extends FindAllArgs {
+  id?: number
+  username?: string
+  postId?: number
+}
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private usersRepository: Repository<User>,
+    private usersRepository: EntityRepository<User>,
   ) {}
 
-  async getByEmail(email: string) {
-    const user = await this.usersRepository.findOneBy({ email })
-    if (user) {
-      return user
-    }
-    throw new HttpException(
-      'User with this email does not exist',
-      HttpStatus.NOT_FOUND,
-    )
+  async create(createUserInput: Partial<User>) {
+    const user = this.usersRepository.create(createUserInput)
+    await this.usersRepository.persistAndFlush(user)
+    return user
   }
 
-  async getById(id: number) {
-    const user = await this.usersRepository.findOneBy({ id })
-    if (user) {
-      return user
-    }
-    throw new HttpException(
-      'User with this id does not exist',
-      HttpStatus.NOT_FOUND,
-    )
+  findAll() {
+    return this.usersRepository.find({})
   }
 
-  async create(userData: CreateUserDto) {
-    const newUser = await this.usersRepository.create(userData)
-    await this.usersRepository.save(newUser)
-    return newUser
+  findOne({ id, username, postId }: FindOneArgs) {
+    if (id) {
+      return this.usersRepository.findOne({ id })
+    } else if (username) {
+      return this.usersRepository.findOne({
+        [expr('lower(username)')]: username.toLowerCase(),
+      })
+    } else if (postId) {
+      return this.usersRepository.findOne({ posts: { id: postId } })
+    } else {
+      throw new Error('One of ID, username or post ID must be provided.')
+    }
+  }
+
+  async update(id: number, updateUserInput: UpdateProfileDto) {
+    const user = await this.usersRepository.findOneOrFail(id)
+    this.usersRepository.assign(user, updateUserInput)
+    await this.usersRepository.flush()
+    return user
+  }
+
+  async remove(id: number) {
+    await this.usersRepository.removeAndFlush({ id })
+    return true
   }
 }
