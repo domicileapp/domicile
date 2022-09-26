@@ -1,7 +1,7 @@
 {
   "name": "domicile",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "An application to help those with executive dysfunction manage household tasks, inventories, and life.",
   "main": "index.js",
   "repository": "https://github.com/patrickblackjr/domicile.git",
