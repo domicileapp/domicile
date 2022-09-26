@@ -1,12 +1,12 @@
 import { MikroOrmModule } from '@mikro-orm/nestjs'
 import { forwardRef, Module } from '@nestjs/common'
-import { PostsModule } from '../posts/posts.module'
-import { User } from './entities/user.entity'
+import { ListsModule } from '../lists/lists.module'
+import { User } from './user.entity'
 import { UsersController } from './users.controller'
 import { UsersService } from './users.service'
 
 @Module({
-  imports: [MikroOrmModule.forFeature([User]), forwardRef(() => PostsModule)],
+  imports: [MikroOrmModule.forFeature([User]), forwardRef(() => ListsModule)],
   controllers: [UsersController],
   providers: [UsersService],
   exports: [UsersService],

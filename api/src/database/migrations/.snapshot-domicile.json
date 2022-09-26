@@ -76,6 +76,15 @@
       "schema": "public",
       "indexes": [
         {
+          "columnNames": [
+            "username"
+          ],
+          "composite": false,
+          "keyName": "users_username_unique",
+          "primary": false,
+          "unique": true
+        },
+        {
           "keyName": "users_pkey",
           "columnNames": [
             "id"
@@ -218,17 +227,17 @@
           "nullable": false,
           "mappedType": "string"
         },
-        "body": {
-          "name": "body",
+        "description": {
+          "name": "description",
           "type": "varchar(255)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
+          "nullable": true,
           "mappedType": "string"
         },
-        "author_id": {
-          "name": "author_id",
+        "created_by_id": {
+          "name": "created_by_id",
           "type": "int",
           "unsigned": false,
           "autoincrement": false,
@@ -237,11 +246,11 @@
           "mappedType": "integer"
         }
       },
-      "name": "posts",
+      "name": "lists",
       "schema": "public",
       "indexes": [
         {
-          "keyName": "posts_pkey",
+          "keyName": "lists_pkey",
           "columnNames": [
             "id"
           ],
@@ -252,17 +261,125 @@
       ],
       "checks": [],
       "foreignKeys": {
-        "posts_author_id_foreign": {
-          "constraintName": "posts_author_id_foreign",
+        "lists_created_by_id_foreign": {
+          "constraintName": "lists_created_by_id_foreign",
           "columnNames": [
-            "author_id"
+            "created_by_id"
           ],
-          "localTableName": "public.posts",
+          "localTableName": "public.lists",
           "referencedColumnNames": [
             "id"
           ],
           "referencedTableName": "public.users",
-          "deleteRule": "CASCADE",
+          "updateRule": "cascade"
+        }
+      }
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "unsigned": true,
+          "autoincrement": true,
+          "primary": true,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 6,
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 6,
+          "mappedType": "datetime"
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "string"
+        },
+        "created_by_id": {
+          "name": "created_by_id",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        },
+        "todo_id": {
+          "name": "todo_id",
+          "type": "int",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "integer"
+        }
+      },
+      "name": "todos",
+      "schema": "public",
+      "indexes": [
+        {
+          "keyName": "todos_pkey",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "todos_created_by_id_foreign": {
+          "constraintName": "todos_created_by_id_foreign",
+          "columnNames": [
+            "created_by_id"
+          ],
+          "localTableName": "public.todos",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "public.users",
+          "updateRule": "cascade"
+        },
+        "todos_todo_id_foreign": {
+          "constraintName": "todos_todo_id_foreign",
+          "columnNames": [
+            "todo_id"
+          ],
+          "localTableName": "public.todos",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "public.lists",
           "updateRule": "cascade"
         }
       }

@@ -4,7 +4,7 @@ import { Injectable, UnprocessableEntityException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import * as bcrypt from 'bcrypt'
 import { TokenExpiredError } from 'jsonwebtoken'
-import { User } from '../users/entities/user.entity'
+import { User } from '../users/user.entity'
 import { UsersService } from '../users/users.service'
 import { RefreshToken } from './entities/refresh-token.entity'
 

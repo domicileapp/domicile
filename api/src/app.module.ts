@@ -11,8 +11,9 @@ import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
 import configuration from './config/configuration'
 import { UsersModule } from './users/users.module'
-import { PostsModule } from './posts/posts.module'
+import { ListsModule } from './lists/lists.module'
 import { MikroORM } from '@mikro-orm/core'
+import { TodosModule } from './todos/todos.module'
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { MikroORM } from '@mikro-orm/core'
     MikroOrmModule.forRoot(),
     UsersModule,
     AuthModule,
-    PostsModule,
+    ListsModule,
+    TodosModule,
   ],
   controllers: [AppController],
   providers: [AppService],

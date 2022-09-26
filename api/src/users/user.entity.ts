@@ -6,10 +6,11 @@ import {
   Property,
   Unique,
 } from '@mikro-orm/core'
+import { ApiHideProperty } from '@nestjs/swagger'
 import { Exclude } from 'class-transformer'
-import { RefreshToken } from '../../auth/entities/refresh-token.entity'
-import { BaseEntity } from '../../database/entities/base-entity.entity'
-import { Post } from '../../posts/entities/post.entity'
+import { RefreshToken } from '../auth/entities/refresh-token.entity'
+import { BaseEntity } from '../database/entities/base-entity.entity'
+import { List } from '../lists/list.entity'
 
 @Entity({ tableName: 'users' })
 export class User extends BaseEntity {
@@ -19,6 +20,7 @@ export class User extends BaseEntity {
 
   @Property()
   @Exclude()
+  @ApiHideProperty()
   password: string
 
   @Property({ nullable: true })
@@ -27,8 +29,10 @@ export class User extends BaseEntity {
   @Property({ nullable: true })
   lastName: string
 
-  @OneToMany(() => Post, (post) => post.author, { cascade: [Cascade.REMOVE] })
-  posts = new Collection<Post>(this)
+  @OneToMany(() => List, (list) => list.createdBy, {
+    cascade: [Cascade.REMOVE],
+  })
+  lists = new Collection<List>(this)
 
   @OneToMany(() => RefreshToken, (refreshToken) => refreshToken.user, {
     cascade: [Cascade.REMOVE],

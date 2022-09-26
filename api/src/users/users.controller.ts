@@ -4,7 +4,7 @@ import { CurrentUser } from 'src/auth/decorator/current-user.decorator'
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard'
 import { UpdateProfileDto } from './dto/update-profile.dto'
 import { UserDto } from './dto/user.dto'
-import { User } from './entities/user.entity'
+import { User } from './user.entity'
 import { UsersService } from './users.service'
 
 @Controller('users')

@@ -2,7 +2,7 @@ import { EntityRepository, expr } from '@mikro-orm/core'
 import { InjectRepository } from '@mikro-orm/nestjs'
 import { Injectable } from '@nestjs/common'
 import { UpdateProfileDto } from './dto/update-profile.dto'
-import { User } from './entities/user.entity'
+import { User } from './user.entity'
 
 interface FindAllArgs {
   relations?: string[]
@@ -39,7 +39,7 @@ export class UsersService {
         [expr('lower(username)')]: username.toLowerCase(),
       })
     } else if (postId) {
-      return this.usersRepository.findOne({ posts: { id: postId } })
+      return this.usersRepository.findOne({ lists: { id: postId } })
     } else {
       throw new Error('One of ID, username or post ID must be provided.')
     }
