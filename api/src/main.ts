@@ -25,10 +25,7 @@ async function bootstrap() {
     .build()
 
   const document = SwaggerModule.createDocument(app, swaggerConfig)
-  fs.writeFileSync(
-    '../docs/schema/openapi-spec.json',
-    JSON.stringify(document, null, 4),
-  )
+  fs.writeFileSync('./openapi-spec.json', JSON.stringify(document, null, 4))
   SwaggerModule.setup('api', app, document)
 
   await app.listen(3000)
