@@ -21,10 +21,11 @@ async function bootstrap() {
     .setDescription(
       'An application to help those with executive dysfunction manage household tasks, inventories, and life.',
     )
+    .addBearerAuth()
     .build()
 
   const document = SwaggerModule.createDocument(app, swaggerConfig)
-  fs.writeFileSync('./swagger-spec.json', JSON.stringify(document))
+  fs.writeFileSync('./swagger-spec.json', JSON.stringify({ document }, null, 4))
   SwaggerModule.setup('api', app, document)
 
   await app.listen(3000)
