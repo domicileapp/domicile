@@ -1362,10 +1362,10 @@ redent@^3.0.0:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
 
-release-please@14.7.1:
-  version "14.7.1"
-  resolved "https://registry.yarnpkg.com/release-please/-/release-please-14.7.1.tgz#cabafd4b32af120e5c64767183fb03622f23662c"
-  integrity sha512-2zcFRcUWBcn16ld4xb8DN79BZHQ7hYvHVBsn/RhHLz1+h++XIZolvL2NixKO8XiSaNEWLRTWcQmm93zb5MoR7g==
+release-please@14.9.0:
+  version "14.9.0"
+  resolved "https://registry.yarnpkg.com/release-please/-/release-please-14.9.0.tgz#19fe0607051c48b2b6f73e14e30565007f283d5c"
+  integrity sha512-E401jP+TvyC1xCR/s96Ih2AvUrZVbqTZGLdBgg0ihgAWa1g+THxzg36I7NGSg77QWCF8s3pQak2uSKa4vKEQTg==
   dependencies:
     "@conventional-commits/parser" "^0.4.1"
     "@google-automations/git-file-utils" "^1.2.0"
