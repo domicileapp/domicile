@@ -1,0 +1,1354 @@
+{
+	"info": {
+		"_postman_id": "81f5e62b-d2ff-4872-b4bc-0df616635119",
+		"name": "Domicile",
+		"description": "An application to help those with executive dysfunction manage household tasks, inventories, and life.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "19056148-81f5e62b-d2ff-4872-b4bc-0df616635119"
+	},
+	"item": [
+		{
+			"name": "api/v1",
+			"item": [
+				{
+					"name": "users",
+					"item": [
+						{
+							"name": "{{baseUrl}}/api/v1/users",
+							"id": "97947d52-89eb-4ad2-baf7-26b00f8d879b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "ec6d018a-a6fe-4044-9c2e-ccf875ace655",
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "{{baseUrl}}/api/v1/users/:username",
+							"id": "cd0ba0b3-6ece-463e-b009-5d226c64dc74",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/users/:username",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										":username"
+									],
+									"variable": [
+										{
+											"key": "username",
+											"value": "nisi consequat deserunt officia",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "2c5f38e0-53c3-425c-9b62-e12479b3e780",
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/users/:username",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												":username"
+											],
+											"variable": [
+												{
+													"key": "username",
+													"value": "nisi consequat deserunt officia",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "{{baseUrl}}/api/v1/users/profile",
+							"id": "c08a9e9e-de47-435b-bddf-71ee1ed58a36",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"elit\",\n  \"firstName\": \"ex consequat\",\n  \"lastName\": \"velit cillum labore ut\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/users/profile",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"profile"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "f8aeaddf-41c1-4cf9-a5d9-0bd67913ca86",
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"username\": \"elit\",\n  \"firstName\": \"ex consequat\",\n  \"lastName\": \"velit cillum labore ut\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/users/profile",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"profile"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "{{baseUrl}}/api/v1/users/me",
+							"id": "b1f1a0d5-24c1-4aca-bdf0-e0d1ca18a41a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/users/me",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"me"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "a3871e95-9107-489d-81d8-88498826a2b2",
+									"name": "Returns the logged-in user.",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/users/me",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"users",
+												"me"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"proident mini\",\n  \"username\": \"consequat sed irure\",\n  \"firstName\": \"sint ea et sed\",\n  \"lastName\": \"in\"\n}"
+								}
+							]
+						}
+					],
+					"id": "9b8590e2-1428-4e08-9d95-3aff7f1e1724"
+				},
+				{
+					"name": "lists",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "{{baseUrl}}/api/v1/lists/:id",
+									"id": "66c7c6db-cd37-47ca-a958-cc34bdae9bc2",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/lists/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"lists",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "-16461702.158869013",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "d633345b-6036-476a-bc8d-6bf4a564d728",
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/lists/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"lists",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "-16461702.158869013",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "{{baseUrl}}/api/v1/lists/:id",
+									"id": "123cfc7d-6904-468e-80ce-bfc3fefcec39",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/lists/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"lists",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "nisi consequat deserunt officia",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "3f290220-8659-4965-b746-4d483f245ee4",
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/lists/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"lists",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "nisi consequat deserunt officia",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "{{baseUrl}}/api/v1/lists/:id",
+									"id": "aff27d39-4a07-40f7-971d-f8e0ef9e6a9b",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/lists/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"lists",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "nisi consequat deserunt officia",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "1e8fc72b-70d7-4cd0-bc90-ea28ea5ec589",
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/lists/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"lists",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "nisi consequat deserunt officia",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							],
+							"id": "916fdaf3-f9f8-49ff-af9f-4221c78e9fab"
+						},
+						{
+							"name": "{{baseUrl}}/api/v1/lists",
+							"id": "0540dc8d-63da-4613-8078-8e4fce688f89",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"ipsum sed deserunt laboris elit\",\n  \"description\": \"dolor\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/lists",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"lists"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "402ad0cc-4ad6-4316-8461-a630675f1360",
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"title\": \"ipsum sed deserunt laboris elit\",\n  \"description\": \"dolor\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/lists",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"lists"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "{{baseUrl}}/api/v1/lists",
+							"id": "c12f5531-aa73-444f-ad3c-193526605070",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/lists",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"lists"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "9a5d784d-4978-483c-9463-5ba354f9d10f",
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/lists",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"lists"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					],
+					"id": "27220612-701a-408d-bad8-5efa68505488"
+				},
+				{
+					"name": "auth",
+					"item": [
+						{
+							"name": "{{baseUrl}}/api/v1/auth/login",
+							"id": "6124b9a3-bc65-4186-9c95-5512b1a64206",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"ut reprehenderit\",\n  \"password\": \"sunt exercitation\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "a9e199d6-9d5d-4ecb-bf32-10b3ca070345",
+									"name": "User has been logged in.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"username\": \"ut reprehenderit\",\n  \"password\": \"sunt exercitation\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/auth/login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"user\": {\n    \"id\": \"est adipisicing eu proident labore\",\n    \"username\": \"deserunt Ut do\",\n    \"firstName\": \"dolor sint\",\n    \"lastName\": \"ad nisi cupidatat\"\n  },\n  \"accessToken\": \"nisi\",\n  \"refreshToken\": \"in elit\"\n}"
+								}
+							]
+						},
+						{
+							"name": "{{baseUrl}}/api/v1/auth/refresh",
+							"id": "da5d65bc-151f-4e24-a39a-804644f5188a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"refreshToken\": \"in\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/auth/refresh",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"refresh"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "546108c3-73ec-45e9-a18c-a2bc6e2b12b6",
+									"name": "Generates a new access token.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"refreshToken\": \"in\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/auth/refresh",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"auth",
+												"refresh"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"user\": {\n    \"id\": \"velit elit pariatur\",\n    \"username\": \"amet nostrud sint exercitation\",\n    \"firstName\": \"magna proident Ut laborum tempor\",\n    \"lastName\": \"Ut enim\"\n  },\n  \"accessToken\": \"laborum officia\"\n}"
+								}
+							]
+						},
+						{
+							"name": "{{baseUrl}}/api/v1/auth/register",
+							"id": "da0483ff-8e90-46c3-af46-db807e57ce4b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"ut reprehenderit\",\n  \"password\": \"sunt exercitation\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/auth/register",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "a79bacf0-a4c1-4f29-a386-139bdb930fdc",
+									"name": "User has been registered.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"username\": \"ut reprehenderit\",\n  \"password\": \"sunt exercitation\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/auth/register",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"auth",
+												"register"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"user\": {\n    \"id\": \"est adipisicing eu proident labore\",\n    \"username\": \"deserunt Ut do\",\n    \"firstName\": \"dolor sint\",\n    \"lastName\": \"ad nisi cupidatat\"\n  },\n  \"accessToken\": \"nisi\",\n  \"refreshToken\": \"in elit\"\n}"
+								}
+							]
+						}
+					],
+					"id": "308ae50d-dc72-4419-9e1b-68cba1829572"
+				},
+				{
+					"name": "todos",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "{{baseUrl}}/api/v1/todos/:id",
+									"id": "1a0f7a14-5626-42d9-8a42-758e9f29d1c7",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/todos/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"todos",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "-16461702.158869013",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "2e44a9bb-f519-4dd0-bf3c-5e0b115e810f",
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/todos/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"todos",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "-16461702.158869013",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "{{baseUrl}}/api/v1/todos/:id",
+									"id": "2f1420af-89f4-4559-b232-526b7fe96e62",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/todos/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"todos",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "nisi consequat deserunt officia",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "8ea9d2da-f017-4dbf-8856-86ff6e2f9d36",
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/todos/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"todos",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "nisi consequat deserunt officia",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "{{baseUrl}}/api/v1/todos/:id",
+									"id": "22b07df4-75a4-4369-baeb-6a05df119302",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/todos/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"todos",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "nisi consequat deserunt officia",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "67288e09-c0c5-40fa-8a2e-39995302f0be",
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v1/todos/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v1",
+														"todos",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "nisi consequat deserunt officia",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							],
+							"id": "b89a3f97-3771-47d6-9418-784feb7446d6"
+						},
+						{
+							"name": "{{baseUrl}}/api/v1/todos",
+							"id": "0c296185-91ce-4498-8496-5571cd512cc5",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"ipsum sed deserunt laboris elit\",\n  \"description\": \"dolor\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/todos",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"todos"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "188fa08a-aa2f-4ad9-96dd-948aaefe2f67",
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"title\": \"ipsum sed deserunt laboris elit\",\n  \"description\": \"dolor\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/todos",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"todos"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "{{baseUrl}}/api/v1/todos",
+							"id": "815f3d63-3553-493e-bfc7-5d77a6913114",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/todos",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"todos"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "bf9a38eb-7585-402f-a52c-37752544ba32",
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/todos",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"todos"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					],
+					"id": "e477001c-ac06-4f41-b737-d7fcc2266e3a"
+				},
+				{
+					"name": "{{baseUrl}}/api/v1",
+					"id": "6c5f7651-1177-405f-b005-51a0a16fbd3b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "a8d069e5-d744-44f5-88f0-f85983041dbe",
+							"name": "Untitled Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/v1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"id": "a47a9d01-a270-4b2d-9db7-c178a7d67f6c"
+		}
+	],
+	"variable": [
+		{
+			"id": "864fbad1-a8b9-454a-9725-a976974357c3",
+			"key": "baseUrl",
+			"value": "/",
+			"type": "string"
+		}
+	]
+}
