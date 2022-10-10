@@ -3,12 +3,15 @@ id = 74f434b6-fbf4-4105-935b-4cca28cbdffb
 [relations]
 
 [relations.collections]
-rootDirectory = postman/collections
+rootDirectory = api/src/config/collections
+files[] = {"id":"19056148-83ba66a2-3d8b-4daa-9ccf-433606a134ca","path":"Domicile.json","metaData":{}}
 
 [relations.collections.metaData]
 
 [relations.apiDefinition]
-rootDirectory = postman/schemas
+rootDirectory = api/src/config/schemas
+files[] = {"path":"openapi-spec.json","metaData":{}}
 
 [relations.apiDefinition.metaData]
 type = openapi:3
+rootFiles[] = openapi-spec.json

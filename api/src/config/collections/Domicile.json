@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "81f5e62b-d2ff-4872-b4bc-0df616635119",
+		"_postman_id": "83ba66a2-3d8b-4daa-9ccf-433606a134ca",
 		"name": "Domicile",
 		"description": "An application to help those with executive dysfunction manage household tasks, inventories, and life.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_uid": "19056148-81f5e62b-d2ff-4872-b4bc-0df616635119"
+		"_uid": "19056148-83ba66a2-3d8b-4daa-9ccf-433606a134ca"
 	},
 	"item": [
 		{
@@ -15,7 +15,7 @@
 					"item": [
 						{
 							"name": "{{baseUrl}}/api/v1/users",
-							"id": "97947d52-89eb-4ad2-baf7-26b00f8d879b",
+							"id": "f52a5e47-ae54-4849-be29-bccc90067ba7",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -36,7 +36,7 @@
 							},
 							"response": [
 								{
-									"id": "ec6d018a-a6fe-4044-9c2e-ccf875ace655",
+									"id": "42fd5cb3-082a-42fd-83cf-a3a95516aeb0",
 									"name": "Untitled Example",
 									"originalRequest": {
 										"method": "GET",
@@ -56,6 +56,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "text",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -69,7 +70,7 @@
 						},
 						{
 							"name": "{{baseUrl}}/api/v1/users/:username",
-							"id": "cd0ba0b3-6ece-463e-b009-5d226c64dc74",
+							"id": "82f532f2-4501-452a-bd7d-a092a9b50213",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -98,7 +99,7 @@
 							},
 							"response": [
 								{
-									"id": "2c5f38e0-53c3-425c-9b62-e12479b3e780",
+									"id": "6b419043-0ffe-42c2-93c6-50c2dc11a630",
 									"name": "Untitled Example",
 									"originalRequest": {
 										"method": "GET",
@@ -126,6 +127,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "text",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -139,7 +141,7 @@
 						},
 						{
 							"name": "{{baseUrl}}/api/v1/users/profile",
-							"id": "c08a9e9e-de47-435b-bddf-71ee1ed58a36",
+							"id": "db5ae188-7622-44ee-9f2a-2da6cb2d4691",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -175,7 +177,7 @@
 							},
 							"response": [
 								{
-									"id": "f8aeaddf-41c1-4cf9-a5d9-0bd67913ca86",
+									"id": "19081838-aa61-457a-a058-b833ead7b8bc",
 									"name": "Untitled Example",
 									"originalRequest": {
 										"method": "PUT",
@@ -205,6 +207,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "text",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -218,7 +221,7 @@
 						},
 						{
 							"name": "{{baseUrl}}/api/v1/users/me",
-							"id": "b1f1a0d5-24c1-4aca-bdf0-e0d1ca18a41a",
+							"id": "3f0ff1c0-bb73-447b-b4fa-b356d914e7d7",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -245,7 +248,7 @@
 							},
 							"response": [
 								{
-									"id": "a3871e95-9107-489d-81d8-88498826a2b2",
+									"id": "0b9b8417-597c-4990-95cc-2c18a2a9d236",
 									"name": "Returns the logged-in user.",
 									"originalRequest": {
 										"method": "GET",
@@ -266,6 +269,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -278,7 +282,7 @@
 							]
 						}
 					],
-					"id": "9b8590e2-1428-4e08-9d95-3aff7f1e1724"
+					"id": "2d114086-e453-4b08-a7b5-cacb44bbea31"
 				},
 				{
 					"name": "lists",
@@ -288,7 +292,7 @@
 							"item": [
 								{
 									"name": "{{baseUrl}}/api/v1/lists/:id",
-									"id": "66c7c6db-cd37-47ca-a958-cc34bdae9bc2",
+									"id": "caf98405-ec9f-4846-ad71-6f0b2e6af569",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -317,7 +321,7 @@
 									},
 									"response": [
 										{
-											"id": "d633345b-6036-476a-bc8d-6bf4a564d728",
+											"id": "3d036abc-cc12-4c30-b7d4-bd3bd0e9d955",
 											"name": "Untitled Example",
 											"originalRequest": {
 												"method": "GET",
@@ -345,6 +349,7 @@
 											"status": "OK",
 											"code": 200,
 											"_postman_previewlanguage": "text",
+											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -358,7 +363,7 @@
 								},
 								{
 									"name": "{{baseUrl}}/api/v1/lists/:id",
-									"id": "123cfc7d-6904-468e-80ce-bfc3fefcec39",
+									"id": "1bf1db3f-b642-4aaf-b9d3-0299906a0d87",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -401,7 +406,7 @@
 									},
 									"response": [
 										{
-											"id": "3f290220-8659-4965-b746-4d483f245ee4",
+											"id": "2df71510-6b48-4600-a73a-19f3b8e7cec5",
 											"name": "Untitled Example",
 											"originalRequest": {
 												"method": "PUT",
@@ -438,6 +443,7 @@
 											"status": "OK",
 											"code": 200,
 											"_postman_previewlanguage": "text",
+											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -451,7 +457,7 @@
 								},
 								{
 									"name": "{{baseUrl}}/api/v1/lists/:id",
-									"id": "aff27d39-4a07-40f7-971d-f8e0ef9e6a9b",
+									"id": "30f3aa6e-2295-4ed2-bf27-301b3b320245",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -480,7 +486,7 @@
 									},
 									"response": [
 										{
-											"id": "1e8fc72b-70d7-4cd0-bc90-ea28ea5ec589",
+											"id": "fa0897c2-6950-466e-ae16-e74b97201ca2",
 											"name": "Untitled Example",
 											"originalRequest": {
 												"method": "DELETE",
@@ -508,6 +514,7 @@
 											"status": "OK",
 											"code": 200,
 											"_postman_previewlanguage": "text",
+											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -520,11 +527,11 @@
 									]
 								}
 							],
-							"id": "916fdaf3-f9f8-49ff-af9f-4221c78e9fab"
+							"id": "4cebd7c1-11e0-465d-aebd-13d5e6356aa6"
 						},
 						{
 							"name": "{{baseUrl}}/api/v1/lists",
-							"id": "0540dc8d-63da-4613-8078-8e4fce688f89",
+							"id": "269606f1-3289-48d6-b39d-c1dcd74b1507",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -559,7 +566,7 @@
 							},
 							"response": [
 								{
-									"id": "402ad0cc-4ad6-4316-8461-a630675f1360",
+									"id": "e5cf414d-cf63-428c-befa-d93bf198bfda",
 									"name": "Untitled Example",
 									"originalRequest": {
 										"method": "POST",
@@ -588,6 +595,7 @@
 									"status": "Created",
 									"code": 201,
 									"_postman_previewlanguage": "text",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -601,7 +609,7 @@
 						},
 						{
 							"name": "{{baseUrl}}/api/v1/lists",
-							"id": "c12f5531-aa73-444f-ad3c-193526605070",
+							"id": "d3e289ee-e91d-445b-b23b-ce3d77926368",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -622,7 +630,7 @@
 							},
 							"response": [
 								{
-									"id": "9a5d784d-4978-483c-9463-5ba354f9d10f",
+									"id": "3cdbd808-de36-421b-a26d-028314c9035d",
 									"name": "Untitled Example",
 									"originalRequest": {
 										"method": "GET",
@@ -642,6 +650,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "text",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -654,14 +663,14 @@
 							]
 						}
 					],
-					"id": "27220612-701a-408d-bad8-5efa68505488"
+					"id": "2139816b-00cb-42fc-9067-f10d5ddd4882"
 				},
 				{
 					"name": "auth",
 					"item": [
 						{
 							"name": "{{baseUrl}}/api/v1/auth/login",
-							"id": "6124b9a3-bc65-4186-9c95-5512b1a64206",
+							"id": "659022a5-c6fd-477e-a69c-d0444f2d7721",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -701,7 +710,7 @@
 							},
 							"response": [
 								{
-									"id": "a9e199d6-9d5d-4ecb-bf32-10b3ca070345",
+									"id": "a7eca6b5-d083-4ec4-894e-4b3021a95435",
 									"name": "User has been logged in.",
 									"originalRequest": {
 										"method": "POST",
@@ -731,6 +740,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -744,7 +754,7 @@
 						},
 						{
 							"name": "{{baseUrl}}/api/v1/auth/refresh",
-							"id": "da5d65bc-151f-4e24-a39a-804644f5188a",
+							"id": "f4785bc8-cab8-4937-b315-44f8c4155de7",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -784,7 +794,7 @@
 							},
 							"response": [
 								{
-									"id": "546108c3-73ec-45e9-a18c-a2bc6e2b12b6",
+									"id": "df050cf0-822d-4488-87b9-c35febb5804e",
 									"name": "Generates a new access token.",
 									"originalRequest": {
 										"method": "POST",
@@ -814,6 +824,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -827,7 +838,7 @@
 						},
 						{
 							"name": "{{baseUrl}}/api/v1/auth/register",
-							"id": "da0483ff-8e90-46c3-af46-db807e57ce4b",
+							"id": "8414160f-64a7-45c3-88fd-0b0b49a21684",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -867,7 +878,7 @@
 							},
 							"response": [
 								{
-									"id": "a79bacf0-a4c1-4f29-a386-139bdb930fdc",
+									"id": "d2a2a829-dd9f-4eb6-a2d6-a3cec2db269a",
 									"name": "User has been registered.",
 									"originalRequest": {
 										"method": "POST",
@@ -897,6 +908,7 @@
 									"status": "Created",
 									"code": 201,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -909,7 +921,7 @@
 							]
 						}
 					],
-					"id": "308ae50d-dc72-4419-9e1b-68cba1829572"
+					"id": "5480957b-3a01-4af9-9e33-a61323d52cc1"
 				},
 				{
 					"name": "todos",
@@ -919,7 +931,7 @@
 							"item": [
 								{
 									"name": "{{baseUrl}}/api/v1/todos/:id",
-									"id": "1a0f7a14-5626-42d9-8a42-758e9f29d1c7",
+									"id": "ef420ba9-b05a-4321-944b-5a0752edfb28",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -948,7 +960,7 @@
 									},
 									"response": [
 										{
-											"id": "2e44a9bb-f519-4dd0-bf3c-5e0b115e810f",
+											"id": "9c3b31b6-a244-4385-baa7-17f78b0de493",
 											"name": "Untitled Example",
 											"originalRequest": {
 												"method": "GET",
@@ -976,6 +988,7 @@
 											"status": "OK",
 											"code": 200,
 											"_postman_previewlanguage": "text",
+											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -989,7 +1002,7 @@
 								},
 								{
 									"name": "{{baseUrl}}/api/v1/todos/:id",
-									"id": "2f1420af-89f4-4559-b232-526b7fe96e62",
+									"id": "291abdce-3762-4ea8-9d41-2cdac074e4ea",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -1032,7 +1045,7 @@
 									},
 									"response": [
 										{
-											"id": "8ea9d2da-f017-4dbf-8856-86ff6e2f9d36",
+											"id": "ec636aa9-388f-4e97-b1c0-4ce1366a4b34",
 											"name": "Untitled Example",
 											"originalRequest": {
 												"method": "PUT",
@@ -1069,6 +1082,7 @@
 											"status": "OK",
 											"code": 200,
 											"_postman_previewlanguage": "text",
+											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -1082,7 +1096,7 @@
 								},
 								{
 									"name": "{{baseUrl}}/api/v1/todos/:id",
-									"id": "22b07df4-75a4-4369-baeb-6a05df119302",
+									"id": "3e3f4e4b-39a1-45de-8e7a-f6dbe3c1612c",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -1111,7 +1125,7 @@
 									},
 									"response": [
 										{
-											"id": "67288e09-c0c5-40fa-8a2e-39995302f0be",
+											"id": "f22eec7c-147f-4c51-b29c-43b6b1f5bbc0",
 											"name": "Untitled Example",
 											"originalRequest": {
 												"method": "DELETE",
@@ -1139,6 +1153,7 @@
 											"status": "OK",
 											"code": 200,
 											"_postman_previewlanguage": "text",
+											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -1151,11 +1166,11 @@
 									]
 								}
 							],
-							"id": "b89a3f97-3771-47d6-9418-784feb7446d6"
+							"id": "d3b613e3-1ba2-4fc3-985a-bc702f2fcf3a"
 						},
 						{
 							"name": "{{baseUrl}}/api/v1/todos",
-							"id": "0c296185-91ce-4498-8496-5571cd512cc5",
+							"id": "1329e989-df42-474b-9901-d13bda1e2f01",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1190,7 +1205,7 @@
 							},
 							"response": [
 								{
-									"id": "188fa08a-aa2f-4ad9-96dd-948aaefe2f67",
+									"id": "235dd091-826e-4f02-a8d3-e4ddb5fc525a",
 									"name": "Untitled Example",
 									"originalRequest": {
 										"method": "POST",
@@ -1219,6 +1234,7 @@
 									"status": "Created",
 									"code": 201,
 									"_postman_previewlanguage": "text",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -1232,7 +1248,7 @@
 						},
 						{
 							"name": "{{baseUrl}}/api/v1/todos",
-							"id": "815f3d63-3553-493e-bfc7-5d77a6913114",
+							"id": "74e07914-f344-47a9-8629-306fb354c928",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -1253,7 +1269,7 @@
 							},
 							"response": [
 								{
-									"id": "bf9a38eb-7585-402f-a52c-37752544ba32",
+									"id": "bc1f3a5c-9409-438f-a883-b4cda2200865",
 									"name": "Untitled Example",
 									"originalRequest": {
 										"method": "GET",
@@ -1273,6 +1289,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "text",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -1285,11 +1302,11 @@
 							]
 						}
 					],
-					"id": "e477001c-ac06-4f41-b737-d7fcc2266e3a"
+					"id": "2e900c54-ed84-4996-a499-edb3796db7de"
 				},
 				{
 					"name": "{{baseUrl}}/api/v1",
-					"id": "6c5f7651-1177-405f-b005-51a0a16fbd3b",
+					"id": "ea602570-43a1-46b7-a18c-9f8c3cb2242c",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1309,7 +1326,7 @@
 					},
 					"response": [
 						{
-							"id": "a8d069e5-d744-44f5-88f0-f85983041dbe",
+							"id": "2058cd43-8ee9-4336-be19-2f3301f014e9",
 							"name": "Untitled Example",
 							"originalRequest": {
 								"method": "GET",
@@ -1328,6 +1345,7 @@
 							"status": "OK",
 							"code": 200,
 							"_postman_previewlanguage": "text",
+							"_postman_previewtype": "html",
 							"header": [
 								{
 									"key": "Content-Type",
@@ -1340,7 +1358,7 @@
 					]
 				}
 			],
-			"id": "a47a9d01-a270-4b2d-9db7-c178a7d67f6c"
+			"id": "edca047a-d177-4738-a43d-831a0f48262e"
 		}
 	],
 	"variable": [
