@@ -9,10 +9,10 @@ on:
 jobs:
   create-pr:
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
       - uses: google-github-actions/release-please-action@v3
         id: release
         with:
           command: manifest
-          # token: ${{secrets.TOKEN}}
           default-branch: dev
