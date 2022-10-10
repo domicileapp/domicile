@@ -90,7 +90,7 @@
 									"variable": [
 										{
 											"key": "username",
-											"value": "mollit anim consequat ex sint",
+											"value": "patrick",
 											"description": "(Required) "
 										}
 									]
@@ -661,11 +661,27 @@
 					"item": [
 						{
 							"name": "Auth Controller login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "fb2765c6-90a8-4787-8779-30d0c7e249e1",
+										"exec": [
+											"const res = pm.response.json()",
+											"pm.collectionVariables.set('token', res.accessToken)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
 							"id": "4d846d40-50e9-4e19-9a16-dc7636e43742",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
 							"request": {
+								"auth": {
+									"type": "noauth"
+								},
 								"method": "POST",
 								"header": [
 									{
@@ -678,8 +694,19 @@
 									}
 								],
 								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"username\": \"pariatur reprehenderit\",\n  \"password\": \"id eiusmod nulla labore\"\n}",
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "patrick",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "P@ssw0rd",
+											"type": "text"
+										}
+									],
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1343,12 +1370,42 @@
 			"id": "0b44a5b7-0b87-4f51-9afc-b7e2c72d1b42"
 		}
 	],
+	"auth": {
+		"type": "bearer"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "aeb9c477-66f8-4d7c-ba58-e7c6fa6f8b2f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "e0b75e9d-76e2-491d-a12c-fa8809b2799d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
 	"variable": [
 		{
-			"id": "4be4c670-9009-4e15-a61b-5eb3e8df1322",
+			"id": "f58d8ddd-fc33-4cd2-9221-693c4dffddd8",
 			"key": "baseUrl",
-			"value": "/",
+			"value": "http://localhost:3000",
 			"type": "string"
+		},
+		{
+			"id": "ceb9bbc8-3868-4aa7-b9c8-4b3ba081322c",
+			"key": "token",
+			"value": ""
 		}
 	]
 }
