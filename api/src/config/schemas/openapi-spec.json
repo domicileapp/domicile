@@ -20,7 +20,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "users"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/users/{username}": {
@@ -38,9 +46,24 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "The found user record",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserDto"
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "tags": [
+                    "users"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/users/profile": {
@@ -59,18 +82,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/api/v1/users/me": {
-            "get": {
-                "operationId": "UsersController_getProfile",
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "description": "Returns the logged-in user.",
+                        "description": "The found user record",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -79,7 +91,41 @@
                             }
                         }
                     }
-                }
+                },
+                "tags": [
+                    "users"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/users/me": {
+            "get": {
+                "operationId": "UsersController_getProfile",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Returns the logged in user.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "users"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/lists": {
@@ -203,7 +249,10 @@
                             }
                         }
                     }
-                }
+                },
+                "tags": [
+                    "auth"
+                ]
             }
         },
         "/api/v1/auth/refresh": {
@@ -231,7 +280,10 @@
                             }
                         }
                     }
-                }
+                },
+                "tags": [
+                    "auth"
+                ]
             }
         },
         "/api/v1/auth/register": {
@@ -259,12 +311,16 @@
                             }
                         }
                     }
-                }
+                },
+                "tags": [
+                    "auth"
+                ]
             }
         },
         "/api/v1/todos": {
             "post": {
                 "operationId": "TodosController_create",
+                "summary": "Create todo",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
@@ -280,7 +336,15 @@
                     "201": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "todos"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "get": {
                 "operationId": "TodosController_findAll",
@@ -289,7 +353,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "todos"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/todos/{id}": {
@@ -307,9 +379,24 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "The found todo record",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Todo"
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "tags": [
+                    "todos"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "put": {
                 "operationId": "TodosController_update",
@@ -337,7 +424,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "todos"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "delete": {
                 "operationId": "TodosController_remove",
@@ -355,7 +450,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "todos"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         }
     },
@@ -376,25 +479,6 @@
             }
         },
         "schemas": {
-            "UpdateProfileDto": {
-                "type": "object",
-                "properties": {
-                    "username": {
-                        "type": "string"
-                    },
-                    "firstName": {
-                        "type": "string"
-                    },
-                    "lastName": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "username",
-                    "firstName",
-                    "lastName"
-                ]
-            },
             "UserDto": {
                 "type": "object",
                 "properties": {
@@ -413,6 +497,25 @@
                 },
                 "required": [
                     "id",
+                    "username",
+                    "firstName",
+                    "lastName"
+                ]
+            },
+            "UpdateProfileDto": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    }
+                },
+                "required": [
                     "username",
                     "firstName",
                     "lastName"
@@ -544,6 +647,81 @@
                 "required": [
                     "title",
                     "description"
+                ]
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "example": "patrick",
+                        "description": "Username. Alphanumeric, 2-24 characters."
+                    },
+                    "firstName": {
+                        "type": "string",
+                        "example": "John",
+                        "description": "User's first name"
+                    },
+                    "lastName": {
+                        "type": "string",
+                        "example": "Smith",
+                        "description": "User's last name"
+                    },
+                    "lists": {
+                        "type": "object",
+                        "description": "Lists created by user."
+                    },
+                    "refreshTokens": {
+                        "type": "object"
+                    }
+                },
+                "required": [
+                    "username",
+                    "firstName",
+                    "lastName",
+                    "lists",
+                    "refreshTokens"
+                ]
+            },
+            "List": {
+                "type": "object",
+                "properties": {}
+            },
+            "Todo": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "Clean out the fridge",
+                        "description": "Title of the todo"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Be sure to remove all the shelving and scrub it.",
+                        "description": "Optional. Description of the todo"
+                    },
+                    "createdBy": {
+                        "description": "User. Creator of the todo.",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        ]
+                    },
+                    "list": {
+                        "description": "List the todo belongs to.",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/List"
+                            }
+                        ]
+                    }
+                },
+                "required": [
+                    "title",
+                    "description",
+                    "createdBy",
+                    "list"
                 ]
             },
             "UpdateTodoDto": {

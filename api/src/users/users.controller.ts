@@ -1,5 +1,10 @@
 import { Body, Controller, Get, Param, Put, UseGuards } from '@nestjs/common'
-import { ApiOkResponse } from '@nestjs/swagger'
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger'
 import { CurrentUser } from 'src/auth/decorator/current-user.decorator'
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard'
 import { UpdateProfileDto } from './dto/update-profile.dto'
@@ -8,6 +13,9 @@ import { User } from './user.entity'
 import { UsersService } from './users.service'
 
 @Controller('users')
+@ApiTags('users')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -18,13 +26,21 @@ export class UsersController {
   }
 
   @Get(':username')
+  @ApiResponse({
+    status: 200,
+    description: 'The found user record',
+    type: UserDto,
+  })
   async findOne(@Param('username') username: string) {
     const user = await this.usersService.findOne({ username })
     return user && new UserDto(user)
   }
 
-  @UseGuards(JwtAuthGuard)
   @Put('profile')
+  @ApiOkResponse({
+    description: 'The found user record',
+    type: UserDto,
+  })
   async update(
     @CurrentUser() user: User,
     @Body() updateUserDto: UpdateProfileDto,
@@ -33,10 +49,9 @@ export class UsersController {
     return res && new UserDto(res)
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('me')
   @ApiOkResponse({
-    description: 'Returns the logged-in user.',
+    description: 'Returns the logged in user.',
     type: UserDto,
   })
   getProfile(@CurrentUser() user: User) {
