@@ -398,6 +398,11 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
+"@faker-js/faker@7.5.0":
+  version "7.5.0"
+  resolved "https://registry.yarnpkg.com/@faker-js/faker/-/faker-7.5.0.tgz#8e8265f65f5b68d2a57886d59b03788eeb676264"
+  integrity sha512-8wNUCCUHvfvI0gQpDUho/3gPzABffnCn5um65F8dzQ86zz6dlt4+nmAA7PQUc8L+eH+9RgR/qzy5N/8kN0Ozdw==
+
 "@graphql-tools/merge@8.3.6":
   version "8.3.6"
   resolved "https://registry.yarnpkg.com/@graphql-tools/merge/-/merge-8.3.6.tgz#97a936d4c8e8f935e58a514bb516c476437b5b2c"
@@ -803,6 +808,15 @@
   dependencies:
     globby "11.0.4"
     ts-morph "16.0.0"
+
+"@mikro-orm/seeder@^5.4.2":
+  version "5.4.2"
+  resolved "https://registry.yarnpkg.com/@mikro-orm/seeder/-/seeder-5.4.2.tgz#1c33896e7dc02d76f92dce6fb40f2fd10910cca1"
+  integrity sha512-5tiRsjlrOAEL0GHfLiM4wqzNp4wa0VKnE0RTTmecNE1311HDgQK6pvrz7KpbEh4dW6VAL/Xbe+KO7JVSsYzuJA==
+  dependencies:
+    "@faker-js/faker" "7.5.0"
+    fs-extra "10.1.0"
+    globby "11.0.4"
 
 "@mikro-orm/sql-highlighter@^1.0.1":
   version "1.0.1"

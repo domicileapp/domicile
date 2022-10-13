@@ -7,9 +7,8 @@ import {
   Unique,
 } from '@mikro-orm/core'
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger'
-import { Exclude } from 'class-transformer'
 import { RefreshToken } from '../auth/entities/refresh-token.entity'
-import { BaseEntity } from '../database/entities/base-entity.entity'
+import { BaseEntity } from '../common/entities/base-entity.entity'
 import { List } from '../lists/list.entity'
 
 @Entity({ tableName: 'users' })
@@ -22,8 +21,7 @@ export class User extends BaseEntity {
   })
   username: string
 
-  @Property()
-  @Exclude()
+  @Property({ hidden: true, lazy: true })
   @ApiHideProperty()
   password: string
 

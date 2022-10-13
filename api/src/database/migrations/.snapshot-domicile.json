@@ -333,8 +333,8 @@
           "nullable": false,
           "mappedType": "integer"
         },
-        "todo_id": {
-          "name": "todo_id",
+        "list_id": {
+          "name": "list_id",
           "type": "int",
           "unsigned": false,
           "autoincrement": false,
@@ -370,10 +370,10 @@
           "referencedTableName": "public.users",
           "updateRule": "cascade"
         },
-        "todos_todo_id_foreign": {
-          "constraintName": "todos_todo_id_foreign",
+        "todos_list_id_foreign": {
+          "constraintName": "todos_list_id_foreign",
           "columnNames": [
-            "todo_id"
+            "list_id"
           ],
           "localTableName": "public.todos",
           "referencedColumnNames": [
