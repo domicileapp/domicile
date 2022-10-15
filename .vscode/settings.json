@@ -17,6 +17,7 @@
   "github.gitAuthentication": true,
   "conventionalCommits.scopes": [
     "infra",
-    "api"
+    "api",
+    "app"
   ]
 }
