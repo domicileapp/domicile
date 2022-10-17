@@ -8,6 +8,6 @@
   "author": "Patrick Black <info@patrickblackjr.com>",
   "license": "MIT",
   "devDependencies": {
-    "release-please": "^14.11.0"
+    "release-please": "^14.13.1"
   }
 }
