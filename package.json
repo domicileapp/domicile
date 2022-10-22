@@ -4,10 +4,12 @@
   "version": "0.2.0",
   "description": "An application to help those with executive dysfunction manage household tasks, inventories, and life.",
   "main": "index.js",
-  "repository": "https://github.com/patrickblackjr/domicile.git",
+  "repository": "https://github.com/domicileapp/domicile.git",
   "author": "Patrick Black <info@patrickblackjr.com>",
   "license": "MIT",
   "devDependencies": {
-    "release-please": "^14.11.0"
+    "release-please": "^14.11.0",
+    "weallbehave": "^1.2.0",
+    "weallcontribute": "^1.0.9"
   }
 }
