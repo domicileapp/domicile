@@ -1,15 +1,15 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar class="bg-indigo">
+      <q-toolbar class="bg-primary">
         <q-toolbar-title>
           <q-btn round flat ripple="false" icon="cottage" no-caps />
         </q-toolbar-title>
 
-        <q-btn flat no-caps class="text-weight-bold text-subtitle1"
+        <q-btn to="/" flat no-caps class="text-weight-bold text-subtitle1"
           >Dashboard</q-btn
         >
-        <q-btn flat no-caps class="text-weight-bold text-subtitle1"
+        <q-btn to="/tasks" flat no-caps class="text-weight-bold text-subtitle1"
           >Tasks</q-btn
         >
         <q-btn flat no-caps class="text-weight-bold text-subtitle1"

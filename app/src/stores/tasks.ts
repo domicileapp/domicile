@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const useCounterStore = defineStore('counter', {
+export const useTasksStore = defineStore('tasks', {
   state: () => ({
     counter: 0,
   }),

@@ -1,0 +1,28 @@
+version: '3.8'
+name: domicile
+services:
+  db:
+    image: postgres:alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=domicile
+      - POSTGRES_PASSWORD=P@ssw0rd
+      - POSTGRES_DB=domicile
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
+  redis:
+    image: redis:alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    volumes: 
+      - redis:/data
+
+volumes:
+  db:
+    driver: local
+  redis:
+    driver: local

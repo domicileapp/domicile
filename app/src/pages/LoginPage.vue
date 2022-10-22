@@ -1,14 +1,12 @@
 <template>
-  <q-page
-    class="home-page window-height row full-width content-center justify-center items-center"
-  >
+  <q-page class="home-page window-height row items-center justify-evenly">
     <div class="col-4">
       <q-card>
         <q-card-section class="text-center">
           <q-icon
             name="cottage"
             class="text-center"
-            color="blue-3"
+            color="indigo-3"
             size="8em"
           />
         </q-card-section>
