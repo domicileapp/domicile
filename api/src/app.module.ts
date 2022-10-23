@@ -13,7 +13,7 @@ import configuration from './config/configuration'
 import { UsersModule } from './users/users.module'
 import { ListsModule } from './lists/lists.module'
 import { MikroORM } from '@mikro-orm/core'
-import { TodosModule } from './todos/todos.module'
+import { TasksModule } from './tasks/tasks.module'
 
 @Module({
   imports: [
@@ -25,7 +25,7 @@ import { TodosModule } from './todos/todos.module'
     UsersModule,
     AuthModule,
     ListsModule,
-    TodosModule,
+    TasksModule,
   ],
   controllers: [AppController],
   providers: [AppService],

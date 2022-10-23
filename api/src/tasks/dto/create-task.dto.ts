@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsOptional, IsString } from 'class-validator'
 
-export class CreateTodoDto {
+export class CreateTaskDto {
   @ApiProperty()
   @IsString()
   readonly title: string

@@ -13,7 +13,7 @@ import { Server } from 'socket.io'
     origin: '*',
   },
 })
-export class TodosGateway {
+export class TasksGateway {
   @WebSocketServer()
   server: Server
 

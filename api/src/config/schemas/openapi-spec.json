@@ -317,17 +317,17 @@
                 ]
             }
         },
-        "/api/v1/todos": {
+        "/api/v1/tasks": {
             "post": {
-                "operationId": "TodosController_create",
-                "summary": "Create todo",
+                "operationId": "TasksController_create",
+                "summary": "Create task",
                 "parameters": [],
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/CreateTodoDto"
+                                "$ref": "#/components/schemas/CreateTaskDto"
                             }
                         }
                     }
@@ -338,7 +338,7 @@
                     }
                 },
                 "tags": [
-                    "todos"
+                    "tasks"
                 ],
                 "security": [
                     {
@@ -347,7 +347,7 @@
                 ]
             },
             "get": {
-                "operationId": "TodosController_findAll",
+                "operationId": "TasksController_findAll",
                 "parameters": [],
                 "responses": {
                     "200": {
@@ -355,7 +355,7 @@
                     }
                 },
                 "tags": [
-                    "todos"
+                    "tasks"
                 ],
                 "security": [
                     {
@@ -364,9 +364,9 @@
                 ]
             }
         },
-        "/api/v1/todos/{id}": {
+        "/api/v1/tasks/{id}": {
             "get": {
-                "operationId": "TodosController_findOne",
+                "operationId": "TasksController_findOne",
                 "parameters": [
                     {
                         "name": "id",
@@ -379,18 +379,18 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "The found todo record",
+                        "description": "The found task record",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Todo"
+                                    "$ref": "#/components/schemas/Task"
                                 }
                             }
                         }
                     }
                 },
                 "tags": [
-                    "todos"
+                    "tasks"
                 ],
                 "security": [
                     {
@@ -399,7 +399,7 @@
                 ]
             },
             "put": {
-                "operationId": "TodosController_update",
+                "operationId": "TasksController_update",
                 "parameters": [
                     {
                         "name": "id",
@@ -415,7 +415,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UpdateTodoDto"
+                                "$ref": "#/components/schemas/UpdateTaskDto"
                             }
                         }
                     }
@@ -426,7 +426,7 @@
                     }
                 },
                 "tags": [
-                    "todos"
+                    "tasks"
                 ],
                 "security": [
                     {
@@ -435,7 +435,7 @@
                 ]
             },
             "delete": {
-                "operationId": "TodosController_remove",
+                "operationId": "TasksController_remove",
                 "parameters": [
                     {
                         "name": "id",
@@ -452,7 +452,7 @@
                     }
                 },
                 "tags": [
-                    "todos"
+                    "tasks"
                 ],
                 "security": [
                     {
@@ -634,7 +634,7 @@
                     "refreshToken"
                 ]
             },
-            "CreateTodoDto": {
+            "CreateTaskDto": {
                 "type": "object",
                 "properties": {
                     "title": {
@@ -687,21 +687,21 @@
                 "type": "object",
                 "properties": {}
             },
-            "Todo": {
+            "Task": {
                 "type": "object",
                 "properties": {
                     "title": {
                         "type": "string",
                         "example": "Clean out the fridge",
-                        "description": "Title of the todo"
+                        "description": "Title of the task"
                     },
                     "description": {
                         "type": "string",
                         "example": "Be sure to remove all the shelving and scrub it.",
-                        "description": "Optional. Description of the todo"
+                        "description": "Optional. Description of the task"
                     },
                     "createdBy": {
-                        "description": "User. Creator of the todo.",
+                        "description": "User. Creator of the task.",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/User"
@@ -709,7 +709,7 @@
                         ]
                     },
                     "list": {
-                        "description": "List the todo belongs to.",
+                        "description": "List the task belongs to.",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/List"
@@ -724,7 +724,7 @@
                     "list"
                 ]
             },
-            "UpdateTodoDto": {
+            "UpdateTaskDto": {
                 "type": "object",
                 "properties": {}
             }

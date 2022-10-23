@@ -3,17 +3,17 @@
     <example-component
       title="Example component"
       active
-      :todos="todos"
+      :tasks="tasks"
       :meta="meta"
     ></example-component>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { Todo, Meta } from 'components/models'
+import { Task, Meta } from 'components/models'
 import { ref } from 'vue'
 
-const todos = ref<Todo[]>([
+const tasks = ref<Task[]>([
   {
     id: 1,
     content: 'ct1',

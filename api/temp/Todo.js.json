@@ -1,1 +1,110 @@
-{"data":{"propertyOrder":{},"properties":{"title":{"name":"title","reference":"scalar","getter":false,"setter":false,"type":"string"},"description":{"name":"description","reference":"scalar","nullable":true,"getter":false,"setter":false,"type":"string","optional":true},"createdBy":{"name":"createdBy","reference":"m:1","cascade":["persist"],"type":"User"},"list":{"name":"list","reference":"m:1","cascade":["persist"],"type":"List"}},"props":[{"name":"title","reference":"scalar","getter":false,"setter":false,"type":"string"},{"name":"description","reference":"scalar","nullable":true,"getter":false,"setter":false,"type":"string","optional":true},{"name":"createdBy","reference":"m:1","cascade":["persist"],"type":"User"},{"name":"list","reference":"m:1","cascade":["persist"],"type":"List"}],"primaryKeys":[],"filters":{},"hooks":{},"indexes":[],"uniques":[],"checks":[],"concurrencyCheckKeys":{},"className":"Todo","path":"./dist/src/todos/todo.entity.js","collection":"todos","name":"Todo","abstract":false,"constructorParams":[],"toJsonParams":[],"extends":"BaseEntity","useCache":true,"relations":[{"name":"createdBy","reference":"m:1","cascade":["persist"],"type":"User"},{"name":"list","reference":"m:1","cascade":["persist"],"type":"List"}]},"origin":"./dist/src/todos/todo.entity.js","hash":"ed3b7f71714c7e1da813b24bbdf41544","version":"5.4.2"}
+{
+  "data": {
+    "propertyOrder": {},
+    "properties": {
+      "title": {
+        "name": "title",
+        "reference": "scalar",
+        "getter": false,
+        "setter": false,
+        "type": "string"
+      },
+      "description": {
+        "name": "description",
+        "reference": "scalar",
+        "nullable": true,
+        "getter": false,
+        "setter": false,
+        "type": "string",
+        "optional": true
+      },
+      "createdBy": {
+        "name": "createdBy",
+        "reference": "m:1",
+        "cascade": [
+          "persist"
+        ],
+        "type": "User"
+      },
+      "list": {
+        "name": "list",
+        "reference": "m:1",
+        "cascade": [
+          "persist"
+        ],
+        "type": "List"
+      }
+    },
+    "props": [
+      {
+        "name": "title",
+        "reference": "scalar",
+        "getter": false,
+        "setter": false,
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "reference": "scalar",
+        "nullable": true,
+        "getter": false,
+        "setter": false,
+        "type": "string",
+        "optional": true
+      },
+      {
+        "name": "createdBy",
+        "reference": "m:1",
+        "cascade": [
+          "persist"
+        ],
+        "type": "User"
+      },
+      {
+        "name": "list",
+        "reference": "m:1",
+        "cascade": [
+          "persist"
+        ],
+        "type": "List"
+      }
+    ],
+    "primaryKeys": [],
+    "filters": {},
+    "hooks": {},
+    "indexes": [],
+    "uniques": [],
+    "checks": [],
+    "concurrencyCheckKeys": {},
+    "className": "Task",
+    "path": "./dist/src/todos/todo.entity.js",
+    "collection": "todos",
+    "name": "Task",
+    "abstract": false,
+    "constructorParams": [],
+    "toJsonParams": [],
+    "extends": "BaseEntity",
+    "useCache": true,
+    "relations": [
+      {
+        "name": "createdBy",
+        "reference": "m:1",
+        "cascade": [
+          "persist"
+        ],
+        "type": "User"
+      },
+      {
+        "name": "list",
+        "reference": "m:1",
+        "cascade": [
+          "persist"
+        ],
+        "type": "List"
+      }
+    ]
+  },
+  "origin": "./dist/src/todos/todo.entity.js",
+  "hash": "ed3b7f71714c7e1da813b24bbdf41544",
+  "version": "5.4.2"
+}
