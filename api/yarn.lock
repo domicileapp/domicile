@@ -800,10 +800,10 @@
     "@mikro-orm/knex" "~5.4.2"
     pg "8.8.0"
 
-"@mikro-orm/reflection@^5.4.2":
-  version "5.4.2"
-  resolved "https://registry.yarnpkg.com/@mikro-orm/reflection/-/reflection-5.4.2.tgz#667a801df485389d2bce210421e6ca5927ec3a30"
-  integrity sha512-5XcW4FD5hLe214pFUxd66WvbvULrz8dPpc5eJ1aF5tfkKMVmIJRxn9X0pnLf1pzYb36PiuZ/urA1neZfUz/mXw==
+"@mikro-orm/reflection@^5.5.0":
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/@mikro-orm/reflection/-/reflection-5.5.0.tgz#0d8a8bfd349d769174eb2ed624aca8ca9a1b8f6e"
+  integrity sha512-EPqW84Q7PfyGQW9QRgy8aejNmKrWHQQUzsEgMUyJVwuHNH49OGa9m3gsuOQqhfpdDRXAn5Ir3H0XeUWHAsYuYA==
   dependencies:
     globby "11.0.4"
     ts-morph "16.0.0"
