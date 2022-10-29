@@ -16,6 +16,6 @@ jobs:
       env:
         ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         TARGET_BRANCH: main
-        BUILD_SCRIPT: yarn && yarn docs:build
+        BUILD_SCRIPT: yarn && yarn build
         BUILD_DIR: docs/.vuepress/dist
         COMMIT_MESSAGE: "chore(docs): auto-deployment of documentation from GHA"
