@@ -15,7 +15,7 @@ jobs:
       uses: jenkey2011/vuepress-deploy@master
       env:
         ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        TARGET_BRANCH: main
+        TARGET_BRANCH: dev
         BUILD_SCRIPT: yarn && yarn build
         BUILD_DIR: docs/.vuepress/dist
         COMMIT_MESSAGE: "chore(docs): auto-deployment of documentation from GHA"
