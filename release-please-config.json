@@ -51,6 +51,11 @@
       "type": "json",
       "path": "app/package.json",
       "jsonpath": "$.version"
+    },
+    {
+      "type": "json",
+      "path": "docs/package.json",
+      "jsonpath": "$.version"
     }
   ],
   "pull-release-header": "Automated release PR",

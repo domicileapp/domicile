@@ -1,5 +1,5 @@
 {
-  "name": "Domicile",
+  "name": "domicile-docs",
   "version": "0.0.1",
   "description": "An application to help those with executive dysfunction manage household tasks, inventories, and life.",
   "main": "index.js",
