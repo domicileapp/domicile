@@ -21,7 +21,7 @@ export class User extends BaseEntity {
   })
   username: string
 
-  @Property({ hidden: true, lazy: true })
+  @Property()
   @ApiHideProperty()
   password: string
 

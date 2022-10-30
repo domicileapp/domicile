@@ -6,7 +6,9 @@ import fs from 'fs'
 import path from 'path'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create(AppModule, {
+    logger: ['error', 'warn', 'log', 'debug'],
+  })
   app.setGlobalPrefix('api/v1')
   app.useGlobalPipes(
     new ValidationPipe({
@@ -16,6 +18,8 @@ async function bootstrap() {
       transform: true,
     }),
   )
+
+  app.enableCors({ origin: '*' })
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Domicile')

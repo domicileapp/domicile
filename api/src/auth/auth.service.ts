@@ -1,6 +1,10 @@
 import { EntityRepository } from '@mikro-orm/core'
 import { InjectRepository } from '@mikro-orm/nestjs'
-import { Injectable, UnprocessableEntityException } from '@nestjs/common'
+import {
+  Injectable,
+  Logger,
+  UnprocessableEntityException,
+} from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import * as bcrypt from 'bcrypt'
 import { TokenExpiredError } from 'jsonwebtoken'
@@ -10,6 +14,7 @@ import { RefreshToken } from './entities/refresh-token.entity'
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name)
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
@@ -17,13 +22,21 @@ export class AuthService {
     private refreshTokenRepository: EntityRepository<RefreshToken>,
   ) {}
 
-  async validateUser(username: string, pass: string) {
-    const user = await this.usersService.findOne({ username })
+  async validateUser(username: string, plainTextPassword: string) {
+    /*
+     * @TODO: Update the users service to allow input of populate properties.
+     * This means we can set the password property on the entity back to hidden & lazy
+     * so it doesn't return the hashed password.
+     */
+    const user = await this.usersService.findOne({
+      username,
+    })
+    // this.logger.log(plainTextPassword, user.password)
+
     if (user) {
-      const { password, ...result } = user
-      const match = await bcrypt.compare(pass, password)
+      const match = await bcrypt.compare(plainTextPassword, user.password)
       if (match) {
-        return result
+        return user
       }
     }
     return null
