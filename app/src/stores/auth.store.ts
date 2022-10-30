@@ -12,12 +12,11 @@ export const useAuthStore = defineStore({
       const user = await api.post('/auth/login', { username, password })
       this.user = user.data
 
-      localStorage.setItem('user', JSON.stringify(user))
-      api.defaults.headers.common = {
-        Authorization: `Bearer ${user.data.accessToken}`,
-      }
-
-      this.router.push(this.returnUrl || '/')
+      localStorage.setItem('user', JSON.stringify(user.data))
+      ;(api.defaults.headers.common[
+        'Authorization'
+      ] = `Bearer ${this.user.accessToken}`),
+        this.router.push(this.returnUrl || '/')
     },
     logout() {
       this.user = null

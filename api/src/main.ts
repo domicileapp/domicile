@@ -19,7 +19,7 @@ async function bootstrap() {
     }),
   )
 
-  app.enableCors({ origin: '*' })
+  app.enableCors({ origin: 'http://localhost:9000' })
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Domicile')

@@ -50,6 +50,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useAuthStore } from 'src/stores/auth.store'
+import { api } from 'src/boot/axios'
 
 const authStore = useAuthStore()
 

@@ -1,6 +1,11 @@
 <template>
   <q-page class="column">
-    <div class="row q-pa-sm bg-primary">
+    <div v-if="!loading">
+      <div v-for="task in tasksStore.tasks" :key="task.id">
+        {{ task.title }}
+      </div>
+    </div>
+    <!-- <div class="row q-pa-sm bg-primary">
       <q-input
         v-model="newTask"
         @keyup.enter="addTask"
@@ -14,7 +19,7 @@
         </template>
       </q-input>
     </div>
-    <q-list class="bg-white" separator bordered>
+    <q-list class="bg-white" separator bordered v-if="tasks">
       <q-item
         v-for="(task, index) in tasks"
         :key="task.title"
@@ -40,8 +45,8 @@
           />
         </q-item-section>
       </q-item>
-    </q-list>
-    <div
+    </q-list> -->
+    <!-- <div
       v-if="!tasks.length"
       class="noTasks absolute-center"
       style="opacity: 0.5"
@@ -49,41 +54,22 @@
       <q-icon name="check" size="6em" color="primary" />
 
       <div class="text-primary text-h6 text-center">No tasks</div>
-    </div>
+    </div> -->
   </q-page>
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { useQuasar } from 'quasar'
-import { api } from 'src/boot/axios'
+import { useTasksStore } from 'src/stores/tasks.store'
 import { ref } from 'vue'
-
-const $q = useQuasar()
 const newTask = ref('')
-const tasks = ref([])
+const tasksStore = useTasksStore()
+const { tasks, loading } = storeToRefs(tasksStore.$state.tasks)
 
-api.get('/tasks').then((res) => {
-  tasks.value = res.data
-})
+// console.log(tasks.value)
 
-const deleteTask = (index) => {
-  $q.dialog({
-    title: 'Confirm',
-    message: 'Do You really want to delete this task?',
-    cancel: true,
-    persistent: true,
-  }).onOk(() => {
-    tasks.value.splice(index, 1)
-    $q.notify('Done! Task deleted!')
-  })
-}
-const addTask = () => {
-  tasks.value.push({
-    title: newTask,
-    done: false,
-  })
-  newTask.value = ''
-}
+tasksStore.getAllTasks()
 </script>
 
 <style lang="scss">
