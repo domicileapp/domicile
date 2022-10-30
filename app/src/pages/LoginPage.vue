@@ -35,10 +35,16 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useAuthStore } from 'src/stores/auth.store'
 
 const username = ref('')
 const password = ref('')
-const login = () => {
-  console.log('Login')
+const login = async () => {
+  try {
+    const authStore = useAuthStore()
+    return authStore.login(username.value, password.value)
+  } catch (error) {
+    console.error(`Error logging in: ${error}`)
+  }
 }
 </script>

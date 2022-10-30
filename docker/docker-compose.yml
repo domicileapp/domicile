@@ -7,11 +7,12 @@ services:
     environment:
       - POSTGRES_USER=domicile
       - POSTGRES_PASSWORD=P@ssw0rd
-      - POSTGRES_DB=domicile
     ports:
       - '5432:5432'
     volumes: 
       - db:/var/lib/postgresql/data
+    expose:
+      - 5432
   redis:
     image: redis:alpine
     restart: always

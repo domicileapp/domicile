@@ -1,12 +1,5 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :tasks="tasks"
-      :meta="meta"
-    ></example-component>
-  </q-page>
+  <q-page class="row items-center justify-evenly"> Dashboard </q-page>
 </template>
 
 <script setup lang="ts">
