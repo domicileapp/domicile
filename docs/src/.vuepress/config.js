@@ -27,7 +27,7 @@ module.exports = {
    * ref：https://v1.vuepress.vuejs.org/theme/default-theme-config.html
    */
   themeConfig: {
-    repo: 'https://github.com/domicileapp/domicile',
+    repo: 'domicileapp/domicile',
     editLinks: false,
     docsDir: '',
     editLinkText: '',
