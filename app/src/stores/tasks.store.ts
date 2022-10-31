@@ -14,13 +14,13 @@ export const useTasksStore = defineStore({
     async getAllTasks() {
       try {
         this.loading = true
-        const tasks = await api.get('/tasks', {
+        const tasksData = await api.get('/tasks', {
           headers: {
             Authorization: `Bearer ${authStore.user.accessToken}`,
           },
         })
-        this.tasks = tasks.data
-        console.log(tasks.data)
+        this.tasks = tasksData.data
+        console.log(tasksData.data)
         this.loading = false
       } catch (error) {
         console.error(error)

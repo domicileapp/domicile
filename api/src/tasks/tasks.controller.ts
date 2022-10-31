@@ -52,7 +52,7 @@ export class TasksController {
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
+  async update(@Param('id') id: number, @Body() updateTaskDto: UpdateTaskDto) {
     try {
       await this.tasksService.findOne({ id: +id })
       return this.tasksService.update(+id, updateTaskDto)

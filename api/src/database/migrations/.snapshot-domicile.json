@@ -144,6 +144,7 @@
           "autoincrement": false,
           "primary": false,
           "nullable": false,
+          "default": "false",
           "mappedType": "boolean"
         },
         "expires": {
@@ -341,6 +342,16 @@
           "primary": false,
           "nullable": false,
           "mappedType": "integer"
+        },
+        "complete": {
+          "name": "complete",
+          "type": "boolean",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "default": "false",
+          "mappedType": "boolean"
         }
       },
       "name": "tasks",

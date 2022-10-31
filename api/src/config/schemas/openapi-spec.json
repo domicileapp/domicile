@@ -406,7 +406,7 @@
                         "required": true,
                         "in": "path",
                         "schema": {
-                            "type": "string"
+                            "type": "number"
                         }
                     }
                 ],
@@ -715,13 +715,17 @@
                                 "$ref": "#/components/schemas/List"
                             }
                         ]
+                    },
+                    "complete": {
+                        "type": "boolean"
                     }
                 },
                 "required": [
                     "title",
                     "description",
                     "createdBy",
-                    "list"
+                    "list",
+                    "complete"
                 ]
             },
             "UpdateTaskDto": {

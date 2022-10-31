@@ -31,4 +31,8 @@ export class Task extends BaseEntity {
     description: 'List the task belongs to.',
   })
   list: List
+
+  @Property({ default: false })
+  @ApiProperty()
+  complete: boolean
 }
