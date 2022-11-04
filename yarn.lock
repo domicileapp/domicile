@@ -32,11 +32,11 @@
     unist-util-visit-parents "^3.1.1"
 
 "@google-automations/git-file-utils@^1.2.0":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@google-automations/git-file-utils/-/git-file-utils-1.2.1.tgz#023639bd871d630db3e67654b354b29c9c770b16"
-  integrity sha512-gI3YQg5tYHPEc1aeOuNoCSOQEptbRH7+vc2rxLaq5z854667ev4Mw19mCyi/fh5/DDzomKh3569SshD0dgtnDA==
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@google-automations/git-file-utils/-/git-file-utils-1.2.2.tgz#6a70803539923cfbda31a1f9ad5a264f630e2f99"
+  integrity sha512-UGZypVMDGFJjVCVHI5yqZsqZtaTJoYVyZJ9IJ1sF02Hh0QbDCJHPmPXUpKnPWt9NG51U4ws+K56c1d8s+omvFw==
   dependencies:
-    "@octokit/rest" "19.0.4"
+    "@octokit/rest" "19.0.5"
     "@octokit/types" "^7.5.1"
     minimatch "^5.1.0"
 
@@ -129,7 +129,7 @@
   dependencies:
     "@octokit/types" "^8.0.0"
 
-"@octokit/core@^4.0.0", "@octokit/core@^4.1.0":
+"@octokit/core@^4.1.0":
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/@octokit/core/-/core-4.1.0.tgz#b6b03a478f1716de92b3f4ec4fd64d05ba5a9251"
   integrity sha512-Czz/59VefU+kKDy+ZfDwtOIYIkFjExOKf+HA92aiTZJ6EfWpFzYQWw0l54ji8bVmyhc+mGaLUbSUmXazG7z5OQ==
@@ -170,13 +170,6 @@
   resolved "https://registry.yarnpkg.com/@octokit/openapi-types/-/openapi-types-14.0.0.tgz#949c5019028c93f189abbc2fb42f333290f7134a"
   integrity sha512-HNWisMYlR8VCnNurDU6os2ikx0s0VyEjDYHNS/h4cgb8DeOxQ0n72HyinUtdDVxJhFy3FWLGl0DJhfEWk3P5Iw==
 
-"@octokit/plugin-paginate-rest@^4.0.0":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@octokit/plugin-paginate-rest/-/plugin-paginate-rest-4.3.1.tgz#553e653ee0318605acd23bf3a799c8bfafdedae3"
-  integrity sha512-h8KKxESmSFTcXX409CAxlaOYscEDvN2KGQRsLCGT1NSqRW+D6EXLVQ8vuHhFznS9MuH9QYw1GfsUN30bg8hjVA==
-  dependencies:
-    "@octokit/types" "^7.5.0"
-
 "@octokit/plugin-paginate-rest@^5.0.0":
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/@octokit/plugin-paginate-rest/-/plugin-paginate-rest-5.0.1.tgz#93d7e74f1f69d68ba554fa6b888c2a9cf1f99a83"
@@ -189,7 +182,7 @@
   resolved "https://registry.yarnpkg.com/@octokit/plugin-request-log/-/plugin-request-log-1.0.4.tgz#5e50ed7083a613816b1e4a28aeec5fb7f1462e85"
   integrity sha512-mLUsMkgP7K/cnFEw07kWqXGF5LKrOkD+lhCrKvPHXWDywAwuDUeDwWBpc69XK3pNX0uKiVt8g5z96PJ6z9xCFA==
 
-"@octokit/plugin-rest-endpoint-methods@^6.0.0", "@octokit/plugin-rest-endpoint-methods@^6.7.0":
+"@octokit/plugin-rest-endpoint-methods@^6.7.0":
   version "6.7.0"
   resolved "https://registry.yarnpkg.com/@octokit/plugin-rest-endpoint-methods/-/plugin-rest-endpoint-methods-6.7.0.tgz#2f6f17f25b6babbc8b41d2bb0a95a8839672ce7c"
   integrity sha512-orxQ0fAHA7IpYhG2flD2AygztPlGYNAdlzYz8yrD8NDgelPfOYoRPROfEyIe035PlxvbYrgkfUZIhSBKju/Cvw==
@@ -218,17 +211,7 @@
     node-fetch "^2.6.7"
     universal-user-agent "^6.0.0"
 
-"@octokit/rest@19.0.4":
-  version "19.0.4"
-  resolved "https://registry.yarnpkg.com/@octokit/rest/-/rest-19.0.4.tgz#fd8bed1cefffa486e9ae46a9dc608ce81bcfcbdd"
-  integrity sha512-LwG668+6lE8zlSYOfwPj4FxWdv/qFXYBpv79TWIQEpBLKA9D/IMcWsF/U9RGpA3YqMVDiTxpgVpEW3zTFfPFTA==
-  dependencies:
-    "@octokit/core" "^4.0.0"
-    "@octokit/plugin-paginate-rest" "^4.0.0"
-    "@octokit/plugin-request-log" "^1.0.4"
-    "@octokit/plugin-rest-endpoint-methods" "^6.0.0"
-
-"@octokit/rest@^19.0.0":
+"@octokit/rest@19.0.5", "@octokit/rest@^19.0.0":
   version "19.0.5"
   resolved "https://registry.yarnpkg.com/@octokit/rest/-/rest-19.0.5.tgz#4dbde8ae69b27dca04b5f1d8119d282575818f6c"
   integrity sha512-+4qdrUFq2lk7Va+Qff3ofREQWGBeoTKNqlJO+FGjFP35ZahP+nBenhZiGdu8USSgmq4Ky3IJ/i4u0xbLqHaeow==
@@ -238,7 +221,7 @@
     "@octokit/plugin-request-log" "^1.0.4"
     "@octokit/plugin-rest-endpoint-methods" "^6.7.0"
 
-"@octokit/types@^7.5.0", "@octokit/types@^7.5.1":
+"@octokit/types@^7.5.1":
   version "7.5.1"
   resolved "https://registry.yarnpkg.com/@octokit/types/-/types-7.5.1.tgz#4e8b182933c17e1f41cc25d44757dbdb7bd76c1b"
   integrity sha512-Zk4OUMLCSpXNI8KZZn47lVLJSsgMyCimsWWQI5hyjZg7hdYm0kjotaIkbG0Pp8SfU2CofMBzonboTqvzn3FrJA==
@@ -289,10 +272,10 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@xmldom/xmldom@^0.8.2":
-  version "0.8.3"
-  resolved "https://registry.yarnpkg.com/@xmldom/xmldom/-/xmldom-0.8.3.tgz#beaf980612532aa9a3004aff7e428943aeaa0711"
-  integrity sha512-Lv2vySXypg4nfa51LY1nU8yDAGo/5YwF+EY/rUZgIbfvwVARcd67ttCM8SMsTeJy51YhHYavEq+FS6R0hW9PFQ==
+"@xmldom/xmldom@^0.8.4":
+  version "0.8.5"
+  resolved "https://registry.yarnpkg.com/@xmldom/xmldom/-/xmldom-0.8.5.tgz#7f4b797cfda39355b512b4cfcc66b49b5d93d5f3"
+  integrity sha512-0dpjDLeCXYThL2YhqZcd/spuwoH+dmnFoND9ZxZkAYxp1IJUB2GP16ow2MJRsjVxy8j1Qv8BJRmN5GKnbDKCmQ==
 
 agent-base@6:
   version "6.0.2"
@@ -593,9 +576,9 @@ debug@4:
     ms "2.1.2"
 
 decamelize-keys@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/decamelize-keys/-/decamelize-keys-1.1.0.tgz#d171a87933252807eb3cb61dc1c1445d078df2d9"
-  integrity sha512-ocLWuYzRPoS9bfiSdDd3cxvrzovVMZnRDVEzAs+hWIVXGDbHxWMECij2OBuyB/An0FFW/nLuq6Kv1i/YC5Qfzg==
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/decamelize-keys/-/decamelize-keys-1.1.1.tgz#04a2d523b2f18d80d0158a43b895d56dff8d19d8"
+  integrity sha512-WiPxgEirIV0/eIOMcnFBA3/IJZAZqKnwAwWyvvdi4lsr1WCN22nhdf/3db3DoZcUjTV2SqfzIwNyp6y2xs3nmg==
   dependencies:
     decamelize "^1.1.0"
     map-obj "^1.0.0"
@@ -1521,9 +1504,9 @@ redent@^3.0.0:
     strip-indent "^3.0.0"
 
 release-please@^14.15.0:
-  version "14.15.0"
-  resolved "https://registry.yarnpkg.com/release-please/-/release-please-14.15.0.tgz#1758820e7387f1aded673d174d2054b6ddef29ac"
-  integrity sha512-sXQCxmqTvvXlrl+QYsuLW0Ddp62Ze357NGsAape3iZPEpbsWXJk3OtG8VUk7y/Kx7eUpgcpmozRqIEA+lYAPzQ==
+  version "14.16.0"
+  resolved "https://registry.yarnpkg.com/release-please/-/release-please-14.16.0.tgz#0620bcebbde33393253623adc1a7e4de1cbc67b4"
+  integrity sha512-ONKOJN6m6reEDnes+2iHGczNZLGrboi6skSH4/gUZtkoVZx2fJ8qYiSGfXu+TThX69mNUY9W3hIZ0BztXuNB8A==
   dependencies:
     "@conventional-commits/parser" "^0.4.1"
     "@google-automations/git-file-utils" "^1.2.0"
@@ -1537,7 +1520,7 @@ release-please@^14.15.0:
     "@octokit/request-error" "^3.0.0"
     "@octokit/rest" "^19.0.0"
     "@types/npm-package-arg" "^6.1.0"
-    "@xmldom/xmldom" "^0.8.2"
+    "@xmldom/xmldom" "^0.8.4"
     chalk "^4.0.0"
     code-suggester "^4.1.0"
     conventional-changelog-conventionalcommits "^5.0.0"
@@ -1848,9 +1831,9 @@ typescript@^4.6.4:
   integrity sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==
 
 uglify-js@^3.1.4:
-  version "3.17.3"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.17.3.tgz#f0feedf019c4510f164099e8d7e72ff2d7304377"
-  integrity sha512-JmMFDME3iufZnBpyKL+uS78LRiC+mK55zWfM5f/pWBJfpOttXAqYfdDGRukYhJuyRinvPVAtUhvy7rlDybNtFg==
+  version "3.17.4"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.17.4.tgz#61678cf5fa3f5b7eb789bb345df29afb8257c22c"
+  integrity sha512-T9q82TJI9e/C1TAxYvfb16xO120tMVFZrGA3f9/P4424DNu6ypK103y0GPFVa17yotwSyZW5iYXgjYHkGrJW/g==
 
 underscore@1.12.1:
   version "1.12.1"
@@ -2038,7 +2021,7 @@ yargs-parser@^20.2.2, yargs-parser@^20.2.3:
   resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-20.2.9.tgz#2eb7dc3b0289718fc295f362753845c41a0c94ee"
   integrity sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w==
 
-yargs-parser@^21.0.0:
+yargs-parser@^21.1.1:
   version "21.1.1"
   resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-21.1.1.tgz#9096bceebf990d21bb31fa9516e0ede294a77d35"
   integrity sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==
@@ -2064,9 +2047,9 @@ yargs@^16.0.0:
     yargs-parser "^20.2.2"
 
 yargs@^17.0.0:
-  version "17.6.0"
-  resolved "https://registry.yarnpkg.com/yargs/-/yargs-17.6.0.tgz#e134900fc1f218bc230192bdec06a0a5f973e46c"
-  integrity sha512-8H/wTDqlSwoSnScvV2N/JHfLWOKuh5MVla9hqLjK3nsfyy6Y4kDSYSvkU5YCUEPOSnRXfIyx3Sq+B/IWudTo4g==
+  version "17.6.2"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-17.6.2.tgz#2e23f2944e976339a1ee00f18c77fedee8332541"
+  integrity sha512-1/9UrdHjDZc0eOU0HxOHoS78C69UD3JRMvzlJ7S79S2nTaWRA/whGCTV8o9e/N/1Va9YIV7Q4sOxD8VV4pCWOw==
   dependencies:
     cliui "^8.0.1"
     escalade "^3.1.1"
@@ -2074,7 +2057,7 @@ yargs@^17.0.0:
     require-directory "^2.1.1"
     string-width "^4.2.3"
     y18n "^5.0.5"
-    yargs-parser "^21.0.0"
+    yargs-parser "^21.1.1"
 
 yargs@^6.6.0:
   version "6.6.0"
