@@ -19,5 +19,8 @@
     "infra",
     "api",
     "app"
-  ]
+  ],
+  "[go]": {
+    "editor.defaultFormatter": "golang.go"
+  }
 }
