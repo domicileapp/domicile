@@ -1,37 +1,37 @@
-component/core:
+c:core:
 - '*'
 
-component/api:
+c:api:
 - api/*
 
-component/api/tasks:
+c:api/tasks:
 - api/tasks/*
 
-component/api/lists:
+c:api/lists:
 - api/lists/*
 
-component/api/auth:
+c:api/auth:
 - api/auth/*
 
-component/api/core:
+c:api/core:
 - api/common/*
 
-component/db:
+c:db:
 - api/database/*
 - api/seeders/*
 
-component/web:
+c:web:
 - web/*
 
-component/infra:
+c:infra:
 - k8s/*
 
-component/infra/database:
+c:infra/database:
 - k8s/database/*
 
-component/infra/web:
+c:infra/web:
 - k8s/web/*
 
-component/infra/api:
+c:infra/api:
 - k8s/api/*
 
