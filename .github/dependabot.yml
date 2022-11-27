@@ -5,13 +5,19 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    labels:
+      - "t:deps"
   - package-ecosystem: "npm"
     target-branch: "dev"
     directory: "/api"
     schedule:
       interval: "daily"
+    labels:
+      - "t:deps"
   - package-ecosystem: "npm"
     target-branch: "dev"
     directory: "/app"
     schedule:
       interval: "daily"
+    labels:
+      - "t:deps"
