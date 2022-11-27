@@ -32,12 +32,12 @@
     unist-util-visit-parents "^3.1.1"
 
 "@google-automations/git-file-utils@^1.2.0":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@google-automations/git-file-utils/-/git-file-utils-1.2.2.tgz#6a70803539923cfbda31a1f9ad5a264f630e2f99"
-  integrity sha512-UGZypVMDGFJjVCVHI5yqZsqZtaTJoYVyZJ9IJ1sF02Hh0QbDCJHPmPXUpKnPWt9NG51U4ws+K56c1d8s+omvFw==
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@google-automations/git-file-utils/-/git-file-utils-1.2.3.tgz#0c530edcabc2712e936657d282afa34c232c6a8a"
+  integrity sha512-CdxeRDIExWMdMIhRNbbqI3amtF72jct3XVEKquqinkSbUbzYx+ZxvakCwJB0FDS8xmq9mjEWEt0Cxy/+49A8kw==
   dependencies:
     "@octokit/rest" "19.0.5"
-    "@octokit/types" "^7.5.1"
+    "@octokit/types" "^8.0.0"
     minimatch "^5.1.0"
 
 "@iarna/toml@^2.2.5":
@@ -160,11 +160,6 @@
     "@octokit/types" "^8.0.0"
     universal-user-agent "^6.0.0"
 
-"@octokit/openapi-types@^13.11.0":
-  version "13.13.1"
-  resolved "https://registry.yarnpkg.com/@octokit/openapi-types/-/openapi-types-13.13.1.tgz#a783bacb1817c9f61a2a0c3f81ea22ad62340fdf"
-  integrity sha512-4EuKSk3N95UBWFau3Bz9b3pheQ8jQYbKmBL5+GSuY8YDPDwu03J4BjI+66yNi8aaX/3h1qDpb0mbBkLdr+cfGQ==
-
 "@octokit/openapi-types@^14.0.0":
   version "14.0.0"
   resolved "https://registry.yarnpkg.com/@octokit/openapi-types/-/openapi-types-14.0.0.tgz#949c5019028c93f189abbc2fb42f333290f7134a"
@@ -211,7 +206,7 @@
     node-fetch "^2.6.7"
     universal-user-agent "^6.0.0"
 
-"@octokit/rest@19.0.5", "@octokit/rest@^19.0.0":
+"@octokit/rest@19.0.5", "@octokit/rest@^19.0.0", "@octokit/rest@^19.0.5":
   version "19.0.5"
   resolved "https://registry.yarnpkg.com/@octokit/rest/-/rest-19.0.5.tgz#4dbde8ae69b27dca04b5f1d8119d282575818f6c"
   integrity sha512-+4qdrUFq2lk7Va+Qff3ofREQWGBeoTKNqlJO+FGjFP35ZahP+nBenhZiGdu8USSgmq4Ky3IJ/i4u0xbLqHaeow==
@@ -220,13 +215,6 @@
     "@octokit/plugin-paginate-rest" "^5.0.0"
     "@octokit/plugin-request-log" "^1.0.4"
     "@octokit/plugin-rest-endpoint-methods" "^6.7.0"
-
-"@octokit/types@^7.5.1":
-  version "7.5.1"
-  resolved "https://registry.yarnpkg.com/@octokit/types/-/types-7.5.1.tgz#4e8b182933c17e1f41cc25d44757dbdb7bd76c1b"
-  integrity sha512-Zk4OUMLCSpXNI8KZZn47lVLJSsgMyCimsWWQI5hyjZg7hdYm0kjotaIkbG0Pp8SfU2CofMBzonboTqvzn3FrJA==
-  dependencies:
-    "@octokit/openapi-types" "^13.11.0"
 
 "@octokit/types@^8.0.0":
   version "8.0.0"
@@ -273,9 +261,9 @@
     "@types/yargs-parser" "*"
 
 "@xmldom/xmldom@^0.8.4":
-  version "0.8.5"
-  resolved "https://registry.yarnpkg.com/@xmldom/xmldom/-/xmldom-0.8.5.tgz#7f4b797cfda39355b512b4cfcc66b49b5d93d5f3"
-  integrity sha512-0dpjDLeCXYThL2YhqZcd/spuwoH+dmnFoND9ZxZkAYxp1IJUB2GP16ow2MJRsjVxy8j1Qv8BJRmN5GKnbDKCmQ==
+  version "0.8.6"
+  resolved "https://registry.yarnpkg.com/@xmldom/xmldom/-/xmldom-0.8.6.tgz#8a1524eb5bd5e965c1e3735476f0262469f71440"
+  integrity sha512-uRjjusqpoqfmRkTaNuLJ2VohVr67Q5YwDATW3VU7PfzTj6IRaihGrYI7zckGZjxQPBIp63nfvJbM+Yu5ICh0Bg==
 
 agent-base@6:
   version "6.0.2"
@@ -447,11 +435,11 @@ code-point-at@^1.0.0:
   integrity sha512-RpAVKQA5T63xEj6/giIbUEtZwJ4UFIc3ZtvEkiaUERylqe8xb5IvqcgOurZLahv93CLKfxcw5YI+DZcUBRyLXA==
 
 code-suggester@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/code-suggester/-/code-suggester-4.1.0.tgz#0c2e30173d6453bd8fcbdec94003fae3895998b3"
-  integrity sha512-l3V0QvXL//d78Kxuanlb89r6AT6G3ZM+qmwvHw3NyP7SjKkt+6LZcgEC6yH5T8hwZGSfz/9dXSek0cMn9tMqpw==
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/code-suggester/-/code-suggester-4.1.1.tgz#3fbf84d5ab37fcf5fc60f6fd84b93204e5ec69e5"
+  integrity sha512-AGO1o4Bl4JlSeVCiFL9IpfH0MJyhtaMAwbO7qM+t/cNSz6URTPUZN+0fTtnAWfyeO5GbcGC9e18ArDbjkgpruA==
   dependencies:
-    "@octokit/rest" "^19.0.0"
+    "@octokit/rest" "^19.0.5"
     "@types/yargs" "^16.0.0"
     async-retry "^1.3.1"
     diff "^5.0.0"
@@ -1190,9 +1178,9 @@ node-fetch@^2.6.7:
     whatwg-url "^5.0.0"
 
 node-html-parser@^6.0.0:
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/node-html-parser/-/node-html-parser-6.1.1.tgz#7f38f4427fafc242a22135d9db80c1455e837467"
-  integrity sha512-eYYblUeoMg0nR6cYGM4GRb1XncNa9FXEftuKAU1qyMIr6rXVtNyUKduvzZtkqFqSHVByq2lLjC7WO8tz7VDmnA==
+  version "6.1.4"
+  resolved "https://registry.yarnpkg.com/node-html-parser/-/node-html-parser-6.1.4.tgz#763cd362497e427d51fc73dda3dcd8ac52ba85a3"
+  integrity sha512-3muP9Uy/Pz7bQa9TNYVQzWJhNZMqyCx7xJle8kz2/y1UgzAUyXXShc1IcPaJy6u07CE3K5rQcRwlvHzmlySRjg==
   dependencies:
     css-select "^5.1.0"
     he "1.2.0"
@@ -1504,9 +1492,9 @@ redent@^3.0.0:
     strip-indent "^3.0.0"
 
 release-please@^14.17.2:
-  version "14.17.2"
-  resolved "https://registry.yarnpkg.com/release-please/-/release-please-14.17.2.tgz#1c450d3b1fb76cacd4d33cec20b1ba0c737bfe04"
-  integrity sha512-fuTnRMf/MK+D94uuHa0VfZrxsGZykOktvaLwjc33IVtOlOj7UTuwx3M8aLEJyrYh4vzlV9bycYXPX0MqwlGtzg==
+  version "14.17.3"
+  resolved "https://registry.yarnpkg.com/release-please/-/release-please-14.17.3.tgz#173b9ed0e74c3151153c39a4517bd4e68da68844"
+  integrity sha512-JSJ5Y85CBPGoAyYHeLoYmJ2mjwJdWggaMvJFsLj9SmYq51ahiOpD0seA2N9ZRHKTcKF0iIIm2+vDONtOZLmTew==
   dependencies:
     "@conventional-commits/parser" "^0.4.1"
     "@google-automations/git-file-utils" "^1.2.0"
@@ -1821,14 +1809,14 @@ type-fest@^0.8.1:
   integrity sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==
 
 type-fest@^3.0.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-3.1.0.tgz#157b74044d9c27fd796b9c6aa46eae6658b1e9b8"
-  integrity sha512-StmrZmK3eD9mDF9Vt7UhqthrDSk66O9iYl5t5a0TSoVkHjl0XZx/xuc/BRz4urAXXGHOY5OLsE0RdJFIApSFmw==
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-3.2.0.tgz#2c8b49e775d9e314a73ea6fcee0b2e8549d5f886"
+  integrity sha512-Il3wdLRzWvbAEtocgxGQA9YOoRVeVUGOMBtel5LdEpNeEAol6GJTLw8GbX6Z8EIMfvfhoOXs2bwOijtAZdK5og==
 
 typescript@^4.6.4:
-  version "4.8.4"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.8.4.tgz#c464abca159669597be5f96b8943500b238e60e6"
-  integrity sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==
+  version "4.9.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.3.tgz#3aea307c1746b8c384435d8ac36b8a2e580d85db"
+  integrity sha512-CIfGzTelbKNEnLpLdGFgdyKhG23CKdKgQPOBc+OUNrkJ2vr+KSzsSV5kq5iWhEQbok+quxgGzrAtGWCyU7tHnA==
 
 uglify-js@^3.1.4:
   version "3.17.4"
