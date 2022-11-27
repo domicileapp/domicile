@@ -7,8 +7,21 @@ component/api:
 component/api/tasks:
 - api/tasks/*
 
-component/app:
-- app/*
+component/api/lists:
+- api/lists/*
+
+component/api/auth:
+- api/auth/*
+
+component/api/core:
+- api/common/*
+
+component/db:
+- api/database/*
+- api/seeders/*
+
+component/web:
+- web/*
 
 component/infra:
 - k8s/*
@@ -16,8 +29,8 @@ component/infra:
 component/infra/database:
 - k8s/database/*
 
-component/infra/app:
-- k8s/app/*
+component/infra/web:
+- k8s/web/*
 
 component/infra/api:
 - k8s/api/*
