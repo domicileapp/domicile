@@ -1,5 +1,89 @@
 # Changelog
 
+## [0.3.0](https://github.com/domicileapp/domicile/compare/domicile-v0.2.0...domicile-v0.3.0) (2022-11-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* **api/tasks:** add completed attribute
+
+### Features
+
+* **api/tasks:** add completed attribute ([4780c9e](https://github.com/domicileapp/domicile/commit/4780c9e333c89f56ed9259759de5feac4eb7d326))
+* **app/auth:** add authentication and protected routes ([a8fb967](https://github.com/domicileapp/domicile/commit/a8fb9678f7b897814b01f8f03a9f6734e8940cd2))
+* **app:** create login page styling ([b21a015](https://github.com/domicileapp/domicile/commit/b21a01536b31cc5dfd8f48d706cf7fdc5602c18c))
+* database seeder (yay) ([0a4e3b5](https://github.com/domicileapp/domicile/commit/0a4e3b57176165a9f7477fc7eda48bd12a7e127a))
+* export swagger specifications ([aabaa96](https://github.com/domicileapp/domicile/commit/aabaa964430412739432b07b8e6c13ba2640cd29))
+* todo base configuration ([4ac7514](https://github.com/domicileapp/domicile/commit/4ac7514217b4f11f7cf3f2e82aeb7ae15425a0ae))
+
+
+### Performance improvements
+
+* **api:** test out redis and websockets ([97f6f20](https://github.com/domicileapp/domicile/commit/97f6f20deaa409b05dfa714d05f4ede958723d43))
+
+
+### Refactors
+
+* todo =&gt; task ([42a292a](https://github.com/domicileapp/domicile/commit/42a292af6551a46a5bfed16b152036517a0af79e))
+
+
+### Documentation
+
+* add collections ([6aa6d02](https://github.com/domicileapp/domicile/commit/6aa6d024ef31c1aeb9f6703535a66f4a969aec01))
+* remove WIP status badge (bc why) ([7a4d6f2](https://github.com/domicileapp/domicile/commit/7a4d6f2119bfc3a3d02982c432edb7b7fd0b609b))
+* target branch fix ([29e978d](https://github.com/domicileapp/domicile/commit/29e978d22704ec9c9b84a941c73ac6325adcea2c))
+* try out VuePress for documentation ([308947d](https://github.com/domicileapp/domicile/commit/308947db7e476ab206a9dfa17508fac4ee8d6127))
+* update swagger documentation ([4b3ce51](https://github.com/domicileapp/domicile/commit/4b3ce51414b2b428f5d393820e4c80ff7edcb887))
+* **vuepress:** add to release-please configuration ([3b7a5eb](https://github.com/domicileapp/domicile/commit/3b7a5eb21884cb00a0d9a56635f361b295be22a0))
+* **vuepress:** fix build command ([07a5bff](https://github.com/domicileapp/domicile/commit/07a5bffd74a7bd6b8dae1381517f93861e379806))
+
+
+### Bug fixes
+
+* **api/auth:** login issues ([336a417](https://github.com/domicileapp/domicile/commit/336a4174e47bd0d1508dc072ad4e79689e994be8))
+* **api:** openapi formatting fix ([ba9e4ea](https://github.com/domicileapp/domicile/commit/ba9e4eabd7a52c20b2f507bf179540a454867feb))
+* **app:** rename to web ([726646f](https://github.com/domicileapp/domicile/commit/726646f8c82529de0ba489a33b2e5b7ec815ee78))
+* **openapi:** pretty print swagger-spec ([84b661f](https://github.com/domicileapp/domicile/commit/84b661fa149358766ab1d14b713ea78936f87330))
+
+
+### Build & tests
+
+* add components for api ([023bfcb](https://github.com/domicileapp/domicile/commit/023bfcbcdfdf7c2f04a30c1c765ec29622393cc1))
+* **deps-dev:** bump @nestjs/testing from 9.1.6 to 9.2.0 in /api ([1746310](https://github.com/domicileapp/domicile/commit/17463107909eb1978737a5d5f5d3eb110601f04b))
+* **deps-dev:** bump @types/validator from 13.7.7 to 13.7.8 in /api ([f03e59c](https://github.com/domicileapp/domicile/commit/f03e59c512f1cc98eb9bdc627fec3740b629b5f2))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin in /app ([7cb85ab](https://github.com/domicileapp/domicile/commit/7cb85ab491aa5091e473bbdf186d3ec999db507c))
+* **deps-dev:** bump @typescript-eslint/eslint-plugin in /app ([f656475](https://github.com/domicileapp/domicile/commit/f65647534a0ce396aebf6c3b6654f55b80b732dc))
+* **deps-dev:** bump release-please from 14.12.0 to 14.13.2 ([765566a](https://github.com/domicileapp/domicile/commit/765566a573e144377184c591797855b285563be8))
+* **deps-dev:** bump release-please from 14.13.2 to 14.15.0 ([9e407f0](https://github.com/domicileapp/domicile/commit/9e407f02d5559abdf7bfe8db257c070a8d11989d))
+* **deps-dev:** bump release-please from 14.16.0 to 14.17.2 ([066052f](https://github.com/domicileapp/domicile/commit/066052fff2bae630d34b69e780979f5af7f23064))
+* **deps-dev:** bump release-please from 14.7.1 to 14.9.0 ([6d60d74](https://github.com/domicileapp/domicile/commit/6d60d741ca26d98e3680d3f47fe0be6700be1430))
+* **deps-dev:** bump release-please from 14.9.0 to 14.11.0 ([7306f97](https://github.com/domicileapp/domicile/commit/7306f97a8a39fadae22be746b7ae95ee3c6ae77b))
+* **deps:** bump @nestjs/core from 9.1.6 to 9.2.0 in /api ([8f05193](https://github.com/domicileapp/domicile/commit/8f051933f97035762265c40fd76d6031957cb626))
+* **deps:** bump @types/validator to 13.7.9 ([5c15f52](https://github.com/domicileapp/domicile/commit/5c15f52986fad7b483ae9649ecca475d91348ec2))
+* **deps:** bump dependencies to latest patches ([1fbfb15](https://github.com/domicileapp/domicile/commit/1fbfb157cf7082cce64edb15d21ed94d50352e23))
+* **deps:** bump dependencies to the latest patches ([4c52515](https://github.com/domicileapp/domicile/commit/4c52515ba6003e310ccc5f0c4939757c61bafa3e))
+* **deps:** change dependabot label ([96238b3](https://github.com/domicileapp/domicile/commit/96238b32c224fb1c20582f80b9825ca448e15ed7))
+* **docs:** add GHA VuePress deployment ([e2850ae](https://github.com/domicileapp/domicile/commit/e2850ae3de3b5c7f14999dbb64c7d3053038db02))
+* **labeler:** add token ([0d42c84](https://github.com/domicileapp/domicile/commit/0d42c84b102354df693a45ea36af091690f78495))
+* **release-please:** remove tokens ([64b0365](https://github.com/domicileapp/domicile/commit/64b03655be1c426cc11395c3105b5a638c74d90f))
+
+
+### Chores
+
+* add openapi/postman folders ([46e05fc](https://github.com/domicileapp/domicile/commit/46e05fc68364d35a932b0f348d0b914e1a68fad4))
+* **api:** move openapi document ([ed62f1c](https://github.com/domicileapp/domicile/commit/ed62f1c00c0fe3572e37167148fe6a6d82ff2d50))
+* **api:** move openapi json output ([6d3da2c](https://github.com/domicileapp/domicile/commit/6d3da2c3301d121354345ce535420e3782c311a6))
+* **deps:** bump dependencies ([92b43eb](https://github.com/domicileapp/domicile/commit/92b43ebd7da92e99f64a19836970e3324ec76adf))
+* **deps:** bump dependencies to latest ([222a6bd](https://github.com/domicileapp/domicile/commit/222a6bd3826501b15bdc7a44f61c53e6450b0834))
+* **deps:** bump docs deps to latest ([182bde6](https://github.com/domicileapp/domicile/commit/182bde69b6fc0543dcf7c6574e02641819044211))
+* **deps:** bump to latest ([bf06bcb](https://github.com/domicileapp/domicile/commit/bf06bcb70cb4ddcddf5bfdeefe052587ad8e4cd8))
+* **deps:** bump to latest patches ([adcec01](https://github.com/domicileapp/domicile/commit/adcec01c53dd1170653c701717895044be128714))
+* postman updates ([b0fe04a](https://github.com/domicileapp/domicile/commit/b0fe04a8bf7ea9560127f8065dce56d6824a15c3))
+* postman updates ([de51361](https://github.com/domicileapp/domicile/commit/de51361ddb8d59ba6bcbd630145bd9f6895ee239))
+* **postman:** add test to populate access token ([f451620](https://github.com/domicileapp/domicile/commit/f451620410bc8541bd2a74a6085c644a60e97722))
+* **postman:** new collection for testing ([a268176](https://github.com/domicileapp/domicile/commit/a268176a80fb03072542a6cae3290d242aab9599))
+* temp file updates ([7e70996](https://github.com/domicileapp/domicile/commit/7e70996796ea8d85599ebee02a1cbe9f547d9828))
+
 ## [0.2.0](https://github.com/patrickblackjr/domicile/compare/domicile-v0.1.0...domicile-v0.2.0) (2022-09-26)
 
 
