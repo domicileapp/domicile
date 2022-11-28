@@ -8,10 +8,11 @@
   "author": "Patrick Black <info@patrickblackjr.com>",
   "license": "MIT",
   "devDependencies": {
+    "degit": "^2.8.4",
+    "nx": "15.2.1",
     "release-please": "^14.17.2",
     "weallbehave": "^1.2.0",
-    "weallcontribute": "^1.0.9",
-    "nx": "15.2.1"
+    "weallcontribute": "^1.0.9"
   },
   "dependencies": {}
 }

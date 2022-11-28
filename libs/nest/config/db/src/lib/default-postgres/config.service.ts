@@ -1,0 +1,108 @@
+import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { TypeOrmOptionsFactory } from "@nestjs/typeorm";
+
+import {
+	PostgresDbOptions,
+	PostgresOptionTypes,
+	TypeOrmDatabaseTypes
+} from "../config.types";
+
+/**
+ * Configuration service for default database connection via TypeORM. See
+ * options at https://typeorm.io/#/connection-options.
+ *
+ * @class
+ */
+@Injectable()
+export class DefaultDbConfigService implements TypeOrmOptionsFactory {
+	/**
+	 * Initialize configuration service dependencies.
+	 * @param configService The injected `ConfigService` instance.
+	 */
+	constructor(private configService: ConfigService<PostgresOptionTypes>) {}
+
+	/** Generate the full configuration object for the default database. */
+	createTypeOrmOptions(): PostgresDbOptions {
+		return {
+			name: this.name,
+			type: this.type,
+			host: this.host,
+			port: this.port,
+			username: this.username,
+			password: this.password,
+			database: this.database,
+			schema: this.schema,
+			autoLoadEntities: this.autoLoadEntities,
+			migrations: this.migrations
+		};
+	}
+
+	/** Database type. */
+	get type(): PostgresDbOptions["type"] {
+		return TypeOrmDatabaseTypes.Postgres;
+	}
+
+	/**
+	 * Name of the database connection. Can be used to identify the connection
+	 * for a particular database operation. Each connection must have a
+	 * different name. If no name is given, it will be called "default".
+	 */
+	get name(): PostgresDbOptions["name"] {
+		return this.configService.get<PostgresDbOptions["name"]>("db.name");
+	}
+
+	/** Database host. */
+	get host(): PostgresDbOptions["host"] {
+		return this.configService.get("db.host");
+	}
+
+	/** Database port. */
+	get port(): PostgresDbOptions["port"] {
+		return this.configService.get("db.port");
+	}
+
+	/** Database username. */
+	get username(): PostgresDbOptions["username"] {
+		return this.configService.get("db.username");
+	}
+
+	/**
+	 * Database password.
+	 * @returns A function that returns a promise-wrapped string.
+	 */
+	get password(): PostgresDbOptions["password"] {
+		return this.configService.get("db.password");
+	}
+
+	/** Database name that will be the target of operations.  */
+	get database(): PostgresDbOptions["database"] {
+		return this.configService.get("db.database");
+	}
+
+	/** Database schema that will be the target of operations.  */
+	get schema(): PostgresDbOptions["schema"] {
+		return this.configService.get("db.schema");
+	}
+
+	/** Whether to automatically load entities.  */
+	get autoLoadEntities(): PostgresDbOptions["autoLoadEntities"] {
+		return this.configService.get("db.autoLoadEntities");
+	}
+
+	/** Migrations to load for `MigrationProvider`. */
+	get migrations(): PostgresDbOptions["migrations"] {
+		return this.configService.get("db.migrations");
+	}
+
+	/**
+	 * Whether the database schema should be created on every application
+	 * launch, which can be useful during development. Alternatively, use
+	 * `yarn nest schema:sync` command.
+	 *
+	 * Default: false (due to data loss).
+	 */
+	// get synchronize(): PostgresDbOptions["synchronize"] {
+	// 	return this.configService.get("db.synchronize");
+	// }
+}
