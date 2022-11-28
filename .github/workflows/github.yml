@@ -2,6 +2,7 @@ name: github
 
 on:
   pull_request:
+  issues:
   workflow_dispatch:
 
 permissions:
@@ -12,7 +13,7 @@ jobs:
   label:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/labeler@v4
-      with:
-        sync-labels: true
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/labeler@v4
+        with:
+          sync-labels: true
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
