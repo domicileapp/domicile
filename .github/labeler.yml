@@ -1,37 +1,39 @@
 c:core:
-- '*'
+  - '*'
 
 c:api:
-- api/*
+  - api/*
 
 c:api/tasks:
-- api/tasks/*
+  - api/tasks/*
 
 c:api/lists:
-- api/lists/*
+  - api/lists/*
 
 c:api/auth:
-- api/auth/*
+  - api/auth/*
 
 c:api/core:
-- api/common/*
+  - api/common/*
 
 c:db:
-- api/database/*
-- api/seeders/*
+  - api/database/*
+  - api/seeders/*
 
 c:web:
-- web/*
+  - web/*
+
+c:cli:
+  - cli/*
 
 c:infra:
-- k8s/*
+  - k8s/*
 
 c:infra/database:
-- k8s/database/*
+  - k8s/database/*
 
 c:infra/web:
-- k8s/web/*
+  - k8s/web/*
 
 c:infra/api:
-- k8s/api/*
-
+  - k8s/api/*
