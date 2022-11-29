@@ -28,7 +28,17 @@
     },
     {
       "type": "build",
-      "section": "Build & tests",
+      "section": "Build",
+      "hidden": false
+    },
+    {
+      "type": "ci",
+      "section": "Build",
+      "hidden": false
+    },
+    {
+      "type": "tests",
+      "section": "Tests",
       "hidden": false
     },
     {
