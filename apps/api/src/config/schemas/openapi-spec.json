@@ -575,7 +575,15 @@
                     "201": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "rooms"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "get": {
                 "operationId": "RoomsController_findAll",
@@ -584,7 +592,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "rooms"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/api/v1/rooms/{id}": {
@@ -604,7 +620,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "rooms"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "patch": {
                 "operationId": "RoomsController_update",
@@ -632,7 +656,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "rooms"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "delete": {
                 "operationId": "RoomsController_remove",
@@ -650,7 +682,15 @@
                     "200": {
                         "description": ""
                     }
-                }
+                },
+                "tags": [
+                    "rooms"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         }
     },
