@@ -1,18 +1,26 @@
+import { getRepositoryToken } from '@mikro-orm/nestjs'
 import { Test, TestingModule } from '@nestjs/testing'
-import { PostsService } from './tasks.service'
+import { Task } from './task.entity'
+import { TasksService } from './tasks.service'
 
-describe('PostsService', () => {
-  let service: PostsService
+describe('TasksService', () => {
+  let service: TasksService
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PostsService],
+      providers: [
+        TasksService,
+        {
+          provide: getRepositoryToken(Task),
+          useValue: Task,
+        },
+      ],
     }).compile()
 
-    service = module.get<PostsService>(PostsService)
+    service = module.get<TasksService>(TasksService)
   })
 
-  it('should be defined', () => {
+  it('TasksService - should be defined', () => {
     expect(service).toBeDefined()
   })
 })

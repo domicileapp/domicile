@@ -1,6 +1,7 @@
+import { UsersModule } from '@/users/users.module'
 import { MikroOrmModule } from '@mikro-orm/nestjs'
 import { forwardRef, Module } from '@nestjs/common'
-import { UsersModule } from 'src/users/users.module'
+
 import { List } from './list.entity'
 import { ListsController } from './lists.controller'
 import { ListsService } from './lists.service'
