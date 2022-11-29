@@ -23,6 +23,9 @@ c:db:
 c:web:
   - apps/web/*
 
+c:cli:
+  - cli/*
+
 c:infra:
   - apps/k8s/*
 
