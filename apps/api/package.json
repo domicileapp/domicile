@@ -53,8 +53,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.5.6",
-    "socket.io": "^4.5.3",
-    "typeorm": "^0.3.10"
+    "socket.io": "^4.5.3"
   },
   "devDependencies": {
     "@mikro-orm/cli": "^5.4.2",

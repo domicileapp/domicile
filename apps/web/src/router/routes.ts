@@ -26,6 +26,11 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
+    path: '/chores',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/ChoresPage.vue') }],
+  },
+  {
     path: '/health',
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/HealthPage.vue') }],

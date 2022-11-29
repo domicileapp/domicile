@@ -14,6 +14,8 @@ import { UsersModule } from './users/users.module'
 import { ListsModule } from './lists/lists.module'
 import { MikroORM } from '@mikro-orm/core'
 import { TasksModule } from './tasks/tasks.module'
+import { ChoresModule } from './chores/chores.module';
+import { RoomsModule } from './rooms/rooms.module';
 
 @Module({
   imports: [
@@ -26,6 +28,8 @@ import { TasksModule } from './tasks/tasks.module'
     AuthModule,
     ListsModule,
     TasksModule,
+    ChoresModule,
+    RoomsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
