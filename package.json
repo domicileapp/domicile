@@ -8,7 +8,7 @@
   "author": "Patrick Black <info@patrickblackjr.com>",
   "license": "MIT",
   "dependencies": {
-    "release-please": "^14.17.2",
+    "release-please": "^14.17.5",
     "weallbehave": "^1.2.0",
     "weallcontribute": "^1.0.9"
   },
