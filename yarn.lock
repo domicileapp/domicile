@@ -873,12 +873,12 @@
     mikro-orm "^5.5.3"
     reflect-metadata "0.1.13"
 
-"@mikro-orm/knex@^5.5.3":
-  version "5.5.3"
-  resolved "https://registry.yarnpkg.com/@mikro-orm/knex/-/knex-5.5.3.tgz#0319105be81fce26b6a44804ae19cf0ba518baab"
-  integrity sha512-vimh9DLsXwauuQj7Lrr70RP9tESIm4LB1BpUwMsj/6qRBaEBefV/BVQzPFDKUOe3bghB4kTEHAdJ7qCnpg1Byw==
+"@mikro-orm/knex@^5.5.3", "@mikro-orm/knex@~5.6.1":
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/@mikro-orm/knex/-/knex-5.6.1.tgz#a51b80999302c16810606a40c8195774142748b5"
+  integrity sha512-6G02eNNkc12slmuqc4t9b+Ee4LnJ+NT2Q2EgZnvUqpPWogTiPqQ36zoJh1dCdCYc/EQRzxzPzfGjRU/2NoOUmA==
   dependencies:
-    fs-extra "10.1.0"
+    fs-extra "11.1.0"
     knex "2.3.0"
     sqlstring "2.3.3"
 
@@ -897,12 +897,12 @@
   resolved "https://registry.yarnpkg.com/@mikro-orm/nestjs/-/nestjs-5.1.2.tgz#1fb47bf4667eba564924f2117e62f42a886bcfbf"
   integrity sha512-kHvrcZoIsZUwaahWIjuJDII0rfikGucsyZg9UJRDLcDIYm9nm39Qtos9uGgTAySejll/g/XdOM6QirPHtgR8FQ==
 
-"@mikro-orm/postgresql@^5.4.2":
-  version "5.5.3"
-  resolved "https://registry.yarnpkg.com/@mikro-orm/postgresql/-/postgresql-5.5.3.tgz#5a7af2933a0adf434c41e13e1a2881d8ee93aacc"
-  integrity sha512-9rJEDT6nfkHOyP4p25AOYbgTkjrlXHlm8e+u1FFW2CZKpdxpmH3hiY5H1x8muOI/fvHP7njt2Da71i2MXakw0g==
+"@mikro-orm/postgresql@^5.6.1":
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/@mikro-orm/postgresql/-/postgresql-5.6.1.tgz#345bf1b3f4852f4fe3cce85adeda9adde4e001d9"
+  integrity sha512-YT1/T/La7+aCmNcHoKnIKZjj3SuCbs/FYEecN3WBWFI78LZCpGaSFj/Gxs8uBdTuXC1UIZmQ75k2oHdLjxTSTQ==
   dependencies:
-    "@mikro-orm/knex" "^5.5.3"
+    "@mikro-orm/knex" "~5.6.1"
     pg "8.8.0"
 
 "@mikro-orm/reflection@^5.4.2":
@@ -4350,6 +4350,15 @@ fs-extra@10.1.0, fs-extra@^10.0.0, fs-extra@^10.0.1:
   version "10.1.0"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-10.1.0.tgz#02873cfbc4084dde127eaa5f9905eef2325d1abf"
   integrity sha512-oRXApq54ETRj4eMiFzGnHWGy+zo5raudjuxN0b8H7s/RU2oW0Wvsx9O0ACRN/kRq9E8Vu/ReskGB5o3ji+FzHQ==
+  dependencies:
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^2.0.0"
+
+fs-extra@11.1.0:
+  version "11.1.0"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-11.1.0.tgz#5784b102104433bb0e090f48bfc4a30742c357ed"
+  integrity sha512-0rcTq621PD5jM/e0a3EJoGC/1TC5ZBCERW82LQuwfGnCa1V8w7dpYH1yNu+SLb6E5dkeCBzKEyLGlFrnr+dUyw==
   dependencies:
     graceful-fs "^4.2.0"
     jsonfile "^6.0.1"
