@@ -15,12 +15,11 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "git.alwaysSignOff": true,
   "github.gitAuthentication": true,
-  "conventionalCommits.scopes": [
-    "infra",
-    "api",
-    "app"
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
   ],
-  "[go]": {
-    "editor.defaultFormatter": "golang.go"
-  }
+  "eslint.packageManager" :"yarn",
+  "typescript.validate.enable": true
 }

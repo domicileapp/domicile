@@ -4,10 +4,4 @@
 			"path": ".."
 		}
 	],
-	"settings": {
-		"typescript.tsdk": "node_modules/typescript/lib",
-		"conventionalCommits.scopes": [
-			"deps"
-		]
-	}
 }
