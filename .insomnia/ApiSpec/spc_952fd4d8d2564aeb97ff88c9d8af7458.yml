@@ -1,0 +1,273 @@
+_id: spc_952fd4d8d2564aeb97ff88c9d8af7458
+type: ApiSpec
+parentId: wrk_166e4a3256b34404ac4b46f45babec5a
+modified: 1672199459867
+created: 1672199260659
+fileName: Domicile API
+contents: |-
+  {
+  	"_format_version": "1.1",
+  	"services": [
+  		{
+  			"name": "Swagger_Petstore",
+  			"protocol": "https",
+  			"host": "petstore.swagger.io",
+  			"port": 443,
+  			"path": "/v2",
+  			"plugins": [],
+  			"routes": [
+  				{
+  					"tags": [
+  						"OAS3_import"
+  					],
+  					"name": "Swagger_Petstore-addPet",
+  					"methods": [
+  						"POST"
+  					],
+  					"paths": [
+  						"/pet$"
+  					],
+  					"strip_path": false
+  				},
+  				{
+  					"tags": [
+  						"OAS3_import"
+  					],
+  					"name": "Swagger_Petstore-updatePet",
+  					"methods": [
+  						"PUT"
+  					],
+  					"paths": [
+  						"/pet$"
+  					],
+  					"strip_path": false
+  				},
+  				{
+  					"tags": [
+  						"OAS3_import"
+  					],
+  					"name": "Swagger_Petstore-findPetsByStatus",
+  					"methods": [
+  						"GET"
+  					],
+  					"paths": [
+  						"/pet/findByStatus$"
+  					],
+  					"strip_path": false
+  				},
+  				{
+  					"tags": [
+  						"OAS3_import"
+  					],
+  					"name": "Swagger_Petstore-findPetsByTags",
+  					"methods": [
+  						"GET"
+  					],
+  					"paths": [
+  						"/pet/findByTags$"
+  					],
+  					"strip_path": false
+  				},
+  				{
+  					"tags": [
+  						"OAS3_import"
+  					],
+  					"name": "Swagger_Petstore-getPetById",
+  					"methods": [
+  						"GET"
+  					],
+  					"paths": [
+  						"/pet/(?<petId>[^/]+)$"
+  					],
+  					"strip_path": false
+  				},
+  				{
+  					"tags": [
+  						"OAS3_import"
+  					],
+  					"name": "Swagger_Petstore-updatePetWithForm",
+  					"methods": [
+  						"POST"
+  					],
+  					"paths": [
+  						"/pet/(?<petId>[^/]+)$"
+  					],
+  					"strip_path": false
+  				},
+  				{
+  					"tags": [
+  						"OAS3_import"
+  					],
+  					"name": "Swagger_Petstore-deletePet",
+  					"methods": [
+  						"DELETE"
+  					],
+  					"paths": [
+  						"/pet/(?<petId>[^/]+)$"
+  					],
+  					"strip_path": false
+  				},
+  				{
+  					"tags": [
+  						"OAS3_import"
+  					],
+  					"name": "Swagger_Petstore-getInventory",
+  					"methods": [
+  						"GET"
+  					],
+  					"paths": [
+  						"/store/inventory$"
+  					],
+  					"strip_path": false
+  				},
+  				{
+  					"tags": [
+  						"OAS3_import"
+  					],
+  					"name": "Swagger_Petstore-placeOrder",
+  					"methods": [
+  						"POST"
+  					],
+  					"paths": [
+  						"/store/order$"
+  					],
+  					"strip_path": false
+  				},
+  				{
+  					"tags": [
+  						"OAS3_import"
+  					],
+  					"name": "Swagger_Petstore-getOrderById",
+  					"methods": [
+  						"GET"
+  					],
+  					"paths": [
+  						"/store/order/(?<orderId>[^/]+)$"
+  					],
+  					"strip_path": false
+  				},
+  				{
+  					"tags": [
+  						"OAS3_import"
+  					],
+  					"name": "Swagger_Petstore-deleteOrder",
+  					"methods": [
+  						"DELETE"
+  					],
+  					"paths": [
+  						"/store/order/(?<orderId>[^/]+)$"
+  					],
+  					"strip_path": false
+  				},
+  				{
+  					"tags": [
+  						"OAS3_import"
+  					],
+  					"name": "Swagger_Petstore-createUser",
+  					"methods": [
+  						"POST"
+  					],
+  					"paths": [
+  						"/user$"
+  					],
+  					"strip_path": false
+  				},
+  				{
+  					"tags": [
+  						"OAS3_import"
+  					],
+  					"name": "Swagger_Petstore-createUsersWithArrayInput",
+  					"methods": [
+  						"POST"
+  					],
+  					"paths": [
+  						"/user/createWithArray$"
+  					],
+  					"strip_path": false
+  				},
+  				{
+  					"tags": [
+  						"OAS3_import"
+  					],
+  					"name": "Swagger_Petstore-createUsersWithListInput",
+  					"methods": [
+  						"POST"
+  					],
+  					"paths": [
+  						"/user/createWithList$"
+  					],
+  					"strip_path": false
+  				},
+  				{
+  					"tags": [
+  						"OAS3_import"
+  					],
+  					"name": "Swagger_Petstore-loginUser",
+  					"methods": [
+  						"GET"
+  					],
+  					"paths": [
+  						"/user/login$"
+  					],
+  					"strip_path": false
+  				},
+  				{
+  					"tags": [
+  						"OAS3_import"
+  					],
+  					"name": "Swagger_Petstore-logoutUser",
+  					"methods": [
+  						"GET"
+  					],
+  					"paths": [
+  						"/user/logout$"
+  					],
+  					"strip_path": false
+  				},
+  				{
+  					"tags": [
+  						"OAS3_import"
+  					],
+  					"name": "Swagger_Petstore-getUserByName",
+  					"methods": [
+  						"GET"
+  					],
+  					"paths": [
+  						"/user/(?<username>[^/]+)$"
+  					],
+  					"strip_path": false
+  				},
+  				{
+  					"tags": [
+  						"OAS3_import"
+  					],
+  					"name": "Swagger_Petstore-updateUser",
+  					"methods": [
+  						"PUT"
+  					],
+  					"paths": [
+  						"/user/(?<username>[^/]+)$"
+  					],
+  					"strip_path": false
+  				},
+  				{
+  					"tags": [
+  						"OAS3_import"
+  					],
+  					"name": "Swagger_Petstore-deleteUser",
+  					"methods": [
+  						"DELETE"
+  					],
+  					"paths": [
+  						"/user/(?<username>[^/]+)$"
+  					],
+  					"strip_path": false
+  				}
+  			],
+  			"tags": [
+  				"OAS3_import"
+  			]
+  		}
+  	]
+  }
+contentType: yaml
