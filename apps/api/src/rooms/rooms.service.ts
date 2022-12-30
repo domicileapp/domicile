@@ -1,4 +1,4 @@
-import { EntityRepository } from '@mikro-orm/core'
+import { EntityRepository, NotFoundError } from '@mikro-orm/core'
 import { InjectRepository } from '@mikro-orm/nestjs'
 import { Injectable } from '@nestjs/common'
 import { CreateRoomDto } from './dto/create-room.dto'
@@ -24,18 +24,30 @@ export class RoomsService {
   }
 
   findAll() {
-    return `This action returns all rooms`
+    return this.roomsRepository.findAll({ populate: ['createdBy'] })
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} room`
+  async findOne(id: number) {
+    try {
+      const list = this.roomsRepository.findOneOrFail(
+        { id },
+        { populate: ['createdBy'] },
+      )
+      return list
+    } catch (e) {
+      return new NotFoundError(`Not found`, Room)
+    }
   }
 
-  update(id: number, updateRoomDto: UpdateRoomDto) {
-    return `This action updates a #${id} room`
+  async update(id: number, updateRoomDto: UpdateRoomDto) {
+    const room = await this.roomsRepository.findOne(id)
+    this.roomsRepository.assign(room, updateRoomDto)
+    await this.roomsRepository.flush()
+    return room
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} room`
+  async remove(id: number) {
+    await this.roomsRepository.removeAndFlush({ id })
+    return true
   }
 }
