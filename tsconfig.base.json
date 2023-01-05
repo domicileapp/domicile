@@ -12,28 +12,14 @@
     "target": "es2015",
     "module": "esnext",
     "removeComments": true,
-    "lib": [
-      "es2017",
-      "dom"
-    ],
+    "lib": ["es2017", "dom"],
     "skipDefaultLibCheck": true,
     "composite": true,
     "baseUrl": ".",
     "paths": {
-      "@apps/*": [
-        "apps/*"
-      ],
-      "@libs/*": [
-        "libs/*"
-      ]
+      "@apps/*": ["apps/*"],
+      "@libs/*": ["libs/*"]
     }
   },
-  "exclude": [
-    "node_modules",
-    ".vscode",
-    ".yarn",
-    "dist",
-    "public",
-    "tmp"
-  ]
+  "exclude": ["node_modules", ".vscode", ".yarn", "dist", "public", "tmp"]
 }

@@ -80,7 +80,7 @@
       "pull-request-title-pattern": "chore: release ${version}",
       "pull-request-header": "Automated release PR"
     },
-    "apps/web": {
+    "web": {
       "package-name": "@domicile/web",
       "bump-minor-pre-major": true,
       "bump-patch-for-minor-pre-major": true,
@@ -90,23 +90,13 @@
       "pull-request-title-pattern": "chore: release ${version}",
       "pull-request-header": "Automated release PR"
     },
-    "apps/api": {
+    "api": {
       "package-name": "@domicile/api",
       "bump-minor-pre-major": true,
       "bump-patch-for-minor-pre-major": true,
       "draft": false,
       "versioning": "default",
       "prerelease": true,
-      "pull-request-title-pattern": "chore: release ${version}",
-      "pull-request-header": "Automated release PR"
-    },
-    "apps/k8s": {
-      "package-name": "@domicile/infra",
-      "bump-minor-pre-major": true,
-      "bump-patch-for-minor-pre-major": true,
-      "draft": false,
-      "versioning": "default",
-      "prerelease": false,
       "pull-request-title-pattern": "chore: release ${version}",
       "pull-request-header": "Automated release PR"
     },
