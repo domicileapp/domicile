@@ -1,12 +1,15 @@
-FROM node:lts
+FROM node:latest as build-stage
+WORKDIR /app
+COPY package*.json ./
 
-# WORKDIR /domicile/app
+RUN curl -sL https://unpkg.com/@pnpm/self-installer | node
 
-# COPY package.json package.json
+RUN pnpm install
+COPY ./ .
+RUN pnpm build
 
-# RUN npm i
+FROM nginx as production-stage
+RUN mkdir /app
+COPY --from=build-stage /app/dist /app
+COPY nginx.conf /etc/nginx/nginx.conf
 
-COPY . /domicile/app
-RUN ls -a
-
-# CMD ["npm", "run", "dev"]

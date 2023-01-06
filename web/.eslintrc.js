@@ -17,11 +17,7 @@ module.exports = {
     'vue/setup-compiler-macros': true,
   },
   // Rules order is important, please avoid shuffling them
-  extends: [
-    'plugin:@typescript-eslint/recommended',
-    'plugin:vue/vue3-essential',
-    'prettier',
-  ],
+  extends: ['plugin:@typescript-eslint/recommended', 'plugin:vue/vue3-essential', 'prettier'],
   plugins: [
     // required to apply rules which need type information
     '@typescript-eslint',
@@ -66,5 +62,6 @@ module.exports = {
     'no-unused-vars': 'off',
     // allow debugger during development only
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'vue/multi-word-component-names': 'off',
   },
 }
