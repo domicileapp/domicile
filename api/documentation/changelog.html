@@ -1,0 +1,218 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>domicile-api documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="./" class="navbar-brand">domicile-api documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content getting-started">
+                   <div class="content-data">
+
+<h1 id="changelog">Changelog</h1>
+<h2 id="030-2022-11-29"><a href="https://github.com/domicileapp/domicile/compare/api-v0.2.0...api-v0.3.0">0.3.0</a> (2022-11-29)</h2>
+<h3 id="⚠-breaking-changes">⚠ BREAKING CHANGES</h3>
+<ul>
+<li>remove NX</li>
+<li><strong>api/tasks:</strong> add completed attribute</li>
+<li><code>TypeORM</code> =&gt; <code>MikroORM</code></li>
+<li>trying out new starter template</li>
+<li>authentication changes</li>
+<li>more authentication changes</li>
+<li>authentication fixes</li>
+</ul>
+<h3 id="features">Features</h3>
+<ul>
+<li><code>TypeORM</code> =&gt; <code>MikroORM</code> (<a href="https://github.com/domicileapp/domicile/commit/5b43abd15f19861ea80f8782db49df761f5896e7">5b43abd</a>)</li>
+<li><strong>api/tasks:</strong> add completed attribute (<a href="https://github.com/domicileapp/domicile/commit/4780c9e333c89f56ed9259759de5feac4eb7d326">4780c9e</a>)</li>
+<li><strong>api:</strong> basic authentication (login) functionality (<a href="https://github.com/domicileapp/domicile/commit/60413076c07795a104cfb8d35994b4a5e0660ecf">6041307</a>)</li>
+<li><strong>api:</strong> start of task and todos (<a href="https://github.com/domicileapp/domicile/commit/931da67c101adcfbf1d1f397275082da515b46be">931da67</a>)</li>
+<li>authentication changes (<a href="https://github.com/domicileapp/domicile/commit/3850ca4f03d6b067f310d66d31469a97f7f822e9">3850ca4</a>)</li>
+<li>authentication changes p2 (<a href="https://github.com/domicileapp/domicile/commit/f22950e934f58642e2d8926070f4216ad2167b58">f22950e</a>)</li>
+<li>create task mutation (<a href="https://github.com/domicileapp/domicile/commit/5bb4d017394d72d35eae6e6c9db0a93344cde3eb">5bb4d01</a>)</li>
+<li>database seeder (yay) (<a href="https://github.com/domicileapp/domicile/commit/0a4e3b57176165a9f7477fc7eda48bd12a7e127a">0a4e3b5</a>)</li>
+<li>docker and keycloak (<a href="https://github.com/domicileapp/domicile/commit/005bf2a06deab50d9227d7877fefe38f9c58175e">005bf2a</a>)</li>
+<li>export swagger specifications (<a href="https://github.com/domicileapp/domicile/commit/aabaa964430412739432b07b8e6c13ba2640cd29">aabaa96</a>)</li>
+<li>init (<a href="https://github.com/domicileapp/domicile/commit/b42d99550b826be366614fae24b3e8c5589db42d">b42d995</a>)</li>
+<li>more authentication changes (<a href="https://github.com/domicileapp/domicile/commit/7b3fad9e6638946b4f03367264cfe925573d2dee">7b3fad9</a>)</li>
+<li>todo base configuration (<a href="https://github.com/domicileapp/domicile/commit/4ac7514217b4f11f7cf3f2e82aeb7ae15425a0ae">4ac7514</a>)</li>
+<li>trying out new starter template (<a href="https://github.com/domicileapp/domicile/commit/2be75efbeb173585efc1c7e96159918c71069671">2be75ef</a>)</li>
+</ul>
+<h3 id="documentation">Documentation</h3>
+<ul>
+<li>update swagger documentation (<a href="https://github.com/domicileapp/domicile/commit/4b3ce51414b2b428f5d393820e4c80ff7edcb887">4b3ce51</a>)</li>
+</ul>
+<h3 id="performance-improvements">Performance improvements</h3>
+<ul>
+<li><strong>api:</strong> test out redis and websockets (<a href="https://github.com/domicileapp/domicile/commit/97f6f20deaa409b05dfa714d05f4ede958723d43">97f6f20</a>)</li>
+<li><strong>infra:</strong> migrate to k8s for database (<a href="https://github.com/domicileapp/domicile/commit/0f2288aeae19f4fa51c1a8d738007e8e96fe3472">0f2288a</a>)</li>
+</ul>
+<h3 id="refactors">Refactors</h3>
+<ul>
+<li>todo =&gt; task (<a href="https://github.com/domicileapp/domicile/commit/42a292af6551a46a5bfed16b152036517a0af79e">42a292a</a>)</li>
+</ul>
+<h3 id="bug-fixes">Bug fixes</h3>
+<ul>
+<li><strong>api/auth:</strong> login issues (<a href="https://github.com/domicileapp/domicile/commit/336a4174e47bd0d1508dc072ad4e79689e994be8">336a417</a>)</li>
+<li><strong>api:</strong> openapi formatting fix (<a href="https://github.com/domicileapp/domicile/commit/ba9e4eabd7a52c20b2f507bf179540a454867feb">ba9e4ea</a>)</li>
+<li>authentication fixes (<a href="https://github.com/domicileapp/domicile/commit/8a1e98b1b21992d7fba45a13016b2acd702a5b13">8a1e98b</a>)</li>
+<li><strong>deps:</strong> pin dependencies (<a href="https://github.com/domicileapp/domicile/commit/ddc6f5c66f59228e050b13e7d878b96c6f3f89e5">ddc6f5c</a>)</li>
+<li><strong>deps:</strong> pin dependencies (<a href="https://github.com/domicileapp/domicile/commit/094acfa528637487f499cd9981177c75b793f172">094acfa</a>)</li>
+<li><strong>openapi:</strong> pretty print swagger-spec (<a href="https://github.com/domicileapp/domicile/commit/84b661fa149358766ab1d14b713ea78936f87330">84b661f</a>)</li>
+<li>yarn lock files out of sync (<a href="https://github.com/domicileapp/domicile/commit/f84ee9e9f6fbaec358945630c9a6f6cb9e8b90b6">f84ee9e</a>)</li>
+</ul>
+<h3 id="chores">Chores</h3>
+<ul>
+<li>add openapi/postman folders (<a href="https://github.com/domicileapp/domicile/commit/46e05fc68364d35a932b0f348d0b914e1a68fad4">46e05fc</a>)</li>
+<li><strong>api:</strong> move openapi document (<a href="https://github.com/domicileapp/domicile/commit/ed62f1c00c0fe3572e37167148fe6a6d82ff2d50">ed62f1c</a>)</li>
+<li><strong>api:</strong> move openapi json output (<a href="https://github.com/domicileapp/domicile/commit/6d3da2c3301d121354345ce535420e3782c311a6">6d3da2c</a>)</li>
+<li><strong>build:</strong> move to yarn 3 (<a href="https://github.com/domicileapp/domicile/commit/6a9592485f47655c32c7100efa6de53409f891cb">6a95924</a>)</li>
+<li><strong>deps:</strong> add new required deps (<a href="https://github.com/domicileapp/domicile/commit/7da214f0c3dab97a422b1b86e871df4c13f2613b">7da214f</a>)</li>
+<li><strong>deps:</strong> bump dependencies (<a href="https://github.com/domicileapp/domicile/commit/92b43ebd7da92e99f64a19836970e3324ec76adf">92b43eb</a>)</li>
+<li><strong>deps:</strong> bump dependencies to latest (<a href="https://github.com/domicileapp/domicile/commit/222a6bd3826501b15bdc7a44f61c53e6450b0834">222a6bd</a>)</li>
+<li><strong>deps:</strong> bump to latest (<a href="https://github.com/domicileapp/domicile/commit/bf06bcb70cb4ddcddf5bfdeefe052587ad8e4cd8">bf06bcb</a>)</li>
+<li><strong>deps:</strong> bump to latest patches (<a href="https://github.com/domicileapp/domicile/commit/adcec01c53dd1170653c701717895044be128714">adcec01</a>)</li>
+<li><strong>deps:</strong> remove release-it (<a href="https://github.com/domicileapp/domicile/commit/29b1cc1044a78264b56e79f9f3bb6b6b0b45919f">29b1cc1</a>)</li>
+<li><strong>deps:</strong> update dependency @nestjs/cli to v9.1.3 (<a href="https://github.com/domicileapp/domicile/commit/084fd38ff91b61db924ea78617b2f1885444fa25">084fd38</a>)</li>
+<li><strong>deps:</strong> update dependency eslint to v8.23.1 (<a href="https://github.com/domicileapp/domicile/commit/7207845d245ca66f375ab3a04778edaf88f865cd">7207845</a>)</li>
+<li><strong>deps:</strong> update dependency ts-jest to v28.0.8 (<a href="https://github.com/domicileapp/domicile/commit/adce1c95ef1bf575e58dcba595d42ec0ec81aabf">adce1c9</a>)</li>
+<li><strong>deps:</strong> update dependency tsconfig-paths to v4.1.0 (<a href="https://github.com/domicileapp/domicile/commit/cb60ee5c5f87d9bfa1d5eb8178581e6425087e53">cb60ee5</a>)</li>
+<li><strong>deps:</strong> update jest monorepo (<a href="https://github.com/domicileapp/domicile/commit/5ca205b47e88af5091c1c202077f4aa6d7ea0a89">5ca205b</a>)</li>
+<li><strong>deps:</strong> update jest monorepo to v29 (<a href="https://github.com/domicileapp/domicile/commit/736efc296f1034ae3ffb018b26b9a5aaf2cd7b60">736efc2</a>)</li>
+<li><strong>deps:</strong> update nest monorepo to v9 (<a href="https://github.com/domicileapp/domicile/commit/15c8bb6e8804f67536f7d87509569ba6ad30e618">15c8bb6</a>)</li>
+<li><strong>deps:</strong> update typescript-eslint monorepo to v5.37.0 (<a href="https://github.com/domicileapp/domicile/commit/8a9e6ccaae1ff53db122c5950b258cf82fdcd15e">8a9e6cc</a>)</li>
+<li>general configureation (<a href="https://github.com/domicileapp/domicile/commit/21fa4d5b7fa9dace9b94dc8b15f364a7f77b41cc">21fa4d5</a>)</li>
+<li>postman updates (<a href="https://github.com/domicileapp/domicile/commit/b0fe04a8bf7ea9560127f8065dce56d6824a15c3">b0fe04a</a>)</li>
+<li><strong>postman:</strong> add test to populate access token (<a href="https://github.com/domicileapp/domicile/commit/f451620410bc8541bd2a74a6085c644a60e97722">f451620</a>)</li>
+<li><strong>postman:</strong> new collection for testing (<a href="https://github.com/domicileapp/domicile/commit/a268176a80fb03072542a6cae3290d242aab9599">a268176</a>)</li>
+<li>release 0.0.2 (<a href="https://github.com/domicileapp/domicile/commit/a7777f9bb5391fc9714e21aaa50665adbdf2d9d0">a7777f9</a>)</li>
+<li>release 0.1.0 (<a href="https://github.com/domicileapp/domicile/commit/12f25ae879a55bdae1b1eb59f16d16e1cc8b11d7">12f25ae</a>)</li>
+<li>release 0.2.0 (<a href="https://github.com/domicileapp/domicile/commit/697fdecfcf61bd9d5cb16c214cfc05a8b02ddb8b">697fdec</a>)</li>
+<li>temp file updates (<a href="https://github.com/domicileapp/domicile/commit/7e70996796ea8d85599ebee02a1cbe9f547d9828">7e70996</a>)</li>
+</ul>
+<h3 id="build">Build</h3>
+<ul>
+<li><strong>deps-dev:</strong> bump @nestjs/testing from 9.1.1 to 9.1.2 in /api (<a href="https://github.com/domicileapp/domicile/commit/e79eb1031a78ce63acd3f06d2593e14d3de109f7">e79eb10</a>)</li>
+<li><strong>deps-dev:</strong> bump @nestjs/testing from 9.1.6 to 9.2.0 in /api (<a href="https://github.com/domicileapp/domicile/commit/17463107909eb1978737a5d5f5d3eb110601f04b">1746310</a>)</li>
+<li><strong>deps-dev:</strong> bump @types/jest from 29.0.2 to 29.0.3 in /api (<a href="https://github.com/domicileapp/domicile/commit/ec3cec7981d4a5a649d736125482b828421fc7c3">ec3cec7</a>)</li>
+<li><strong>deps-dev:</strong> bump @types/validator from 13.7.7 to 13.7.8 in /api (<a href="https://github.com/domicileapp/domicile/commit/f03e59c512f1cc98eb9bdc627fec3740b629b5f2">f03e59c</a>)</li>
+<li><strong>deps-dev:</strong> bump dependencies in /api (<a href="https://github.com/domicileapp/domicile/commit/84309a78bfd6fb8c826ab8fc09b9d2c60c466f74">84309a7</a>)</li>
+<li><strong>deps:</strong> bump @nestjs/common from 9.1.1 to 9.1.2 in /api (<a href="https://github.com/domicileapp/domicile/commit/28c50ef1eb423a22dd00f8c9c090da95b251ce51">28c50ef</a>)</li>
+<li><strong>deps:</strong> bump @nestjs/core from 9.1.1 to 9.1.2 in /api (<a href="https://github.com/domicileapp/domicile/commit/aac9a3ed62166eb678984f21fc1529ec53162294">aac9a3e</a>)</li>
+<li><strong>deps:</strong> bump @nestjs/core from 9.1.6 to 9.2.0 in /api (<a href="https://github.com/domicileapp/domicile/commit/8f051933f97035762265c40fd76d6031957cb626">8f05193</a>)</li>
+<li><strong>deps:</strong> bump @nestjs/platform-express from 9.1.1 to 9.1.2 in /api (<a href="https://github.com/domicileapp/domicile/commit/e3e57a6f4fc6a44ec355b713d4d539ff4607fe06">e3e57a6</a>)</li>
+<li><strong>deps:</strong> bump @types/validator to 13.7.9 (<a href="https://github.com/domicileapp/domicile/commit/5c15f52986fad7b483ae9649ecca475d91348ec2">5c15f52</a>)</li>
+<li><strong>deps:</strong> bump dependencies to latest patches (<a href="https://github.com/domicileapp/domicile/commit/1fbfb157cf7082cce64edb15d21ed94d50352e23">1fbfb15</a>)</li>
+<li><strong>deps:</strong> bump dependencies to the latest patches (<a href="https://github.com/domicileapp/domicile/commit/4c52515ba6003e310ccc5f0c4939757c61bafa3e">4c52515</a>)</li>
+<li><strong>deps:</strong> bump joi from 17.6.0 to 17.6.1 in /api (<a href="https://github.com/domicileapp/domicile/commit/be38bae3ba344e423da19aafdd05cf4aa0adcb5f">be38bae</a>)</li>
+<li><strong>deps:</strong> move to pnpm [skip ci] (<a href="https://github.com/domicileapp/domicile/commit/9c159b1db4daca37788bacb9012be550e313d63e">9c159b1</a>)</li>
+<li><strong>docker:</strong> docker development containters testing (<a href="https://github.com/domicileapp/domicile/commit/ee0b054070d6d3c9fd7d30e593a708c1c2a6aa4f">ee0b054</a>)</li>
+<li>evaluating release-it (<a href="https://github.com/domicileapp/domicile/commit/03b1db57727b8ad72b94e972e7e2f45d8e701c46">03b1db5</a>)</li>
+<li>update release-please config (<a href="https://github.com/domicileapp/domicile/commit/13858639abfaeae0c7215b4c8f37b7fd649d8847">1385863</a>)</li>
+</ul>
+<h3 id="revert">revert</h3>
+<ul>
+<li>remove NX (<a href="https://github.com/domicileapp/domicile/commit/0d09d6e44decbfefca5a148740ff7b0c13a8ba1f">0d09d6e</a>)</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
+            var COMPODOC_CURRENT_PAGE_URL = 'changelog.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+
+       <script src="./js/menu-wc.js" defer></script>
+       <script nomodule src="./js/menu-wc_es5.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+       <script src="./js/libs/zepto.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

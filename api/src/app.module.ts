@@ -6,16 +6,15 @@ import {
 } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { MikroOrmMiddleware, MikroOrmModule } from '@mikro-orm/nestjs'
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
 import configuration from './config/configuration'
 import { UsersModule } from './users/users.module'
 import { ListsModule } from './lists/lists.module'
 import { MikroORM } from '@mikro-orm/core'
 import { TasksModule } from './tasks/tasks.module'
-import { ChoresModule } from './chores/chores.module';
-import { RoomsModule } from './rooms/rooms.module';
+import { ChoresModule } from './chores/chores.module'
+import { RoomsModule } from './rooms/rooms.module'
+import { HealthModule } from './health/health.module'
 
 @Module({
   imports: [
@@ -30,9 +29,10 @@ import { RoomsModule } from './rooms/rooms.module';
     TasksModule,
     ChoresModule,
     RoomsModule,
+    HealthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule implements NestModule, OnModuleInit {
   constructor(private readonly orm: MikroORM) {}

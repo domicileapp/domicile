@@ -4,6 +4,9 @@ import { Injectable } from '@nestjs/common'
 import { UpdateProfileDto } from './dto/update-profile.dto'
 import { User } from './user.entity'
 
+/**
+ * All args for FindAll.
+ */
 interface FindAllArgs {
   relations?: string[]
 }
