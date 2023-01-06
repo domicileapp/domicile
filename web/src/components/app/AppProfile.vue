@@ -1,4 +1,4 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 const expanded = ref(false)
 
 function onClick(event: any) {
@@ -17,27 +17,19 @@ function onClick(event: any) {
     <transition name="layout-submenu-wrapper">
       <ul v-show="expanded">
         <li>
-          <button class="p-link">
-            <i class="pi pi-fw pi-user" /><span>Account</span>
-          </button>
+          <button class="p-link"><i class="pi pi-fw pi-user" /><span>Account</span></button>
         </li>
         <li>
           <button class="p-link">
-            <i class="pi pi-fw pi-inbox" /><span>Notifications</span><span
-              class="menuitem-badge"
-            >2</span>
+            <i class="pi pi-fw pi-inbox" /><span>Notifications</span><span class="menuitem-badge">2</span>
           </button>
         </li>
         <li>
-          <button class="p-link">
-            <i class="pi pi-fw pi-power-off" /><span>Logout</span>
-          </button>
+          <button class="p-link"><i class="pi pi-fw pi-power-off" /><span>Logout</span></button>
         </li>
       </ul>
     </transition>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

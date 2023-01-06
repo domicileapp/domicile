@@ -1,4 +1,6 @@
-declare interface Window {}
+declare interface Window {
+  // extend the window
+}
 
 declare module '*.vue' {
   import type { DefineComponent } from 'vue'

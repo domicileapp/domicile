@@ -1,4 +1,4 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 import { useThemeStore } from '@/store'
 
 const emit = defineEmits(['menuToggle', 'topbarMenuToggle'])
@@ -69,21 +69,30 @@ function onTopbarMenuToggle(event: any) {
     <OverlayPanel id="overlay_panel" ref="op" append-to="body" style="width: 200px">
       <div class="field-radiobutton">
         <RadioButton
-          id="saga" v-model="themeStore.themeName" name="layoutColorMode" value="saga"
+          id="saga"
+          v-model="themeStore.themeName"
+          name="layoutColorMode"
+          value="saga"
           @change="themeStore.setLight()"
         />
         <label>Light</label>
       </div>
       <div class="field-radiobutton">
         <RadioButton
-          id="vela" v-model="themeStore.themeName" name="layoutColorMode" value="vela"
+          id="vela"
+          v-model="themeStore.themeName"
+          name="layoutColorMode"
+          value="vela"
           @change="themeStore.setDim()"
         />
         <label>Dim</label>
       </div>
       <div class="field-radiobutton">
         <RadioButton
-          id="arya" v-model="themeStore.themeName" name="layoutColorMode" value="arya"
+          id="arya"
+          v-model="themeStore.themeName"
+          name="layoutColorMode"
+          value="arya"
           @change="themeStore.setDark()"
         />
         <label>Dark</label>
@@ -92,19 +101,23 @@ function onTopbarMenuToggle(event: any) {
       <h6>Primary Color</h6>
       <div class="flex">
         <div
-          style="width:2rem;height:2rem;border-radius:6px" class="bg-blue-500 mr-3 cursor-pointer"
+          style="width: 2rem; height: 2rem; border-radius: 6px"
+          class="bg-blue-500 mr-3 cursor-pointer"
           @click="themeStore.setColor('blue')"
         />
         <div
-          style="width:2rem;height:2rem;border-radius:6px" class="bg-green-500 mr-3 cursor-pointer"
+          style="width: 2rem; height: 2rem; border-radius: 6px"
+          class="bg-green-500 mr-3 cursor-pointer"
           @click="themeStore.setColor('green')"
         />
         <div
-          style="width:2rem;height:2rem;border-radius:6px" class="bg-yellow-300 mr-3 cursor-pointer"
+          style="width: 2rem; height: 2rem; border-radius: 6px"
+          class="bg-yellow-300 mr-3 cursor-pointer"
           @click="themeStore.setColor('orange')"
         />
         <div
-          style="width:2rem;height:2rem;border-radius:6px" class="bg-purple-500 cursor-pointer"
+          style="width: 2rem; height: 2rem; border-radius: 6px"
+          class="bg-purple-500 cursor-pointer"
           @click="themeStore.setColor('purple')"
         />
       </div>

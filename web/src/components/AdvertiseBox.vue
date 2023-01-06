@@ -1,8 +1,8 @@
-<script setup lang="ts">
-defineProps<{
-  header: string
-  icon: string
-  color?: string
+<script setup lang='ts'>
+const props = defineProps<{
+  header: String
+  icon: String
+  color?: String
 }>()
 </script>
 
@@ -20,4 +20,6 @@ defineProps<{
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>

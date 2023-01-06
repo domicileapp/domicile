@@ -10,8 +10,11 @@ export const install: UserModule = ({ isClient, initialState, app, router }) => 
   // Refer to
   // https://github.com/antfu/vite-ssg/blob/main/README.md#state-serialization
   // for other serialization strategies.
-  if (isClient) pinia.state.value = initialState.pinia || {}
-  else initialState.pinia = pinia.state.value
+  if (isClient)
+    pinia.state.value = (initialState.pinia) || {}
+
+  else
+    initialState.pinia = pinia.state.value
 
   // enable athentification
   const auth = useAuthStore()
@@ -20,10 +23,14 @@ export const install: UserModule = ({ isClient, initialState, app, router }) => 
     if (path === '/logout') {
       auth.logout()
       router.push('/')
-    } else if (path.includes('/admin')) {
-      if (auth.authentificated) next()
-      else router.push('/login')
-    } else {
+    }
+    else if (path.includes('/admin')) {
+      if (auth.authentificated)
+        next()
+      else
+        router.push('/login')
+    }
+    else {
       next()
     }
   })

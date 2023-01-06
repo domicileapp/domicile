@@ -1,4 +1,4 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 const version = ref(import.meta.env.VITE_APP_VERSION)
 </script>
 
@@ -8,6 +8,4 @@ const version = ref(import.meta.env.VITE_APP_VERSION)
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

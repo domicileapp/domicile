@@ -1,13 +1,9 @@
 export const navigationMenu = [
   {
     label: 'Home',
-    items: [
-      {
-        label: 'Dashboard',
-        icon: 'pi pi-fw pi-home',
-        to: '/',
-      },
-    ],
+    items: [{
+      label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/',
+    }],
   },
   {
     label: 'PrimeVue',
@@ -35,22 +31,14 @@ export const navigationMenu = [
   },
   {
     label: 'Markdown',
-    items: [
-      {
-        label: 'Sample Page',
-        icon: 'pi pi-fw pi-star',
-        to: '/markdown/hello',
-      },
-    ],
+    items: [{
+      label: 'Sample Page', icon: 'pi pi-fw pi-star', to: '/markdown/hello',
+    }],
   },
   {
     label: 'Admin',
-    items: [
-      {
-        label: 'Admin Page',
-        icon: 'pi pi-fw pi-sign-in',
-        to: '/admin',
-      },
-    ],
+    items: [{
+      label: 'Admin Page', icon: 'pi pi-fw pi-sign-in', to: '/admin',
+    }],
   },
 ]

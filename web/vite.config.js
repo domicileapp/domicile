@@ -42,8 +42,14 @@ export default defineConfig({
   },
 
   optimizeDeps: {
-    include: ['vue', 'vue-router', '@vueuse/core'],
-    exclude: ['vue-demi'],
+    include: [
+      'vue',
+      'vue-router',
+      '@vueuse/core',
+    ],
+    exclude: [
+      'vue-demi',
+    ],
   },
   plugins: [
     Unocss({}),
@@ -69,29 +75,41 @@ export default defineConfig({
     }),
     Components({
       dts: 'src/components.d.ts',
-      resolvers: [],
+      resolvers: [
+      ],
     }),
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
     Layouts(),
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({
-      imports: ['vue', 'vue-router', 'vue-i18n', '@vueuse/head'],
-      exclude: ['**/dist/**'],
+      imports: [
+        'vue',
+        'vue-router',
+        'vue-i18n',
+        '@vueuse/head',
+      ],
+      exclude: [
+        '**/dist/**',
+      ],
       dts: 'src/auto-import.d.ts',
     }),
     Pages({
       // pagesDir: ['src/pages', 'src/pages2'],
-      pagesDir: [{ dir: 'src/pages', baseRoute: '' }],
+      pagesDir: [
+        { dir: 'src/pages', baseRoute: '' },
+      ],
       extensions: ['vue', 'md'],
       syncIndex: true,
       replaceSquareBrackets: true,
       extendRoute(route) {
-        if (route.name === 'about') route.props = (route) => ({ query: route.query.q })
+        if (route.name === 'about')
+          route.props = route => ({ query: route.query.q })
 
         if (route.name === 'components') {
           return {
             ...route,
             beforeEnter: (route) => {
+
               // console.log(route)
             },
           }
@@ -105,15 +123,14 @@ export default defineConfig({
         // https://prismjs.com/
         md.use(Prism)
         md.use(LinkAttributes, {
-          matcher: (link) => /^https?:\/\//.test(link),
+          matcher: link => /^https?:\/\//.test(link),
           attrs: {
             target: '_blank',
             rel: 'noopener',
           },
         })
       },
-    }),
-    Restart({
+    }), Restart({
       restart: ['../../dist/*.js'],
     }),
 
@@ -129,4 +146,5 @@ export default defineConfig({
       '~': path.resolve(__dirname, 'node_modules/'),
     },
   },
+
 })

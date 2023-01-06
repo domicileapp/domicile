@@ -1,7 +1,7 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 import AppSubmenu from './AppSubmenu.vue'
 
-const props = defineProps<{
+defineProps<{
   model: Array<any>
 }>()
 
@@ -18,6 +18,4 @@ function onmenuItemClick(event: any) {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

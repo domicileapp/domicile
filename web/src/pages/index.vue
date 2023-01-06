@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang='ts'>
 import AdvertiseBox from '@/components/AdvertiseBox.vue'
 </script>
 
@@ -9,9 +9,13 @@ import AdvertiseBox from '@/components/AdvertiseBox.vue'
       <span class="text-blue-400"> & TypeScript</span>
       <span class="text-blue-600"> & Vite</span>
     </div>
-    <h2 class="text-2xl pb-6">Starter for Vue.js Development.</h2>
+    <h2 class="text-2xl pb-6">
+      Starter for Vue.js Development.
+    </h2>
     <div class="grid grid-cols-3 gap-4">
-      <AdvertiseBox header="VUE 3.2" icon="pi-check-circle" color="green-600"> Composition Api </AdvertiseBox>
+      <AdvertiseBox header="VUE 3.2" icon="pi-check-circle" color="green-600">
+        Composition Api
+      </AdvertiseBox>
       <AdvertiseBox header="Script Setup" icon="pi-check-circle" color="green-600">
         Reduce a lot of boilerplate code
       </AdvertiseBox>
@@ -27,7 +31,9 @@ import AdvertiseBox from '@/components/AdvertiseBox.vue'
       <AdvertiseBox header="Vite Layouts" icon="pi-check-circle" color="blue-600">
         Layouts like nuxt layout templates
       </AdvertiseBox>
-      <AdvertiseBox header="Typescript 4.8" icon="pi-check-circle" color="blue-400"> Typesafe by default </AdvertiseBox>
+      <AdvertiseBox header="Typescript 4.8" icon="pi-check-circle" color="blue-400">
+        Typesafe by default
+      </AdvertiseBox>
 
       <AdvertiseBox header="PrimeVue 3.20" icon="pi-check-circle" color="green-600">
         Excellent Component Library for VUE
@@ -41,7 +47,9 @@ import AdvertiseBox from '@/components/AdvertiseBox.vue'
       <AdvertiseBox header="Formkit" icon="pi-check-circle" color="green-600">
         Formkit PrimeVue Example included
       </AdvertiseBox>
-      <AdvertiseBox header="VueUse" icon="pi-check-circle" color="green-600"> VueUse Head included </AdvertiseBox>
+      <AdvertiseBox header="VueUse" icon="pi-check-circle" color="green-600">
+        VueUse Head included
+      </AdvertiseBox>
     </div>
   </div>
 </template>
