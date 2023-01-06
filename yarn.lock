@@ -2329,10 +2329,10 @@ regexpp@^3.2.0:
   resolved "https://registry.yarnpkg.com/regexpp/-/regexpp-3.2.0.tgz#0425a2768d8f23bad70ca4b90461fa2f1213e1b2"
   integrity sha512-pq2bWo9mVD43nbts2wGv17XLiNLya+GklZ8kaDLV2Z08gDCsGpnKn9BFMepvWuHCbyVvY7J5o5+BVvoQbmlJLg==
 
-release-please@^15.0.0:
-  version "15.0.0"
-  resolved "https://registry.yarnpkg.com/release-please/-/release-please-15.0.0.tgz#7c51807720bb7af67b6b1fe62ed8e2c3f490fb7c"
-  integrity sha512-xNN/+xMuShbcpyLY0Gliu1OGHsz8gTNZzl/8V7i7BlphOJR9M0QTbp1vBxiBuy1IVm9NJEZ8DVytYXBGSguc3A==
+release-please@^15.1.0:
+  version "15.1.0"
+  resolved "https://registry.yarnpkg.com/release-please/-/release-please-15.1.0.tgz#2150a42297637fe15cbb4978264d75cea770cd58"
+  integrity sha512-EX4aN36qc5V+Q8/ifZT+bMB+bCrjvYkUssOVM38aA0MObZLiPMfzwzVTVoYr4Wiw8rg+Pen7G4I3+yG/sPgRjw==
   dependencies:
     "@conventional-commits/parser" "^0.4.1"
     "@google-automations/git-file-utils" "^1.2.0"

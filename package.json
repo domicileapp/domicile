@@ -11,7 +11,7 @@
     "lint": "prettier -w ."
   },
   "dependencies": {
-    "release-please": "^15.0.0",
+    "release-please": "^15.1.0",
     "weallbehave": "^1.2.0",
     "weallcontribute": "^1.0.9"
   },
