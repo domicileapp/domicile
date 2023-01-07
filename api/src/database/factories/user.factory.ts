@@ -1,6 +1,5 @@
 import { Factory, Faker } from '@mikro-orm/seeder'
-import { User } from '../../users/user.entity'
-import * as bcrypt from 'bcrypt'
+import { User } from '@/users/user.entity'
 
 export class UserFactory extends Factory<User> {
   model = User
@@ -13,7 +12,6 @@ export class UserFactory extends Factory<User> {
       firstName,
       lastName,
       username: faker.internet.userName(firstName, lastName),
-      // password: faker.internet.password(),
     }
   }
 }

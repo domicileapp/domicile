@@ -15,6 +15,7 @@ import { TasksModule } from './tasks/tasks.module'
 import { ChoresModule } from './chores/chores.module'
 import { RoomsModule } from './rooms/rooms.module'
 import { HealthModule } from './health/health.module'
+import { RecipesModule } from './recipes/recipes.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { HealthModule } from './health/health.module'
     ChoresModule,
     RoomsModule,
     HealthModule,
+    RecipesModule,
   ],
   controllers: [],
   providers: [],
