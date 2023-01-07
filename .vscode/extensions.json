@@ -6,9 +6,9 @@
     "wayou.vscode-todo-highlight",
     "pkief.material-icon-theme",
     "ionutvmi.path-autocomplete",
-    "abdelaziz18003.quasar-snippets",
     "ms-vscode-remote.remote-containers",
-    "vue.volar"
+    "vue.volar",
+    "vue.vscode-typescript-vue-plugin"
   ],
   "unwantedRecommendations": [
     "octref.vetur",

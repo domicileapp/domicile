@@ -22,7 +22,7 @@ export const useThemeStore = defineStore('theme', {
     theme: (state) => {
       return `${state.themeName}-${state.themeColor}`
     },
-    isDarkMode: state => state.themeName !== 'saga',
+    isDarkMode: (state) => state.themeName !== 'saga',
   },
   // optional actions
   actions: {
