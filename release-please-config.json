@@ -54,54 +54,84 @@
   "extra-files": [
     {
       "type": "json",
-      "path": "api/package.json",
+      "path": "apps/api/package.json",
       "jsonpath": "$.version"
     },
     {
       "type": "json",
-      "path": "app/package.json",
+      "path": "apps/web/package.json",
       "jsonpath": "$.version"
     },
     {
       "type": "json",
-      "path": "docs/package.json",
+      "path": "libs/auth/package.json",
+      "jsonpath": "$.version"
+    },
+    {
+      "type": "json",
+      "path": "libs/common/package.json",
+      "jsonpath": "$.version"
+    },
+    {
+      "type": "json",
+      "path": "libs/core/package.json",
       "jsonpath": "$.version"
     }
   ],
   "pull-release-header": "Automated release PR",
   "packages": {
     ".": {
+      "package-name": "domicile",
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": true,
+      "draft": false,
+      "versioning": "default",
+      "prerelease": true,
+      "pull-request-title-pattern": "chore: release ${version}",
+      "pull-request-header": "Automated release PR"
+    },
+    "apps/web": {
+      "package-name": "domicile-web",
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": true,
+      "draft": false,
+      "versioning": "default",
+      "prerelease": true,
+      "pull-request-title-pattern": "chore: release ${version}",
+      "pull-request-header": "Automated release PR"
+    },
+    "apps/api": {
+      "package-name": "domicile-api",
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": true,
+      "draft": false,
+      "versioning": "default",
+      "prerelease": true,
+      "pull-request-title-pattern": "chore: release ${version}",
+      "pull-request-header": "Automated release PR"
+    },
+    "libs/auth": {
+      "package-name": "@domicile/auth",
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": true,
+      "draft": false,
+      "versioning": "default",
+      "prerelease": true,
+      "pull-request-title-pattern": "chore: release ${version}",
+      "pull-request-header": "Automated release PR"
+    },
+    "libs/common": {
+      "package-name": "@domicile/common",
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": true,
+      "draft": false,
+      "versioning": "default",
+      "prerelease": true,
+      "pull-request-title-pattern": "chore: release ${version}",
+      "pull-request-header": "Automated release PR"
+    },
+    "libs/core": {
       "package-name": "@domicile/core",
-      "bump-minor-pre-major": true,
-      "bump-patch-for-minor-pre-major": true,
-      "draft": false,
-      "versioning": "default",
-      "prerelease": true,
-      "pull-request-title-pattern": "chore: release ${version}",
-      "pull-request-header": "Automated release PR"
-    },
-    "web": {
-      "package-name": "@domicile/web",
-      "bump-minor-pre-major": true,
-      "bump-patch-for-minor-pre-major": true,
-      "draft": false,
-      "versioning": "default",
-      "prerelease": true,
-      "pull-request-title-pattern": "chore: release ${version}",
-      "pull-request-header": "Automated release PR"
-    },
-    "api": {
-      "package-name": "@domicile/api",
-      "bump-minor-pre-major": true,
-      "bump-patch-for-minor-pre-major": true,
-      "draft": false,
-      "versioning": "default",
-      "prerelease": true,
-      "pull-request-title-pattern": "chore: release ${version}",
-      "pull-request-header": "Automated release PR"
-    },
-    "apps/docs": {
-      "package-name": "@domicile/docs",
       "bump-minor-pre-major": true,
       "bump-patch-for-minor-pre-major": true,
       "draft": false,
