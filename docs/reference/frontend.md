@@ -1,3 +1,0 @@
-# Frontend Documentation
-
-In progress.

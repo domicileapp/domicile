@@ -1,3 +1,0 @@
-# Kubernetes
-
-In progress.

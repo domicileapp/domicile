@@ -1,3 +1,0 @@
-# NGINX
-
-In progress.

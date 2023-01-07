@@ -1,3 +1,0 @@
-# Frontend Structure
-
-In progress.

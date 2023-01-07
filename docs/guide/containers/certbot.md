@@ -1,3 +1,0 @@
-# Certbot
-
-In progress.
