@@ -17,6 +17,8 @@
     "paths": {
       "@domicile/auth": ["libs/auth/src/index.ts"],
       "@domicile/common": ["libs/common/src/index.ts"],
+      "@domicile/config": ["libs/config/src/index.ts"],
+      "@domicile/contracts": ["libs/contracts/src/index.ts"],
       "@domicile/core": ["libs/core/src/index.ts"]
     }
   },

@@ -6,4 +6,4 @@ import { Module, Global } from '@nestjs/common'
   providers: [],
   exports: [],
 })
-export class CoreModule {}
+export class ContractsModule {}
