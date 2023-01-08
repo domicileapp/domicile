@@ -1,0 +1,11 @@
+{
+  "name": "domicile",
+  "version": "0.1.0",
+  "repository": "https://github.com/domicileapp/domicile.git",
+  "private": true,
+  "resolutions": {},
+  "workspaces": [
+    "libs/*",
+    "apps/*"
+  ]
+}

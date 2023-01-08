@@ -8,7 +8,9 @@
     "ionutvmi.path-autocomplete",
     "abdelaziz18003.quasar-snippets",
     "ms-vscode-remote.remote-containers",
-    "vue.volar"
+    "vue.volar",
+    "nrwl.angular-console",
+    "firsttris.vscode-jest-runner"
   ],
   "unwantedRecommendations": [
     "octref.vetur",
