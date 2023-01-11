@@ -5,7 +5,10 @@
   "scripts": {
     "postinstall": "node node_modules/@nx-plus/vue/patch-nx-dep-graph.js"
   },
-  "private": true,
+  "workspaces": [
+    "apps/**",
+    "libs/**"
+  ],
   "dependencies": {
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",

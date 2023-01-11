@@ -1,1 +1,1 @@
-export * from './lib/common.module'
+export * from './utils/shared.util'
