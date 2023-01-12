@@ -1653,7 +1653,7 @@ __metadata:
     "@nestjs/terminus": ^9.1.4
     "@nestjs/testing": ^9.2.1
     "@nestjs/websockets": ^9.2.1
-    "@socket.io/redis-adapter": ^8.0.0
+    "@socket.io/redis-adapter": ^8.0.1
     "@types/bcrypt": ^5.0.0
     "@types/cookie-parser": ^1.4.3
     "@types/express": ^4.17.15
@@ -3604,15 +3604,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@socket.io/redis-adapter@npm:^8.0.0":
-  version: 8.0.0
-  resolution: "@socket.io/redis-adapter@npm:8.0.0"
+"@socket.io/redis-adapter@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "@socket.io/redis-adapter@npm:8.0.1"
   dependencies:
     debug: ~4.3.1
     notepack.io: ~3.0.1
-    socket.io-adapter: ^2.4.0
+    socket.io-adapter: ~2.4.0
     uid2: 1.0.0
-  checksum: a186d352fa5da5c9106c7e648dc59fe8fe07d396d3aaf440849e977cc644bd105b1ce3b025233f26f486f427f0db6911e88de67a06c84868641f724fa12bc01f
+  checksum: 4d203d2cc93659377d2c897a5a8e707c9d3e9a9ce1b88670a25991cb45b1574fbaaa5c95aab8683a692256f6865a7ca09660093b02a754396882b2f303bf40bf
   languageName: node
   linkType: hard
 
@@ -17151,15 +17151,6 @@ __metadata:
   version: 4.2.0
   resolution: "smart-buffer@npm:4.2.0"
   checksum: b5167a7142c1da704c0e3af85c402002b597081dd9575031a90b4f229ca5678e9a36e8a374f1814c8156a725d17008ae3bde63b92f9cfd132526379e580bec8b
-  languageName: node
-  linkType: hard
-
-"socket.io-adapter@npm:^2.4.0":
-  version: 2.5.1
-  resolution: "socket.io-adapter@npm:2.5.1"
-  peerDependencies:
-    ws: "*"
-  checksum: fa28c4422af30941e6561aacb8f4dc079917cf2b0a800806b9b2845901ea84ef1f3afc5bfa92ad13c309496fc61f6fc4c8acb05f061e5d371f37d865fa2974a2
   languageName: node
   linkType: hard
 
