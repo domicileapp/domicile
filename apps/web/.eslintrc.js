@@ -21,10 +21,12 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:vue/vue3-essential',
     'prettier',
+    '../../.eslintrc.json',
   ],
   plugins: [
     // required to apply rules which need type information
     '@typescript-eslint',
+    'cypress',
     // https://eslint.vuejs.org/user-guide/#why-doesn-t-it-work-on-vue-files
     // required to lint *.vue files
     'vue',

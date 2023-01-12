@@ -15,6 +15,7 @@
     "@nestjs/platform-express": "^9.2.1",
     "@nestjs/schematics": "^9.0.4",
     "@nestjs/testing": "^9.2.1",
+    "@nestjs/typeorm": "^9.0.1",
     "@nrwl/eslint-plugin-nx": "15.4.5",
     "@nrwl/linter": "^15.4.5",
     "@nrwl/nest": "15.4.5",
