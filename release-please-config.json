@@ -109,36 +109,6 @@
       "prerelease": true,
       "pull-request-title-pattern": "chore: release ${version}",
       "pull-request-header": "Automated release PR"
-    },
-    "libs/auth": {
-      "package-name": "@domicile/auth",
-      "bump-minor-pre-major": true,
-      "bump-patch-for-minor-pre-major": true,
-      "draft": false,
-      "versioning": "default",
-      "prerelease": true,
-      "pull-request-title-pattern": "chore: release ${version}",
-      "pull-request-header": "Automated release PR"
-    },
-    "libs/common": {
-      "package-name": "@domicile/common",
-      "bump-minor-pre-major": true,
-      "bump-patch-for-minor-pre-major": true,
-      "draft": false,
-      "versioning": "default",
-      "prerelease": true,
-      "pull-request-title-pattern": "chore: release ${version}",
-      "pull-request-header": "Automated release PR"
-    },
-    "libs/core": {
-      "package-name": "@domicile/core",
-      "bump-minor-pre-major": true,
-      "bump-patch-for-minor-pre-major": true,
-      "draft": false,
-      "versioning": "default",
-      "prerelease": true,
-      "pull-request-title-pattern": "chore: release ${version}",
-      "pull-request-header": "Automated release PR"
     }
   }
 }

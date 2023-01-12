@@ -1,8 +1,5 @@
 {
   ".": "0.2.0",
   "apps/api": "0.2.0",
-  "apps/web": "0.2.0",
-  "libs/auth": "0.0.1",
-  "libs/common": "0.0.1",
-  "libs/core": "0.0.1"
+  "apps/web": "0.2.0"
 }
