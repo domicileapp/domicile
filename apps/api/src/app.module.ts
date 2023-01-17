@@ -15,7 +15,10 @@ import { TasksModule } from './tasks/tasks.module'
 import { ChoresModule } from './chores/chores.module'
 import { RoomsModule } from './rooms/rooms.module'
 import { HealthModule } from './health/health.module'
-import { RecipesModule } from './recipes/recipes.module';
+import { RecipesModule } from './recipes/recipes.module'
+import { ShoppingListsModule } from './shopping-lists/shopping-lists.module';
+import { MealPlannerModule } from './meal-planner/meal-planner.module';
+import { CookbooksModule } from './cookbooks/cookbooks.module';
 
 @Module({
   imports: [
@@ -32,6 +35,9 @@ import { RecipesModule } from './recipes/recipes.module';
     RoomsModule,
     HealthModule,
     RecipesModule,
+    ShoppingListsModule,
+    MealPlannerModule,
+    CookbooksModule,
   ],
   controllers: [],
   providers: [],

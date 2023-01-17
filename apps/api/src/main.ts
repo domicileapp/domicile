@@ -1,9 +1,9 @@
 import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { writeFileSync } from 'fs'
+import { join } from 'path'
 import { AppModule } from './app.module'
-import fs from 'fs'
-import path from 'path'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -30,10 +30,10 @@ async function bootstrap() {
     .build()
 
   const document = SwaggerModule.createDocument(app, swaggerConfig)
-  fs.writeFileSync(
-    path.join(__dirname, '@/src/config/schemas/openapi-spec.json'),
-    JSON.stringify(document, null, 4),
-  )
+  // writeFileSync(
+  //   join(__dirname, './src/config/schemas/openapi-spec.json'),
+  //   JSON.stringify(document, null, 4),
+  // )
   SwaggerModule.setup('api', app, document)
 
   await app.listen(3000)

@@ -4,9 +4,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', component: () => import('src/pages/DashboardPage.vue') },
-    ],
+    children: [{ path: '', component: () => import('src/pages/DashboardPage.vue') }],
   },
   {
     path: '/login',
@@ -21,9 +19,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/inventory',
     component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/InventoryPage.vue') },
-    ],
+    children: [{ path: '', component: () => import('pages/InventoryPage.vue') }],
   },
   {
     path: '/chores',
@@ -34,6 +30,11 @@ const routes: RouteRecordRaw[] = [
     path: '/health',
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/HealthPage.vue') }],
+  },
+  {
+    path: '/recipes',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/RecipesPage.vue') }],
   },
   {
     path: '/:catchAll(.*)*',

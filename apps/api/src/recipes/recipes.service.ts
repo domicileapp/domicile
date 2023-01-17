@@ -1,15 +1,23 @@
+import { InjectRepository } from '@mikro-orm/nestjs'
+import { EntityRepository } from '@mikro-orm/postgresql'
 import { Injectable } from '@nestjs/common'
 import { CreateRecipeDto } from './dto/create-recipe.dto'
 import { UpdateRecipeDto } from './dto/update-recipe.dto'
+import { Recipe } from './recipe.entity'
 
 @Injectable()
 export class RecipesService {
+  constructor(
+    @InjectRepository(Recipe)
+    private recipes: EntityRepository<Recipe>,
+  ) {}
+
   create(createRecipeDto: CreateRecipeDto) {
-    return 'This action adds a new recipe'
+    return { message: 'This action adds a new recipe' }
   }
 
   findAll() {
-    return `This action returns all recipes`
+    return this.recipes.findAll()
   }
 
   findOne(id: number) {

@@ -20,12 +20,12 @@ export abstract class ObjectSelect<T = any> {
   readonly select?: any
 }
 
-export abstract class OptionsSelect<T = any> {
-  @ApiPropertyOptional({type: 'object'})
-  @IsOptional()
-  @Transform(({value}: TransformFnParams) => parseObject(value, parseToBoolean))
-  readonly select?:
-}
+// export abstract class OptionsSelect<T = any> {
+//   @ApiPropertyOptional({type: 'object'})
+//   @IsOptional()
+//   @Transform(({value}: TransformFnParams) => parseObject(value, parseToBoolean))
+//   readonly select?:
+// }
 
 /**
  * Parse object to specific type

@@ -10,13 +10,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="drawer"
-      show-if-above
-      :width="300"
-      :breakpoint="500"
-      class="bg-grey-3"
-    >
+    <q-drawer v-model="drawer" show-if-above :width="300" :breakpoint="500" class="bg-grey-3">
       <q-scroll-area style="max-width: 350px; height: 100%">
         <q-list padding>
           <template v-for="(menuItem, index) in menuList" :key="index">
@@ -48,8 +42,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useAuthStore } from 'src/stores/auth.store'
+import { ref } from 'vue'
 
 const authStore = useAuthStore()
 
@@ -70,13 +64,25 @@ const menuList = [
     icon: 'task',
     label: 'Tasks',
     link: '/tasks',
-    separator: false,
+    separator: true,
   },
   {
     icon: 'inventory',
     label: 'Inventory',
     link: '/inventory',
+    separator: true,
+  },
+  {
+    icon: 'inventory',
+    label: 'Recipes',
+    link: '/recipes',
     separator: false,
+  },
+  {
+    icon: 'inventory',
+    label: 'Cookbooks',
+    link: '/cookbooks',
+    separator: true,
   },
   {
     icon: 'monitor_heart',

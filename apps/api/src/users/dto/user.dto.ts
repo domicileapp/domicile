@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Exclude, Expose } from 'class-transformer'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { User } from '../user.entity'
 
 @Exclude()

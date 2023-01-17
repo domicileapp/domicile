@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, Put, UseGuards } from '@nestjs/common'
 import {
   ApiBearerAuth,
+  ApiCreatedResponse,
   ApiOkResponse,
   ApiResponse,
   ApiTags,
@@ -50,7 +51,7 @@ export class UsersController {
   }
 
   @Get('me')
-  @ApiOkResponse({
+  @ApiCreatedResponse({
     description: 'Returns the logged in user.',
     type: UserDto,
   })

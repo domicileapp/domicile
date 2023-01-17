@@ -1,10 +1,9 @@
 import { defineStore } from 'pinia'
 import { api } from 'src/boot/axios'
-
 export const useAuthStore = defineStore({
   id: 'auth',
   state: () => ({
-    user: JSON.parse(localStorage.getItem('user')),
+    user: JSON.parse(localStorage.getItem('user')) as any | null,
     returnUrl: null,
   }),
   actions: {
@@ -13,9 +12,7 @@ export const useAuthStore = defineStore({
       this.user = user.data
 
       localStorage.setItem('user', JSON.stringify(user.data))
-      ;(api.defaults.headers.common[
-        'Authorization'
-      ] = `Bearer ${this.user.accessToken}`),
+      ;(api.defaults.headers.common['Authorization'] = `Bearer ${this.user.accessToken}`),
         this.router.push(this.returnUrl || '/')
     },
     logout() {
