@@ -17,7 +17,7 @@
   "devDependencies": {
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
-    "@nrwl/eslint-plugin-nx": "15.5.1",
+    "@nrwl/eslint-plugin-nx": "15.5.2",
     "@nrwl/jest": "15.5.1",
     "@nrwl/linter": "15.5.1",
     "@nrwl/nest": "15.5.1",
