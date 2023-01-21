@@ -2,15 +2,22 @@
   <q-page class="column">
     <div class="row q-pa-sm bg-primary">
       <q-input
-        v-model="newTask"
-        @keyup.enter="addTask"
+        v-model="title"
+        @keyup.enter="tasksStore.createTask(newTask)"
         class="col"
         filled
         placeholder="New task"
         bg-color="grey-2"
       >
         <template v-slot:append>
-          <q-btn @click="addTask" round dense size="lg" flat icon="add_box" />
+          <q-btn
+            @click="tasksStore.createTask(newTask)"
+            round
+            dense
+            size="lg"
+            flat
+            icon="add_box"
+          />
         </template>
       </q-input>
     </div>
@@ -46,7 +53,7 @@
     <div class="absolute-center" v-if="loading">
       <q-spinner-pie color="secondary" style="font-size: 5em" />
     </div>
-    <div v-if="!tasks" class="noTasks absolute-center" style="opacity: 0.5">
+    <div v-if="tasks.length === 0" class="noTasks absolute-center" style="opacity: 0.5">
       <q-icon name="check" size="6em" color="primary" />
 
       <div class="text-primary text-h6 text-center">No tasks</div>
@@ -56,19 +63,20 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { api } from 'src/boot/axios'
 import { useTasksStore } from 'src/stores/tasks.store'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
+import { ITask } from '@domicile/contracts'
 
-const newTask = ref('')
+const title = ref('')
 const tasksStore = useTasksStore()
 const { tasks, loading } = storeToRefs(tasksStore)
 
 tasksStore.getAllTasks()
 
-const completeTask = (taskId) => {
-  api.put(`/tasks/${taskId}`, { complete: true })
-}
+const newTask = reactive<ITask>({
+  title: title.value,
+  complete: false,
+})
 </script>
 
 <style lang="scss">

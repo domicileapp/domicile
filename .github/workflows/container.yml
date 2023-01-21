@@ -1,51 +1,39 @@
-name: container
+name: Build and Publish Docker Image
 
 on:
   push:
-    branches: [main]
-
-env:
-  REGISTRY: ghcr.io
+    branches:
+      - main
 
 jobs:
-  publish:
+  build-and-publish:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.TOKEN }}
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v3
+      - name: Set up Docker
+        uses: docker/setup-docker@v2
         with:
-          images: |
-            ${{ env.REGISTRY }}/patrickblackjr/domicile-api
-            ${{ env.REGISTRY }}/patrickblackjr/domicile-app
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
+          version: 20.10.2
 
-      - name: build/push api
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
-        with:
-          context: api
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+      - name: Build Docker image
+        run: |
+          docker build -t my-image:latest ./apps/api
 
-      - name: build/push app
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
-        with:
-          context: app
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+      - name: Log in to DockerHub
+        run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+      - name: Publish Docker image to DockerHub
+        run: |
+          docker tag my-image:latest $DOCKER_USERNAME/my-image:latest
+          docker push $DOCKER_USERNAME/my-image:latest
+
+      - name: Log in to GitHub Container Registry
+        run: echo "${{secrets.GH_TOKEN}}" | docker login ghcr.io -u $GHCR_USERNAME --password-stdin
+
+      - name: Publish Docker image to GitHub Container Registry
+        run: |
+          docker tag my-image:latest ghcr.io/$GHCR_USERNAME/my-image:latest
+          docker push ghcr.io/$GHCR_USERNAME/my-image:latest

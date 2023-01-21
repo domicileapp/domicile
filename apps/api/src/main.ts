@@ -1,8 +1,6 @@
 import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
-import { writeFileSync } from 'fs'
-import { join } from 'path'
 import { AppModule } from './app.module'
 
 async function bootstrap() {

@@ -1,7 +1,16 @@
 import axios from 'axios'
 
+const BASE_URL = 'http://localhost:3000/api/v1'
+
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api/v1',
+  baseURL: BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+    common: {
+      Authorization: localStorage.getItem('accessToken'),
+      // 'Access-Control-Allow-Headers': true,
+    },
+  },
   // withCredentials: true,
 })
 

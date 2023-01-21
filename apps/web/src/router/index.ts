@@ -35,16 +35,19 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.VUE_ROUTER_BASE),
   })
 
-  Router.beforeEach(async (to) => {
-    const publicPages = ['/login']
-    const authRequired = !publicPages.includes(to.path)
-    const auth = useAuthStore()
-
-    if (authRequired && !auth.user) {
-      auth.returnUrl = to.fullPath
-      return '/login'
-    }
+  Router.beforeEach(async (to, from, next) => {
+    if (to.meta.requireAuth && !useAuthStore().loggedIn) next('/login')
+    // if (to.meta.requireAuth && !useAuthStore().user) {
+    //   useAuthStore().$reset()
+    //   next('/login')
+    // }
+    else next()
   })
+
+  const redirectToHomeIfLoggedIn = (_to: any, _from: any, next: any) => {
+    if (useAuthStore().loggedIn) next('/')
+    else next()
+  }
 
   return Router
 })

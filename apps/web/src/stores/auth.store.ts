@@ -1,24 +1,42 @@
 import { defineStore } from 'pinia'
 import { api } from 'src/boot/axios'
+
+interface Credentials {
+  username: string
+  password: string
+}
+
 export const useAuthStore = defineStore({
   id: 'auth',
   state: () => ({
-    user: JSON.parse(localStorage.getItem('user')) as any | null,
-    returnUrl: null,
+    loading: false as boolean,
+    user: null,
+    loggedIn: localStorage.getItem('accessToken') ? true : false,
   }),
+  getters: {},
   actions: {
-    async login(username: string, password: string) {
-      const user = await api.post('/auth/login', { username, password })
-      this.user = user.data
+    async login(credentials: Credentials) {
+      this.loading = true
+      const response = (await api.post('auth/login', credentials)).data
 
-      localStorage.setItem('user', JSON.stringify(user.data))
-      ;(api.defaults.headers.common['Authorization'] = `Bearer ${this.user.accessToken}`),
-        this.router.push(this.returnUrl || '/')
+      if (response) {
+        const accessToken = `Bearer ${response.accessToken}`
+        localStorage.setItem('accessToken', accessToken)
+        api.defaults.headers.common['Authorization'] = accessToken
+        this.user = response
+        this.loggedIn = true
+        this.loading = false
+        this.router.push('/')
+      }
     },
-    logout() {
-      this.user = null
-      localStorage.removeItem('user')
-      this.router.push('/login')
+    async logout() {
+      const response = await (await api.post('auth/logout')).data
+      if (response) {
+        localStorage.removeItem('accessToken')
+        this.$reset()
+      }
     },
+    async refreshToken() {},
   },
+  persist: true,
 })
