@@ -2034,10 +2034,10 @@
     boxen "5.1.2"
     check-disk-space "3.3.1"
 
-"@nestjs/testing@^9.0.0", "@nestjs/testing@^9.2.1":
-  version "9.2.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/testing/-/testing-9.2.1.tgz#2a3f64214d58ec4ab878862395407947671e4ece"
-  integrity sha512-lemXZdRSuqoZ87l0orCrS/c7gqwxeduIFOd21g9g2RUeQ4qlWPegbQDKASzbfC28klPyrgJLW4MNq7uv2JwV8w==
+"@nestjs/testing@^9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@nestjs/testing/-/testing-9.3.0.tgz#124963ada212522f60d6adb5c8282e14cee62a0e"
+  integrity sha512-d24yJNtjN9Ks7E8svDOhhUlrNLDUvfjnylJpO6BLYKve2jMNrGZPIBNmeBrS+3qxx0ExW+rYX3n6YdBzrhMg8g==
   dependencies:
     tslib "2.4.1"
 
@@ -2107,17 +2107,6 @@
   version "15.5.3"
   resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-15.5.3.tgz#16fac0147c2ab6ebba7b5357b2b959ad46b6eb26"
   integrity sha512-GGNLLGXDGWflrpaLimnE6hChfZfq3+XWZ0LJWL0IuCnchngPbNzuyh8S8KPgNKKgq4Nv0hglWefIwMg2UhHysA==
-  dependencies:
-    "@phenomnomnominal/tsquery" "4.1.1"
-    ejs "^3.1.7"
-    ignore "^5.0.4"
-    semver "7.3.4"
-    tslib "^2.3.0"
-
-"@nrwl/devkit@15.6.3":
-  version "15.6.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/devkit/-/devkit-15.6.3.tgz#e4e96c53ba3304786a49034286c8511534b2b194"
-  integrity sha512-/JDvdzNxUM+C1PCZPCrvmFx+OfywqZdOq1GS9QR8C0VctTLG4D/SGSFD88O1SAdcbH/f1mMiBGfEYZYd23fghQ==
   dependencies:
     "@phenomnomnominal/tsquery" "4.1.1"
     ejs "^3.1.7"
