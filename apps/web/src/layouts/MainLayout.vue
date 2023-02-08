@@ -13,8 +13,21 @@
     <q-drawer v-model="drawer" show-if-above :width="300" :breakpoint="500" class="bg-grey-3">
       <q-scroll-area style="max-width: 350px; height: 100%">
         <q-list padding>
-          <template v-for="(menuItem, index) in menuList" :key="index">
-            <q-item clickable :to="menuItem.link" v-ripple>
+          <q-item to="/" v-ripple clickable>
+            <q-item-section avatar>
+              <q-icon name="dashboard" />
+            </q-item-section>
+            <q-item-section> Dashboard </q-item-section>
+          </q-item>
+          <q-expansion-item expand-separator icon="inventory" label="Cook">
+            <q-item to="/" v-ripple clickable :header-inset-level="1">
+              <q-item-section avatar>
+                <q-icon name="inventory" />
+              </q-item-section>
+              <q-item-section> Recipes </q-item-section>
+            </q-item>
+          </q-expansion-item>
+          <!-- <q-item clickable :to="menuItem.link" v-ripple>
               <q-item-section avatar>
                 <q-icon :name="menuItem.icon" />
               </q-item-section>
@@ -22,8 +35,7 @@
                 {{ menuItem.label }}
               </q-item-section>
             </q-item>
-            <q-separator :key="'sep' + index" v-if="menuItem.separator" />
-          </template>
+            <q-separator :key="'sep' + index" v-if="menuItem.separator" /> -->
         </q-list>
         <div class="absolute-bottom q-pa-md">
           <div class="text-subtitle1">
