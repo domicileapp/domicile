@@ -39,7 +39,7 @@
     "@nestjs/platform-socket.io": "^9.2.1",
     "@nestjs/swagger": "^6.1.4",
     "@nestjs/terminus": "^9.1.4",
-    "@nestjs/websockets": "^9.2.1",
+    "@nestjs/websockets": "^9.3.8",
     "@socket.io/redis-adapter": "^8.0.1",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
