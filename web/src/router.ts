@@ -14,6 +14,9 @@ import { useGlobal } from '@/store'
 // Components
 import AboutPage from '@/views/AboutPage.vue'
 import HomePage from '@/views/HomePage.vue'
+import TasksPage from '@/views/TasksPage.vue'
+import CookingPage from '@/views/CookingPage.vue'
+import LoginPage from '@/views/LoginPage.vue'
 
 /** Router Rules */
 const routes: RouteRecordRaw[] = [
@@ -26,6 +29,21 @@ const routes: RouteRecordRaw[] = [
     path: '/about',
     name: 'About',
     component: AboutPage,
+  },
+  {
+    path: '/tasks',
+    name: 'Tasks',
+    component: TasksPage,
+  },
+  {
+    path: '/cooking',
+    name: 'Cooking',
+    component: CookingPage,
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: LoginPage,
   },
 ]
 
@@ -51,8 +69,6 @@ router.beforeEach(
     const globalStore = useGlobal()
     // Show Loading
     globalStore.setLoading(true)
-    // Hide snack bar
-    globalStore.setMessage('')
     await nextTick()
 
     next()

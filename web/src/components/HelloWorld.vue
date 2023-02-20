@@ -1,35 +1,16 @@
 <script setup lang="ts">
-import type MetaInterface from '@/interfaces/MetaInterface'
-import Meta from '@/Meta'
-
 type HelloWordProps = {
   msg: string
 }
 
 /** Props */
 defineProps<HelloWordProps>()
-
-/** Meta information */
-const meta: MetaInterface = Meta
 </script>
 
 <template>
   <v-container class="fill-height">
     <v-responsive class="d-flex align-center text-center fill-height">
       <h1 class="text-h2 font-weight-bold">Welcome to Vuetify 3</h1>
-      <p class="text-medium-emphasis">
-        <a
-          href="https://github.com/logue/vite-vuetify-ts-starter"
-          target="_blank"
-        >
-          vite-vuetify-ts-starter
-        </a>
-        &nbsp;/&nbsp;Build:
-        <time
-          :datetime="meta.date"
-          v-text="new Date(meta.date).toLocaleString()"
-        />
-      </p>
       <div class="py-14" />
       <v-row class="d-flex align-center justify-center">
         <v-col cols="auto">

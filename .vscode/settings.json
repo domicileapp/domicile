@@ -8,5 +8,9 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "git.alwaysSignOff": true,
   "github.gitAuthentication": true,
-  "conventionalCommits.scopes": ["web"]
+  "conventionalCommits.scopes": ["web"],
+  "eslint.workingDirectories": [
+    { "directory": "./api", "changeProcessCWD": true },
+    { "directory": "./web", "changeProcessCWD": true }
+  ]
 }

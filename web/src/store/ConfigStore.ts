@@ -3,37 +3,21 @@ import { defineStore } from 'pinia'
 /** Config State */
 type ConfigState = {
   /** Dark Theme mode */
-  _themeDark: boolean
-  /** Language */
-  _locale: string
+  themeDark: boolean
 }
 
 /** Config Store */
 export default defineStore('config', {
   // Default Config State
   state: (): ConfigState => ({
-    _themeDark: window.matchMedia('(prefers-color-scheme: dark)').matches,
-    _locale:
-      (window.navigator.languages && window.navigator.languages[0]) ||
-      window.navigator.language,
+    themeDark:
+      window.matchMedia('(prefers-color-scheme: dark)').matches || true,
   }),
-  // Getters
-  getters: {
-    themeDark: (s): boolean => s._themeDark,
-    locale: (s): string => s._locale,
-  },
-  // Actions
   actions: {
-    /** Toggle Dark/Light mode */
     toggleTheme() {
-      this._themeDark = !this._themeDark
-    },
-    /** Set Locale. */
-    setLocale(locale: string) {
-      this._locale = locale
+      this.themeDark = !this.themeDark
     },
   },
-  // Data persistence destination
   persist: {
     key: import.meta.env.VITE_APP_WEBSTORAGE_NAMESPACE || 'vuetify',
     storage: window.sessionStorage,

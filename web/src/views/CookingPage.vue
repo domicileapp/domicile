@@ -1,6 +1,6 @@
 <template>
-  <v-container class="about">
-    <h1>This is an about page</h1>
+  <v-container class="cooking">
+    <h1>Cooking</h1>
   </v-container>
 </template>
 

@@ -15,6 +15,7 @@ extends:
   - plugin:vuetify/base
   - plugin:yaml/recommended
   - "@vue/eslint-config-prettier"
+  - plugin:import/typescript
 plugins:
   - "@typescript-eslint"
   - jsdoc
@@ -31,6 +32,7 @@ parserOptions:
   project:
     - ./tsconfig.json
 rules:
+  import/extensions: off
   new-cap: off
   no-invalid-this: off
   no-unused-vars: warn
@@ -59,18 +61,25 @@ settings:
       - "*.ts"
       - "*.tsx"
       - "*.vue"
-  # import/resolver:
-  #   typescript: true
-  #   node: true
-  #   alias:
-  #     map:
-  #       - ["@", "./src"]
-  #       - ["~", "./node_modules"]
-  #     extensions:
-  #       - .js
-  #       - .ts
-  #       - .jsx
-  #       - .tsx
-  # - .vue
+  import/resolver:
+    typescript: true
+    node:
+      moduleDirectory: ["src"]
+      extensions:
+        - .js
+        - .ts
+        - .jsx
+        - .tsx
+        - .vue
+    alias:
+      map:
+        - ["@", "./src"]
+        - ["~", "./node_modules"]
+      extensions:
+        - .js
+        - .ts
+        - .jsx
+        - .tsx
+        - .vue
   vite:
     configPath: ./vite.config.ts
