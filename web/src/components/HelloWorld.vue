@@ -42,20 +42,6 @@ defineProps<HelloWordProps>()
             Get Started
           </v-btn>
         </v-col>
-
-        <v-col cols="auto">
-          <v-btn
-            href="https://community.vuetifyjs.com/"
-            min-width="164"
-            rel="noopener noreferrer"
-            target="_blank"
-            variant="text"
-          >
-            <v-icon icon="mdi-account-group" size="large" start />
-
-            Community
-          </v-btn>
-        </v-col>
       </v-row>
     </v-responsive>
   </v-container>
