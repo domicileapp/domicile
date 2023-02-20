@@ -1,6 +1,7 @@
 import { BaseEntity } from '@/common/entities/base-entity.entity'
-import { Entity, Property } from '@mikro-orm/core'
+import { Collection, Entity, ManyToMany, Property } from '@mikro-orm/core'
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
+import { RecipeCategory } from './category.entity'
 
 @Entity({ tableName: 'recipes' })
 export class Recipe extends BaseEntity {
@@ -27,4 +28,7 @@ export class Recipe extends BaseEntity {
   @Property({ columnType: 'text' })
   @ApiPropertyOptional()
   directions?: string
+
+  @ManyToMany()
+  categories = new Collection<RecipeCategory>(this)
 }

@@ -3,7 +3,7 @@ import { EntityRepository } from '@mikro-orm/postgresql'
 import { Injectable } from '@nestjs/common'
 import { CreateRecipeDto } from './dto/create-recipe.dto'
 import { UpdateRecipeDto } from './dto/update-recipe.dto'
-import { Recipe } from './recipe.entity'
+import { Recipe } from './entity/recipe.entity'
 
 @Injectable()
 export class RecipesService {

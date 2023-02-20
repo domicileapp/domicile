@@ -1,4 +1,4 @@
-import { Recipe } from '@/recipes/recipe.entity'
+import { Recipe } from '@/recipes/entity/recipe.entity'
 import { Factory, Faker } from '@mikro-orm/seeder'
 
 export class RecipeFactory extends Factory<Recipe> {

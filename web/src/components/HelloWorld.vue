@@ -22,7 +22,6 @@ defineProps<HelloWordProps>()
             variant="text"
           >
             <v-icon icon="mdi-view-dashboard" size="large" start />
-
             Components
           </v-btn>
         </v-col>

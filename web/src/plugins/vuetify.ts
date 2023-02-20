@@ -21,20 +21,6 @@ import 'vuetify/styles'
 import '@mdi/font/css/materialdesignicons.css'
 
 export default createVuetify({
-  // Global configuration
-  // https://next.vuetifyjs.com/en/features/global-configuration/
-  /*
-  defaults: {
-    global: {
-      ripple: false,
-    },
-    VSheet: {
-      elevation: 4,
-    },
-  },
-  */
-  // Icon Fonts
-  // https://next.vuetifyjs.com/en/features/icon-fonts/
   icons: {
     defaultSet: 'mdi',
     aliases,
@@ -42,19 +28,15 @@ export default createVuetify({
       mdi,
     },
   },
-  // Internationalization (i18n)
-  // https://next.vuetifyjs.com/en/features/internationalization/#internationalization-i18n
   locale: {
     locale: 'en',
     fallback: 'en',
     messages: { en },
   },
-  // Theme
-  // https://next.vuetifyjs.com/en/features/theme/
   theme: {
     defaultTheme: 'light',
   },
 })
 
-// Export for test.
+// Export for test
 export { components, directives }
