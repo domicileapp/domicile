@@ -1,4 +1,3 @@
-import { FindOptions } from '@mikro-orm/core'
 import { ApiPropertyOptional } from '@nestjs/swagger'
 import { Transform, TransformFnParams } from 'class-transformer'
 import { IsOptional } from 'class-validator'
@@ -11,7 +10,7 @@ import {
 /*
  * Specifies which column should be retrieved.
  */
-export abstract class ObjectSelect<T = any> {
+export abstract class ObjectSelect {
   @ApiPropertyOptional({ type: 'object' })
   @IsOptional()
   @Transform(({ value }: TransformFnParams) =>
@@ -33,8 +32,8 @@ export abstract class ObjectSelect<T = any> {
  * @param source
  * @returns
  */
-// eslint-disable-next-line @typescript-eslint/ban-types
-export function parseObject(source: Object, callback: Function) {
+
+export function parseObject(source: object, callback: any) {
   if (isObject(source)) {
     for (const key in source) {
       if (isObject(source[key])) {
