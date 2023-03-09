@@ -6,7 +6,7 @@ export default function AccountIcon() {
     <>
       <Tooltip title='Account'>
         <IconButton>
-          <AccountCircle />
+          <AccountCircle htmlColor='white' />
         </IconButton>
       </Tooltip>
     </>

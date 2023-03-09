@@ -64,7 +64,7 @@ export default function Table<T extends TableRecord>({
       )}
       <MuiTable>
         <TableHead>
-          <Grid component='tr' container sx={{ backgroundColor: theme.palette.primary.main }}>
+          <Grid component='tr' container sx={{ backgroundColor: theme.palette.secondary.main }}>
             {columns.map((col) => (
               <Grid key={col.title} className='p-1.5' component='th' item xs={col.width ?? true}>
                 <Typography

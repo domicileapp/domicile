@@ -100,8 +100,12 @@ export function DialogConsumer() {
         </div>
       </DialogContent>
       <DialogActions>
-        {submitOptions && <Button onClick={handleSubmit}>{submitOptions.label}</Button>}
         {cancelOptions && <Button onClick={handleCancel}>{cancelOptions.label}</Button>}
+        {submitOptions && (
+          <Button variant='contained' color='primary' onClick={handleSubmit}>
+            {submitOptions.label}
+          </Button>
+        )}
       </DialogActions>
     </MuiDialog>
   )

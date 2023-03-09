@@ -6,7 +6,7 @@ const Page = lazy(async () => import('./AboutCompany'))
 
 const config: RouteConfig = {
   element: <Page />,
-  path: 'about/:info',
+  path: 'about/:info/:id',
   parent: 'HomeLayout',
 }
 

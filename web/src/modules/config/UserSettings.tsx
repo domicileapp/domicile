@@ -9,11 +9,12 @@ import { useSnackbar } from '@/common/feedback/Snackbar'
 
 interface User extends TableRecord {
   name: string
+  username?: string
   email: string
 }
 
 const fakeUsers: User[] = [
-  { id: '1', name: 'Elon Musk', email: 'elonm@tesla.com' },
+  { id: '1', name: 'Patrick Black', email: 'info@patrickblackjr.com', username: 'patrickblackjr' },
   { id: '2', name: 'Jeff Bezzos', email: 'jeffb@amazon.com' },
 ]
 
@@ -76,6 +77,9 @@ export default function UserSettings() {
       dialog.open({
         content: <UserForm {...user} />,
         title: 'Edit user',
+        cancelOptions: {
+          label: 'Back',
+        },
         submitOptions: {
           label: 'Edit',
           onClick: (data: unknown) => {
@@ -92,14 +96,12 @@ export default function UserSettings() {
             snackbar.open({ message: `User ${user.name} edited`, severity: 'success' })
           },
         },
-        cancelOptions: {
-          label: 'Back',
-        },
       })
     }
 
     return [
       { title: 'Name', key: 'name' },
+      { title: 'Username', key: 'username' },
       { title: 'Email', key: 'email' },
       {
         align: 'center',

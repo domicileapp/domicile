@@ -1,5 +1,5 @@
 import HttpClient from '@/common/http/HttpClient'
-import Todo from '@/modules/home/models/Todo'
+import Todo from '@/modules/home/models/todo'
 
 const client = new HttpClient({
   url: 'https://jsonplaceholder.typicode.com',

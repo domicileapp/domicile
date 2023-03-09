@@ -4,11 +4,11 @@ import { PropsWithChildren } from 'react'
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      cacheTime: Infinity,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      staleTime: Infinity,
-      suspense: true,
+      // cacheTime: Infinity,
+      // refetchOnMount: false,
+      // refetchOnWindowFocus: false,
+      // staleTime: Infinity,
+      // suspense: true,
     },
   },
 })

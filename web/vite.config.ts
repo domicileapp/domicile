@@ -47,7 +47,7 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       cors: true,
-      open: true,
+      open: false,
     },
     test: {
       clearMocks: true,

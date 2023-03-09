@@ -12,7 +12,6 @@ import {
 import Spinner from '@/common/feedback/Spinner'
 import { SidebarProvider } from '@/common/layout/Sidebar'
 import Header from './Header'
-import Footer from './Footer'
 import { Outlet } from 'react-router-dom'
 
 export interface LayoutState {
@@ -90,7 +89,6 @@ export default function Layout() {
             <Outlet />
           </Suspense>
         </div>
-        <Footer />
       </SidebarProvider>
     </LayoutProvider>
   )

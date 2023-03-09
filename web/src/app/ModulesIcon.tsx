@@ -5,6 +5,7 @@ import { Drawer, IconButton, List, ListItemButton, ListItemIcon, ListItemText } 
 
 import useToggle from '@/common/form/useToggle'
 import Link from '@/common/navigation/Link'
+import { CottageRounded } from '@mui/icons-material'
 
 export default function ModulesIcon() {
   const [open, toggle] = useToggle()
@@ -15,12 +16,12 @@ export default function ModulesIcon() {
         <Apps />
       </IconButton>
       <Drawer onClose={toggle} open={open}>
-        <img alt='app-logo' src='/images/app_logo.jfif' width={160} />
+        <CottageRounded />
         <List onClick={toggle}>
           <Link href='/'>
             <ListItemButton>
               <ListItemIcon>
-                <Home color='primary' />
+                <Home color='secondary' />
               </ListItemIcon>
               <ListItemText primary='Index' />
             </ListItemButton>

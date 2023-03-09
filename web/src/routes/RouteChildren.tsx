@@ -4,7 +4,7 @@ import { Suspense } from 'react'
 import Spinner from '@/common/feedback/Spinner'
 
 /**
- * Standar way to handle routes in suspense state
+ * @description Standard way to handle routes in suspense state
  */
 export default function RouteChildren() {
   return (
