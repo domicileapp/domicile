@@ -39,17 +39,19 @@ export function Sidebar({ options, variant }: SidebarProps) {
   const toggle = useContext(ToggleSidebarExtandedContext)
 
   return (
-    <Paper className='flex flex-col p-1.5 space-y-1.5' component='aside' square variant='outlined'>
+    <Paper
+      className='flex flex-col p-1.5 space-y-1.5 content-start'
+      component='aside'
+      square
+      variant='outlined'
+    >
       {expanded ? (
         <Button
-          fullWidth
           onClick={toggle}
           startIcon={
             variant === 'left' ? <KeyboardDoubleArrowLeft /> : <KeyboardDoubleArrowRight />
           }
-        >
-          Contract
-        </Button>
+        />
       ) : (
         <Tooltip placement={variant === 'left' ? 'right' : 'left'} title='Expand'>
           <IconButton color='primary' onClick={toggle}>

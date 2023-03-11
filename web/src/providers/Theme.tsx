@@ -4,12 +4,6 @@ import type { PropsWithChildren } from 'react'
 const theme = createTheme({
   palette: {
     mode: 'light',
-    primary: {
-      main: '#2F243A',
-    },
-    secondary: {
-      main: '#6a8d73',
-    },
   },
   spacing: 8,
 })

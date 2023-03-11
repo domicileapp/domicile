@@ -7,7 +7,6 @@ import Theme from '@/providers/Theme'
 import Routes from '@/routes/Routes'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
-import './styles/scroll-bar.css'
 import './styles/tailwind.css'
 
 createRoot(document.getElementById('root') as HTMLElement).render(

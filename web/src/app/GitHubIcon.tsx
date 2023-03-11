@@ -16,7 +16,7 @@ export default function HelpIcon() {
   return (
     <Tooltip title={'help' as string}>
       <IconButton onClick={handleClick}>
-        <GitHub htmlColor='white' />
+        <GitHub />
       </IconButton>
     </Tooltip>
   )
