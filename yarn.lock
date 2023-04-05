@@ -2091,10 +2091,10 @@
   dependencies:
     tslib "2.5.0"
 
-"@nestjs/websockets@^9.2.1":
-  version "9.3.5"
-  resolved "https://registry.yarnpkg.com/@nestjs/websockets/-/websockets-9.3.5.tgz#29e6e9c901a1693e9f4fcb867f046b1e874c634a"
-  integrity sha512-BXhHpFuChE4B4PycTjbM7iQDHcLYCoAd0/tjpcHGCayKqx6GMh+yARi3QmXxsNBafm4urYK+gL8t1Y5n02uDvQ==
+"@nestjs/websockets@^9.4.0":
+  version "9.4.0"
+  resolved "https://registry.yarnpkg.com/@nestjs/websockets/-/websockets-9.4.0.tgz#26d4b506fe45ecdb2223f7031050ce67332880b0"
+  integrity sha512-RATR9C0cKhXp3mTQAg75iItyUuRhVwU39Xe/kl0XLpvAhWzhnGrn6CxSTRRzBfp3F68DOKvs7/ODDY51f+rdXw==
   dependencies:
     iterare "1.2.1"
     object-hash "3.0.0"
