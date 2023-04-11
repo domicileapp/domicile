@@ -1,11 +1,5 @@
 module.exports = {
-  // branches: [
-  //   'main',
-  //   {
-  //     name: 'next',
-  //     prerelease: true,
-  //   },
-  // ],
+  branches: ['main', 'next'],
   repositoryUrl: 'https://github.com/thecodinganalyst/semantic-java',
   plugins: [
     ['@semantic-release/commit-analyzer'],
