@@ -1,15 +1,15 @@
 category/core:
-  - "*"
+  - '*'
 
 category/api:
-  - apps/api/*
+  - api/*
 
 category/db:
-  - apps/api/database/*
-  - apps/api/seeders/*
+  - api/database/*
+  - api/seeders/*
 
 category/web:
-  - apps/web/*
+  - web/*
 
 category/docker:
   - docker/*
