@@ -1,0 +1,1 @@
+{"version":3,"file":"room.factory.js","sourceRoot":"","sources":["../../../../src/database/factories/room.factory.ts"],"names":[],"mappings":";;;AAAA,yDAA0C;AAC1C,8CAAkD;AAElD,MAAa,WAAY,SAAQ,gBAAa;IAA9C;;QACE,UAAK,GAAG,kBAAI,CAAA;IAOd,CAAC;IALC,UAAU,CAAC,KAAY;QACrB,OAAO;YACL,IAAI,EAAE,KAAK,CAAC,MAAM,CAAC,IAAI,EAAE;SAC1B,CAAA;IACH,CAAC;CACF;AARD,kCAQC"}
