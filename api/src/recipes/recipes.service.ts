@@ -1,9 +1,10 @@
 import { InjectRepository } from '@mikro-orm/nestjs'
 import { EntityRepository } from '@mikro-orm/postgresql'
-import { Injectable } from '@nestjs/common'
+import { HttpStatus, Injectable } from '@nestjs/common'
 import { CreateRecipeDto } from './dto/create-recipe.dto'
 import { UpdateRecipeDto } from './dto/update-recipe.dto'
 import { Recipe } from './entity/recipe.entity'
+import { wrap } from '@mikro-orm/core'
 
 @Injectable()
 export class RecipesService {
@@ -12,23 +13,34 @@ export class RecipesService {
     private recipes: EntityRepository<Recipe>,
   ) {}
 
-  create(createRecipeDto: CreateRecipeDto) {
-    return { message: 'This action adds a new recipe' }
+  async create(createRecipeDto: CreateRecipeDto) {
+    const recipe = this.recipes.create(createRecipeDto)
+    await this.recipes.persist(recipe).flush()
+
+    return recipe
   }
 
-  findAll() {
-    return this.recipes.findAll()
+  async findAll() {
+    const recipes = await this.recipes.findAll()
+    return recipes
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} recipe`
+  async findOne(id: number) {
+    const recipe = await this.recipes.findOneOrFail(id)
+    return recipe
   }
 
-  update(id: number, updateRecipeDto: UpdateRecipeDto) {
-    return `This action updates a #${id} recipe`
+  async update(id: number, updateRecipeDto: UpdateRecipeDto) {
+    const recipe = await this.recipes.findOne(id)
+    wrap(recipe).assign(updateRecipeDto)
+    await this.recipes.flush()
+
+    return recipe
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} recipe`
+  async remove(id: number) {
+    const recipe = await this.recipes.findOne(id)
+    this.recipes.removeAndFlush(recipe)
+    return { status: HttpStatus.OK, entityRemoved: recipe }
   }
 }

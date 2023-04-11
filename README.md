@@ -85,6 +85,7 @@ To get a local copy up and running follow these simple example steps.
 This is an example of how to list things you need to use the software and how to install them.
 
 - npm
+
   ```sh
   npm install npm@latest -g
   ```
@@ -93,14 +94,19 @@ This is an example of how to list things you need to use the software and how to
 
 1. Get a free API Key at [https://example.com](https://example.com)
 2. Clone the repo
+
    ```sh
    git clone https://github.com/domicileapp/domicile.git
    ```
+
 3. Install NPM packages
+
    ```sh
    npm install
    ```
+
 4. Enter your API in `config.js`
+
    ```js
    const API_KEY = 'ENTER YOUR API'
    ```
@@ -164,7 +170,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 [issues-url]: https://github.com/domicileapp/domicile/issues
 [license-shield]: https://img.shields.io/github/license/domicileapp/domicile.svg?style=for-the-badge
 [license-url]: https://github.com/domicileapp/domicile/blob/master/LICENSE
-[product-screenshot]: images/screenshot.png
 [nest]: https://img.shields.io/badge/nestjs-E0234E?style=for-the-badge&logo=nestjs&logoColor=white
 [nest-url]: https://nestjs.org/
 [vue]: https://img.shields.io/badge/Vue.js-4FC08D?style=for-the-badge&logo=vuedotjs&logoColor=white

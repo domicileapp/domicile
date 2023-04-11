@@ -1,12 +1,17 @@
 import { Grid, Typography } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
-import { getAllRecipes } from './hooks/recipes.api'
+import { getRecipe, getRecipes } from './hooks/recipes.api'
 
 export default function Recipes() {
-  const { data } = useQuery({
+  const { data: recipes } = useQuery({
     queryKey: ['recipes'],
-    queryFn: () => getAllRecipes,
+    queryFn: () => getRecipes(),
+  })
+  const recipeId = 2
+  const { data: recipe } = useQuery({
+    queryKey: ['recipe', recipeId],
+    queryFn: () => getRecipe(recipeId),
   })
 
   return (
@@ -16,9 +21,14 @@ export default function Recipes() {
           <Typography variant='h3'>Recipes</Typography>
         </Grid>
         <Grid item xs={12}>
-          {data?.map((recipe) => (
-            <li key={recipe.age}>{recipe.name}</li>
+          {recipes?.map((recipe: any) => (
+            <li key={recipe.id}>{recipe.title}</li>
           ))}
+        </Grid>
+        <Grid item xs={12}>
+          <li key={recipe?.id}>
+            {recipe?.title} ({recipe?.id})
+          </li>
         </Grid>
       </Grid>
     </div>

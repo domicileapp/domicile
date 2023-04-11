@@ -16,9 +16,10 @@ import { ChoresModule } from './chores/chores.module'
 import { RoomsModule } from './rooms/rooms.module'
 import { HealthModule } from './health/health.module'
 import { RecipesModule } from './recipes/recipes.module'
-import { ShoppingListsModule } from './shopping-lists/shopping-lists.module';
-import { MealPlannerModule } from './meal-planner/meal-planner.module';
-import { CookbooksModule } from './cookbooks/cookbooks.module';
+import { ShoppingListsModule } from './shopping-lists/shopping-lists.module'
+import { MealPlannerModule } from './meal-planner/meal-planner.module'
+import { CookbooksModule } from './cookbooks/cookbooks.module'
+import testConfig from 'mikro-orm-test.config'
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { CookbooksModule } from './cookbooks/cookbooks.module';
       load: [configuration],
     }),
     MikroOrmModule.forRoot(),
+    MikroOrmModule.forRoot(testConfig),
     UsersModule,
     AuthModule,
     ListsModule,
