@@ -4,17 +4,21 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "nx run-many --target=dev --projects=@domicile/api,@domicile/web"
+    "prepare": "husky install",
+    "commit": "commit"
   },
   "dependencies": {
-    "@nestjs/common": "^9.0.0",
-    "@nestjs/core": "^9.0.0",
-    "@nestjs/platform-express": "^9.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.0.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+<<<<<<< HEAD
+    "@commitlint/cli": "^17.5.1",
+    "@commitlint/config-conventional": "^17.4.4",
+    "@commitlint/prompt-cli": "^17.5.0",
+    "husky": "^8.0.3",
+=======
     "@mikro-orm/cli": "^5.6.8",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.3.7",
@@ -34,14 +38,10 @@
     "jest": "28.1.1",
     "jest-environment-jsdom": "28.1.1",
     "nx": "15.5.1",
-    "prettier": "^2.8.7",
+    "prettier": "^2.6.2",
+>>>>>>> dev
     "ts-jest": "28.0.5",
     "ts-node": "10.9.1",
     "typescript": "^4.9.4"
-  },
-  "workspaces": [
-    "packages/**",
-    "apps/**"
-  ],
-  "packageManager": "yarn@3.3.1"
+  }
 }
