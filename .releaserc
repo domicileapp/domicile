@@ -7,7 +7,6 @@
       }
     ],
     "repositoryUrl": "https://github.com/thecodinganalyst/semantic-java",
-    "debug": "false",
     "plugins": [
       [
         "@semantic-release/commit-analyzer"
