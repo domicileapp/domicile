@@ -1,5 +1,5 @@
 import MainContent from '@/common/layout/MainContent'
-import PageWithNavigationSidebar from '@/common/layout/PageWithNavigationSidebar'
+import PageWithNavigationSidebar from '@/common/layout/Page'
 import type { SidebarOption } from '@/common/layout/Sidebar'
 import RouteChildren from '@/routes/RouteChildren'
 import { useLayout } from '@/app/Layout'

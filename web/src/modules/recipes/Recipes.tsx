@@ -1,25 +1,26 @@
-import { Button, Grid, Paper, TextField, Typography } from '@mui/material'
-import { Container } from '@mui/system'
+import { Grid, Typography } from '@mui/material'
+import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
+import { getAllRecipes } from './hooks/recipes.api'
 
 export default function Recipes() {
-  const [title, setTitle] = useState('')
-  const [prepTime, setPrepTime] = useState('')
-  const [cookTime, setCookTime] = useState('')
-  const [servingSize, setServingSize] = useState('')
-  const [ingredients, setIngredients] = useState('')
-  const [directions, setDirections] = useState('')
+  const { data } = useQuery({
+    queryKey: ['recipes'],
+    queryFn: () => getAllRecipes,
+  })
+
   return (
     <div>
-      <Container fixed>
-        <Paper sx={{ p: 3, m: 3 }} elevation={2}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant='h3'>Recipe List</Typography>
-            </Grid>
-          </Grid>
-        </Paper>
-      </Container>
+      <Grid container spacing={2} sx={{ px: 2 }}>
+        <Grid item xs={12}>
+          <Typography variant='h3'>Recipes</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          {data?.map((recipe) => (
+            <li key={recipe.age}>{recipe.name}</li>
+          ))}
+        </Grid>
+      </Grid>
     </div>
   )
 }

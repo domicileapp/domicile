@@ -9,8 +9,6 @@ import {
   useContext,
 } from 'react'
 
-import Spinner from '@/common/feedback/Spinner'
-import { SidebarProvider } from '@/common/layout/Sidebar'
 import Header from './Header'
 import { Outlet } from 'react-router-dom'
 
@@ -81,15 +79,12 @@ export default function Layout() {
 
   return (
     <LayoutProvider>
-      <SidebarProvider>
-        <Header />
-        <Toolbar />
-        <div style={{ minHeight: height }}>
-          <Suspense fallback={<Spinner variant='page' />}>
-            <Outlet />
-          </Suspense>
-        </div>
-      </SidebarProvider>
+      <Header />
+      <div style={{ minHeight: height }}>
+        <Suspense>
+          <Outlet />
+        </Suspense>
+      </div>
     </LayoutProvider>
   )
 }

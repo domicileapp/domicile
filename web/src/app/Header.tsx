@@ -1,28 +1,27 @@
-import { KeyboardDoubleArrowRight } from '@mui/icons-material'
-import { AppBar, AppBar as MuiNavbar, Breadcrumbs, Toolbar, Typography } from '@mui/material'
-
-import AccountIcon from './AccountIcon'
-import HeaderTitle from './HeaderTitle'
-import HelpIcon from './GitHubIcon'
-import ModulesIcon from './ModulesIcon'
+import { KeyboardDoubleArrowRight, Menu } from '@mui/icons-material'
+import {
+  AppBar,
+  AppBar as MuiNavbar,
+  Breadcrumbs,
+  Toolbar,
+  Typography,
+  IconButton,
+  Button,
+} from '@mui/material'
 
 export default function Header() {
   return (
-    <AppBar color='primary'>
-      <Toolbar className='flex justify-between w-full'>
-        <div className='flex items-center'>
-          <ModulesIcon />
-
-          <Typography className='pl-3.5 pr-10' component='h1' variant='h6'>
-            Domicile
-          </Typography>
-
-          {/* <HeaderTitle /> */}
-        </div>
-        <nav className='flex space-x-1.5'>
-          <HelpIcon />
-          <AccountIcon />
-        </nav>
+    <AppBar position='static'>
+      <Toolbar>
+        <IconButton size='large' edge='start' color='inherit' aria-label='menu' sx={{ mr: 2 }}>
+          <Menu />
+        </IconButton>
+        <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
+          Domicile
+        </Typography>
+        <Button color='inherit' href='/recipes'>
+          Recipes
+        </Button>
       </Toolbar>
     </AppBar>
   )
