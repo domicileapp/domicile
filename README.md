@@ -102,12 +102,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/domicileapp/domicile.svg?style=for-the-badge
-[contributors-url]: https://github.com/domicileapp/domicile/graphs/contributors
-[issues-shield]: https://img.shields.io/github/issues/domicileapp/domicile.svg?style=for-the-badge
-[issues-url]: https://github.com/domicileapp/domicile/issues
-[license-shield]: https://img.shields.io/github/license/domicileapp/domicile.svg?style=for-the-badge
-[license-url]: https://github.com/domicileapp/domicile/blob/master/LICENSE
 [nest]: https://img.shields.io/badge/nestjs-E0234E?style=for-the-badge&logo=nestjs&logoColor=white
 [nest-url]: https://nestjs.org/
 [vue]: https://img.shields.io/badge/Vue.js-4FC08D?style=for-the-badge&logo=vuedotjs&logoColor=white
