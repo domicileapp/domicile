@@ -4,6 +4,7 @@ on:
     branches:
       - main
       - next
+      - dev
 permissions:
   contents: write
   id-token: write
