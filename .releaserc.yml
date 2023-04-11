@@ -12,4 +12,4 @@ plugins:
         - CHANGELOG.md
   - - '@semantic-release/github'
     - failTitle: Automated release is failing
-    - labels: false
+      labels: false
