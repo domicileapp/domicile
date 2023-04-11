@@ -89,26 +89,6 @@
       "prerelease": true,
       "pull-request-title-pattern": "chore: release ${version}",
       "pull-request-header": "Automated release PR"
-    },
-    "apps/web": {
-      "package-name": "domicile-web",
-      "bump-minor-pre-major": true,
-      "bump-patch-for-minor-pre-major": true,
-      "draft": false,
-      "versioning": "default",
-      "prerelease": true,
-      "pull-request-title-pattern": "chore: release ${version}",
-      "pull-request-header": "Automated release PR"
-    },
-    "apps/api": {
-      "package-name": "domicile-api",
-      "bump-minor-pre-major": true,
-      "bump-patch-for-minor-pre-major": true,
-      "draft": false,
-      "versioning": "default",
-      "prerelease": true,
-      "pull-request-title-pattern": "chore: release ${version}",
-      "pull-request-header": "Automated release PR"
     }
   }
 }
