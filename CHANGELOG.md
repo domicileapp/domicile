@@ -1,5 +1,12 @@
 # Domicile Changelog
 
+## [1.0.0-dev.4](https://github.com/domicileapp/domicile/compare/v1.0.0-dev.3...v1.0.0-dev.4) (2023-04-12)
+
+
+### Bug Fixes
+
+* force another release ([cbd6d03](https://github.com/domicileapp/domicile/commit/cbd6d03eff5aa403fe3fd1c3ab48311dbe981c77))
+
 ## [1.0.0-dev.3](https://github.com/domicileapp/domicile/compare/v1.0.0-dev.2...v1.0.0-dev.3) (2023-04-12)
 
 
