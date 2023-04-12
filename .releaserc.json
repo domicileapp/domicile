@@ -48,6 +48,10 @@
             {
               "type": "test",
               "section": "Misc"
+            },
+            {
+              "type": "ci",
+              "section": "Misc"
             }
           ]
         }
