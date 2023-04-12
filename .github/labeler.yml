@@ -1,0 +1,17 @@
+category/core:
+  - '*'
+  - '!api/*'
+  - '!web/*'
+
+category/api:
+  - api/*
+
+category/db:
+  - api/database/*
+  - api/seeders/*
+
+category/web:
+  - web/*
+
+category/docker:
+  - docker/*

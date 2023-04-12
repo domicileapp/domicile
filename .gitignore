@@ -4,7 +4,7 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
+**/temp*
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
@@ -39,10 +39,11 @@ build/Release
 
 # Dependency directories
 node_modules/
+**/.yarn/*
+!**/.yarn/releases
+!**/.yarn/plugins
+.pnp.*
 jspm_packages/
-
-# TypeScript v1 declaration files
-typings/
 
 # TypeScript cache
 *.tsbuildinfo
@@ -104,3 +105,21 @@ dist
 .tern-port
 
 .DS_Store
+*/.quasar/**
+
+
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+bin
+testbin/*
+Dockerfile.cross
+
+### VS Code ###
+.vscode/
+node_modules
+dist/
+domicile-test-db

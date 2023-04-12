@@ -1,5 +1,23 @@
 {
   "recommendations": [
-    "vivaxy.vscode-conventional-commits"
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "editorconfig.editorconfig",
+    "wayou.vscode-todo-highlight",
+    "pkief.material-icon-theme",
+    "ionutvmi.path-autocomplete",
+    "abdelaziz18003.quasar-snippets",
+    "ms-vscode-remote.remote-containers",
+    "vue.volar",
+    "firsttris.vscode-jest-runner",
+    "stylelint.vscode-stylelint",
+    "Vue.volar",
+    "Vue.vscode-typescript-vue-plugin"
+  ],
+  "unwantedRecommendations": [
+    "octref.vetur",
+    "hookyqr.beautify",
+    "dbaeumer.jshint",
+    "ms-vscode.vscode-typescript-tslint-plugin"
   ]
 }

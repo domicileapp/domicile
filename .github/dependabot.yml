@@ -1,16 +1,12 @@
 version: 2
 updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    target-branch: 'dev'
+    directory: '/'
     schedule:
-      interval: "daily"
-  - package-ecosystem: "npm"
-    target-branch: "dev"
-    directory: "/"
-    schedule:
-      interval: "daily"
-  - package-ecosystem: "terraform"
-    target-branch: "dev"
-    directory: "/infrastructure/terraform"
-    schedule:
-      interval: "daily"
+      interval: 'daily'
+    commit-message:
+      include: scope
+      prefix: chore
+    labels:
+      - 'category/deps'

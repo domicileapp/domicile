@@ -1,0 +1,28 @@
+import { ApiProperty } from '@nestjs/swagger'
+import { Exclude, Expose } from 'class-transformer'
+import { User } from '../user.entity'
+
+@Exclude()
+export class UserDto {
+  constructor(
+    partial: Pick<User, 'id' | 'username' | 'firstName' | 'lastName'>,
+  ) {
+    Object.assign(this, partial)
+  }
+
+  @Expose()
+  @ApiProperty()
+  readonly id: string
+
+  @Expose()
+  @ApiProperty()
+  readonly username: string
+
+  @Expose()
+  @ApiProperty()
+  readonly firstName: string
+
+  @Expose()
+  @ApiProperty()
+  readonly lastName: string
+}

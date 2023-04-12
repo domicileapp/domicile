@@ -1,0 +1,621 @@
+openapi: 3.0.0
+paths:
+  /api/v1:
+    get:
+      operationId: AppController_getHello
+      parameters: []
+      responses:
+        "200":
+          description: ""
+  /api/v1/users:
+    get:
+      operationId: UsersController_findAll
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      tags:
+        - users
+      security:
+        - bearer: []
+  "/api/v1/users/{username}":
+    get:
+      operationId: UsersController_findOne
+      parameters:
+        - name: username
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The found user record
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDto"
+      tags:
+        - users
+      security:
+        - bearer: []
+  /api/v1/users/profile:
+    put:
+      operationId: UsersController_update
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProfileDto"
+      responses:
+        "200":
+          description: The found user record
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDto"
+      tags:
+        - users
+      security:
+        - bearer: []
+  /api/v1/users/me:
+    get:
+      operationId: UsersController_getProfile
+      parameters: []
+      responses:
+        "200":
+          description: Returns the logged in user.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDto"
+      tags:
+        - users
+      security:
+        - bearer: []
+  /api/v1/lists:
+    post:
+      operationId: ListsController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateListDto"
+      responses:
+        "201":
+          description: ""
+    get:
+      operationId: ListsController_findAll
+      parameters: []
+      responses:
+        "200":
+          description: ""
+  "/api/v1/lists/{id}":
+    get:
+      operationId: ListsController_findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+    put:
+      operationId: ListsController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateListDto"
+      responses:
+        "200":
+          description: ""
+    delete:
+      operationId: ListsController_remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+  /api/v1/auth/login:
+    post:
+      operationId: AuthController_login
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginUserBody"
+      responses:
+        "200":
+          description: User has been logged in.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginUserResponse"
+      tags:
+        - auth
+  /api/v1/auth/refresh:
+    post:
+      operationId: AuthController_refresh
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefreshTokenBody"
+      responses:
+        "200":
+          description: Generates a new access token.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RefreshTokenResponse"
+      tags:
+        - auth
+  /api/v1/auth/register:
+    post:
+      operationId: AuthController_register
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterUserBody"
+      responses:
+        "201":
+          description: User has been registered.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegisterUserResponse"
+      tags:
+        - auth
+  /api/v1/tasks:
+    post:
+      operationId: TasksController_create
+      summary: Create task
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTaskDto"
+      responses:
+        "201":
+          description: ""
+      tags:
+        - tasks
+      security:
+        - bearer: []
+    get:
+      operationId: TasksController_findAll
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      tags:
+        - tasks
+      security:
+        - bearer: []
+  "/api/v1/tasks/{id}":
+    get:
+      operationId: TasksController_findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: The found task record
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+      tags:
+        - tasks
+      security:
+        - bearer: []
+    put:
+      operationId: TasksController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTaskDto"
+      responses:
+        "200":
+          description: ""
+      tags:
+        - tasks
+      security:
+        - bearer: []
+    delete:
+      operationId: TasksController_remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - tasks
+      security:
+        - bearer: []
+  /api/v1/chores:
+    post:
+      operationId: ChoresController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateChoreDto"
+      responses:
+        "201":
+          description: ""
+    get:
+      operationId: ChoresController_findAll
+      parameters: []
+      responses:
+        "200":
+          description: ""
+  "/api/v1/chores/{id}":
+    get:
+      operationId: ChoresController_findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+    patch:
+      operationId: ChoresController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateChoreDto"
+      responses:
+        "200":
+          description: ""
+    delete:
+      operationId: ChoresController_remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+  /api/v1/rooms:
+    post:
+      operationId: RoomsController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateRoomDto"
+      responses:
+        "201":
+          description: ""
+      tags:
+        - rooms
+      security:
+        - bearer: []
+    get:
+      operationId: RoomsController_findAll
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      tags:
+        - rooms
+      security:
+        - bearer: []
+  "/api/v1/rooms/{id}":
+    get:
+      operationId: RoomsController_findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - rooms
+      security:
+        - bearer: []
+    patch:
+      operationId: RoomsController_update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateRoomDto"
+      responses:
+        "200":
+          description: ""
+      tags:
+        - rooms
+      security:
+        - bearer: []
+    delete:
+      operationId: RoomsController_remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - rooms
+      security:
+        - bearer: []
+info:
+  title: Domicile
+  description: An application to help those with executive dysfunction manage
+    household tasks, inventories, and life.
+  version: 1.0.0
+  contact: {}
+tags: []
+servers: []
+components:
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+  schemas:
+    UserDto:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+      required:
+        - id
+        - username
+        - firstName
+        - lastName
+    UpdateProfileDto:
+      type: object
+      properties:
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+      required:
+        - username
+        - firstName
+        - lastName
+    CreateListDto:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+      required:
+        - title
+        - description
+    UpdateListDto:
+      type: object
+      properties: {}
+    LoginUserBody:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - password
+    LoginUserResponse:
+      type: object
+      properties:
+        user:
+          $ref: "#/components/schemas/UserDto"
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+      required:
+        - user
+        - accessToken
+        - refreshToken
+    RefreshTokenBody:
+      type: object
+      properties:
+        refreshToken:
+          type: string
+      required:
+        - refreshToken
+    RefreshTokenResponse:
+      type: object
+      properties:
+        user:
+          $ref: "#/components/schemas/UserDto"
+        accessToken:
+          type: string
+      required:
+        - user
+        - accessToken
+    RegisterUserBody:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - password
+    RegisterUserResponse:
+      type: object
+      properties:
+        user:
+          $ref: "#/components/schemas/UserDto"
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+      required:
+        - user
+        - accessToken
+        - refreshToken
+    CreateTaskDto:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+      required:
+        - title
+        - description
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          example: patrick
+          description: Username. Alphanumeric, 2-24 characters.
+        firstName:
+          type: string
+          example: John
+          description: User's first name
+        lastName:
+          type: string
+          example: Smith
+          description: User's last name
+        lists:
+          type: object
+          description: Lists created by user.
+        refreshTokens:
+          type: object
+      required:
+        - username
+        - firstName
+        - lastName
+        - lists
+        - refreshTokens
+    List:
+      type: object
+      properties: {}
+    Task:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Clean out the fridge
+          description: Title of the task
+        description:
+          type: string
+          example: Be sure to remove all the shelving and scrub it.
+          description: Optional. Description of the task
+        createdBy:
+          description: User. Creator of the task.
+          allOf:
+            - $ref: "#/components/schemas/User"
+        list:
+          description: List the task belongs to.
+          allOf:
+            - $ref: "#/components/schemas/List"
+        complete:
+          type: boolean
+      required:
+        - title
+        - description
+        - createdBy
+        - list
+        - complete
+    UpdateTaskDto:
+      type: object
+      properties: {}
+    CreateChoreDto:
+      type: object
+      properties: {}
+    UpdateChoreDto:
+      type: object
+      properties: {}
+    CreateRoomDto:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    UpdateRoomDto:
+      type: object
+      properties:
+        name:
+          type: string
