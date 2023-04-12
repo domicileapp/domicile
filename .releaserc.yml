@@ -1,0 +1,18 @@
+branches:
+  - main
+  - name: dev
+    prerelease: true
+repositoryUrl: https://github.com/domicileapp/domicile
+plugins:
+  - - '@semantic-release/commit-analyzer'
+  - - '@semantic-release/release-notes-generator'
+    - preset: conventionalcommits
+  - - '@semantic-release/changelog'
+    - changelogFile: CHANGELOG.md
+      changelogTitle: '# Domicile Changelog'
+  - - '@semantic-release/git'
+    - assets:
+        - CHANGELOG.md
+  - - '@semantic-release/github'
+    - failTitle: Automated release is failing
+      labels: false
