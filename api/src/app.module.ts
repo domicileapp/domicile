@@ -28,7 +28,7 @@ import testConfig from 'mikro-orm-test.config'
       load: [configuration],
     }),
     MikroOrmModule.forRoot(),
-    MikroOrmModule.forRoot(testConfig),
+    // MikroOrmModule.forRoot(testConfig),
     UsersModule,
     AuthModule,
     ListsModule,
