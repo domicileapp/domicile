@@ -1,11 +1,9 @@
 {
   "branches": [
     "main",
-    "master",
     {
       "name": "dev",
-      "prerelease": true,
-      "channel": "nightly"
+      "prerelease": true
     }
   ],
   "repositoryUrl": "https://github.com/domicileapp/domicile",
