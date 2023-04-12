@@ -1,5 +1,13 @@
 # Domicile Changelog
 
+## [1.0.0-dev.2](https://github.com/domicileapp/domicile/compare/v1.0.0-dev.1...v1.0.0-dev.2) (2023-04-12)
+
+
+### Bug Fixes
+
+* change releaserc to yml ([5b69bbd](https://github.com/domicileapp/domicile/commit/5b69bbd9608ae3fac66e95bdcb8630fc77c6e272))
+* **ci:** changelog generation ([077bd6d](https://github.com/domicileapp/domicile/commit/077bd6de521dbd97dab078756cd5691dfc50a810))
+
 # 1.0.0-dev.1 (2023-04-12)
 
 ### Bug Fixes
