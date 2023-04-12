@@ -12,7 +12,46 @@
       "@semantic-release/commit-analyzer"
     ],
     [
-      "@semantic-release/release-notes-generator"
+      "@semantic-release/release-notes-generator",
+      {
+        "preset": {
+          "name": "conventionalcommits",
+          "types": [
+            {
+              "type": "feat",
+              "section": "Features"
+            },
+            {
+              "type": "fix",
+              "section": "Fixes"
+            },
+            {
+              "type": "chore",
+              "section": "Misc"
+            },
+            {
+              "type": "docs",
+              "section": "Documentation"
+            },
+            {
+              "type": "style",
+              "section": "Misc"
+            },
+            {
+              "type": "refactor",
+              "section": "Fixes"
+            },
+            {
+              "type": "perf",
+              "section": "Misc"
+            },
+            {
+              "type": "test",
+              "section": "Misc"
+            }
+          ]
+        }
+      }
     ],
     [
       "@semantic-release/changelog",
