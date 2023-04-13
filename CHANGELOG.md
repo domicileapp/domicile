@@ -1,5 +1,12 @@
 # Domicile Changelog
 
+## [1.0.0-dev.6](https://github.com/domicileapp/domicile/compare/v1.0.0-dev.5...v1.0.0-dev.6) (2023-04-13)
+
+
+### Bug Fixes
+
+* don't commit test-db to vc ([074f9fd](https://github.com/domicileapp/domicile/commit/074f9fdb1e8a990664fbfd6dd41b2731db72d567))
+
 ## [1.0.0-dev.5](https://github.com/domicileapp/domicile/compare/v1.0.0-dev.4...v1.0.0-dev.5) (2023-04-13)
 
 
