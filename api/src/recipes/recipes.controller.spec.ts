@@ -52,5 +52,16 @@ describe('RecipesController', () => {
     expect(res3.id).toBeDefined()
     expect(res3.title).toBe('Ultimate Nachos')
     expect(res3.ingredients).toBe('Chips, Cheese')
+
+    const res4 = await controller.findOne(id)
+    expect(res4.id).toBe(+id)
+    expect(res4.title).toBe('Ultimate Nachos')
+    expect(res4.ingredients).toBe('Chips, Cheese')
+
+    const res5 = await controller.remove(id)
+    expect(res5).toStrictEqual({
+      status: 200,
+      entityRemoved: res5.entityRemoved,
+    })
   })
 })
