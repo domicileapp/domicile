@@ -1,5 +1,12 @@
 # Domicile Changelog
 
+## [1.1.0](https://github.com/domicileapp/domicile/compare/v1.0.0...v1.1.0) (2023-04-13)
+
+
+### Features
+
+* add versioning to docs and deploy on release ([5609d61](https://github.com/domicileapp/domicile/commit/5609d610b8415caa48ac17ca01620052e202e973))
+
 ## [1.0.0-dev.5](https://github.com/domicileapp/domicile/compare/v1.0.0-dev.4...v1.0.0-dev.5) (2023-04-13)
 
 
