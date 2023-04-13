@@ -9,6 +9,5 @@ import { UsersModule } from '@/users/users.module'
   imports: [MikroOrmModule.forFeature([Recipe]), forwardRef(() => UsersModule)],
   controllers: [RecipesController],
   providers: [RecipesService],
-  // exports: [RecipesController, RecipesService],
 })
 export class RecipesModule {}
