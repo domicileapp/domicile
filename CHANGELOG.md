@@ -11,6 +11,7 @@
 
 ## [1.1.1-dev.1](https://github.com/domicileapp/domicile/compare/v1.1.0...v1.1.1-dev.1) (2023-04-13)
 
+## [1.1.1](https://github.com/domicileapp/domicile/compare/v1.1.0...v1.1.1) (2023-04-13)
 
 ### Bug Fixes
 
