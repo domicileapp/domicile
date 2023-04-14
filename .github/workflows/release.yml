@@ -7,7 +7,6 @@ on:
   workflow_dispatch:
 jobs:
   release:
-    name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,7 +18,7 @@ jobs:
         with:
           node-version: 'lts/*'
       - name: Install dependencies
-        run: yarn
+        run: yarn workspace domicile install
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
