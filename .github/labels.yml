@@ -1,18 +1,17 @@
 - name: category/core
-  color: '006B75'
+  color: 006B75
 - name: category/api
-  color: '006B75'
+  color: 006B75
 - name: category/db
-  color: '006B75'
+  color: 006B75
 - name: category/web
-  color: '006B75'
+  color: 006B75
 - name: category/docker
-  color: '006B75'
+  color: 006B75
 - name: category/kubernetes
-  color: '006B75'
+  color: 006B75
 - name: category/deps
-  color: '006B75'
-
+  color: 006B75
 - name: lifecycle/active
   description: Actively being worked on by a community member or maintainer.
   color: '5319E7'
@@ -35,20 +34,19 @@
   color: '5319E7'
 - name: lifecycle/needs-rebase
   color: '5319E7'
-
 - name: type/bug
-  color: 'FBCA04'
+  color: FBCA04
 - name: type/deprecation
-  color: 'FBCA04'
+  color: FBCA04
 - name: type/docs
-  color: 'FBCA04'
+  color: FBCA04
 - name: type/feature
-  color: 'FBCA04'
+  color: FBCA04
 - name: type/meta
-  color: 'FBCA04'
+  color: FBCA04
 - name: type/security
-  color: 'FBCA04'
+  color: FBCA04
 - name: type/support
-  color: 'FBCA04'
+  color: FBCA04
 - name: type/tests
-  color: 'FBCA04'
+  color: FBCA04

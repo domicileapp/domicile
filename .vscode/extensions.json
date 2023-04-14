@@ -12,7 +12,8 @@
     "firsttris.vscode-jest-runner",
     "stylelint.vscode-stylelint",
     "Vue.volar",
-    "Vue.vscode-typescript-vue-plugin"
+    "Vue.vscode-typescript-vue-plugin",
+    "arcanis.vscode-zipfs"
   ],
   "unwantedRecommendations": [
     "octref.vetur",
