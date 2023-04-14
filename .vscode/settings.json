@@ -3,14 +3,34 @@
   "editor.guides.bracketPairs": true,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.codeActionsOnSave": ["source.fixAll.eslint"],
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"],
-  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.codeActionsOnSave": [
+    "source.fixAll.eslint"
+  ],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "vue"
+  ],
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
   "git.alwaysSignOff": true,
   "github.gitAuthentication": true,
-  "conventionalCommits.scopes": ["web"],
+  "conventionalCommits.scopes": [
+    "web"
+  ],
   "eslint.workingDirectories": [
-    { "directory": "./api", "changeProcessCWD": true },
-    { "directory": "./web", "changeProcessCWD": true }
-  ]
+    {
+      "directory": "./api",
+      "changeProcessCWD": true
+    },
+    {
+      "directory": "./web",
+      "changeProcessCWD": true
+    }
+  ],
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  },
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }
