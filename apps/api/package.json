@@ -1,8 +1,7 @@
 {
   "name": "@domicile/api",
   "version": "0.3.0",
-  "description": "",
-  "author": "",
+  "author": "Patrick Black",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -34,6 +33,7 @@
     "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.4.0",
     "@nestjs/jwt": "^10.0.3",
+    "@nestjs/mapped-types": "^1.2.2",
     "@nestjs/passport": "^9.0.3",
     "@nestjs/platform-express": "^9.4.0",
     "@nestjs/platform-socket.io": "^9.4.0",
@@ -50,6 +50,7 @@
     "graphql": "^16.6.0",
     "graphql-tools": "^8.3.20",
     "joi": "^17.9.1",
+    "jsonwebtoken": "^9.0.0",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
