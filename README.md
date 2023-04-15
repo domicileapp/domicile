@@ -1,65 +1,3 @@
-<a name="readme-top"></a>
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-
-[![Contributors][contributors-shield]][contributors-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-
-<!-- PROJECT LOGO -->
-<br />
-<div align="center">
-  <!-- <a href="https://github.com/domicileapp/domicile">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a> -->
-
-<h3 align="center">Domicile</h3>
-
-  <p align="center">
-    An application to help those with executive dysfunction manage household tasks, inventories, and life.
-    <br />
-    <a href="https://github.com/domicileapp/domicile"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <!-- <a href="https://github.com/domicileapp/domicile">View Demo</a> -->
-    <!-- · -->
-    <a href="https://github.com/domicileapp/domicile/issues">Report bug</a>
-    ·
-    <a href="https://github.com/domicileapp/domicile/discussions">Suggest feature</a>
-  </p>
-</div>
-
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-  </ol>
-</details>
-<br/>
-<!-- ABOUT THE PROJECT -->
-
-## About The Project
-
 <!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
 
 ### Built With
@@ -85,6 +23,7 @@ To get a local copy up and running follow these simple example steps.
 This is an example of how to list things you need to use the software and how to install them.
 
 - npm
+
   ```sh
   npm install npm@latest -g
   ```
@@ -93,14 +32,19 @@ This is an example of how to list things you need to use the software and how to
 
 1. Get a free API Key at [https://example.com](https://example.com)
 2. Clone the repo
+
    ```sh
    git clone https://github.com/domicileapp/domicile.git
    ```
+
 3. Install NPM packages
+
    ```sh
    npm install
    ```
+
 4. Enter your API in `config.js`
+
    ```js
    const API_KEY = 'ENTER YOUR API'
    ```
@@ -158,13 +102,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/domicileapp/domicile.svg?style=for-the-badge
-[contributors-url]: https://github.com/domicileapp/domicile/graphs/contributors
-[issues-shield]: https://img.shields.io/github/issues/domicileapp/domicile.svg?style=for-the-badge
-[issues-url]: https://github.com/domicileapp/domicile/issues
-[license-shield]: https://img.shields.io/github/license/domicileapp/domicile.svg?style=for-the-badge
-[license-url]: https://github.com/domicileapp/domicile/blob/master/LICENSE
-[product-screenshot]: images/screenshot.png
 [nest]: https://img.shields.io/badge/nestjs-E0234E?style=for-the-badge&logo=nestjs&logoColor=white
 [nest-url]: https://nestjs.org/
 [vue]: https://img.shields.io/badge/Vue.js-4FC08D?style=for-the-badge&logo=vuedotjs&logoColor=white

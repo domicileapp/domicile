@@ -3,15 +3,24 @@ name: github
 on:
   pull_request:
   push:
-  issues:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
+  issues: write
 
 jobs:
-  label:
+  sync-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: EndBug/label-sync@v2
+        with:
+          config-file: https://raw.githubusercontent.com/domicileapp/labels/main/labels.yml
+          delete-other-labels: true
+          dry-run: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+  add-labels-to-prs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/labeler@v4

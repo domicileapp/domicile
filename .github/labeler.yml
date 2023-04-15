@@ -1,6 +1,3 @@
-category/core:
-  - '*'
-
 category/api:
   - api/*
 

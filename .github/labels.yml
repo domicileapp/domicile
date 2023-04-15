@@ -1,0 +1,52 @@
+- name: category/core
+  color: 006B75
+- name: category/api
+  color: 006B75
+- name: category/db
+  color: 006B75
+- name: category/web
+  color: 006B75
+- name: category/docker
+  color: 006B75
+- name: category/kubernetes
+  color: 006B75
+- name: category/deps
+  color: 006B75
+- name: lifecycle/active
+  description: Actively being worked on by a community member or maintainer.
+  color: '5319E7'
+- name: lifecycle/approved
+  description: Feature or request planned to be implemented
+  color: '5319E7'
+- name: lifecycle/active
+  description: Cannot move forward until some roadblock is lifted
+  color: '5319E7'
+- name: lifecycle/needs-info
+  color: '5319E7'
+- name: lifecycle/needs-pr
+  description: Typically paired with approved tag, needs PR with feature/fix.
+  color: '5319E7'
+- name: lifecycle/needs-proposal
+  description: A large feature or change in development pattern that needs community feedback.
+  color: '5319E7'
+- name: lifecycle/rejected
+  description: For issues and PRs the community has determined are not a priority and will not be implemented at this time.
+  color: '5319E7'
+- name: lifecycle/needs-rebase
+  color: '5319E7'
+- name: type/bug
+  color: FBCA04
+- name: type/deprecation
+  color: FBCA04
+- name: type/docs
+  color: FBCA04
+- name: type/feature
+  color: FBCA04
+- name: type/meta
+  color: FBCA04
+- name: type/security
+  color: FBCA04
+- name: type/support
+  color: FBCA04
+- name: type/tests
+  color: FBCA04
