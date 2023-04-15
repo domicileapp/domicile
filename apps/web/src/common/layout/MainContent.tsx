@@ -6,5 +6,5 @@ export type MainContentProps = {
 }
 
 export default function MainContent({ children, header }: PropsWithChildren<MainContentProps>) {
-  return <div className='flex flex-col space-y-1.5'>{children}</div>
+  return <div>{children}</div>
 }

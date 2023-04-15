@@ -7,7 +7,7 @@ export async function getRecipes() {
   return recipes
 }
 
-export async function getRecipe(id: number | string) {
+export async function getRecipe(id: string | undefined) {
   const recipe = await api.get(`/recipes/${id}`).then((res) => {
     return res.data
   })
