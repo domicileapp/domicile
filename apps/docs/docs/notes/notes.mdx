@@ -1,0 +1,48 @@
+---
+sidebar_position: 4
+---
+
+# Notes
+
+Random thoughts on direction for the project to be organized later
+
+## Release Schedule
+
+I'm really not certain about a release schedule at this point.
+I imagine at first, the release schedule should be fairly frequent, but
+I no idea what best practices are here. I have not really worked on a team
+that releases software in this particular way before as I am more on the
+infrastructure side of the house. Presumably the `next` branch gets released
+fairly often...once a week? once a day? Also factoring in the upgrade methods
+if folks are running this on Docker or Kubernetes clusters, that might be annoying.
+
+## Technology and Tooling Rationale
+
+This project's purpose is partially because I will find it useful, and partially
+as a learning experience for me.
+
+### Nest.js
+
+Honestly, I just really like Nest.js from what I've done with it so far, and just
+want to get a bit more comfortable with it. Other considered backend/api options included
+Python (Django) and Go (Gin?).
+
+### React
+
+Previous projects have been exclusively in Vue.js, and React has a signifigant market
+share and I've never had the opportunity to use or learn it. Like what I see so far!
+It's also very popular and that makes it easier for others to contribute if they want.
+
+I am very weak in design and could really use some assistance in this area.
+
+### Kubernetes
+
+Pretty much see above. Have not had many professional opportunities to use this, and I
+would like to. Eventually I see a full helm chart option. **However, I feel strongly about
+maintaining a Docker (compose) version as not everyone wants or needs a k8s cluster**. I
+have found it a bit frustrating when other projects ONLY offer self-hosting on a Kubernetes
+cluster.
+
+I understand this may impact some architecture choices, but honestly can't really
+see this needing the more advanced features k8s offers as theoretically it should be a fairly
+simple CRUD app with thoughtful defaults for people with executive disfunction.

@@ -2993,6 +2993,24 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@domicile/docs@workspace:apps/docs":
+  version: 0.0.0-use.local
+  resolution: "@domicile/docs@workspace:apps/docs"
+  dependencies:
+    "@docusaurus/core": 2.4.0
+    "@docusaurus/module-type-aliases": 2.4.0
+    "@docusaurus/preset-classic": 2.4.0
+    "@docusaurus/types": ^2.4.0
+    "@mdx-js/react": ^1.6.22
+    "@tsconfig/docusaurus": ^1.0.7
+    clsx: ^1.2.1
+    prism-react-renderer: ^1.3.5
+    react: ^17.0.2
+    react-dom: ^17.0.2
+    typescript: ^4.9.5
+  languageName: unknown
+  linkType: soft
+
 "@domicile/web@workspace:apps/web":
   version: 0.0.0-use.local
   resolution: "@domicile/web@workspace:apps/web"
@@ -10626,24 +10644,6 @@ __metadata:
   checksum: 3aa26bb03a613362937225f786d46b1a39b5002d0a68b40537326b090685d5c53d46e25cc7c610f2a29ea5029c8ce480c368a8b0492932c5fb88ebc377676e84
   languageName: node
   linkType: hard
-
-"docs@workspace:apps/docs":
-  version: 0.0.0-use.local
-  resolution: "docs@workspace:apps/docs"
-  dependencies:
-    "@docusaurus/core": 2.4.0
-    "@docusaurus/module-type-aliases": 2.4.0
-    "@docusaurus/preset-classic": 2.4.0
-    "@docusaurus/types": ^2.4.0
-    "@mdx-js/react": ^1.6.22
-    "@tsconfig/docusaurus": ^1.0.7
-    clsx: ^1.2.1
-    prism-react-renderer: ^1.3.5
-    react: ^17.0.2
-    react-dom: ^17.0.2
-    typescript: ^4.9.5
-  languageName: unknown
-  linkType: soft
 
 "doctrine@npm:^2.1.0":
   version: 2.1.0
