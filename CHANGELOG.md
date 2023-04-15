@@ -1,5 +1,12 @@
 # Domicile Changelog
 
+## [1.2.0-dev.1](https://github.com/domicileapp/domicile/compare/v1.1.2-dev.1...v1.2.0-dev.1) (2023-04-15)
+
+
+### Features
+
+* **web:** add recipe singleton page ([9f1fb92](https://github.com/domicileapp/domicile/commit/9f1fb92352eab386f249029b288ad61402551799))
+
 ## [1.1.2-dev.1](https://github.com/domicileapp/domicile/compare/v1.1.1...v1.1.2-dev.1) (2023-04-15)
 
 
