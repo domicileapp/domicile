@@ -1,5 +1,12 @@
 # Domicile Changelog
 
+## [1.2.0-next.2](https://github.com/domicileapp/domicile/compare/v1.2.0-next.1...v1.2.0-next.2) (2023-04-16)
+
+
+### Features
+
+* **web:** create recipe functionality ([#264](https://github.com/domicileapp/domicile/issues/264)) ([136eab5](https://github.com/domicileapp/domicile/commit/136eab53ec64aeda8c91a55c955a22034e421603))
+
 ## [1.2.0-next.1](https://github.com/domicileapp/domicile/compare/v1.1.1...v1.2.0-next.1) (2023-04-15)
 
 
