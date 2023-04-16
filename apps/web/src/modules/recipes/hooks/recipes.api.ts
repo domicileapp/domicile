@@ -21,3 +21,9 @@ export async function createRecipe(data: IRecipe) {
   })
   return recipe
 }
+
+export async function updateRecipeFn(id: string, data: Partial<IRecipe>) {
+  console.log(data)
+  const recipe = await api.patch(`/recipes/${id}`, { ...data })
+  return recipe
+}

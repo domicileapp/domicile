@@ -38,7 +38,7 @@ export default function Recipes() {
       </Grid>
       <Grid container spacing={2}>
         {recipes?.map((recipe: IRecipe) => (
-          <Grid item xs={6}>
+          <Grid item xs={6} key={recipe.id}>
             <RecipeCard id={recipe.id} title={recipe.title} ingredients={recipe.ingredients} />
           </Grid>
         ))}
