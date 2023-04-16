@@ -2,9 +2,9 @@ import { IBase } from './base.interface'
 
 export interface IRecipe extends IBase {
   title: string
-  prepTime?: number
-  cookTime?: number
-  servingSize?: number
-  ingredients?: string
-  directions?: string
+  prepTime?: number | string
+  cookTime?: number | string
+  servingSize?: number | string
+  ingredients: string
+  directions: string
 }
