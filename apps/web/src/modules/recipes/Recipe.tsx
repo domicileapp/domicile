@@ -11,25 +11,29 @@ export default function Recipe() {
   })
   return (
     <Grid container sx={{ px: 2 }}>
-      <Grid container spacing={2} sx={{ my: 2 }}>
+      <Grid container spacing={2} sx={{ mt: 1, mb: 3 }}>
         <Grid item xs={12}>
           <Typography variant='h3'>{recipe?.title}</Typography>
         </Grid>
       </Grid>
       <Grid container spacing={2}>
-        <Grid item xs={4} sx={{ p: 'auto' }}>
-          <Card sx={{ p: 'auto' }}>
+        <Grid item md={4} xs={12}>
+          <Card>
             <CardContent>
               <Typography variant='h4'>Ingredients</Typography>
-              <Typography variant='body2'>{recipe?.ingredients}</Typography>
+              <Typography variant='body1' sx={{ whiteSpace: 'pre-line' }}>
+                {recipe?.ingredients}
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item md={8} xs={12}>
           <Card>
             <CardContent>
               <Typography variant='h4'>Directions</Typography>
-              <Typography variant='body2'>{recipe?.directions}</Typography>
+              <Typography variant='body1' sx={{ whiteSpace: 'pre-line' }}>
+                {recipe?.directions}
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
