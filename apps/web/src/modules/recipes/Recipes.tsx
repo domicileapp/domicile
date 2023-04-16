@@ -14,6 +14,8 @@ import { useQuery } from '@tanstack/react-query'
 import { getRecipes } from './hooks/recipes.api'
 import { Add, Visibility } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
+import { RecipeCard } from './components/RecipeCard'
+import { IRecipe } from '@domicile/contracts'
 
 export default function Recipes() {
   const { data: recipes } = useQuery({
@@ -35,21 +37,9 @@ export default function Recipes() {
         </Grid>
       </Grid>
       <Grid container spacing={2}>
-        {recipes?.map((recipe: any) => (
+        {recipes?.map((recipe: IRecipe) => (
           <Grid item xs={6}>
-            <Card key={recipe.id}>
-              <CardContent>
-                <Typography gutterBottom variant='h5'>
-                  {recipe.title}
-                </Typography>
-                <Typography variant='body2'>{recipe.ingredients}</Typography>
-              </CardContent>
-              <CardActions>
-                <Button href={`/recipes/${recipe.id}`} startIcon={<Visibility />} size='small'>
-                  View
-                </Button>
-              </CardActions>
-            </Card>
+            <RecipeCard id={recipe.id} title={recipe.title} ingredients={recipe.ingredients} />
           </Grid>
         ))}
       </Grid>
