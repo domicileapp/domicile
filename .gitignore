@@ -123,3 +123,5 @@ Dockerfile.cross
 node_modules
 dist/
 domicile-test-db
+
+.DS_Store
