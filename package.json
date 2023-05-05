@@ -3,10 +3,6 @@
   "version": "0.0.0-development",
   "license": "MIT",
   "private": true,
-  "workspaces": [
-    "packages/**",
-    "apps/**"
-  ],
   "scripts": {
     "prepare": "husky install",
     "commit": "commit",
