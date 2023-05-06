@@ -26,12 +26,12 @@ Route.get('/', async () => {
 
 Route.group(() => {
   Route.get('/users', 'UsersController.index')
-  Route.post('/users', 'UsersController.create')
 
   Route.get('recipes', 'RecipesController.index')
   Route.post('recipes', 'RecipesController.create')
 }).middleware('auth')
 
+Route.post('/users', 'UsersController.create')
 Route.post('login', async ({ auth, request, response }) => {
   const email = request.input('email')
   const password = request.input('password')

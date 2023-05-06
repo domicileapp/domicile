@@ -26,6 +26,7 @@ export default class CreateRecipeValidator {
   public schema = schema.create({
     instructions: schema.string({ trim: true }),
     ingredients: schema.string({ trim: true }),
+    categories: schema.string.nullable(),
   })
 
   /**
@@ -39,5 +40,8 @@ export default class CreateRecipeValidator {
    * }
    *
    */
-  public messages: CustomMessages = {}
+  public messages: CustomMessages = {
+    'instructions.required': 'Instructions are required.',
+    'ingredients.required': 'Ingredients are required.',
+  }
 }
