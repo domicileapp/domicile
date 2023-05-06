@@ -1,5 +1,13 @@
-import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  BelongsTo,
+  ManyToMany,
+  belongsTo,
+  column,
+  manyToMany,
+} from '@ioc:Adonis/Lucid/Orm'
 import { DateTime } from 'luxon'
+import Category from './Category'
 import User from './User'
 
 export default class Recipe extends BaseModel {
@@ -21,6 +29,9 @@ export default class Recipe extends BaseModel {
   @column()
   public userId: number
 
-  @belongsTo(() => User, { localKey: 'userId', foreignKey: 'userId' })
+  @belongsTo(() => User)
   public createdBy: BelongsTo<typeof User>
+
+  @manyToMany(() => Category)
+  public categories: ManyToMany<typeof Category>
 }

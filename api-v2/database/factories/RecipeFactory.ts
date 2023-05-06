@@ -1,7 +1,7 @@
-import Recipe from 'App/Models/Recipe'
 import Factory from '@ioc:Adonis/Lucid/Factory'
+import Recipe from 'App/Models/Recipe'
 
-export default Factory.define(Recipe, ({ faker }) => {
+export default Factory.define(Recipe, ({}) => {
   return {
     //
   }
