@@ -28,6 +28,12 @@ export default class RecipesController {
     return recipes
   }
 
+  public async view({ request }: HttpContextContract) {
+    const recipe = await Recipe.findByOrFail('id', request.param('id'))
+    await recipe.load((loader) => loader.load('categories').load('createdBy'))
+    return recipe
+  }
+
   public async create({ auth, request }: HttpContextContract) {
     const { categories, ...values } = await request.validate(CreateRecipeValidator)
     const recipe = await auth.user?.related('recipes').create(values)
@@ -40,6 +46,37 @@ export default class RecipesController {
       await recipe?.related('categories').sync(relatedCategories.map(({ id }) => id))
     }
 
+    return recipe
+  }
+
+  public async update({ auth, request }: HttpContextContract) {
+    const recipe = await auth.user
+      ?.related('recipes')
+      .query()
+      .where('id', request.param('id'))
+      .first()
+    if (!recipe) return
+    const { categories, ...values } = await request.validate(CreateRecipeValidator)
+    await recipe.merge(values).save()
+    if (categories) {
+      const relatedCategories = await Category.fetchOrCreateMany(
+        'name',
+        categories.split(',').map((name) => ({ name: name.trim() }))
+      )
+      await recipe.related('categories').sync(relatedCategories.map(({ id }) => id))
+    }
+    return recipe
+  }
+
+  public async delete({ auth, request }: HttpContextContract) {
+    const recipe = await auth.user
+      ?.related('recipes')
+      .query()
+      .where('id', request.param('id'))
+      .first()
+
+    if (!recipe) return
+    await recipe.delete()
     return recipe
   }
 }
