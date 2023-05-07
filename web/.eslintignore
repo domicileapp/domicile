@@ -1,4 +1,7 @@
+node_modules/**
+scripts/**
+tailwind.config.js
 dist
-node_modules
-public
-vite.config.ts
+build
+coverage
+.eslintcache
