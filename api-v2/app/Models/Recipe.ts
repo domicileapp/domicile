@@ -21,10 +21,22 @@ export default class Recipe extends BaseModel {
   public updatedAt: DateTime
 
   @column()
+  public title: string
+
+  @column()
+  public description?: string
+
+  @column()
   public ingredients: string
 
   @column()
   public instructions: string
+
+  @column()
+  public prepTime?: string
+
+  @column()
+  public cookTime?: string
 
   @column()
   public userId: number
