@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "formik": "^2.2.9",
     "primeflex": "^3.3.0",
     "primeicons": "^6.0.1",
     "primereact": "^8.6.1",

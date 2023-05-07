@@ -15,7 +15,7 @@ export default class RecipesController {
 
     const recipes = await Recipe.query()
       .if(filterBy === 'category' && !!category, (query) =>
-        query.whereHas('categories', (categoriesQuery) => categoriesQuery.where('value', category))
+        query.whereHas('categories', (categoriesQuery) => categoriesQuery.where('name', category))
       )
       .preload('categories')
       .preload('createdBy')
