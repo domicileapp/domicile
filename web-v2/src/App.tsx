@@ -1,46 +1,52 @@
 import { Button } from 'primereact/button'
+import { Card } from 'primereact/card'
+import { Checkbox } from 'primereact/checkbox'
 import { InputText } from 'primereact/inputtext'
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-
-import 'primeflex/primeflex.css' // flex
-import 'primeicons/primeicons.css' //icons
-import 'primereact/resources/primereact.min.css' //core css
-import 'primereact/resources/themes/lara-light-indigo/theme.css' //theme
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [username, setUsername] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const [checked1, setChecked1] = useState<boolean>(false)
 
   return (
-    <div className="App">
+    <Card>
+      <div className="text-center mb-5">
+        <div className="text-3xl mb-3">Login</div>
+        <span className="line-height-3">Don't have an account?</span>
+        <a className="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Create today!</a>
+      </div>
+
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <label htmlFor="email" className="block text-900 font-medium mb-2">
+          Email
+        </label>
+        <InputText id="email" type="text" placeholder="Email address" className="w-full mb-3" />
+
+        <label htmlFor="password" className="block text-900 font-medium mb-2">
+          Password
+        </label>
+        <InputText type="password" placeholder="Password" className="w-full mb-3" />
+
+        <div className="flex align-items-center justify-content-between mb-6">
+          <div className="flex align-items-center">
+            <Checkbox
+              id="rememberme"
+              className="mr-2"
+              checked={checked1}
+              onChange={(e) => setChecked1(e.checked)}
+            />
+            <label htmlFor="rememberme">Remember me</label>
+          </div>
+          <a className="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">
+            Forgot your password?
+          </a>
+        </div>
+
+        <Button label="Sign In" icon="pi pi-user" className="w-full" />
       </div>
-      <h1>Vite + PrimeReact</h1>
-      <div>
-        <h2>PrimeReact Typescript Issue Template</h2>
-        <p>Please create a test case and attach the link to the to your github issue report.</p>
-      </div>
-      <div className="card">
-        <Button
-          icon="pi pi-plus"
-          className="mr-2"
-          label="Increment"
-          onClick={() => setCount((count) => count + 1)}
-        ></Button>
-        <InputText value={count} />
-        <p>
-          Edit <code>src/App.tsx</code> and save to test PrimeReact
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </div>
+    </Card>
   )
 }
 
