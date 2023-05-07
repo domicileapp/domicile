@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { MantineProvider } from '@mantine/core'
 import * as Sentry from '@sentry/react'
 import React from 'react'
@@ -40,17 +41,30 @@ import ReactQuery from '@/providers/ReactQuery'
 import Theme from '@/providers/Theme'
 import Routes from '@/routes/Routes'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+=======
+import { MantineProvider } from '@mantine/core'
+import React from 'react'
+import ReactDOM from 'react-dom'
+>>>>>>> a0431e8b (move)
 
-import './styles/tailwind.css'
+import App from './App'
+import './theme/App.css'
+import './theme/index.css'
 
-createRoot(document.getElementById('root') as HTMLElement).render(
-  <StrictMode>
-    <Theme>
-      <ReactQuery>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <Routes />
-      </ReactQuery>
-    </Theme>
-  </StrictMode>
+ReactDOM.render(
+  <React.StrictMode>
+    <MantineProvider withGlobalStyles withNormalizeCSS>
+      <App />
+    </MantineProvider>
+  </React.StrictMode>,
+  document.getElementById('root')
 )
+<<<<<<< HEAD
 >>>>>>> ed5ca8e1 (chore: move folders around)
+=======
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// reportWebVitals();
+>>>>>>> a0431e8b (move)
