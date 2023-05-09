@@ -2,6 +2,8 @@
 
 import { PrivateLayout, PublicLayout } from '@/components/layout'
 import { AuthGuard, GuestGuard } from '@/components/layout/guards'
+import { HomePage } from '@/pages/private/HomePage'
+import { LoginPage } from '@/pages/public/LoginPage'
 import { Navigate, RouteObject } from 'react-router-dom'
 
 // Layouts and guards should be loaded from the beginning, so we can use them in the
@@ -25,7 +27,7 @@ const routes: RouteObject[] = [
       {
         index: true,
         path: 'login',
-        // element: <LoginPage />,
+        element: <LoginPage />,
       },
       // Examples:
       // {
@@ -43,7 +45,7 @@ const routes: RouteObject[] = [
     ],
   },
   {
-    path: 'dashboard',
+    path: '/',
     element: (
       <AuthGuard>
         <PrivateLayout />
@@ -53,7 +55,7 @@ const routes: RouteObject[] = [
       {
         index: true,
         path: 'home',
-        // element: <HomePage />,
+        element: <HomePage />,
       },
       // Examples for admin only
       // {
