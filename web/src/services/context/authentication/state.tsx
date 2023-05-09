@@ -8,7 +8,6 @@ interface IAuthenticationStateProps {
 }
 
 const AuthenticationState: React.FC<IAuthenticationStateProps> = ({ children }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [state, dispatch] = useReducer<React.Reducer<IState, ActionTypes>>(
     authenticationReducer,
     initialState
