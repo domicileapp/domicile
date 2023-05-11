@@ -20,13 +20,6 @@ ujson = "^5.7.0"
 SQLAlchemy = {version = "^2.0.0", extras = ["asyncio"]}
 alembic = "^1.9.2"
 asyncpg = {version = "^0.27.0", extras = ["sa"]}
-aiofiles = "^22.1.0"
-httptools = "^0.5.0"
-aio-pika = "^8.3.0"
-prometheus-client = "^0.16.0"
-prometheus-fastapi-instrumentator = "5.9.1"
-aiokafka = "^0.8.0"
-
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.2.1"
@@ -71,27 +64,6 @@ env = [
     "DOMICILE_ENVIRONMENT=pytest",
     "DOMICILE_DB_BASE=domicile_test",
 ]
-
-[fastapi-template.options]
-project_name = "domicile"
-api_type = "rest"
-enable_redis = "None"
-enable_rmq = "True"
-ci_type = "github"
-enable_migrations = "True"
-enable_taskiq = "None"
-enable_kube = "None"
-kube_name = "domicile"
-enable_routers = "True"
-enable_kafka = "True"
-enable_loguru = "None"
-traefik_labels = "None"
-add_dummy = "True"
-orm = "sqlalchemy"
-self_hosted_swagger = "True"
-prometheus_enabled = "True"
-sentry_enabled = "None"
-otlp_enabled = "None"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

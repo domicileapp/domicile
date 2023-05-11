@@ -1,1 +1,0 @@
-"""domicile API package."""
