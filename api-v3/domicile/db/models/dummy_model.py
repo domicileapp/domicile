@@ -1,7 +1,6 @@
+from domicile.db.base import Base
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.sql.sqltypes import String
-
-from domicile.db.base import Base
 
 
 class DummyModel(Base):

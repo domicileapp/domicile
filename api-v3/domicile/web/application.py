@@ -1,13 +1,13 @@
-from fastapi import FastAPI
-from fastapi.responses import UJSONResponse
 import logging
-from domicile.web.api.router import api_router
-from domicile.settings import settings
-from domicile.web.lifetime import register_startup_event, register_shutdown_event
 from importlib import metadata
-from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 
+from domicile.settings import settings
+from domicile.web.api.router import api_router
+from domicile.web.lifetime import register_shutdown_event, register_startup_event
+from fastapi import FastAPI
+from fastapi.responses import UJSONResponse
+from fastapi.staticfiles import StaticFiles
 
 APP_ROOT = Path(__file__).parent.parent
 
@@ -25,7 +25,6 @@ def get_app() -> FastAPI:
         version=metadata.version("domicile"),
         docs_url=None,
         redoc_url=None,
-        
         openapi_url="/api/openapi.json",
         default_response_class=UJSONResponse,
     )
@@ -38,11 +37,6 @@ def get_app() -> FastAPI:
     app.include_router(router=api_router, prefix="/api")
     # Adds static directory.
     # This directory is used to access swagger files.
-    app.mount(
-        "/static",
-        StaticFiles(directory=APP_ROOT / "static"),
-        name="static"
-    )
-    
+    app.mount("/static", StaticFiles(directory=APP_ROOT / "static"), name="static")
 
     return app

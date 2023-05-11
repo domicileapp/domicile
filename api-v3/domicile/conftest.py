@@ -1,27 +1,32 @@
 import asyncio
-from asyncio.events import AbstractEventLoop
 import sys
-from typing import Any, Generator, AsyncGenerator
+import uuid
+from asyncio.events import AbstractEventLoop
+from typing import Any, AsyncGenerator, Generator
+from unittest.mock import Mock
 
 import pytest
-from fastapi import FastAPI
-from httpx import AsyncClient
-import uuid
-from unittest.mock import Mock
 from aio_pika import Channel
 from aio_pika.abc import AbstractExchange, AbstractQueue
 from aio_pika.pool import Pool
-from domicile.services.rabbit.dependencies import get_rmq_channel_pool
-from domicile.services.rabbit.lifetime import init_rabbit, shutdown_rabbit
 from aiokafka import AIOKafkaProducer
-from domicile.services.kafka.dependencies import get_kafka_producer
-from domicile.services.kafka.lifetime import init_kafka, shutdown_kafka
-
-from domicile.settings import settings
-from domicile.web.application import get_app
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, AsyncEngine, AsyncConnection, async_sessionmaker
 from domicile.db.dependencies import get_db_session
 from domicile.db.utils import create_database, drop_database
+from domicile.services.kafka.dependencies import get_kafka_producer
+from domicile.services.kafka.lifetime import init_kafka, shutdown_kafka
+from domicile.services.rabbit.dependencies import get_rmq_channel_pool
+from domicile.services.rabbit.lifetime import init_rabbit, shutdown_rabbit
+from domicile.settings import settings
+from domicile.web.application import get_app
+from fastapi import FastAPI
+from httpx import AsyncClient
+from sqlalchemy.ext.asyncio import (
+    AsyncConnection,
+    AsyncEngine,
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine,
+)
 
 
 @pytest.fixture(scope="session")
@@ -31,7 +36,9 @@ def anyio_backend() -> str:
 
     :return: backend name.
     """
-    return 'asyncio'
+    return "asyncio"
+
+
 @pytest.fixture(scope="session")
 async def _engine() -> AsyncGenerator[AsyncEngine, None]:
     """
@@ -55,6 +62,7 @@ async def _engine() -> AsyncGenerator[AsyncEngine, None]:
     finally:
         await engine.dispose()
         await drop_database()
+
 
 @pytest.fixture
 async def dbsession(
@@ -84,6 +92,7 @@ async def dbsession(
         await session.close()
         await trans.rollback()
         await connection.close()
+
 
 @pytest.fixture
 async def test_rmq_pool() -> AsyncGenerator[Channel, None]:
@@ -164,6 +173,7 @@ async def test_queue(
 
         await queue.delete(if_unused=False, if_empty=False)
 
+
 @pytest.fixture
 async def test_kafka_producer() -> AsyncGenerator[AIOKafkaProducer, None]:
     """
@@ -177,11 +187,9 @@ async def test_kafka_producer() -> AsyncGenerator[AIOKafkaProducer, None]:
     await shutdown_kafka(app_mock)
 
 
-
 @pytest.fixture
 def fastapi_app(
     dbsession: AsyncSession,
-    
     test_rmq_pool: Pool[Channel],
     test_kafka_producer: AIOKafkaProducer,
 ) -> FastAPI:
@@ -199,8 +207,7 @@ def fastapi_app(
 
 @pytest.fixture
 async def client(
-    fastapi_app: FastAPI,
-    anyio_backend: Any
+    fastapi_app: FastAPI, anyio_backend: Any
 ) -> AsyncGenerator[AsyncClient, None]:
     """
     Fixture that creates client for requesting server.
@@ -209,4 +216,4 @@ async def client(
     :yield: client for the app.
     """
     async with AsyncClient(app=fastapi_app, base_url="http://test") as ac:
-            yield ac
+        yield ac

@@ -1,1 +1,1 @@
-"""WEB API for domicile."""
+"""Web API for domicile."""

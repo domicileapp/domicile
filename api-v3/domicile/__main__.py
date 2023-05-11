@@ -1,8 +1,10 @@
-import uvicorn
 import os
 import shutil
 
+import uvicorn
 from domicile.settings import settings
+
+
 def set_multiproc_dir() -> None:
     """
     Sets mutiproc_dir env variable.

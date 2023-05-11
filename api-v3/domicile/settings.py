@@ -8,6 +8,7 @@ from yarl import URL
 
 TEMP_DIR = Path(gettempdir())
 
+
 class LogLevel(str, enum.Enum):  # noqa: WPS600
     """Possible log levels."""
 
@@ -63,7 +64,6 @@ class Settings(BaseSettings):
 
     kafka_bootstrap_servers: List[str] = ["domicile-kafka:9092"]
 
-
     @property
     def db_url(self) -> URL:
         """
@@ -79,6 +79,7 @@ class Settings(BaseSettings):
             password=self.db_pass,
             path=f"/{self.db_base}",
         )
+
     @property
     def rabbit_url(self) -> URL:
         """

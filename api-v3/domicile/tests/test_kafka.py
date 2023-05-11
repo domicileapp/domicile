@@ -3,11 +3,10 @@ import uuid
 
 import pytest
 from aiokafka import AIOKafkaConsumer
+from domicile.settings import settings
 from fastapi import FastAPI
 from httpx import AsyncClient
 from starlette import status
-
-from domicile.settings import settings
 
 
 @pytest.mark.anyio
@@ -40,7 +39,6 @@ async def test_message_publishing(
             "message": message,
         },
     )
-
 
     assert response.status_code == status.HTTP_200_OK
 

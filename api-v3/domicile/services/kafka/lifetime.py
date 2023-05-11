@@ -1,7 +1,6 @@
 from aiokafka import AIOKafkaProducer
-from fastapi import FastAPI
-
 from domicile.settings import settings
+from fastapi import FastAPI
 
 
 async def init_kafka(app: FastAPI) -> None:  # pragma: no cover

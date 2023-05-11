@@ -1,15 +1,14 @@
-from typing import Awaitable, Callable
 import logging
-from fastapi import FastAPI
+from typing import Awaitable, Callable
 
-from domicile.settings import settings
-from prometheus_fastapi_instrumentator.instrumentation import PrometheusFastApiInstrumentator
-from domicile.services.rabbit.lifetime import init_rabbit, shutdown_rabbit
 from domicile.services.kafka.lifetime import init_kafka, shutdown_kafka
-from sqlalchemy.ext.asyncio import (
-    create_async_engine,
-    async_sessionmaker,
+from domicile.services.rabbit.lifetime import init_rabbit, shutdown_rabbit
+from domicile.settings import settings
+from fastapi import FastAPI
+from prometheus_fastapi_instrumentator.instrumentation import (
+    PrometheusFastApiInstrumentator,
 )
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy.orm import sessionmaker
 
 
@@ -30,6 +29,8 @@ def _setup_db(app: FastAPI) -> None:  # pragma: no cover
     )
     app.state.db_engine = engine
     app.state.db_session_factory = session_factory
+
+
 def setup_prometheus(app: FastAPI) -> None:  # pragma: no cover
     """
     Enables prometheus integration.
@@ -41,7 +42,9 @@ def setup_prometheus(app: FastAPI) -> None:  # pragma: no cover
     ).expose(app, should_gzip=True, name="prometheus_metrics")
 
 
-def register_startup_event(app: FastAPI) -> Callable[[], Awaitable[None]]:  # pragma: no cover
+def register_startup_event(
+    app: FastAPI,
+) -> Callable[[], Awaitable[None]]:  # pragma: no cover
     """
     Actions to run on application startup.
 
@@ -63,7 +66,9 @@ def register_startup_event(app: FastAPI) -> Callable[[], Awaitable[None]]:  # pr
     return _startup
 
 
-def register_shutdown_event(app: FastAPI) -> Callable[[], Awaitable[None]]:  # pragma: no cover
+def register_shutdown_event(
+    app: FastAPI,
+) -> Callable[[], Awaitable[None]]:  # pragma: no cover
     """
     Actions to run on application's shutdown.
 
@@ -74,7 +79,7 @@ def register_shutdown_event(app: FastAPI) -> Callable[[], Awaitable[None]]:  # p
     @app.on_event("shutdown")
     async def _shutdown() -> None:  # noqa: WPS430
         await app.state.db_engine.dispose()
-        
+
         await shutdown_rabbit(app)
         await shutdown_kafka(app)
         pass  # noqa: WPS420

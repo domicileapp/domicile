@@ -1,11 +1,10 @@
 from typing import List
 
-from fastapi import APIRouter
-from fastapi.param_functions import Depends
-
 from domicile.db.dao.dummy_dao import DummyDAO
 from domicile.db.models.dummy_model import DummyModel
 from domicile.web.api.dummy.schema import DummyModelDTO, DummyModelInputDTO
+from fastapi import APIRouter
+from fastapi.param_functions import Depends
 
 router = APIRouter()
 

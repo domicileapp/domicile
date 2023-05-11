@@ -1,10 +1,5 @@
+from domicile.web.api import docs, dummy, echo, kafka, monitoring, rabbit
 from fastapi.routing import APIRouter
-from domicile.web.api import echo
-from domicile.web.api import dummy
-from domicile.web.api import rabbit
-from domicile.web.api import kafka
-from domicile.web.api import docs
-from domicile.web.api import monitoring
 
 api_router = APIRouter()
 api_router.include_router(monitoring.router)
