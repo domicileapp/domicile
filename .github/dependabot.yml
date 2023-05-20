@@ -1,22 +1,35 @@
 version: 2
 updates:
-- package-ecosystem: 'npm'
-  target-branch: 'next'
-  directory: '/'
-  schedule:
-    interval: 'daily'
-  commit-message:
-    include: scope
-    prefix: chore
-  labels:
-  - 'category/deps'
-- package-ecosystem: 'pip'
-  target-branch: 'next'
-  directory: '/'
-  schedule:
-    interval: 'daily'
-  commit-message:
-    include: scope
-    prefix: chore
-  labels:
-  - 'category/deps'
+  - package-ecosystem: 'npm'
+    target-branch: 'next'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+    commit-message:
+      include: scope
+      prefix: chore
+    labels:
+      - 'category/deps'
+      - 'type/npm'
+  - package-ecosystem: 'pip'
+    target-branch: 'next'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+    commit-message:
+      include: scope
+      prefix: chore
+    labels:
+      - 'category/deps'
+      - 'type/python'
+  - package-ecosystem: 'gomod'
+    target-branch: 'next'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+    commit-message:
+      include: scope
+      prefix: chore
+    labels:
+      - 'category/deps'
+      - 'type/go'
