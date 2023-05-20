@@ -9,13 +9,13 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-var router = gin.Default()
+var Router = gin.Default()
 
 // SetupRoutes creates the API routes
 func SetupRoutes() {
-	v1 := router.Group("/v1")
+	v1 := Router.Group("/v1")
 	docs.SwaggerInfo.Title = "Program"
-	router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	Router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	routes.AddHealthRoutes(v1)
-	router.Run("localhost:3000")
+	Router.Run("localhost:3000")
 }
