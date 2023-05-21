@@ -1,8 +1,6 @@
 package main
 
 import (
-	"github.com/domicileapp/domicile/api/pkg/api"
-	"github.com/domicileapp/domicile/api/pkg/database"
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,7 +19,7 @@ import (
 // @host		petstore.swagger.io
 // @BasePath    /v1
 func main() {
-	database.SetupDatabase()
-	api.SetupRoutes()
+	// database.SetupDatabase()
+	// api.SetupRoutes()
 	gin.SetMode(gin.DebugMode)
 }
