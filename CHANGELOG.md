@@ -1,5 +1,12 @@
 # Domicile Changelog
 
+## [1.2.0-next.5](https://github.com/domicileapp/domicile/compare/v1.2.0-next.4...v1.2.0-next.5) (2023-05-22)
+
+
+### Features
+
+* **api:** authentication ([158da8b](https://github.com/domicileapp/domicile/commit/158da8bbc68ced3f7c8794c20883c900703d1d16))
+
 ## [1.2.0-next.4](https://github.com/domicileapp/domicile/compare/v1.2.0-next.3...v1.2.0-next.4) (2023-05-10)
 
 
