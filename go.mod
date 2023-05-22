@@ -9,7 +9,7 @@ require (
 	github.com/joho/godotenv v1.5.1
 	github.com/stretchr/testify v1.8.2
 	github.com/swaggo/swag v1.16.1
-	golang.org/x/crypto v0.8.0
+	golang.org/x/crypto v0.9.0
 	gorm.io/driver/postgres v1.5.2
 	gorm.io/gorm v1.25.1
 )
