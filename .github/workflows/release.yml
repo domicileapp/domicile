@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - main
-      - dev
+      - next
   workflow_dispatch:
 jobs:
   release:
@@ -20,7 +20,7 @@ jobs:
           node-version: 'lts/*'
 
       - name: Install dependencies
-        run: yarn workspace domicile install
+        run: yarn install
 
       - name: Release
         env:

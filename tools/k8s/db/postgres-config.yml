@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: domicile
+  labels:
+    app: domicile-db
+data:
+  POSTGRES_DB: domicile_config
+  POSTGRES_USER: domicile
+  POSTGRES_PASSWORD: password
