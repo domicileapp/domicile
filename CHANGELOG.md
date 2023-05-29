@@ -1,5 +1,12 @@
 # Domicile Changelog
 
+## [1.2.0-next.6](https://github.com/domicileapp/domicile/compare/v1.2.0-next.5...v1.2.0-next.6) (2023-05-29)
+
+
+### Features
+
+* init golang using https://github.com/techschool/simplebank/blob/master/db/query/account.sql ([d7923e7](https://github.com/domicileapp/domicile/commit/d7923e781376555e115489f87f5a7211333b78cf))
+
 ## [1.2.0-next.5](https://github.com/domicileapp/domicile/compare/v1.2.0-next.4...v1.2.0-next.5) (2023-05-22)
 
 
