@@ -1,7 +1,6 @@
 version: '3'
 
 tasks:
-  hello:
+  sqlc:
     cmds:
-      - echo "hello world from task"
-    silent: true
+      - sqlc generate -f sqlc.yaml
