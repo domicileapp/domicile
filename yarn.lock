@@ -549,29 +549,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commitlint/prompt-cli@npm:^17.6.1":
-  version: 17.6.1
-  resolution: "@commitlint/prompt-cli@npm:17.6.1"
+"@commitlint/prompt-cli@npm:^17.6.6":
+  version: 17.6.6
+  resolution: "@commitlint/prompt-cli@npm:17.6.6"
   dependencies:
-    "@commitlint/prompt": ^17.6.1
+    "@commitlint/prompt": ^17.6.6
     execa: ^5.0.0
     inquirer: ^6.5.2
   bin:
     commit: cli.js
-  checksum: f364896fed36a23024ae7931f12918990662d596a3cc281e23d67133ce0d905d8a38ceb99e020b0bd7433ca0234895b6aa01fec9f52d9e4afd5d762566602d47
+  checksum: 671a63823220577b495d13bd85e6414cfbd107e8d285a244daf1a9391466711b9ca9bce01b143069196c3f6f933aaa0818fd76bcdce9ab153dbf27c170f22eb0
   languageName: node
   linkType: hard
 
-"@commitlint/prompt@npm:^17.6.1":
-  version: 17.6.1
-  resolution: "@commitlint/prompt@npm:17.6.1"
+"@commitlint/prompt@npm:^17.6.6":
+  version: 17.6.6
+  resolution: "@commitlint/prompt@npm:17.6.6"
   dependencies:
     "@commitlint/ensure": ^17.4.4
     "@commitlint/load": ^17.5.0
     "@commitlint/types": ^17.4.4
     chalk: ^4.1.0
     inquirer: ^6.5.2
-  checksum: e6ceb9610ddb6544a2e974e138a24ff0626887cc8cd2a634ad9cd7b1669b6f82eaa0e04b6ca4d3814a0237f93164b1079d6064beeca4f7564e7d28ff4568e9ce
+  checksum: f90c9c5847cb38510788409bf185445bc1a1c98497c89c3c5e6c0411a680523bbfef871b6d3ece2900ca99aeb0c2fc221e0b24bb5c0c2f6747c3279927623a9a
   languageName: node
   linkType: hard
 
@@ -3081,7 +3081,7 @@ __metadata:
   dependencies:
     "@commitlint/cli": ^17.6.1
     "@commitlint/config-conventional": ^17.6.1
-    "@commitlint/prompt-cli": ^17.6.1
+    "@commitlint/prompt-cli": ^17.6.6
     "@semantic-release/changelog": ^6.0.3
     "@semantic-release/git": ^10.0.1
     "@types/node": ^18.15.11
