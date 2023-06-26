@@ -23,7 +23,7 @@
     "@types/node": "^18.15.11",
     "conventional-changelog-conventionalcommits": "^5.0.0",
     "husky": "^8.0.3",
-    "nx": "15.9.2",
+    "nx": "16.4.0",
     "rimraf": "^4.4.1",
     "semantic-release": "^21.0.1",
     "ts-jest": "28.0.5",
