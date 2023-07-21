@@ -7,7 +7,7 @@ require (
 	github.com/brianvoe/gofakeit/v6 v6.22.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.9.1
-	github.com/go-git/go-git/v5 v5.7.0
+	github.com/go-git/go-git/v5 v5.8.0
 	github.com/google/uuid v1.3.0
 	github.com/lib/pq v1.10.9
 	github.com/o1egl/paseto v1.0.0
