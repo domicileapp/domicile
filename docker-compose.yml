@@ -1,41 +1,91 @@
-version: '3.8'
-name: domicile
-services:
-  db:
-    image: postgres:14
-    restart: always
-    environment:
-      - POSTGRES_USER=domicile
-      - POSTGRES_PASSWORD=domicile
-    ports:
-      - '5432:5432'
-    volumes:
-      - db:/var/lib/postgresql/data
-    expose:
-      - 5432
-  # redis:
-  #   image: redis:alpine
-  #   restart: always
-  #   ports:
-  #     - '6379:6379'
-  #   command: redis-server --save 20 1 --loglevel warning
-  #   volumes:
-  #     - redis:/data
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-app@domicileapp.com}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
-    volumes:
-      - pgadmin:/var/lib/pgadmin
-    ports:
-      - '${PGADMIN_PORT:-5050}:80'
-    restart: unless-stopped
+version: '3.3'
 
-volumes:
-  db:
-    driver: local
-  redis:
-    driver: local
-  pgadmin:
+services:
+  proxy:
+    image: traefik:v2.10
+    ports:
+      - '80:80'
+      - '443:443'
+      - '8080:8080'
+    volumes:
+      # Use a static configuration file instead of command parameters to the container
+      - ./traefik/traefik.yaml:/etc/traefik/traefik.yaml
+      # Copy traefik logs locally so we can check them out without having to connect to traefik container
+      # (where Traefik writes logs is defined in static configuration)
+      - ./shared/traefik.log:/etc/traefik/log/traefik.log
+      # Traefik provider configuration. Share the docker sock file
+      # with traefik container so that Traefik can listen to the Docker events
+      # If you are on Linux, replace double slash with single
+      - //var/run/docker.sock:/var/run/docker.sock
+      # Share files between Traefik container and host.
+      - ./shared:/shared
+    networks:
+      - internet # ports opened by traefik (80, 443, 8080) can be accessed through external network
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.api.service=api@internal' # Enable the API to be a service to access
+  public-app-nginx:
+    build:
+      context: public_app/nginx
+    volumes:
+      - ../public_app:/var/www/html
+    networks:
+      - internet
+      - intranet
+    depends_on:
+      public-app-fpm:
+        condition: service_started
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=internet'
+      # Define an HTTPS redirection middleware named 'https-redirect2'
+      - 'traefik.http.middlewares.https-redirect2.redirectScheme.scheme=https'
+      - 'traefik.http.middlewares.https-redirect2.redirectScheme.permanent=true'
+      # Define a router to redirect HTTP traffic for 'www.mydomain.gr' to HTTPS
+      # It will use the middleware we defined earlier.
+      - 'traefik.http.routers.nginx-web2.entrypoints=web'
+      - 'traefik.http.routers.nginx-web2.rule=Host(`www.mydomain.gr`)'
+      - 'traefik.http.routers.nginx-web2.middlewares=https-redirect2'
+      # Define a router to direct HTTPS traffic for 'www.mydomain.gr' to this service
+      # (self-signed certificates defined in static configuration will be used)
+      - 'traefik.http.routers.nginx-webs2.entrypoints=websecure'
+      - 'traefik.http.routers.nginx-webs2.rule=Host(`www.mydomain.gr`)'
+      - 'traefik.http.routers.nginx-webs2.tls=true'
+  public-app-fpm:
+    build:
+      context: public_app/fpm
+    scale: 1
+    volumes:
+      - ../public_app:/var/www/html
+    networks:
+      - intranet # fpm server is accessible only by other containers
+  api-app-nginx:
+    build:
+      context: api_app/nginx
+    volumes:
+      - ../api_app:/var/www/html
+    networks:
+      - internet # It should be able to talk to traefik and vice versa.
+      - intranet
+    depends_on:
+      api-app-fpm:
+        condition: service_started
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=internet'
+      # Define a router to direct HTTP traffic for 'api.mydomain.gr' to this service
+      - 'traefik.http.routers.nginx-base.entrypoints=web'
+      - 'traefik.http.routers.nginx-base.rule=Host(`api.mydomain.gr`)'
+  api-app-fpm:
+    build:
+      context: api_app/fpm
+    scale: 1
+    volumes:
+      - ../api_app:/var/www/html
+    networks:
+      - intranet # fpm server is accessible only by other containers
+networks:
+  internet:
+    external: true
+  intranet:
+    external: false

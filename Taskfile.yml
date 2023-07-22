@@ -9,33 +9,8 @@ tasks:
   default:
     cmds:
       - task --list
-  sqlc:
-    desc: Generate Go code from the 'db/query' SQL code
+  api:dev:
+    desc: Run API in dev mode (hot reload)
     silent: false
     cmds:
-      - sqlc generate -f sqlc.yaml
-  migrate:up:
-    silent: true
-    desc: Migrate up to the latest schema.
-    cmds:
-      - migrate -path db/migrations -database "{{.TEST_DB_URL}}" -verbose up
-  migrate:up1:
-    silent: true
-    desc: Migrate up one schema.
-    cmds:
-      - migrate -path db/migrations -database "{{.DEV_DB_URL}}" -verbose up 1
-  migrate:down:
-    silent: true
-    desc: Migrate down
-    cmds:
-      - migrate -path db/migrations -database "{{.DEV_DB_URL}}" -verbose down
-  migrate:down1:
-    silent: true
-    desc: Migrate down one schema.
-    cmds:
-      - migrate -path db/migrations -database "{{.DEV_DB_URL}}" -verbose down 1
-  test:
-    silent: true
-    desc: Run Go tests in verbose mode with coverage output
-    cmds:
-      - go test -v -cover ./...
+      - uvicorn main:app --reload
