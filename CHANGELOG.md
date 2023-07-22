@@ -2,13 +2,11 @@
 
 ## [1.2.0-next.8](https://github.com/domicileapp/domicile/compare/v1.2.0-next.7...v1.2.0-next.8) (2023-07-22)
 
-
 ### Bug Fixes
 
 * **deps:** update module github.com/o1egl/paseto to v2.1.1 ([#334](https://github.com/domicileapp/domicile/issues/334)) ([d734115](https://github.com/domicileapp/domicile/commit/d734115b332da831462514f5fd8f212dd856c8a3))
 
 ## [1.2.0-next.7](https://github.com/domicileapp/domicile/compare/v1.2.0-next.6...v1.2.0-next.7) (2023-07-22)
-
 
 ### Bug Fixes
 
@@ -16,20 +14,17 @@
 
 ## [1.2.0-next.6](https://github.com/domicileapp/domicile/compare/v1.2.0-next.5...v1.2.0-next.6) (2023-05-29)
 
-
 ### Features
 
-* init golang using https://github.com/techschool/simplebank/blob/master/db/query/account.sql ([d7923e7](https://github.com/domicileapp/domicile/commit/d7923e781376555e115489f87f5a7211333b78cf))
+* init golang using <https://github.com/techschool/simplebank/blob/master/db/query/account.sql> ([d7923e7](https://github.com/domicileapp/domicile/commit/d7923e781376555e115489f87f5a7211333b78cf))
 
 ## [1.2.0-next.5](https://github.com/domicileapp/domicile/compare/v1.2.0-next.4...v1.2.0-next.5) (2023-05-22)
-
 
 ### Features
 
 * **api:** authentication ([158da8b](https://github.com/domicileapp/domicile/commit/158da8bbc68ced3f7c8794c20883c900703d1d16))
 
 ## [1.2.0-next.4](https://github.com/domicileapp/domicile/compare/v1.2.0-next.3...v1.2.0-next.4) (2023-05-10)
-
 
 ### Features
 
@@ -50,13 +45,11 @@
 * **web:** edit recipes ([0ad31ea](https://github.com/domicileapp/domicile/commit/0ad31ea192f5d15dbc6dd5f4c865ad3bf639295e))
 * **web:** edit recipes ([7dedd7f](https://github.com/domicileapp/domicile/commit/7dedd7f740e7352ccc2b6b60ebd5fd4b63e07b28))
 
-
 ### Bug Fixes
 
 * releases ([94155b1](https://github.com/domicileapp/domicile/commit/94155b19e02b2cee74fd849295d016ba471a6868))
 
 ## [1.2.0-next.3](https://github.com/domicileapp/domicile/compare/v1.2.0-next.2...v1.2.0-next.3) (2023-04-16)
-
 
 ### Features
 
@@ -64,18 +57,15 @@
 
 ## [1.2.0-next.2](https://github.com/domicileapp/domicile/compare/v1.2.0-next.1...v1.2.0-next.2) (2023-04-16)
 
-
 ### Features
 
 * **web:** create recipe functionality ([#264](https://github.com/domicileapp/domicile/issues/264)) ([136eab5](https://github.com/domicileapp/domicile/commit/136eab53ec64aeda8c91a55c955a22034e421603))
 
 ## [1.2.0-next.1](https://github.com/domicileapp/domicile/compare/v1.1.1...v1.2.0-next.1) (2023-04-15)
 
-
 ### Features
 
 * **web:** add recipe singleton page ([9f1fb92](https://github.com/domicileapp/domicile/commit/9f1fb92352eab386f249029b288ad61402551799))
-
 
 ### Bug Fixes
 
