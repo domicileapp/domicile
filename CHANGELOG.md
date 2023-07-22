@@ -1,5 +1,12 @@
 # Domicile Changelog
 
+## [1.2.0-next.7](https://github.com/domicileapp/domicile/compare/v1.2.0-next.6...v1.2.0-next.7) (2023-07-22)
+
+
+### Bug Fixes
+
+* **deps:** update tslib to 2.6.0 ([#328](https://github.com/domicileapp/domicile/issues/328)) ([b8050d9](https://github.com/domicileapp/domicile/commit/b8050d9fe071b7b6f0d5946d157ad3b44f3f6511))
+
 ## [1.2.0-next.6](https://github.com/domicileapp/domicile/compare/v1.2.0-next.5...v1.2.0-next.6) (2023-05-29)
 
 
