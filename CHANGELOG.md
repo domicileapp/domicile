@@ -1,5 +1,12 @@
 # Domicile Changelog
 
+## [1.2.0-next.8](https://github.com/domicileapp/domicile/compare/v1.2.0-next.7...v1.2.0-next.8) (2023-07-22)
+
+
+### Bug Fixes
+
+* **deps:** update module github.com/o1egl/paseto to v2.1.1 ([#334](https://github.com/domicileapp/domicile/issues/334)) ([d734115](https://github.com/domicileapp/domicile/commit/d734115b332da831462514f5fd8f212dd856c8a3))
+
 ## [1.2.0-next.7](https://github.com/domicileapp/domicile/compare/v1.2.0-next.6...v1.2.0-next.7) (2023-07-22)
 
 
