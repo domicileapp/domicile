@@ -24,5 +24,6 @@
     "**/.pnp.*": true
   },
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "ansible.python.interpreterPath": "/Users/patrick/code/infr-automation/watch_meditech_kbs/venv/bin/python"
+  "ansible.python.interpreterPath": "/Users/patrick/code/infr-automation/watch_meditech_kbs/venv/bin/python",
+  "githubPullRequests.ignoredPullRequestBranches": ["next"]
 }
