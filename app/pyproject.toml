@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "domicile"
+version = "0.1.0"
+description = "An application to help those with executive dysfunction manage household tasks, inventories, and life."
+authors = ["Patrick Black <info@patrickblackjr.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = {extras = ["all"], version = "^0.100.0"}
+uvicorn = {extras = ["standard"], version = "^0.23.1"}
+python-multipart = "^0.0.6"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+sqlalchemy = "^2.0.19"
+pydantic = "^2.1.1"
+alembic = "^1.11.1"
+tenacity = "^8.2.2"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.7.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
