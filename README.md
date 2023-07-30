@@ -289,36 +289,36 @@ Check all the corresponding available URLs in the section at the end.
 
 If you are running Docker in an IP address different than `127.0.0.1` (`localhost`) and `192.168.99.100` (the default of Docker Toolbox), you will need to perform some additional steps. That will be the case if you are running a custom Virtual Machine, a secondary Docker Toolbox or your Docker is located in a different machine in your network.
 
-In that case, you will need to use a fake local domain (`dev.domicile.patrickblack.dev`) and make your computer think that the domain is is served by the custom IP (e.g. `192.168.99.150`).
+In that case, you will need to use a fake local domain (`dev.patrickblack.dev`) and make your computer think that the domain is is served by the custom IP (e.g. `192.168.99.150`).
 
-If you used the default CORS enabled domains, `dev.domicile.patrickblack.dev` was configured to be allowed. If you want a custom one, you need to add it to the list in the variable `BACKEND_CORS_ORIGINS` in the `.env` file.
+If you used the default CORS enabled domains, `dev.patrickblack.dev` was configured to be allowed. If you want a custom one, you need to add it to the list in the variable `BACKEND_CORS_ORIGINS` in the `.env` file.
 
 * Open your `hosts` file with administrative privileges using a text editor:
   * **Note for Windows**: If you are in Windows, open the main Windows menu, search for "notepad", right click on it, and select the option "open as Administrator" or similar. Then click the "File" menu, "Open file", go to the directory `c:\Windows\System32\Drivers\etc\`, select the option to show "All files" instead of only "Text (.txt) files", and open the `hosts` file.
   * **Note for Mac and Linux**: Your `hosts` file is probably located at `/etc/hosts`, you can edit it in a terminal running `sudo nano /etc/hosts`.
 
-* Additional to the contents it might have, add a new line with the custom IP (e.g. `192.168.99.150`) a space character, and your fake local domain: `dev.domicile.patrickblack.dev`.
+* Additional to the contents it might have, add a new line with the custom IP (e.g. `192.168.99.150`) a space character, and your fake local domain: `dev.patrickblack.dev`.
 
 The new line might look like:
 
 ```
-192.168.99.100    dev.domicile.patrickblack.dev
+192.168.99.100    dev.patrickblack.dev
 ```
 
 * Save the file.
   * **Note for Windows**: Make sure you save the file as "All files", without an extension of `.txt`. By default, Windows tries to add the extension. Make sure the file is saved as is, without extension.
 
-...that will make your computer think that the fake local domain is served by that custom IP, and when you open that URL in your browser, it will talk directly to your locally running server when it is asked to go to `dev.domicile.patrickblack.dev` and think that it is a remote server while it is actually running in your computer.
+...that will make your computer think that the fake local domain is served by that custom IP, and when you open that URL in your browser, it will talk directly to your locally running server when it is asked to go to `dev.patrickblack.dev` and think that it is a remote server while it is actually running in your computer.
 
-To configure it in your stack, follow the section **Change the development "domain"** below, using the domain `dev.domicile.patrickblack.dev`.
+To configure it in your stack, follow the section **Change the development "domain"** below, using the domain `dev.patrickblack.dev`.
 
-After performing those steps you should be able to open: http://dev.domicile.patrickblack.dev and it will be server by your stack in `localhost`.
+After performing those steps you should be able to open: http://dev.patrickblack.dev and it will be server by your stack in `localhost`.
 
 Check all the corresponding available URLs in the section at the end.
 
 ### Change the development "domain"
 
-If you need to use your local stack with a different domain than `localhost`, you need to make sure the domain you use points to the IP where your stack is set up. See the different ways to achieve that in the sections above (i.e. using Docker Toolbox with `local.dockertoolbox.tiangolo.com`, using `localhost.tiangolo.com` or using `dev.domicile.patrickblack.dev`).
+If you need to use your local stack with a different domain than `localhost`, you need to make sure the domain you use points to the IP where your stack is set up. See the different ways to achieve that in the sections above (i.e. using Docker Toolbox with `local.dockertoolbox.tiangolo.com`, using `localhost.tiangolo.com` or using `dev.patrickblack.dev`).
 
 To simplify your Docker Compose setup, for example, so that the API docs (Swagger UI) knows where is your API, you should let it know you are using that domain for development. You will need to edit 1 line in 2 files.
 
@@ -455,7 +455,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.domicile-patrickblack-dev.app-db-data == true
+          - node.labels-patrickblack-dev.app-db-data == true
 ```
 
 **Note**: The `${STACK_NAME?Variable not set}` means "use the environment variable `STACK_NAME`, but if it is not set, show an error `Variable not set`".
@@ -663,25 +663,25 @@ Automatic Interactive Docs (Swagger UI): https://domicile.patrickblack.dev/docs
 
 Automatic Alternative Docs (ReDoc): https://domicile.patrickblack.dev/redoc
 
-PGAdmin: https://pgadmin.domicile.patrickblack.dev
+PGAdmin: https://pgadmin.patrickblack.dev
 
-Flower: https://flower.domicile.patrickblack.dev
+Flower: https://flower.patrickblack.dev
 
 ### Staging URLs
 
 Staging URLs, from the branch `master`.
 
-Frontend: https://stag.domicile.patrickblack.dev
+Frontend: https://stag.patrickblack.dev
 
-Backend: https://stag.domicile.patrickblack.dev/api/
+Backend: https://stag.patrickblack.dev/api/
 
-Automatic Interactive Docs (Swagger UI): https://stag.domicile.patrickblack.dev/docs
+Automatic Interactive Docs (Swagger UI): https://stag.patrickblack.dev/docs
 
-Automatic Alternative Docs (ReDoc): https://stag.domicile.patrickblack.dev/redoc
+Automatic Alternative Docs (ReDoc): https://stag.patrickblack.dev/redoc
 
-PGAdmin: https://pgadmin.stag.domicile.patrickblack.dev
+PGAdmin: https://pgadmin.stag.patrickblack.dev
 
-Flower: https://flower.stag.domicile.patrickblack.dev
+Flower: https://flower.stag.patrickblack.dev
 
 ### Development URLs
 
@@ -723,19 +723,19 @@ Traefik UI: http://local.dockertoolbox.tiangolo.com:8090
 
 Development URLs, for local development.
 
-Frontend: http://dev.domicile.patrickblack.dev
+Frontend: http://dev.patrickblack.dev
 
-Backend: http://dev.domicile.patrickblack.dev/api/
+Backend: http://dev.patrickblack.dev/api/
 
-Automatic Interactive Docs (Swagger UI): https://dev.domicile.patrickblack.dev/docs
+Automatic Interactive Docs (Swagger UI): https://dev.patrickblack.dev/docs
 
-Automatic Alternative Docs (ReDoc): https://dev.domicile.patrickblack.dev/redoc
+Automatic Alternative Docs (ReDoc): https://dev.patrickblack.dev/redoc
 
-PGAdmin: http://dev.domicile.patrickblack.dev:5050
+PGAdmin: http://dev.patrickblack.dev:5050
 
-Flower: http://dev.domicile.patrickblack.dev:5555
+Flower: http://dev.patrickblack.dev:5555
 
-Traefik UI: http://dev.domicile.patrickblack.dev:8090
+Traefik UI: http://dev.patrickblack.dev:8090
 
 ### Development in localhost with a custom domain URLs
 
