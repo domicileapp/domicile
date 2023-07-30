@@ -7,3 +7,4 @@ docker-stack.yml
 .s3cfg
 __pycache__
 app.egg-info
+**/*.db
