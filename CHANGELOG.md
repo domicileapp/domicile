@@ -1,5 +1,19 @@
 # Domicile Changelog
 
+## [1.2.0-next.9](https://github.com/domicileapp/domicile/compare/v1.2.0-next.8...v1.2.0-next.9) (2023-08-05)
+
+
+### Features
+
+* **api:** base fastapi ([be90510](https://github.com/domicileapp/domicile/commit/be905108fce07e0ca26ecd63c7735968466be382))
+
+
+### Bug Fixes
+
+* **deps:** update dependency fastapi to ^0.101.0 ([#341](https://github.com/domicileapp/domicile/issues/341)) ([6d2ae17](https://github.com/domicileapp/domicile/commit/6d2ae17fe9c8e35a3db2cb94df848c7a74f36098))
+* **deps:** update module github.com/o1egl/paseto to v2.1.1 ([#334](https://github.com/domicileapp/domicile/issues/334)) ([d70e569](https://github.com/domicileapp/domicile/commit/d70e5693006078a111f8119ccf4fb69118e9e601))
+* **deps:** update tslib to 2.6.0 ([#328](https://github.com/domicileapp/domicile/issues/328)) ([fb095f5](https://github.com/domicileapp/domicile/commit/fb095f59cc77cf5840026daff9758a9909446e2b))
+
 ## [1.2.0-next.8](https://github.com/domicileapp/domicile/compare/v1.2.0-next.7...v1.2.0-next.8) (2023-07-22)
 
 ### Bug Fixes
