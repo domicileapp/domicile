@@ -14,4 +14,14 @@ tasks:
     desc: Run API in dev mode (hot reload)
     silent: false
     cmds:
+      - export PYTHONPATH="${PYTHONPATH}:'{{.USER_WORKING_DIR}}'/api/app"
       - uvicorn app.main:app --reload --app-dir api
+  db:init:
+    dir: api
+    desc: Initalize the database for development
+    silent: false
+    cmds:
+      - export PYTHONPATH="${PYTHONPATH}:'{{.USER_WORKING_DIR}}'/api/app"
+      - python ./app/prestart.py
+      - alembic upgrade head
+      - python app/init_data.py
