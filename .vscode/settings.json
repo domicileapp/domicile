@@ -25,5 +25,11 @@
   },
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "ansible.python.interpreterPath": "/Users/patrick/code/infr-automation/watch_meditech_kbs/venv/bin/python",
-  "githubPullRequests.ignoredPullRequestBranches": ["next"]
+  "githubPullRequests.ignoredPullRequestBranches": ["next"],
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "python.formatting.provider": "black",
+  "python.linting.flake8Enabled": true,
+  "python.linting.enabled": true
 }

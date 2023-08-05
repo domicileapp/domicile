@@ -19,6 +19,9 @@ tenacity = "^8.2.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.7.0"
+flake8 = "^6.1.0"
+
+[tool.black]
 
 [build-system]
 requires = ["poetry-core"]

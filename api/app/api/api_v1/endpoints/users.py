@@ -1,10 +1,9 @@
+from app import crud, models, schemas
 from app.api import deps
 from fastapi import APIRouter, Body, Depends, HTTPException
 from fastapi.encoders import jsonable_encoder
 from pydantic.networks import EmailStr
 from sqlalchemy.orm import Session
-
-from domicile import crud, models, schemas
 
 router = APIRouter()
 
@@ -64,7 +63,8 @@ def update_user_me(
 
 @router.get("/me", response_model=schemas.User)
 def read_user_me(
-    db: Session = Depends(deps.get_db),
+    # pylint: disable-next=unused-argument
+    db: Session = Depends(deps.get_db),  # pylint: disable=invalid-name
     current_user: models.User = Depends(deps.get_current_active_user),
 ) -> any:
     """
@@ -77,6 +77,7 @@ def read_user_me(
 def read_user_by_id(
     user_id: int,
     current_user: models.User = Depends(deps.get_current_active_user),
+    # pylint: disable-next=invalid-name
     db: Session = Depends(deps.get_db),
 ) -> any:
     """
@@ -85,7 +86,7 @@ def read_user_by_id(
     user = crud.user.get(db, id=user_id)
     if user == current_user:
         return user
-    if not crud.user.is_superuser(current_user):
+    if not crud.user.is_admin(current_user):
         raise HTTPException(
             status_code=400, detail="The user doesn't have enough privileges"
         )
@@ -98,6 +99,7 @@ def update_user(
     db: Session = Depends(deps.get_db),
     user_id: int,
     user_in: schemas.UserUpdate,
+    # pylint: disable-next=unused-argument
     current_user: models.User = Depends(deps.get_current_active_admin_user),
 ) -> any:
     """

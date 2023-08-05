@@ -14,4 +14,4 @@ tasks:
     desc: Run API in dev mode (hot reload)
     silent: false
     cmds:
-      - uvicorn main:app --reload --app-dir domicile
+      - uvicorn app.main:app --reload --app-dir api
