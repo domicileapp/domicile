@@ -9,8 +9,9 @@ tasks:
   default:
     cmds:
       - task --list
+    silent: true
   api:dev:
     desc: Run API in dev mode (hot reload)
     silent: false
     cmds:
-      - uvicorn main:app --reload
+      - uvicorn main:app --reload --app-dir domicile

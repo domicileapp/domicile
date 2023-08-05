@@ -2,7 +2,7 @@ import * as types from './types'
 
 export interface IState {
   isAuthenticated: boolean
-  // Coudl have more props
+  // Could have more props
 }
 
 type Type = typeof types.UPDATE_IS_AUTHENTICATED
