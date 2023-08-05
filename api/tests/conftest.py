@@ -2,14 +2,13 @@ import asyncio
 import os
 from typing import Generator
 
+import core.database.transactional as transactional
 import pytest
 import pytest_asyncio
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import sessionmaker
-
-import core.database.transactional as transactional
 from app.models import Base
 from core.config import config
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.orm import sessionmaker
 
 TEST_DATABASE_URL = os.getenv("TEST_POSTGRES_URL")
 

@@ -1,11 +1,10 @@
 from functools import partial
 
-from fastapi import Depends
-
 from app.controllers import AuthController, TaskController, UserController
 from app.models import Task, User
 from app.repositories import TaskRepository, UserRepository
 from core.database import get_session
+from fastapi import Depends
 
 
 class Factory:

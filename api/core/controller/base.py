@@ -1,11 +1,10 @@
 from typing import Any, Generic, Type, TypeVar
 from uuid import UUID
 
-from pydantic import BaseModel
-
 from core.database import Base, Propagation, Transactional
 from core.exceptions import NotFoundException
 from core.repository import BaseRepository
+from pydantic import BaseModel
 
 ModelType = TypeVar("ModelType", bound=Base)
 

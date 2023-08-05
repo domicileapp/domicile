@@ -1,7 +1,5 @@
 from typing import Callable
 
-from fastapi import APIRouter, Depends
-
 from app.controllers import AuthController, UserController
 from app.models.user import User, UserPermission
 from app.schemas.extras.token import Token
@@ -11,6 +9,7 @@ from core.factory import Factory
 from core.fastapi.dependencies import AuthenticationRequired
 from core.fastapi.dependencies.current_user import get_current_user
 from core.fastapi.dependencies.permissions import Permissions
+from fastapi import APIRouter, Depends
 
 user_router = APIRouter()
 

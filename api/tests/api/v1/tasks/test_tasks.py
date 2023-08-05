@@ -1,6 +1,5 @@
 import pytest
 from httpx import AsyncClient
-
 from tests.factory.tasks import create_fake_task
 from tests.utils.login import _create_user_and_login
 

@@ -1,10 +1,6 @@
 from enum import Enum
 from uuid import uuid4
 
-from sqlalchemy import BigInteger, Boolean, Column, ForeignKey, String
-from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import relationship
-
 from core.database import Base
 from core.database.mixins import TimestampMixin
 from core.security.access_control import (
@@ -13,6 +9,9 @@ from core.security.access_control import (
     RolePrincipal,
     UserPrincipal,
 )
+from sqlalchemy import BigInteger, Boolean, Column, ForeignKey, String
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship
 
 
 class TaskPermission(Enum):

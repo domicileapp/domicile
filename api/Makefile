@@ -69,10 +69,10 @@ reset-database: ## Rollback all migrations
 
 	poetry run alembic downgrade base
 
-.PHONY: generate-migration 
+.PHONY: generate-migration
 generate-migration: ## Generate a new migration
-	$(eval include .env) 
-	$(eval export $(sh sed 's/=.*//' .env)) 
+	$(eval include .env)
+	$(eval export $(sh sed 's/=.*//' .env))
 
 	@read -p "Enter migration message: " message; \
 	poetry run alembic revision --autogenerate -m "$$message"
@@ -98,7 +98,7 @@ check-format: ## Dry-run code formatter
 .PHONY: lint
 lint: ## Run linter
 	poetry run pylint ./api ./app ./core
- 
+
 .PHONY: format
 format: ## Run code formatter
 	poetry run black ./

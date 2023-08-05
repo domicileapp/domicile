@@ -2,11 +2,10 @@ from typing import Any, Generator
 
 import pytest
 import pytest_asyncio
-from fastapi import FastAPI
-from httpx import AsyncClient
-
 from core.factory.factory import get_session
 from core.server import create_app
+from fastapi import FastAPI
+from httpx import AsyncClient
 
 
 @pytest.fixture(scope="session")

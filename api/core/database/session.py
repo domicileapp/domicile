@@ -1,6 +1,7 @@
 from contextvars import ContextVar, Token
 from typing import Union
 
+from core.config import config
 from sqlalchemy.ext.asyncio import (
     AsyncSession,
     async_scoped_session,
@@ -8,8 +9,6 @@ from sqlalchemy.ext.asyncio import (
 )
 from sqlalchemy.orm import Session, declarative_base, sessionmaker
 from sqlalchemy.sql.expression import Delete, Insert, Update
-
-from core.config import config
 
 session_context: ContextVar[str] = ContextVar("session_context")
 

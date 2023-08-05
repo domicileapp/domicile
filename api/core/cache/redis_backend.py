@@ -3,7 +3,6 @@ from typing import Any
 
 import redis.asyncio as aioredis
 import ujson
-
 from core.cache.base import BaseBackend
 from core.config import config
 

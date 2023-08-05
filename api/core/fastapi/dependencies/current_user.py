@@ -1,7 +1,6 @@
-from fastapi import Depends, Request
-
 from app.controllers.user import UserController
 from core.factory import Factory
+from fastapi import Depends, Request
 
 
 async def get_current_user(

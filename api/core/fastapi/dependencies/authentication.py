@@ -1,7 +1,6 @@
+from core.exceptions.base import CustomException
 from fastapi import Depends, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-
-from core.exceptions.base import CustomException
 
 
 class AuthenticationRequiredException(CustomException):

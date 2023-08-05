@@ -1,11 +1,5 @@
 from typing import List
 
-from fastapi import Depends, FastAPI, Request
-from fastapi.middleware import Middleware
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
-
-from api import router
 from core.cache import Cache, CustomKeyMaker, RedisBackend
 from core.config import config
 from core.exceptions import CustomException
@@ -16,6 +10,12 @@ from core.fastapi.middlewares import (
     ResponseLoggerMiddleware,
     SQLAlchemyMiddleware,
 )
+from fastapi import Depends, FastAPI, Request
+from fastapi.middleware import Middleware
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+
+from api import router
 
 
 def on_auth_error(request: Request, exc: Exception):

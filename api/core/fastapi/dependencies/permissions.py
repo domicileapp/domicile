@@ -1,7 +1,5 @@
 from http import HTTPStatus
 
-from fastapi import Depends, Request
-
 from app.controllers.user import UserController
 from core.exceptions import CustomException
 from core.factory import Factory
@@ -12,6 +10,7 @@ from core.security.access_control import (
     RolePrincipal,
     UserPrincipal,
 )
+from fastapi import Depends, Request
 
 
 class InsufficientPermissionsException(CustomException):

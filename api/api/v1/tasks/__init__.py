@@ -1,7 +1,7 @@
 from core.fastapi.dependencies.authentication import AuthenticationRequired
 from fastapi import APIRouter, Depends
 
-from .tasks import task_router
+from api.v1.tasks.tasks import task_router
 
 tasks_router = APIRouter()
 tasks_router.include_router(

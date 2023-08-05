@@ -1,5 +1,4 @@
 from httpx import AsyncClient
-
 from tests.factory.users import create_fake_user
 
 

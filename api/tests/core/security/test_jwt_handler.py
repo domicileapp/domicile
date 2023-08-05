@@ -2,9 +2,8 @@ from datetime import datetime, timedelta
 from unittest.mock import MagicMock, patch
 
 import pytest
-from jose import JWTError, jwt
-
 from core.security.jwt import JWTDecodeError, JWTHandler
+from jose import JWTError, jwt
 
 
 class MockConfig:

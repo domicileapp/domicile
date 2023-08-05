@@ -1,8 +1,8 @@
 [tool.poetry]
-name = "fastapi-boilerplate"
+name = "domicile-api"
+description = "Domicile API"
 version = "0.1.0"
-description = "FastAPI Boilerplate"
-authors = ["Abbas <me@abbasmj.com>"]
+authors = ["Patrick Black"]
 
 [tool.poetry.dependencies]
 python = "^3.11"

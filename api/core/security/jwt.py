@@ -1,9 +1,8 @@
 from datetime import datetime, timedelta
 
-from jose import ExpiredSignatureError, JWTError, jwt
-
 from core.config import config
 from core.exceptions import CustomException
+from jose import ExpiredSignatureError, JWTError, jwt
 
 
 class JWTDecodeError(CustomException):

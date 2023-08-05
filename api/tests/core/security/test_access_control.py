@@ -1,8 +1,6 @@
 from unittest.mock import MagicMock
 
 import pytest
-from fastapi import HTTPException
-
 from core.security.access_control import (
     AccessControl,
     ActionPrincipal,
@@ -13,6 +11,7 @@ from core.security.access_control import (
     SystemPrincipal,
     UserPrincipal,
 )
+from fastapi import HTTPException
 
 
 def test_access_control():

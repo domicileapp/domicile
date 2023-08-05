@@ -1,9 +1,8 @@
 import pytest
 import pytest_asyncio
-from faker import Faker
-
 from app.models import User
 from core.repository import BaseRepository
+from faker import Faker
 
 fake = Faker()
 
