@@ -8,3 +8,7 @@ docker-stack.yml
 __pycache__
 app.egg-info
 **/*.db
+.DS_Store
+.yarn/*
+!.yarn/releases
+node_modules
