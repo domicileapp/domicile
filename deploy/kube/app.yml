@@ -15,32 +15,32 @@ spec:
         app: domicile-app
     spec:
       containers:
-      - name: app
-        image: domicile:latest
-        readinessProbe:
-          httpGet:
-            path: /api/health
-            port: api-port
-          initialDelaySeconds: 5
-          periodSeconds: 10
-        command: ['/bin/sh']
-        args:
-        - -c
-        - >-
-          alembic upgrade head &&
-          python -m domicile
-        env:
-        - name: DOMICILE_HOST
-          value: '0.0.0.0'
-        - name: DOMICILE_WORKERS_COUNT
-          value: '10'
-        resources:
-          limits:
-            memory: '200Mi'
-            cpu: '100m'
-        ports:
-        - containerPort: 8000
-          name: api-port
+        - name: app
+          image: domicile:latest
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: api-port
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          command: ['/bin/sh']
+          args:
+            - -c
+            - >-
+              alembic upgrade head &&
+              python -m domicile
+          env:
+            - name: DOMICILE_HOST
+              value: '0.0.0.0'
+            - name: DOMICILE_WORKERS_COUNT
+              value: '10'
+          resources:
+            limits:
+              memory: '200Mi'
+              cpu: '100m'
+          ports:
+            - containerPort: 8000
+              name: api-port
 ---
 apiVersion: v1
 kind: Service
@@ -51,10 +51,10 @@ spec:
   selector:
     app: domicile-app
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: api-port
-    name: api-port
+    - protocol: TCP
+      port: 80
+      targetPort: api-port
+      name: api-port
 
 ---
 apiVersion: networking.k8s.io/v1
@@ -66,15 +66,16 @@ metadata:
     name: domicile-app
 spec:
   rules:
-  - host: domicile.local
-    http:
-      paths:
-      - pathType: Prefix
-        path: '/'
-        backend:
-          service:
-            name: domicile-app-service
-            port:
-              name: api-port
+    - host: domicile.local
+      http:
+        paths:
+          - pathType: Prefix
+            path: '/'
+            backend:
+              service:
+                name: domicile-app-service
+                port:
+                  name: api-port
 
 ---
+

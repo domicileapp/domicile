@@ -9,12 +9,12 @@ services:
     image: domicile:${DOMICILE_VERSION:-latest}
     restart: always
     env_file:
-    - .env
+      - .env
     environment:
       DOMICILE_HOST: 0.0.0.0
       DOMICILE_DB_FILE: /db_data/db.sqlite3
     volumes:
-    - domicile-db-data:/db_data/
+      - domicile-db-data:/db_data/
 
   migrator:
     image: domicile:${DOMICILE_VERSION:-latest}
@@ -23,7 +23,7 @@ services:
     environment:
       DOMICILE_DB_FILE: /db_data/db.sqlite3
     volumes:
-    - domicile-db-data:/db_data/
+      - domicile-db-data:/db_data/
 
 volumes:
   domicile-db-data:
