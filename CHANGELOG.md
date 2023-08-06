@@ -1,5 +1,12 @@
 # Domicile Changelog
 
+## [1.2.0-next.12](https://github.com/domicileapp/domicile/compare/v1.2.0-next.11...v1.2.0-next.12) (2023-08-06)
+
+
+### Bug Fixes
+
+* **deps:** update dependency uvicorn to ^0.23.0 ([#344](https://github.com/domicileapp/domicile/issues/344)) ([edef680](https://github.com/domicileapp/domicile/commit/edef6809d7b57a08c6c2d199577a75b5c15726a9))
+
 ## [1.2.0-next.11](https://github.com/domicileapp/domicile/compare/v1.2.0-next.10...v1.2.0-next.11) (2023-08-06)
 
 
