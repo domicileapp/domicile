@@ -1,5 +1,12 @@
 # Domicile Changelog
 
+## [1.2.0-next.11](https://github.com/domicileapp/domicile/compare/v1.2.0-next.10...v1.2.0-next.11) (2023-08-06)
+
+
+### Bug Fixes
+
+* **deps:** update dependency asyncpg to ^0.28.0 ([#340](https://github.com/domicileapp/domicile/issues/340)) ([16fd656](https://github.com/domicileapp/domicile/commit/16fd656dca4dee20bc0bfc9e73ae234fafe3c2c8))
+
 ## [1.2.0-next.10](https://github.com/domicileapp/domicile/compare/v1.2.0-next.9...v1.2.0-next.10) (2023-08-06)
 
 
