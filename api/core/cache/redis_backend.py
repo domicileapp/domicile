@@ -1,5 +1,4 @@
 import pickle
-from typing import Any
 
 import redis.asyncio as aioredis
 import ujson
@@ -10,7 +9,7 @@ redis = aioredis.from_url(url=config.REDIS_URL)
 
 
 class RedisBackend(BaseBackend):
-    async def get(self, key: str) -> Any:
+    async def get(self, key: str) -> any:
         result = await redis.get(key)
         if not result:
             return
@@ -20,7 +19,7 @@ class RedisBackend(BaseBackend):
         except UnicodeDecodeError:
             return pickle.loads(result)
 
-    async def set(self, response: Any, key: str, ttl: int = 60) -> None:
+    async def set(self, response: any, key: str, ttl: int = 60) -> None:
         if isinstance(response, dict):
             response = ujson.dumps(response)
         elif isinstance(response, object):
