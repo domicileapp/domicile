@@ -9,4 +9,14 @@ tasks:
     desc: Run API in dev mode (hot reload)
     silent: false
     cmds:
-      - docker compose -f deploy/docker-compose.yml -f deploy/docker-compose.dev.yml --project-directory . up --build
+      - poetry shell
+      - python ./domicile/backend_prestart.py
+      - alembic upgrade head
+      - python ./domicile/initial_data.py
+      - uvicorn domicile.main:app --port 8000 --reload
+
+  gen_migration:
+    desc: 'Generate a migration provided a name: task gen_migration -- migration_name'
+    silent: false
+    cmds:
+      - alembic revision --autogenerate -m "{{.CLI_ARGS}}"

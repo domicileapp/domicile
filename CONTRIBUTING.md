@@ -4,21 +4,21 @@
 
 - [Use This Guide](#introduction)?
 - Ask or Say Something?
-  - [Request Support](#request-support)
-  - [Report an Error or Bug](#report-an-error-or-bug)
-  - [Request a Feature](#request-a-feature)
+    - [Request Support](#request-support)
+    - [Report an Error or Bug](#report-an-error-or-bug)
+    - [Request a Feature](#request-a-feature)
 - Make Something?
-  - [Project Setup](#project-setup)
-  - [Contribute Documentation](#contribute-documentation)
-  - [Contribute Code](#contribute-code)
+    - [Project Setup](#project-setup)
+    - [Contribute Documentation](#contribute-documentation)
+    - [Contribute Code](#contribute-code)
 - Manage Something
-  - [Provide Support on Issues](#provide-support-on-issues)
-  - [Label Issues](#label-issues)
-  - [Clean Up Issues and PRs](#clean-up-issues-and-prs)
-  - [Review Pull Requests](#review-pull-requests)
-  - [Merge Pull Requests](#merge-pull-requests)
-  - [Tag a Release](#tag-a-release)
-  - [Join the Project Team](#join-the-project-team)
+    - [Provide Support on Issues](#provide-support-on-issues)
+    - [Label Issues](#label-issues)
+    - [Clean Up Issues and PRs](#clean-up-issues-and-prs)
+    - [Review Pull Requests](#review-pull-requests)
+    - [Merge Pull Requests](#merge-pull-requests)
+    - [Tag a Release](#tag-a-release)
+    - [Join the Project Team](#join-the-project-team)
 - Add a Guide Like This One [To My Project](#attribution)?
 
 ## Introduction
@@ -142,7 +142,7 @@ Once you've filed the PR:
 - One or more maintainers will use GitHub's review feature to review your PR.
 - If the maintainer asks for any changes, edit your changes, push, and ask for another review. Additional tags (such as `needs-tests`) will be added depending on the review.
 - If the maintainer decides to pass on your PR, they will thank you for the contribution and explain why they won't be accepting the changes. That's ok! We still really appreciate you taking the time to do it, and we don't take that lightly. 💚
-- If your PR gets accepted, it will be marked as such, and merged into the `latest` branch soon after. Your contribution will be distributed to the masses next time the maintainers [tag a release](#tag-a-release)
+- If your PR gets accepted, it will be marked as such, and merged into the `next` or branch soon after. Your contribution will be distributed to the masses next time the maintainers [tag a release](#tag-a-release)
 
 ## Provide Support on Issues
 
@@ -201,11 +201,11 @@ To clean up issues and PRs:
 
 - Search the issue tracker for issues or PRs, and add the term `updated:<=YYYY-MM-DD`, where the date is 30 days before today.
 - Go through each issue _from oldest to newest_, and close them if **all of the following are true**:
-  - not opened by a maintainer
-  - not marked as `critical`
-  - not marked as `starter` or `help wanted` (these might stick around for a while, in general, as they're intended to be available)
-  - no explicit messages in the comments asking for it to be left open
-  - does not belong to a milestone
+    - not opened by a maintainer
+    - not marked as `critical`
+    - not marked as `starter` or `help wanted` (these might stick around for a while, in general, as they're intended to be available)
+    - no explicit messages in the comments asking for it to be left open
+    - does not belong to a milestone
 - Leave a message when closing saying "Cleaning up stale issue. Please reopen or ping us if and when you're ready to resume this. See <https://github.com/domicileapp/domicile/blob/latest/CONTRIBUTING.md#clean-up-issues-and-prs> for more details."
 
 ## Review Pull Requests

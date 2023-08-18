@@ -2,9 +2,13 @@ site_name: Domicile Documentation
 theme:
   name: material
 plugins:
-  - search:
-  - mike:
-extra:
-  version:
-    provider: mike
-    default: latest
+  - search
+  # - gen-files:
+  #     scripts:
+  #       - scripts/gen_ref_pages.py
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: google
+  - section-index
