@@ -1,5 +1,15 @@
 # Domicile Changelog
 
+## [1.2.0-next.14](https://github.com/domicileapp/domicile/compare/v1.2.0-next.13...v1.2.0-next.14) (2023-08-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency alembic to v1.11.3 ([#374](https://github.com/domicileapp/domicile/issues/374)) ([d713e21](https://github.com/domicileapp/domicile/commit/d713e21b4d34c2876270946db68355af71980b79))
+* **deps:** update dependency fastapi to v0.101.1 ([#367](https://github.com/domicileapp/domicile/issues/367)) ([4e365e3](https://github.com/domicileapp/domicile/commit/4e365e315f269d8bfe84be88a0e9aae8a958cc68))
+* **deps:** update dependency pydantic to v2.2.1 ([#378](https://github.com/domicileapp/domicile/issues/378)) ([37c1635](https://github.com/domicileapp/domicile/commit/37c163558346ac9f42fc2e85372bd5907b297d8b))
+* **deps:** update dependency pydantic-settings to v2.0.3 ([#375](https://github.com/domicileapp/domicile/issues/375)) ([f9d750d](https://github.com/domicileapp/domicile/commit/f9d750dfef243e3cd20d0685d989e78ac88b0f9e))
+
 ## [1.2.0-next.13](https://github.com/domicileapp/domicile/compare/v1.2.0-next.12...v1.2.0-next.13) (2023-08-19)
 
 
