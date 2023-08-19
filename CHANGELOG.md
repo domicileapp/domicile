@@ -1,5 +1,15 @@
 # Domicile Changelog
 
+## [1.2.0-next.13](https://github.com/domicileapp/domicile/compare/v1.2.0-next.12...v1.2.0-next.13) (2023-08-19)
+
+
+### Bug Fixes
+
+* **deps:** fix python deps ([e28b02a](https://github.com/domicileapp/domicile/commit/e28b02a0d2b4ab8db5b4b72a82f499a1283cd90e))
+* **deps:** update dependency fastapi to ^0.101.0 ([#360](https://github.com/domicileapp/domicile/issues/360)) ([e6e8020](https://github.com/domicileapp/domicile/commit/e6e8020d1150b95d4237e7888805816f95d9d2c8))
+* **deps:** update dependency uvicorn to ^0.23.0 ([#361](https://github.com/domicileapp/domicile/issues/361)) ([09257e2](https://github.com/domicileapp/domicile/commit/09257e24f40923a69275e5340ab80efa957aaf3b))
+* move files ([40460d2](https://github.com/domicileapp/domicile/commit/40460d2a4fe1e0e817dc4614cf477fa92a43608c))
+
 ## [1.2.0-next.12](https://github.com/domicileapp/domicile/compare/v1.2.0-next.11...v1.2.0-next.12) (2023-08-06)
 
 
