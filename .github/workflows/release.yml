@@ -9,6 +9,13 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+      - name: Get token
+        id: get_token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.DOMICILEBOT_APP_ID }}
+          private_key: ${{ secrets.DOMICILEBOT_PRIVATE_KEY }}
+
       - name: Checkout
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3
         with:
@@ -24,5 +31,5 @@ jobs:
 
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: '${{ steps.get_token.outputs.token }}'
         run: yarn semantic-release
