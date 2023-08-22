@@ -1,5 +1,13 @@
 # Domicile Changelog
 
+## [1.2.0-next.15](https://github.com/domicileapp/domicile/compare/v1.2.0-next.14...v1.2.0-next.15) (2023-08-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency sqlalchemy to v2.0.20 ([#379](https://github.com/domicileapp/domicile/issues/379)) ([131b2a6](https://github.com/domicileapp/domicile/commit/131b2a6e57886077c1b324ae3832bc012ebf50f7))
+* **deps:** update dependency tslib to v2.6.2 ([#376](https://github.com/domicileapp/domicile/issues/376)) ([e5f7160](https://github.com/domicileapp/domicile/commit/e5f716030dc8560d70c83a7fbc790d6877fc3eb5))
+
 ## [1.2.0-next.14](https://github.com/domicileapp/domicile/compare/v1.2.0-next.13...v1.2.0-next.14) (2023-08-19)
 
 
