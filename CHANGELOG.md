@@ -1,5 +1,12 @@
 # Domicile Changelog
 
+## [1.2.0-next.16](https://github.com/domicileapp/domicile/compare/v1.2.0-next.15...v1.2.0-next.16) (2023-08-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency pydantic to v2.2.1 ([#382](https://github.com/domicileapp/domicile/issues/382)) ([fa81a09](https://github.com/domicileapp/domicile/commit/fa81a09efa416d5f9225fb3320a43987ccc47c1a))
+
 ## [1.2.0-next.15](https://github.com/domicileapp/domicile/compare/v1.2.0-next.14...v1.2.0-next.15) (2023-08-22)
 
 
