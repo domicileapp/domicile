@@ -1,0 +1,44 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = "*"
+uvicorn = "*"
+gunicorn = "*"
+pydantic = "*"
+pydantic-settings = "*"
+yarl = "*"
+ujson = "*"
+alembic = "*"
+aiosqlite = "*"
+httptools = "*"
+loguru = "*"
+mkdocs = "*"
+mkdocs-material = "*"
+mkdocs-gen-files = "*"
+mkdocstrings = "*"
+mkdocs-literate-nav = "*"
+mkdocs-section-index = "*"
+python-dotenv = "*"
+celery = "*"
+emails = "*"
+psycopg2-binary = "*"
+
+[dev-packages]
+pytest = "*"
+flake8 = "*"
+mypy = "*"
+isort = "*"
+pre-commit = "*"
+wemake-python-styleguide = "*"
+black = "*"
+autoflake = "*"
+pytest-cov = "*"
+anyio = "*"
+pytest-env = "*"
+httpx = "*"
+
+[requires]
+python_version = "3.11"
