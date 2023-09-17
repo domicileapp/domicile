@@ -1,5 +1,16 @@
 # Domicile Changelog
 
+## [1.2.0-next.17](https://github.com/domicileapp/domicile/compare/v1.2.0-next.16...v1.2.0-next.17) (2023-09-17)
+
+
+### Bug Fixes
+
+* **deps:** update dependency axios to v1.5.0 ([#402](https://github.com/domicileapp/domicile/issues/402)) ([8f851fc](https://github.com/domicileapp/domicile/commit/8f851fc06631e806f5a2187a8e09d6d707e392e6))
+* **deps:** update dependency celery to v5.3.4 ([#417](https://github.com/domicileapp/domicile/issues/417)) ([ae6f17f](https://github.com/domicileapp/domicile/commit/ae6f17fcaafc9527c1ed47ed4106a4ffcf8b7147))
+* **deps:** update dependency loguru to v0.7.2 ([#413](https://github.com/domicileapp/domicile/issues/413)) ([d4f6a16](https://github.com/domicileapp/domicile/commit/d4f6a16572c6936fffd2789751887558b5ea8dc2))
+* **deps:** update dependency mkdocs-literate-nav to v0.6.1 ([#419](https://github.com/domicileapp/domicile/issues/419)) ([71b1844](https://github.com/domicileapp/domicile/commit/71b1844efbca8102b36184226e89a73049dce7a9))
+* **deps:** update dependency mkdocs-section-index to v0.3.7 ([#414](https://github.com/domicileapp/domicile/issues/414)) ([d0beb63](https://github.com/domicileapp/domicile/commit/d0beb637682843b85c6ed8a883977bb4c8dcd4f9))
+
 ## [1.2.0-next.16](https://github.com/domicileapp/domicile/compare/v1.2.0-next.15...v1.2.0-next.16) (2023-08-22)
 
 
