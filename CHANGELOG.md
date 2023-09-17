@@ -1,5 +1,14 @@
 # Domicile Changelog
 
+## [1.2.0-next.18](https://github.com/domicileapp/domicile/compare/v1.2.0-next.17...v1.2.0-next.18) (2023-09-17)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @tanstack/react-query to v4.35.3 ([#399](https://github.com/domicileapp/domicile/issues/399)) ([4f774ef](https://github.com/domicileapp/domicile/commit/4f774ef35194d65bd229608cd897044b97990fc4))
+* **deps:** update dependency alembic to v1.12.0 ([#409](https://github.com/domicileapp/domicile/issues/409)) ([e2a5f4c](https://github.com/domicileapp/domicile/commit/e2a5f4c33d2202aeae572e7be341ed3ccd633851))
+* **deps:** update react-router monorepo to v6.16.0 ([#401](https://github.com/domicileapp/domicile/issues/401)) ([1d3b682](https://github.com/domicileapp/domicile/commit/1d3b6829166c755557398a2e3e6d0c40c2aecbd5))
+
 ## [1.2.0-next.17](https://github.com/domicileapp/domicile/compare/v1.2.0-next.16...v1.2.0-next.17) (2023-09-17)
 
 
