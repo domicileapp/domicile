@@ -22,7 +22,7 @@ CREATE TABLE recipe_ingredients (
     sort_order double precision NOT NULL,
     raw_text text NOT NULL,
  
-    -- parsed/structured fields, nullable until parsed
+    -- structured fields, nullable until parsed
     quantity numeric,
     unit text,
     ingredient_name text,

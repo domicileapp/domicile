@@ -62,6 +62,52 @@ definitions:
       updated_at:
         type: string
     type: object
+  github_com_domicileapp_domicile_internal_db.RecipeIngredient:
+    properties:
+      created_at:
+        type: string
+      group_name:
+        type: string
+      id:
+        type: integer
+      ingredient_name:
+        type: string
+      parse_status:
+        type: string
+      parsed_at:
+        type: string
+      preparation:
+        type: string
+      quantity:
+        type: number
+      raw_text:
+        type: string
+      recipe_id:
+        type: integer
+      sort_order:
+        type: number
+      unit:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  github_com_domicileapp_domicile_internal_db.RecipeInstruction:
+    properties:
+      content:
+        type: string
+      created_at:
+        type: string
+      group_name:
+        type: string
+      id:
+        type: integer
+      recipe_id:
+        type: integer
+      sort_order:
+        type: number
+      updated_at:
+        type: string
+    type: object
   recipes.RecipeResponse:
     properties:
       cook_time:
@@ -145,6 +191,7 @@ definitions:
     type: object
 info:
   contact: {}
+  description: Domicile's REST API
   title: Domicile API
   version: "0.1"
 paths:
@@ -311,7 +358,7 @@ paths:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/github_com_domicileapp_domicile_internal_db.Recipe'
+            $ref: '#/definitions/github_com_domicileapp_domicile_internal_db.RecipeIngredient'
       summary: Create recipe ingredient
       tags:
       - recipes
@@ -385,7 +432,7 @@ paths:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/github_com_domicileapp_domicile_internal_db.Recipe'
+            $ref: '#/definitions/github_com_domicileapp_domicile_internal_db.RecipeInstruction'
       summary: Create recipe instruction
       tags:
       - recipes
