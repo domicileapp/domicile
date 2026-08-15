@@ -1,0 +1,5 @@
+version: "3"
+tasks:
+  load-env:
+    cmds:
+      - ./hack/load_env_files.sh

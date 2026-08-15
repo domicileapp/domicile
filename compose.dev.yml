@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:18
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: domicile
+      POSTGRES_PASSWORD: domicilesecretpassword
+      POSTGRES_DB: domicile
+    ports:
+      - "5432:5432"
+    volumes:
+      - domicile_db_data:/var/lib/postgresql
+
+volumes:
+  domicile_db_data:
