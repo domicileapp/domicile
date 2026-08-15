@@ -10,8 +10,8 @@ import (
 
 	_ "github.com/domicileapp/domicile/docs"
 	"github.com/domicileapp/domicile/internal/db"
+	"github.com/domicileapp/domicile/internal/recipes"
 	"github.com/domicileapp/domicile/pkg/logger"
-	"github.com/domicileapp/domicile/recipes"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/httplog/v3"
