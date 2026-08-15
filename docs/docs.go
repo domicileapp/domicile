@@ -347,6 +347,7 @@ const docTemplate = `{
             },
             "get": {
                 "description": "Get list of all recipes",
+                "operationId": "list-recipes",
                 "requestBody": {
                     "content": {
                         "application/json": {

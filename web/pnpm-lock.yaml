@@ -42,6 +42,9 @@ importers:
         specifier: ^4.1.18
         version: 4.3.3
     devDependencies:
+      '@kubb/plugin-axios':
+        specifier: 5.0.0-beta.109
+        version: 5.0.0-beta.109(kubb@5.0.0-beta.109(esbuild@0.28.2)(openapi-types@12.1.3)(rolldown@1.2.4)(typescript@6.0.3)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(sugarss@5.0.1(postcss@8.5.26))(yaml@2.9.0)))
       '@kubb/plugin-faker':
         specifier: 5.0.0-beta.109
         version: 5.0.0-beta.109(kubb@5.0.0-beta.109(esbuild@0.28.2)(openapi-types@12.1.3)(rolldown@1.2.4)(typescript@6.0.3)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(sugarss@5.0.1(postcss@8.5.26))(yaml@2.9.0)))
@@ -611,6 +614,16 @@ packages:
   '@kubb/parser-ts@5.0.0-beta.97':
     resolution: {integrity: sha512-eyuDL9JkvNaW9za8MJ6Wpe6Nl3X0F2x2cLsfilF5Ey2+Bl+/YrEsJAehNHqWcbStTUUPlfvTKWXh1y9BOvP8Yg==}
     engines: {node: '>=22'}
+
+  '@kubb/plugin-axios@5.0.0-beta.109':
+    resolution: {integrity: sha512-jBy9o5gRVaZaI5YeqbTMoWJjBpDCwOwPrD5pxp+U9zzyWNzm8C1vaEZ525nRLMAmdiDSE+/MIK+HZgzGOVRChg==}
+    engines: {node: '>=22'}
+    peerDependencies:
+      axios: ^1.19.0
+      kubb: ^5.0.0-beta.109
+    peerDependenciesMeta:
+      axios:
+        optional: true
 
   '@kubb/plugin-barrel@5.0.0-beta.109':
     resolution: {integrity: sha512-4qiv2Of5+zFlqVywP0EQq1UG8QWQ5/Ave8jeq+PjuykF8OFKL2EruRN8AeLNRIx/h7go3GZ/KxecqbTmVnNTLw==}
@@ -4105,6 +4118,12 @@ snapshots:
     dependencies:
       '@kubb/core': 5.0.0-beta.97
       typescript: 6.0.3
+
+  '@kubb/plugin-axios@5.0.0-beta.109(kubb@5.0.0-beta.109(esbuild@0.28.2)(openapi-types@12.1.3)(rolldown@1.2.4)(typescript@6.0.3)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(sugarss@5.0.1(postcss@8.5.26))(yaml@2.9.0)))':
+    dependencies:
+      '@kubb/plugin-ts': 5.0.0-beta.109(kubb@5.0.0-beta.109(esbuild@0.28.2)(openapi-types@12.1.3)(rolldown@1.2.4)(typescript@6.0.3)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(sugarss@5.0.1(postcss@8.5.26))(yaml@2.9.0)))
+      '@kubb/plugin-zod': 5.0.0-beta.109(kubb@5.0.0-beta.109(esbuild@0.28.2)(openapi-types@12.1.3)(rolldown@1.2.4)(typescript@6.0.3)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(sugarss@5.0.1(postcss@8.5.26))(yaml@2.9.0)))
+      kubb: 5.0.0-beta.109(esbuild@0.28.2)(openapi-types@12.1.3)(rolldown@1.2.4)(typescript@6.0.3)(vite@8.2.1(@types/node@26.2.0)(esbuild@0.28.2)(jiti@2.7.0)(sugarss@5.0.1(postcss@8.5.26))(yaml@2.9.0))
 
   '@kubb/plugin-barrel@5.0.0-beta.109(@kubb/core@5.0.0-beta.109)':
     dependencies:

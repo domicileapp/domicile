@@ -36,6 +36,7 @@ func Routes(store RecipeStore) chi.Router {
 // ListRecipesHandler godoc
 //
 //	@Summary		List recipes
+//	@Id				list-recipes
 //	@Tags			recipes
 //	@Description	Get list of all recipes
 //	@Accept			json
