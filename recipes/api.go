@@ -2,23 +2,19 @@ package recipes
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"strconv"
 
 	_ "github.com/domicileapp/domicile/docs"
 	"github.com/domicileapp/domicile/internal/db"
 	"github.com/domicileapp/domicile/pkg/encode"
+	"github.com/domicileapp/domicile/pkg/logger"
 	"github.com/go-chi/chi/v5"
 )
 
-type Handler struct {
-	DB db.Querier
-}
-
-func Routes(queries *db.Queries) chi.Router {
+func Routes(store RecipeStore) chi.Router {
 	r := chi.NewRouter()
-	h := &Handler{DB: queries}
+	h := &Handler{Store: store}
 
 	r.Get("/", h.ListRecipesHandler)
 	r.Post("/", h.CreateRecipeHandler)
@@ -47,7 +43,7 @@ func Routes(queries *db.Queries) chi.Router {
 //	@Success		200	{array}	db.Recipe
 //	@Router			/api/v1/recipes [get]
 func (h *Handler) ListRecipesHandler(w http.ResponseWriter, r *http.Request) {
-	recipes, err := h.DB.ListRecipes(r.Context())
+	recipes, err := h.Store.ListRecipes(r.Context())
 	if err != nil {
 		http.Error(w, "Failed to retrieve recipes", http.StatusInternalServerError)
 		return
@@ -74,32 +70,33 @@ type RecipeResponse struct {
 //	@Param		id	path		int	true	"Recipe ID"
 //	@Router		/api/v1/recipes/{id} [get]
 func (h *Handler) GetRecipeByIDHandler(w http.ResponseWriter, r *http.Request) {
+	log, _ := logger.SetupLogging()
 	recipeID, err := parseIDParam(r, "id")
 	if err != nil {
 		http.Error(w, "Invalid recipe ID", http.StatusBadRequest)
 		return
 	}
 
-	recipe, err := h.DB.GetRecipe(r.Context(), recipeID)
+	recipe, err := h.Store.GetRecipe(r.Context(), recipeID)
 	if err != nil {
 		http.Error(w, "No recipe found for ID", http.StatusNotFound)
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return
 	}
 
 	ids := []int64{recipeID}
 
-	ingredients, err := h.DB.ListRecipeIngredients(r.Context(), ids)
+	ingredients, err := h.Store.ListRecipeIngredients(r.Context(), ids)
 	if err != nil {
 		http.Error(w, "Failed to retrieve ingredients", http.StatusInternalServerError)
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return
 	}
 
-	instructions, err := h.DB.ListRecipeInstructions(r.Context(), ids)
+	instructions, err := h.Store.ListRecipeInstructions(r.Context(), ids)
 	if err != nil {
 		http.Error(w, "Failed to retrieve instructions", http.StatusInternalServerError)
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return
 	}
 
@@ -111,7 +108,7 @@ func (h *Handler) GetRecipeByIDHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err := encode.ResponseJSON(w, http.StatusOK, resp); err != nil {
 		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
-		log.Println(err.Error())
+		log.Error(err.Error())
 	}
 }
 
@@ -130,6 +127,7 @@ type createRecipeRequest struct {
 //	@Param		message	body		createRecipeRequest	true	"Recipe data"
 //	@Router		/api/v1/recipes [post]
 func (h *Handler) CreateRecipeHandler(w http.ResponseWriter, r *http.Request) {
+	log, _ := logger.SetupLogging()
 	var req createRecipeRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
@@ -140,13 +138,10 @@ func (h *Handler) CreateRecipeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	recipe, err := h.DB.CreateRecipe(r.Context(), db.CreateRecipeParams{
-		Name:             req.Name,
-		ShortDescription: &req.ShortDescription,
-	})
+	recipe, err := h.Store.CreateRecipe(r.Context(), req.Name, req.ShortDescription)
 	if err != nil {
 		http.Error(w, "Failed to create recipe", http.StatusInternalServerError)
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return
 	}
 
@@ -170,6 +165,7 @@ type updateRecipeRequest struct {
 //	@Param		message	body		updateRecipeRequest	true	"Recipe data"
 //	@Router		/api/v1/recipes/{id} [put]
 func (h *Handler) UpdateRecipeHandler(w http.ResponseWriter, r *http.Request) {
+	log, _ := logger.SetupLogging()
 	recipeID, err := parseIDParam(r, "id")
 	if err != nil {
 		http.Error(w, "Invalid recipe ID", http.StatusBadRequest)
@@ -186,14 +182,10 @@ func (h *Handler) UpdateRecipeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	recipe, err := h.DB.UpdateRecipe(r.Context(), db.UpdateRecipeParams{
-		ID:               recipeID,
-		Name:             req.Name,
-		ShortDescription: &req.ShortDescription,
-	})
+	recipe, err := h.Store.UpdateRecipe(r.Context(), recipeID, req.Name, req.ShortDescription)
 	if err != nil {
 		http.Error(w, "Failed to update recipe", http.StatusInternalServerError)
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return
 	}
 
@@ -212,15 +204,16 @@ func (h *Handler) UpdateRecipeHandler(w http.ResponseWriter, r *http.Request) {
 //	@Param		id	path	int	true	"Recipe ID"
 //	@Router		/api/v1/recipes [delete]
 func (h *Handler) DeleteRecipeHandler(w http.ResponseWriter, r *http.Request) {
+	log, _ := logger.SetupLogging()
 	recipeID, err := parseIDParam(r, "id")
 	if err != nil {
 		http.Error(w, "Invalid recipe ID", http.StatusBadRequest)
 		return
 	}
 
-	if err := h.DB.DeleteRecipe(r.Context(), recipeID); err != nil {
+	if err := h.Store.DeleteRecipe(r.Context(), recipeID); err != nil {
 		http.Error(w, "Failed to delete recipe", http.StatusInternalServerError)
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return
 	}
 
@@ -239,11 +232,12 @@ type createIngredientRequest struct {
 //	@Tags		recipes, ingredients
 //	@Accept		json
 //	@Produce	json
-//	@Success	201		{object}	db.Recipe
+//	@Success	201		{object}	db.RecipeIngredient
 //	@Param		message	body		createIngredientRequest	true	"Ingredient data"
 //	@Param		id		path		int						true	"Recipe ID"
 //	@Router		/api/v1/recipes/{id}/ingredients [post]
 func (h *Handler) CreateRecipeIngredientHandler(w http.ResponseWriter, r *http.Request) {
+	log, _ := logger.SetupLogging()
 	recipeID, err := parseIDParam(r, "id")
 	if err != nil {
 		http.Error(w, "Invalid recipe ID", http.StatusBadRequest)
@@ -260,15 +254,10 @@ func (h *Handler) CreateRecipeIngredientHandler(w http.ResponseWriter, r *http.R
 		return
 	}
 
-	ingredient, err := h.DB.CreateRecipeIngredient(r.Context(), db.CreateRecipeIngredientParams{
-		RecipeID:  recipeID,
-		GroupName: &req.GroupName,
-		SortOrder: req.SortOrder,
-		RawText:   req.RawText,
-	})
+	ingredient, err := h.Store.CreateRecipeIngredient(r.Context(), recipeID, req.GroupName, req.SortOrder, req.RawText)
 	if err != nil {
 		http.Error(w, "Failed to create ingredient", http.StatusInternalServerError)
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return
 	}
 
@@ -293,6 +282,7 @@ type updateIngredientRequest struct {
 //	@Param		id		path		int						true	"Recipe ID"
 //	@Router		/api/v1/recipes/{id}/ingredient [put]
 func (h *Handler) UpdateRecipeIngredientHandler(w http.ResponseWriter, r *http.Request) {
+	log, _ := logger.SetupLogging()
 	ingredientID, err := parseIDParam(r, "ingredientID")
 	if err != nil {
 		http.Error(w, "Invalid ingredient ID", http.StatusBadRequest)
@@ -305,12 +295,9 @@ func (h *Handler) UpdateRecipeIngredientHandler(w http.ResponseWriter, r *http.R
 		return
 	}
 
-	if err := h.DB.UpdateRecipeIngredientSortOrder(r.Context(), db.UpdateRecipeIngredientSortOrderParams{
-		ID:        ingredientID,
-		SortOrder: req.SortOrder,
-	}); err != nil {
+	if err := h.Store.UpdateRecipeIngredientSortOrder(r.Context(), ingredientID, req.SortOrder); err != nil {
 		http.Error(w, "Failed to update ingredient", http.StatusInternalServerError)
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return
 	}
 
@@ -327,15 +314,16 @@ func (h *Handler) UpdateRecipeIngredientHandler(w http.ResponseWriter, r *http.R
 //	@Param		id	path		int	true	"Recipe ID"
 //	@Router		/api/v1/recipes/{id}/ingredient [delete]
 func (h *Handler) DeleteRecipeIngredientHandler(w http.ResponseWriter, r *http.Request) {
+	log, _ := logger.SetupLogging()
 	ingredientID, err := parseIDParam(r, "ingredientID")
 	if err != nil {
 		http.Error(w, "Invalid ingredient ID", http.StatusBadRequest)
 		return
 	}
 
-	if err := h.DB.DeleteRecipeIngredient(r.Context(), ingredientID); err != nil {
+	if err := h.Store.DeleteRecipeIngredient(r.Context(), ingredientID); err != nil {
 		http.Error(w, "Failed to delete ingredient", http.StatusInternalServerError)
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return
 	}
 
@@ -354,11 +342,12 @@ type createInstructionRequest struct {
 //	@Tags		recipes, instructions
 //	@Accept		json
 //	@Produce	json
-//	@Success	201		{object}	db.Recipe
+//	@Success	201		{object}	db.RecipeInstruction
 //	@Param		message	body		createInstructionRequest	true	"Instruction data"
 //	@Param		id		path		int							true	"Recipe ID"
 //	@Router		/api/v1/recipes/{id}/instructions [post]
 func (h *Handler) CreateRecipeInstructionHandler(w http.ResponseWriter, r *http.Request) {
+	log, _ := logger.SetupLogging()
 	recipeID, err := parseIDParam(r, "id")
 	if err != nil {
 		http.Error(w, "Invalid recipe ID", http.StatusBadRequest)
@@ -375,15 +364,10 @@ func (h *Handler) CreateRecipeInstructionHandler(w http.ResponseWriter, r *http.
 		return
 	}
 
-	instruction, err := h.DB.CreateRecipeInstruction(r.Context(), db.CreateRecipeInstructionParams{
-		RecipeID:  recipeID,
-		GroupName: &req.GroupName,
-		SortOrder: req.SortOrder,
-		Content:   req.Content,
-	})
+	instruction, err := h.Store.CreateRecipeInstruction(r.Context(), recipeID, req.GroupName, req.SortOrder, req.Content)
 	if err != nil {
 		http.Error(w, "Failed to create instruction", http.StatusInternalServerError)
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return
 	}
 
@@ -408,6 +392,7 @@ type updateInstructionRequest struct {
 //	@Param		id		path		int							true	"Recipe ID"
 //	@Router		/api/v1/recipes/{id}/instruction [put]
 func (h *Handler) UpdateRecipeInstructionHandler(w http.ResponseWriter, r *http.Request) {
+	log, _ := logger.SetupLogging()
 	instructionID, err := parseIDParam(r, "instructionID")
 	if err != nil {
 		http.Error(w, "Invalid instruction ID", http.StatusBadRequest)
@@ -420,21 +405,9 @@ func (h *Handler) UpdateRecipeInstructionHandler(w http.ResponseWriter, r *http.
 		return
 	}
 
-	if err := h.DB.UpdateRecipeInstructionContent(r.Context(), db.UpdateRecipeInstructionContentParams{
-		ID:      instructionID,
-		Content: req.Content,
-	}); err != nil {
-		http.Error(w, "Failed to update instruction content", http.StatusInternalServerError)
-		log.Println(err.Error())
-		return
-	}
-
-	if err := h.DB.UpdateRecipeInstructionSortOrder(r.Context(), db.UpdateRecipeInstructionSortOrderParams{
-		ID:        instructionID,
-		SortOrder: req.SortOrder,
-	}); err != nil {
-		http.Error(w, "Failed to update instruction order", http.StatusInternalServerError)
-		log.Println(err.Error())
+	if err := h.Store.UpdateRecipeInstruction(r.Context(), instructionID, req.Content, req.SortOrder); err != nil {
+		http.Error(w, "Failed to update instruction", http.StatusInternalServerError)
+		log.Error(err.Error())
 		return
 	}
 
@@ -451,15 +424,16 @@ func (h *Handler) UpdateRecipeInstructionHandler(w http.ResponseWriter, r *http.
 //	@Param		id	path		int	true	"Recipe ID"
 //	@Router		/api/v1/recipes/{id}/instruction [delete]
 func (h *Handler) DeleteRecipeInstructionHandler(w http.ResponseWriter, r *http.Request) {
+	log, _ := logger.SetupLogging()
 	instructionID, err := parseIDParam(r, "instructionID")
 	if err != nil {
 		http.Error(w, "Invalid instruction ID", http.StatusBadRequest)
 		return
 	}
 
-	if err := h.DB.DeleteRecipeInstruction(r.Context(), instructionID); err != nil {
+	if err := h.Store.DeleteRecipeInstruction(r.Context(), instructionID); err != nil {
 		http.Error(w, "Failed to delete instruction", http.StatusInternalServerError)
-		log.Println(err.Error())
+		log.Error(err.Error())
 		return
 	}
 

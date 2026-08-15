@@ -4,6 +4,11 @@ tasks:
     cmds:
       - source .env
 
+  dev:setup:
+    cmds:
+      - go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
+      - go install github.com/swaggo/swag/cmd/swag@latest
+
   gen:sql:
     cmds:
       - task: load-env

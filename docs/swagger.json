@@ -1,6 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
+        "description": "Domicile's REST API",
         "title": "Domicile API",
         "contact": {},
         "version": "0.1"
@@ -257,7 +258,7 @@
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/github_com_domicileapp_domicile_internal_db.Recipe"
+                            "$ref": "#/definitions/github_com_domicileapp_domicile_internal_db.RecipeIngredient"
                         }
                     }
                 }
@@ -369,7 +370,7 @@
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/github_com_domicileapp_domicile_internal_db.Recipe"
+                            "$ref": "#/definitions/github_com_domicileapp_domicile_internal_db.RecipeInstruction"
                         }
                     }
                 }
@@ -467,6 +468,76 @@
                 },
                 "source": {
                     "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_domicileapp_domicile_internal_db.RecipeIngredient": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "group_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "ingredient_name": {
+                    "type": "string"
+                },
+                "parse_status": {
+                    "type": "string"
+                },
+                "parsed_at": {
+                    "type": "string"
+                },
+                "preparation": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "number"
+                },
+                "raw_text": {
+                    "type": "string"
+                },
+                "recipe_id": {
+                    "type": "integer"
+                },
+                "sort_order": {
+                    "type": "number"
+                },
+                "unit": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_domicileapp_domicile_internal_db.RecipeInstruction": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "group_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "recipe_id": {
+                    "type": "integer"
+                },
+                "sort_order": {
+                    "type": "number"
                 },
                 "updated_at": {
                     "type": "string"
