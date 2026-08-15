@@ -4,6 +4,10 @@ tasks:
     cmds:
       - source .env
 
+  update:gha:
+    cmds:
+      - npx actions-up
+
   dev:setup:
     cmds:
       - go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
