@@ -13,25 +13,31 @@ import (
 
 const createRecipe = `-- name: CreateRecipe :one
 insert into recipes (
-    title,
+    name,
     short_description
 )
 values ($1, $2)
-returning id, title, short_description, created_at, updated_at, deleted_at
+returning id, name, short_description, servings, prep_time, cook_time, notes, nutrition, source, created_at, updated_at, deleted_at
 `
 
 type CreateRecipeParams struct {
-	Title            string      `json:"title"`
+	Name             string      `json:"name"`
 	ShortDescription pgtype.Text `json:"short_description"`
 }
 
 func (q *Queries) CreateRecipe(ctx context.Context, arg CreateRecipeParams) (Recipe, error) {
-	row := q.db.QueryRow(ctx, createRecipe, arg.Title, arg.ShortDescription)
+	row := q.db.QueryRow(ctx, createRecipe, arg.Name, arg.ShortDescription)
 	var i Recipe
 	err := row.Scan(
 		&i.ID,
-		&i.Title,
+		&i.Name,
 		&i.ShortDescription,
+		&i.Servings,
+		&i.PrepTime,
+		&i.CookTime,
+		&i.Notes,
+		&i.Nutrition,
+		&i.Source,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,
@@ -50,7 +56,7 @@ func (q *Queries) DeleteRecipe(ctx context.Context, id int64) error {
 }
 
 const getRecipe = `-- name: GetRecipe :one
-select id, title, short_description, created_at, updated_at, deleted_at from recipes
+select id, name, short_description, servings, prep_time, cook_time, notes, nutrition, source, created_at, updated_at, deleted_at from recipes
 where id = $1 limit 1
 `
 
@@ -59,8 +65,14 @@ func (q *Queries) GetRecipe(ctx context.Context, id int64) (Recipe, error) {
 	var i Recipe
 	err := row.Scan(
 		&i.ID,
-		&i.Title,
+		&i.Name,
 		&i.ShortDescription,
+		&i.Servings,
+		&i.PrepTime,
+		&i.CookTime,
+		&i.Notes,
+		&i.Nutrition,
+		&i.Source,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,
@@ -68,27 +80,131 @@ func (q *Queries) GetRecipe(ctx context.Context, id int64) (Recipe, error) {
 	return i, err
 }
 
-const listRecipes = `-- name: ListRecipes :many
-select id, title, short_description, created_at, updated_at, deleted_at from recipes
-order by id desc
+const listRecipeIngredients = `-- name: ListRecipeIngredients :many
+select
+    id,
+    recipe_id,
+    sort_order,
+    content
+from recipes_ingredients
+where recipe_id = $1
+order by recipe_id, sort_order
 `
 
-func (q *Queries) ListRecipes(ctx context.Context) ([]Recipe, error) {
+func (q *Queries) ListRecipeIngredients(ctx context.Context, recipeID pgtype.Int8) ([]RecipesIngredient, error) {
+	rows, err := q.db.Query(ctx, listRecipeIngredients, recipeID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []RecipesIngredient
+	for rows.Next() {
+		var i RecipesIngredient
+		if err := rows.Scan(
+			&i.ID,
+			&i.RecipeID,
+			&i.SortOrder,
+			&i.Content,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listRecipeInstructions = `-- name: ListRecipeInstructions :many
+select
+    id,
+    recipe_id,
+    sort_order,
+    content
+from recipes_ingredients
+where recipe_id = $1
+order by recipe_id, sort_order
+`
+
+func (q *Queries) ListRecipeInstructions(ctx context.Context, recipeID pgtype.Int8) ([]RecipesIngredient, error) {
+	rows, err := q.db.Query(ctx, listRecipeInstructions, recipeID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []RecipesIngredient
+	for rows.Next() {
+		var i RecipesIngredient
+		if err := rows.Scan(
+			&i.ID,
+			&i.RecipeID,
+			&i.SortOrder,
+			&i.Content,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const listRecipes = `-- name: ListRecipes :many
+select 
+    id,
+    name,
+    short_description,
+    servings,
+    prep_time,
+    cook_time,
+    notes,
+    nutrition,
+    source,
+    created_at,
+    updated_at
+from recipes
+where deleted_at is null
+order by updated_at desc
+`
+
+type ListRecipesRow struct {
+	ID               int64              `json:"id"`
+	Name             string             `json:"name"`
+	ShortDescription pgtype.Text        `json:"short_description"`
+	Servings         pgtype.Text        `json:"servings"`
+	PrepTime         pgtype.Text        `json:"prep_time"`
+	CookTime         pgtype.Text        `json:"cook_time"`
+	Notes            pgtype.Text        `json:"notes"`
+	Nutrition        pgtype.Text        `json:"nutrition"`
+	Source           pgtype.Text        `json:"source"`
+	CreatedAt        pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt        pgtype.Timestamptz `json:"updated_at"`
+}
+
+func (q *Queries) ListRecipes(ctx context.Context) ([]ListRecipesRow, error) {
 	rows, err := q.db.Query(ctx, listRecipes)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Recipe
+	var items []ListRecipesRow
 	for rows.Next() {
-		var i Recipe
+		var i ListRecipesRow
 		if err := rows.Scan(
 			&i.ID,
-			&i.Title,
+			&i.Name,
 			&i.ShortDescription,
+			&i.Servings,
+			&i.PrepTime,
+			&i.CookTime,
+			&i.Notes,
+			&i.Nutrition,
+			&i.Source,
 			&i.CreatedAt,
 			&i.UpdatedAt,
-			&i.DeletedAt,
 		); err != nil {
 			return nil, err
 		}
@@ -103,26 +219,32 @@ func (q *Queries) ListRecipes(ctx context.Context) ([]Recipe, error) {
 const updateRecipe = `-- name: UpdateRecipe :one
 update recipes
 set 
-    title = $2,
+    name = $2,
     short_description = $3,
     updated_at = now()
 where id = $1
-returning id, title, short_description, created_at, updated_at, deleted_at
+returning id, name, short_description, servings, prep_time, cook_time, notes, nutrition, source, created_at, updated_at, deleted_at
 `
 
 type UpdateRecipeParams struct {
 	ID               int64       `json:"id"`
-	Title            string      `json:"title"`
+	Name             string      `json:"name"`
 	ShortDescription pgtype.Text `json:"short_description"`
 }
 
 func (q *Queries) UpdateRecipe(ctx context.Context, arg UpdateRecipeParams) (Recipe, error) {
-	row := q.db.QueryRow(ctx, updateRecipe, arg.ID, arg.Title, arg.ShortDescription)
+	row := q.db.QueryRow(ctx, updateRecipe, arg.ID, arg.Name, arg.ShortDescription)
 	var i Recipe
 	err := row.Scan(
 		&i.ID,
-		&i.Title,
+		&i.Name,
 		&i.ShortDescription,
+		&i.Servings,
+		&i.PrepTime,
+		&i.CookTime,
+		&i.Notes,
+		&i.Nutrition,
+		&i.Source,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.DeletedAt,

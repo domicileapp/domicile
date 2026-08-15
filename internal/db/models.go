@@ -10,9 +10,29 @@ import (
 
 type Recipe struct {
 	ID               int64              `json:"id"`
-	Title            string             `json:"title"`
+	Name             string             `json:"name"`
 	ShortDescription pgtype.Text        `json:"short_description"`
+	Servings         pgtype.Text        `json:"servings"`
+	PrepTime         pgtype.Text        `json:"prep_time"`
+	CookTime         pgtype.Text        `json:"cook_time"`
+	Notes            pgtype.Text        `json:"notes"`
+	Nutrition        pgtype.Text        `json:"nutrition"`
+	Source           pgtype.Text        `json:"source"`
 	CreatedAt        pgtype.Timestamptz `json:"created_at"`
 	UpdatedAt        pgtype.Timestamptz `json:"updated_at"`
 	DeletedAt        pgtype.Timestamptz `json:"deleted_at"`
+}
+
+type RecipesIngredient struct {
+	ID        int64       `json:"id"`
+	RecipeID  pgtype.Int8 `json:"recipe_id"`
+	SortOrder int32       `json:"sort_order"`
+	Content   string      `json:"content"`
+}
+
+type RecipesInstruction struct {
+	ID        int64       `json:"id"`
+	RecipeID  pgtype.Int8 `json:"recipe_id"`
+	SortOrder int32       `json:"sort_order"`
+	Content   string      `json:"content"`
 }

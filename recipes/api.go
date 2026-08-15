@@ -1,39 +1,62 @@
 package recipes
 
 import (
-	"context"
+	"encoding/json"
 	"log"
 	"net/http"
-	"os"
+	"strconv"
 
 	"github.com/domicileapp/domicile/internal/db"
-	"github.com/domicileapp/domicile/pkg/response"
+	"github.com/domicileapp/domicile/pkg/encode"
 	"github.com/go-chi/chi/v5"
-	"github.com/jackc/pgx/v5"
 )
 
-func RegisterRoutes(r chi.Router) {
-	recipesRouter := chi.NewRouter()
-	recipesRouter.Get("/", get)
-
-	r.Mount("/recipes", recipesRouter)
+type Handler struct {
+	DB *db.Queries
 }
 
-func get(w http.ResponseWriter, r *http.Request) {
-	ctx := context.Background()
+func Routes(queries *db.Queries) chi.Router {
+	r := chi.NewRouter()
+	h := &Handler{DB: queries}
 
-	dbString := os.Getenv("GOOSE_DBSTRING")
-	conn, err := pgx.Connect(ctx, dbString)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer conn.Close(ctx)
+	// Define specific recipe paths
+	r.Get("/", h.ListRecipesHandler)
+	r.Get("/{id}", h.GetRecipeByIDHandler)
 
-	q := db.New(conn)
-	recipes, err := q.ListRecipes(r.Context())
+	return r
+}
+
+func (h *Handler) ListRecipesHandler(w http.ResponseWriter, r *http.Request) {
+	recipes, err := h.DB.ListRecipes(r.Context())
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, "Failed to retrieve recipes", http.StatusInternalServerError)
 		return
 	}
-	response.RespondWithJSON(w, 200, recipes)
+
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(recipes); err != nil {
+		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
+	}
+}
+
+func (h *Handler) GetRecipeByIDHandler(w http.ResponseWriter, r *http.Request) {
+	recipeIDParam := chi.URLParam(r, "id")
+	recipeID, err := strconv.ParseInt(recipeIDParam, 10, 64)
+	if err != nil {
+		http.Error(w, "Failed to retrieve recipe", http.StatusInternalServerError)
+		log.Println(err.Error())
+	}
+
+	recipe, err := h.DB.GetRecipe(r.Context(), recipeID)
+	if err != nil {
+		http.Error(w, "No recipe found for ID", http.StatusNotFound)
+		log.Println(err.Error())
+		return
+	}
+
+	err = encode.ResponseJSON(w, 200, recipe)
+	if err != nil {
+		http.Error(w, "Failed to retrieve recipe", http.StatusInternalServerError)
+		log.Println(err.Error())
+	}
 }
