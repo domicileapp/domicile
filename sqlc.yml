@@ -1,0 +1,50 @@
+version: "2"
+sql:
+  - engine: "postgresql"
+    queries: "internal/db/queries"
+    schema: "internal/db/migrations"
+    gen:
+      go:
+        package: "db"
+        out: "internal/db"
+        sql_package: "pgx/v5"
+        emit_json_tags: true
+        emit_empty_slices: true
+        emit_interface: true
+        json_tags_case_style: snake
+        emit_pointers_for_null_types: true
+        overrides:
+          # timestamptz
+          - db_type: "pg_catalog.timestamptz"
+            nullable: true
+            go_type:
+              type: "time.Time"
+              pointer: true
+          - db_type: "timestamptz"
+            nullable: true
+            go_type:
+              type: "time.Time"
+              pointer: true
+          - db_type: "pg_catalog.timestamptz"
+            nullable: false
+            go_type: "time.Time"
+          - db_type: "timestamptz"
+            nullable: false
+            go_type: "time.Time"
+          # numeric
+          - db_type: "pg_catalog.numeric"
+            nullable: true
+            go_type:
+              type: "float64"
+              pointer: true
+          - db_type: "numeric"
+            nullable: true
+            go_type:
+              type: "float64"
+              pointer: true
+          - db_type: "pg_catalog.numeric"
+            nullable: false
+            go_type: "float64"
+          - db_type: "numeric"
+            nullable: false
+            go_type: "float64"

@@ -1,0 +1,11 @@
+template: testify
+include-auto-generated: true
+packages:
+  github.com/domicileapp/domicile/internal/db:
+    config:
+      dir: "internal/db"
+      filename: "querier_mock.go"
+      pkgname: "db"
+      structname: "MockQuerier"
+    interfaces:
+      Querier:
