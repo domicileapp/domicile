@@ -3,3 +3,14 @@ tasks:
   load-env:
     cmds:
       - ./hack/load_env_files.sh
+
+  gen:sql:
+    cmds:
+      - sqlc generate
+
+  gen:docs:
+    cmds:
+      - task: gen:sql
+      - swag fmt
+      - swag init -g cmd/domicile/main.go --parseInternal --parseFuncBody --parseDependency
+      - sed -i '' 's|swag/v2|swag|' docs/docs.go # https://github.com/swaggo/http-swagger/issues/132

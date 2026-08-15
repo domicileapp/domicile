@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
+	_ "github.com/domicileapp/domicile/docs"
 	"github.com/domicileapp/domicile/internal/db"
 	"github.com/domicileapp/domicile/pkg/encode"
 	"github.com/go-chi/chi/v5"
@@ -37,6 +38,15 @@ func Routes(queries *db.Queries) chi.Router {
 	return r
 }
 
+// ListRecipesHandler godoc
+//
+//	@Summary		List recipes
+//	@Tags			recipes
+//	@Description	Get list of all recipes
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{array}	db.Recipe
+//	@Router			/api/v1/recipes [get]
 func (h *Handler) ListRecipesHandler(w http.ResponseWriter, r *http.Request) {
 	recipes, err := h.DB.ListRecipes(r.Context())
 	if err != nil {
@@ -55,6 +65,15 @@ type RecipeResponse struct {
 	Instructions []db.ListRecipeInstructionsRow `json:"instructions"`
 }
 
+// GetRecipeByIDHandler godoc
+//
+//	@Summary	Get recipe by ID
+//	@Tags		recipes
+//	@Accept		json
+//	@Produce	json
+//	@Success	200	{object}	recipes.RecipeResponse
+//	@Param		id	path		int	true	"Recipe ID"
+//	@Router		/api/v1/recipes/{id} [get]
 func (h *Handler) GetRecipeByIDHandler(w http.ResponseWriter, r *http.Request) {
 	recipeID, err := parseIDParam(r, "id")
 	if err != nil {
@@ -102,6 +121,15 @@ type createRecipeRequest struct {
 	ShortDescription string `json:"short_description"`
 }
 
+// CreateRecipeHandler godoc
+//
+//	@Summary	Create recipe
+//	@Tags		recipes
+//	@Accept		json
+//	@Produce	json
+//	@Success	200		{object}	db.Recipe
+//	@Param		message	body		createRecipeRequest	true	"Recipe data"
+//	@Router		/api/v1/recipes [post]
 func (h *Handler) CreateRecipeHandler(w http.ResponseWriter, r *http.Request) {
 	var req createRecipeRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -115,7 +143,7 @@ func (h *Handler) CreateRecipeHandler(w http.ResponseWriter, r *http.Request) {
 
 	recipe, err := h.DB.CreateRecipe(r.Context(), db.CreateRecipeParams{
 		Name:             req.Name,
-		ShortDescription: toNullString(req.ShortDescription),
+		ShortDescription: &req.ShortDescription,
 	})
 	if err != nil {
 		http.Error(w, "Failed to create recipe", http.StatusInternalServerError)
@@ -130,7 +158,7 @@ func (h *Handler) CreateRecipeHandler(w http.ResponseWriter, r *http.Request) {
 
 type updateRecipeRequest struct {
 	Name             string `json:"name"`
-	ShortDescription string `json:"short_description"`
+	ShortDescription string `json:"short_description,omitempty"`
 }
 
 func (h *Handler) UpdateRecipeHandler(w http.ResponseWriter, r *http.Request) {
@@ -153,7 +181,7 @@ func (h *Handler) UpdateRecipeHandler(w http.ResponseWriter, r *http.Request) {
 	recipe, err := h.DB.UpdateRecipe(r.Context(), db.UpdateRecipeParams{
 		ID:               recipeID,
 		Name:             req.Name,
-		ShortDescription: toNullString(req.ShortDescription),
+		ShortDescription: &req.ShortDescription,
 	})
 	if err != nil {
 		http.Error(w, "Failed to update recipe", http.StatusInternalServerError)
@@ -207,7 +235,7 @@ func (h *Handler) CreateRecipeIngredientHandler(w http.ResponseWriter, r *http.R
 
 	ingredient, err := h.DB.CreateRecipeIngredient(r.Context(), db.CreateRecipeIngredientParams{
 		RecipeID:  recipeID,
-		GroupName: toNullString(req.GroupName),
+		GroupName: &req.GroupName,
 		SortOrder: req.SortOrder,
 		RawText:   req.RawText,
 	})
@@ -293,7 +321,7 @@ func (h *Handler) CreateRecipeInstructionHandler(w http.ResponseWriter, r *http.
 
 	instruction, err := h.DB.CreateRecipeInstruction(r.Context(), db.CreateRecipeInstructionParams{
 		RecipeID:  recipeID,
-		GroupName: toNullString(req.GroupName),
+		GroupName: &req.GroupName,
 		SortOrder: req.SortOrder,
 		Content:   req.Content,
 	})

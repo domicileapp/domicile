@@ -7,8 +7,7 @@ package db
 
 import (
 	"context"
-
-	"github.com/jackc/pgx/v5/pgtype"
+	"time"
 )
 
 const createRecipe = `-- name: CreateRecipe :one
@@ -21,8 +20,8 @@ returning id, name, short_description, servings, prep_time, cook_time, notes, nu
 `
 
 type CreateRecipeParams struct {
-	Name             string      `json:"name"`
-	ShortDescription pgtype.Text `json:"short_description"`
+	Name             string  `json:"name"`
+	ShortDescription *string `json:"short_description"`
 }
 
 func (q *Queries) CreateRecipe(ctx context.Context, arg CreateRecipeParams) (Recipe, error) {
@@ -57,10 +56,10 @@ returning id, recipe_id, group_name, sort_order, raw_text, quantity, unit, ingre
 `
 
 type CreateRecipeIngredientParams struct {
-	RecipeID  int64       `json:"recipe_id"`
-	GroupName pgtype.Text `json:"group_name"`
-	SortOrder float64     `json:"sort_order"`
-	RawText   string      `json:"raw_text"`
+	RecipeID  int64   `json:"recipe_id"`
+	GroupName *string `json:"group_name"`
+	SortOrder float64 `json:"sort_order"`
+	RawText   string  `json:"raw_text"`
 }
 
 func (q *Queries) CreateRecipeIngredient(ctx context.Context, arg CreateRecipeIngredientParams) (RecipeIngredient, error) {
@@ -101,10 +100,10 @@ returning id, recipe_id, group_name, sort_order, content, created_at, updated_at
 `
 
 type CreateRecipeInstructionParams struct {
-	RecipeID  int64       `json:"recipe_id"`
-	GroupName pgtype.Text `json:"group_name"`
-	SortOrder float64     `json:"sort_order"`
-	Content   string      `json:"content"`
+	RecipeID  int64   `json:"recipe_id"`
+	GroupName *string `json:"group_name"`
+	SortOrder float64 `json:"sort_order"`
+	Content   string  `json:"content"`
 }
 
 func (q *Queries) CreateRecipeInstruction(ctx context.Context, arg CreateRecipeInstructionParams) (RecipeInstruction, error) {
@@ -201,16 +200,16 @@ order by recipe_id, sort_order
 `
 
 type ListRecipeIngredientsRow struct {
-	ID             int64          `json:"id"`
-	RecipeID       int64          `json:"recipe_id"`
-	GroupName      pgtype.Text    `json:"group_name"`
-	SortOrder      float64        `json:"sort_order"`
-	RawText        string         `json:"raw_text"`
-	Quantity       pgtype.Numeric `json:"quantity"`
-	Unit           pgtype.Text    `json:"unit"`
-	IngredientName pgtype.Text    `json:"ingredient_name"`
-	Preparation    pgtype.Text    `json:"preparation"`
-	ParseStatus    string         `json:"parse_status"`
+	ID             int64    `json:"id"`
+	RecipeID       int64    `json:"recipe_id"`
+	GroupName      *string  `json:"group_name"`
+	SortOrder      float64  `json:"sort_order"`
+	RawText        string   `json:"raw_text"`
+	Quantity       *float64 `json:"quantity"`
+	Unit           *string  `json:"unit"`
+	IngredientName *string  `json:"ingredient_name"`
+	Preparation    *string  `json:"preparation"`
+	ParseStatus    string   `json:"parse_status"`
 }
 
 func (q *Queries) ListRecipeIngredients(ctx context.Context, dollar_1 []int64) ([]ListRecipeIngredientsRow, error) {
@@ -257,11 +256,11 @@ order by recipe_id, sort_order
 `
 
 type ListRecipeInstructionsRow struct {
-	ID        int64       `json:"id"`
-	RecipeID  int64       `json:"recipe_id"`
-	GroupName pgtype.Text `json:"group_name"`
-	SortOrder float64     `json:"sort_order"`
-	Content   string      `json:"content"`
+	ID        int64   `json:"id"`
+	RecipeID  int64   `json:"recipe_id"`
+	GroupName *string `json:"group_name"`
+	SortOrder float64 `json:"sort_order"`
+	Content   string  `json:"content"`
 }
 
 func (q *Queries) ListRecipeInstructions(ctx context.Context, dollar_1 []int64) ([]ListRecipeInstructionsRow, error) {
@@ -309,17 +308,17 @@ order by updated_at desc
 `
 
 type ListRecipesRow struct {
-	ID               int64              `json:"id"`
-	Name             string             `json:"name"`
-	ShortDescription pgtype.Text        `json:"short_description"`
-	Servings         pgtype.Text        `json:"servings"`
-	PrepTime         pgtype.Text        `json:"prep_time"`
-	CookTime         pgtype.Text        `json:"cook_time"`
-	Notes            pgtype.Text        `json:"notes"`
-	Nutrition        pgtype.Text        `json:"nutrition"`
-	Source           pgtype.Text        `json:"source"`
-	CreatedAt        pgtype.Timestamptz `json:"created_at"`
-	UpdatedAt        pgtype.Timestamptz `json:"updated_at"`
+	ID               int64     `json:"id"`
+	Name             string    `json:"name"`
+	ShortDescription *string   `json:"short_description"`
+	Servings         *string   `json:"servings"`
+	PrepTime         *string   `json:"prep_time"`
+	CookTime         *string   `json:"cook_time"`
+	Notes            *string   `json:"notes"`
+	Nutrition        *string   `json:"nutrition"`
+	Source           *string   `json:"source"`
+	CreatedAt        time.Time `json:"created_at"`
+	UpdatedAt        time.Time `json:"updated_at"`
 }
 
 func (q *Queries) ListRecipes(ctx context.Context) ([]ListRecipesRow, error) {
@@ -365,9 +364,9 @@ returning id, name, short_description, servings, prep_time, cook_time, notes, nu
 `
 
 type UpdateRecipeParams struct {
-	ID               int64       `json:"id"`
-	Name             string      `json:"name"`
-	ShortDescription pgtype.Text `json:"short_description"`
+	ID               int64   `json:"id"`
+	Name             string  `json:"name"`
+	ShortDescription *string `json:"short_description"`
 }
 
 func (q *Queries) UpdateRecipe(ctx context.Context, arg UpdateRecipeParams) (Recipe, error) {
@@ -404,12 +403,12 @@ where id = $1
 `
 
 type UpdateRecipeIngredientParsedParams struct {
-	ID             int64          `json:"id"`
-	Quantity       pgtype.Numeric `json:"quantity"`
-	Unit           pgtype.Text    `json:"unit"`
-	IngredientName pgtype.Text    `json:"ingredient_name"`
-	Preparation    pgtype.Text    `json:"preparation"`
-	ParseStatus    string         `json:"parse_status"`
+	ID             int64    `json:"id"`
+	Quantity       *float64 `json:"quantity"`
+	Unit           *string  `json:"unit"`
+	IngredientName *string  `json:"ingredient_name"`
+	Preparation    *string  `json:"preparation"`
+	ParseStatus    string   `json:"parse_status"`
 }
 
 func (q *Queries) UpdateRecipeIngredientParsed(ctx context.Context, arg UpdateRecipeIngredientParsedParams) error {

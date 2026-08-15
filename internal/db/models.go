@@ -5,46 +5,46 @@
 package db
 
 import (
-	"github.com/jackc/pgx/v5/pgtype"
+	"time"
 )
 
 type Recipe struct {
-	ID               int64              `json:"id"`
-	Name             string             `json:"name"`
-	ShortDescription pgtype.Text        `json:"short_description"`
-	Servings         pgtype.Text        `json:"servings"`
-	PrepTime         pgtype.Text        `json:"prep_time"`
-	CookTime         pgtype.Text        `json:"cook_time"`
-	Notes            pgtype.Text        `json:"notes"`
-	Nutrition        pgtype.Text        `json:"nutrition"`
-	Source           pgtype.Text        `json:"source"`
-	CreatedAt        pgtype.Timestamptz `json:"created_at"`
-	UpdatedAt        pgtype.Timestamptz `json:"updated_at"`
-	DeletedAt        pgtype.Timestamptz `json:"deleted_at"`
+	ID               int64      `json:"id"`
+	Name             string     `json:"name"`
+	ShortDescription *string    `json:"short_description"`
+	Servings         *string    `json:"servings"`
+	PrepTime         *string    `json:"prep_time"`
+	CookTime         *string    `json:"cook_time"`
+	Notes            *string    `json:"notes"`
+	Nutrition        *string    `json:"nutrition"`
+	Source           *string    `json:"source"`
+	CreatedAt        time.Time  `json:"created_at"`
+	UpdatedAt        time.Time  `json:"updated_at"`
+	DeletedAt        *time.Time `json:"deleted_at"`
 }
 
 type RecipeIngredient struct {
-	ID             int64              `json:"id"`
-	RecipeID       int64              `json:"recipe_id"`
-	GroupName      pgtype.Text        `json:"group_name"`
-	SortOrder      float64            `json:"sort_order"`
-	RawText        string             `json:"raw_text"`
-	Quantity       pgtype.Numeric     `json:"quantity"`
-	Unit           pgtype.Text        `json:"unit"`
-	IngredientName pgtype.Text        `json:"ingredient_name"`
-	Preparation    pgtype.Text        `json:"preparation"`
-	ParseStatus    string             `json:"parse_status"`
-	ParsedAt       pgtype.Timestamptz `json:"parsed_at"`
-	CreatedAt      pgtype.Timestamptz `json:"created_at"`
-	UpdatedAt      pgtype.Timestamptz `json:"updated_at"`
+	ID             int64      `json:"id"`
+	RecipeID       int64      `json:"recipe_id"`
+	GroupName      *string    `json:"group_name"`
+	SortOrder      float64    `json:"sort_order"`
+	RawText        string     `json:"raw_text"`
+	Quantity       *float64   `json:"quantity"`
+	Unit           *string    `json:"unit"`
+	IngredientName *string    `json:"ingredient_name"`
+	Preparation    *string    `json:"preparation"`
+	ParseStatus    string     `json:"parse_status"`
+	ParsedAt       *time.Time `json:"parsed_at"`
+	CreatedAt      time.Time  `json:"created_at"`
+	UpdatedAt      time.Time  `json:"updated_at"`
 }
 
 type RecipeInstruction struct {
-	ID        int64              `json:"id"`
-	RecipeID  int64              `json:"recipe_id"`
-	GroupName pgtype.Text        `json:"group_name"`
-	SortOrder float64            `json:"sort_order"`
-	Content   string             `json:"content"`
-	CreatedAt pgtype.Timestamptz `json:"created_at"`
-	UpdatedAt pgtype.Timestamptz `json:"updated_at"`
+	ID        int64     `json:"id"`
+	RecipeID  int64     `json:"recipe_id"`
+	GroupName *string   `json:"group_name"`
+	SortOrder float64   `json:"sort_order"`
+	Content   string    `json:"content"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
