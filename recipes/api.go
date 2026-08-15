@@ -13,7 +13,7 @@ import (
 )
 
 type Handler struct {
-	DB *db.Queries
+	DB db.Querier
 }
 
 func Routes(queries *db.Queries) chi.Router {
