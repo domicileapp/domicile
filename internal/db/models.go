@@ -23,16 +23,28 @@ type Recipe struct {
 	DeletedAt        pgtype.Timestamptz `json:"deleted_at"`
 }
 
-type RecipesIngredient struct {
-	ID        int64       `json:"id"`
-	RecipeID  pgtype.Int8 `json:"recipe_id"`
-	SortOrder int32       `json:"sort_order"`
-	Content   string      `json:"content"`
+type RecipeIngredient struct {
+	ID             int64              `json:"id"`
+	RecipeID       int64              `json:"recipe_id"`
+	GroupName      pgtype.Text        `json:"group_name"`
+	SortOrder      float64            `json:"sort_order"`
+	RawText        string             `json:"raw_text"`
+	Quantity       pgtype.Numeric     `json:"quantity"`
+	Unit           pgtype.Text        `json:"unit"`
+	IngredientName pgtype.Text        `json:"ingredient_name"`
+	Preparation    pgtype.Text        `json:"preparation"`
+	ParseStatus    string             `json:"parse_status"`
+	ParsedAt       pgtype.Timestamptz `json:"parsed_at"`
+	CreatedAt      pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt      pgtype.Timestamptz `json:"updated_at"`
 }
 
-type RecipesInstruction struct {
-	ID        int64       `json:"id"`
-	RecipeID  pgtype.Int8 `json:"recipe_id"`
-	SortOrder int32       `json:"sort_order"`
-	Content   string      `json:"content"`
+type RecipeInstruction struct {
+	ID        int64              `json:"id"`
+	RecipeID  int64              `json:"recipe_id"`
+	GroupName pgtype.Text        `json:"group_name"`
+	SortOrder float64            `json:"sort_order"`
+	Content   string             `json:"content"`
+	CreatedAt pgtype.Timestamptz `json:"created_at"`
+	UpdatedAt pgtype.Timestamptz `json:"updated_at"`
 }

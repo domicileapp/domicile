@@ -45,8 +45,91 @@ func (q *Queries) CreateRecipe(ctx context.Context, arg CreateRecipeParams) (Rec
 	return i, err
 }
 
+const createRecipeIngredient = `-- name: CreateRecipeIngredient :one
+insert into recipe_ingredients (
+    recipe_id,
+    group_name,
+    sort_order,
+    raw_text
+)
+values ($1, $2, $3, $4)
+returning id, recipe_id, group_name, sort_order, raw_text, quantity, unit, ingredient_name, preparation, parse_status, parsed_at, created_at, updated_at
+`
+
+type CreateRecipeIngredientParams struct {
+	RecipeID  int64       `json:"recipe_id"`
+	GroupName pgtype.Text `json:"group_name"`
+	SortOrder float64     `json:"sort_order"`
+	RawText   string      `json:"raw_text"`
+}
+
+func (q *Queries) CreateRecipeIngredient(ctx context.Context, arg CreateRecipeIngredientParams) (RecipeIngredient, error) {
+	row := q.db.QueryRow(ctx, createRecipeIngredient,
+		arg.RecipeID,
+		arg.GroupName,
+		arg.SortOrder,
+		arg.RawText,
+	)
+	var i RecipeIngredient
+	err := row.Scan(
+		&i.ID,
+		&i.RecipeID,
+		&i.GroupName,
+		&i.SortOrder,
+		&i.RawText,
+		&i.Quantity,
+		&i.Unit,
+		&i.IngredientName,
+		&i.Preparation,
+		&i.ParseStatus,
+		&i.ParsedAt,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const createRecipeInstruction = `-- name: CreateRecipeInstruction :one
+insert into recipe_instructions (
+    recipe_id,
+    group_name,
+    sort_order,
+    content
+)
+values ($1, $2, $3, $4)
+returning id, recipe_id, group_name, sort_order, content, created_at, updated_at
+`
+
+type CreateRecipeInstructionParams struct {
+	RecipeID  int64       `json:"recipe_id"`
+	GroupName pgtype.Text `json:"group_name"`
+	SortOrder float64     `json:"sort_order"`
+	Content   string      `json:"content"`
+}
+
+func (q *Queries) CreateRecipeInstruction(ctx context.Context, arg CreateRecipeInstructionParams) (RecipeInstruction, error) {
+	row := q.db.QueryRow(ctx, createRecipeInstruction,
+		arg.RecipeID,
+		arg.GroupName,
+		arg.SortOrder,
+		arg.Content,
+	)
+	var i RecipeInstruction
+	err := row.Scan(
+		&i.ID,
+		&i.RecipeID,
+		&i.GroupName,
+		&i.SortOrder,
+		&i.Content,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
 const deleteRecipe = `-- name: DeleteRecipe :exec
-delete from recipes
+update recipes
+set deleted_at = now()
 where id = $1
 `
 
@@ -55,9 +138,29 @@ func (q *Queries) DeleteRecipe(ctx context.Context, id int64) error {
 	return err
 }
 
+const deleteRecipeIngredient = `-- name: DeleteRecipeIngredient :exec
+delete from recipe_ingredients
+where id = $1
+`
+
+func (q *Queries) DeleteRecipeIngredient(ctx context.Context, id int64) error {
+	_, err := q.db.Exec(ctx, deleteRecipeIngredient, id)
+	return err
+}
+
+const deleteRecipeInstruction = `-- name: DeleteRecipeInstruction :exec
+delete from recipe_instructions
+where id = $1
+`
+
+func (q *Queries) DeleteRecipeInstruction(ctx context.Context, id int64) error {
+	_, err := q.db.Exec(ctx, deleteRecipeInstruction, id)
+	return err
+}
+
 const getRecipe = `-- name: GetRecipe :one
 select id, name, short_description, servings, prep_time, cook_time, notes, nutrition, source, created_at, updated_at, deleted_at from recipes
-where id = $1 limit 1
+where id = $1 and deleted_at is null limit 1
 `
 
 func (q *Queries) GetRecipe(ctx context.Context, id int64) (Recipe, error) {
@@ -84,27 +187,52 @@ const listRecipeIngredients = `-- name: ListRecipeIngredients :many
 select
     id,
     recipe_id,
+    group_name,
     sort_order,
-    content
-from recipes_ingredients
-where recipe_id = $1
+    raw_text,
+    quantity,
+    unit,
+    ingredient_name,
+    preparation,
+    parse_status
+from recipe_ingredients
+where recipe_id = any($1::bigint[])
 order by recipe_id, sort_order
 `
 
-func (q *Queries) ListRecipeIngredients(ctx context.Context, recipeID pgtype.Int8) ([]RecipesIngredient, error) {
-	rows, err := q.db.Query(ctx, listRecipeIngredients, recipeID)
+type ListRecipeIngredientsRow struct {
+	ID             int64          `json:"id"`
+	RecipeID       int64          `json:"recipe_id"`
+	GroupName      pgtype.Text    `json:"group_name"`
+	SortOrder      float64        `json:"sort_order"`
+	RawText        string         `json:"raw_text"`
+	Quantity       pgtype.Numeric `json:"quantity"`
+	Unit           pgtype.Text    `json:"unit"`
+	IngredientName pgtype.Text    `json:"ingredient_name"`
+	Preparation    pgtype.Text    `json:"preparation"`
+	ParseStatus    string         `json:"parse_status"`
+}
+
+func (q *Queries) ListRecipeIngredients(ctx context.Context, dollar_1 []int64) ([]ListRecipeIngredientsRow, error) {
+	rows, err := q.db.Query(ctx, listRecipeIngredients, dollar_1)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []RecipesIngredient
+	items := []ListRecipeIngredientsRow{}
 	for rows.Next() {
-		var i RecipesIngredient
+		var i ListRecipeIngredientsRow
 		if err := rows.Scan(
 			&i.ID,
 			&i.RecipeID,
+			&i.GroupName,
 			&i.SortOrder,
-			&i.Content,
+			&i.RawText,
+			&i.Quantity,
+			&i.Unit,
+			&i.IngredientName,
+			&i.Preparation,
+			&i.ParseStatus,
 		); err != nil {
 			return nil, err
 		}
@@ -120,25 +248,35 @@ const listRecipeInstructions = `-- name: ListRecipeInstructions :many
 select
     id,
     recipe_id,
+    group_name,
     sort_order,
     content
-from recipes_ingredients
-where recipe_id = $1
+from recipe_instructions
+where recipe_id = any($1::bigint[])
 order by recipe_id, sort_order
 `
 
-func (q *Queries) ListRecipeInstructions(ctx context.Context, recipeID pgtype.Int8) ([]RecipesIngredient, error) {
-	rows, err := q.db.Query(ctx, listRecipeInstructions, recipeID)
+type ListRecipeInstructionsRow struct {
+	ID        int64       `json:"id"`
+	RecipeID  int64       `json:"recipe_id"`
+	GroupName pgtype.Text `json:"group_name"`
+	SortOrder float64     `json:"sort_order"`
+	Content   string      `json:"content"`
+}
+
+func (q *Queries) ListRecipeInstructions(ctx context.Context, dollar_1 []int64) ([]ListRecipeInstructionsRow, error) {
+	rows, err := q.db.Query(ctx, listRecipeInstructions, dollar_1)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []RecipesIngredient
+	items := []ListRecipeInstructionsRow{}
 	for rows.Next() {
-		var i RecipesIngredient
+		var i ListRecipeInstructionsRow
 		if err := rows.Scan(
 			&i.ID,
 			&i.RecipeID,
+			&i.GroupName,
 			&i.SortOrder,
 			&i.Content,
 		); err != nil {
@@ -153,7 +291,7 @@ func (q *Queries) ListRecipeInstructions(ctx context.Context, recipeID pgtype.In
 }
 
 const listRecipes = `-- name: ListRecipes :many
-select 
+select
     id,
     name,
     short_description,
@@ -190,7 +328,7 @@ func (q *Queries) ListRecipes(ctx context.Context) ([]ListRecipesRow, error) {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []ListRecipesRow
+	items := []ListRecipesRow{}
 	for rows.Next() {
 		var i ListRecipesRow
 		if err := rows.Scan(
@@ -218,7 +356,7 @@ func (q *Queries) ListRecipes(ctx context.Context) ([]ListRecipesRow, error) {
 
 const updateRecipe = `-- name: UpdateRecipe :one
 update recipes
-set 
+set
     name = $2,
     short_description = $3,
     updated_at = now()
@@ -250,4 +388,86 @@ func (q *Queries) UpdateRecipe(ctx context.Context, arg UpdateRecipeParams) (Rec
 		&i.DeletedAt,
 	)
 	return i, err
+}
+
+const updateRecipeIngredientParsed = `-- name: UpdateRecipeIngredientParsed :exec
+update recipe_ingredients
+set
+    quantity = $2,
+    unit = $3,
+    ingredient_name = $4,
+    preparation = $5,
+    parse_status = $6,
+    parsed_at = now(),
+    updated_at = now()
+where id = $1
+`
+
+type UpdateRecipeIngredientParsedParams struct {
+	ID             int64          `json:"id"`
+	Quantity       pgtype.Numeric `json:"quantity"`
+	Unit           pgtype.Text    `json:"unit"`
+	IngredientName pgtype.Text    `json:"ingredient_name"`
+	Preparation    pgtype.Text    `json:"preparation"`
+	ParseStatus    string         `json:"parse_status"`
+}
+
+func (q *Queries) UpdateRecipeIngredientParsed(ctx context.Context, arg UpdateRecipeIngredientParsedParams) error {
+	_, err := q.db.Exec(ctx, updateRecipeIngredientParsed,
+		arg.ID,
+		arg.Quantity,
+		arg.Unit,
+		arg.IngredientName,
+		arg.Preparation,
+		arg.ParseStatus,
+	)
+	return err
+}
+
+const updateRecipeIngredientSortOrder = `-- name: UpdateRecipeIngredientSortOrder :exec
+update recipe_ingredients
+set sort_order = $2, updated_at = now()
+where id = $1
+`
+
+type UpdateRecipeIngredientSortOrderParams struct {
+	ID        int64   `json:"id"`
+	SortOrder float64 `json:"sort_order"`
+}
+
+func (q *Queries) UpdateRecipeIngredientSortOrder(ctx context.Context, arg UpdateRecipeIngredientSortOrderParams) error {
+	_, err := q.db.Exec(ctx, updateRecipeIngredientSortOrder, arg.ID, arg.SortOrder)
+	return err
+}
+
+const updateRecipeInstructionContent = `-- name: UpdateRecipeInstructionContent :exec
+update recipe_instructions
+set content = $2, updated_at = now()
+where id = $1
+`
+
+type UpdateRecipeInstructionContentParams struct {
+	ID      int64  `json:"id"`
+	Content string `json:"content"`
+}
+
+func (q *Queries) UpdateRecipeInstructionContent(ctx context.Context, arg UpdateRecipeInstructionContentParams) error {
+	_, err := q.db.Exec(ctx, updateRecipeInstructionContent, arg.ID, arg.Content)
+	return err
+}
+
+const updateRecipeInstructionSortOrder = `-- name: UpdateRecipeInstructionSortOrder :exec
+update recipe_instructions
+set sort_order = $2, updated_at = now()
+where id = $1
+`
+
+type UpdateRecipeInstructionSortOrderParams struct {
+	ID        int64   `json:"id"`
+	SortOrder float64 `json:"sort_order"`
+}
+
+func (q *Queries) UpdateRecipeInstructionSortOrder(ctx context.Context, arg UpdateRecipeInstructionSortOrderParams) error {
+	_, err := q.db.Exec(ctx, updateRecipeInstructionSortOrder, arg.ID, arg.SortOrder)
+	return err
 }
