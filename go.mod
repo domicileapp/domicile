@@ -1,13 +1,13 @@
 module github.com/domicileapp/domicile
 
-go 1.26.3
+go 1.26.6
 
 require (
 	github.com/go-chi/chi/v5 v5.3.1
 	github.com/jackc/pgx/v5 v5.10.0
 	github.com/stretchr/testify v1.11.1
 	github.com/swaggo/http-swagger/v2 v2.0.2
-	github.com/swaggo/swag/v2 v2.0.0-rc5
+	github.com/swaggo/swag v1.16.6
 )
 
 require (
@@ -30,9 +30,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rogpeppe/go-internal v1.16.0 // indirect
 	github.com/stretchr/objx v0.5.2 // indirect
-	github.com/sv-tools/openapi v0.4.0 // indirect
 	github.com/swaggo/files/v2 v2.0.0 // indirect
-	github.com/swaggo/swag v1.16.6 // indirect
 	go.yaml.in/yaml/v3 v3.0.5 // indirect
 	golang.org/x/mod v0.40.0 // indirect
 	golang.org/x/sync v0.22.0 // indirect

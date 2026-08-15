@@ -10,7 +10,6 @@ import (
 	"github.com/domicileapp/domicile/internal/db"
 	"github.com/domicileapp/domicile/pkg/encode"
 	"github.com/go-chi/chi/v5"
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 type Handler struct {
@@ -161,6 +160,15 @@ type updateRecipeRequest struct {
 	ShortDescription string `json:"short_description,omitempty"`
 }
 
+// UpdateRecipeHandler godoc
+//
+//	@Summary	Update recipe
+//	@Tags		recipes
+//	@Accept		json
+//	@Produce	json
+//	@Success	204		{object}	db.Recipe
+//	@Param		message	body		updateRecipeRequest	true	"Recipe data"
+//	@Router		/api/v1/recipes/{id} [put]
 func (h *Handler) UpdateRecipeHandler(w http.ResponseWriter, r *http.Request) {
 	recipeID, err := parseIDParam(r, "id")
 	if err != nil {
@@ -194,6 +202,15 @@ func (h *Handler) UpdateRecipeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// DeleteRecipeHandler godoc
+//
+//	@Summary	Delete recipe
+//	@Tags		recipes
+//	@Accept		json
+//	@Produce	json
+//	@Success	204
+//	@Param		id	path	int	true	"Recipe ID"
+//	@Router		/api/v1/recipes [delete]
 func (h *Handler) DeleteRecipeHandler(w http.ResponseWriter, r *http.Request) {
 	recipeID, err := parseIDParam(r, "id")
 	if err != nil {
@@ -216,6 +233,16 @@ type createIngredientRequest struct {
 	RawText   string  `json:"raw_text"`
 }
 
+// CreateRecipeIngredientHandler godoc
+//
+//	@Summary	Create recipe ingredient
+//	@Tags		recipes, ingredients
+//	@Accept		json
+//	@Produce	json
+//	@Success	201		{object}	db.Recipe
+//	@Param		message	body		createIngredientRequest	true	"Ingredient data"
+//	@Param		id		path		int						true	"Recipe ID"
+//	@Router		/api/v1/recipes/{id}/ingredients [post]
 func (h *Handler) CreateRecipeIngredientHandler(w http.ResponseWriter, r *http.Request) {
 	recipeID, err := parseIDParam(r, "id")
 	if err != nil {
@@ -255,6 +282,16 @@ type updateIngredientRequest struct {
 	SortOrder float64 `json:"sort_order"`
 }
 
+// UpdateRecipeIngredientHandler godoc
+//
+//	@Summary	Update recipe ingredient
+//	@Tags		recipes, ingredients
+//	@Accept		json
+//	@Produce	json
+//	@Success	201		{object}	db.Recipe
+//	@Param		message	body		updateIngredientRequest	true	"Ingredient data"
+//	@Param		id		path		int						true	"Recipe ID"
+//	@Router		/api/v1/recipes/{id}/ingredient [put]
 func (h *Handler) UpdateRecipeIngredientHandler(w http.ResponseWriter, r *http.Request) {
 	ingredientID, err := parseIDParam(r, "ingredientID")
 	if err != nil {
@@ -280,6 +317,15 @@ func (h *Handler) UpdateRecipeIngredientHandler(w http.ResponseWriter, r *http.R
 	w.WriteHeader(http.StatusNoContent)
 }
 
+// DeleteRecipeIngredientHandler godoc
+//
+//	@Summary	Delete recipe ingredient
+//	@Tags		recipes, ingredients
+//	@Accept		json
+//	@Produce	json
+//	@Success	204	{object}	db.Recipe
+//	@Param		id	path		int	true	"Recipe ID"
+//	@Router		/api/v1/recipes/{id}/ingredient [delete]
 func (h *Handler) DeleteRecipeIngredientHandler(w http.ResponseWriter, r *http.Request) {
 	ingredientID, err := parseIDParam(r, "ingredientID")
 	if err != nil {
@@ -302,6 +348,16 @@ type createInstructionRequest struct {
 	Content   string  `json:"content"`
 }
 
+// CreateRecipeInstructionHandler godoc
+//
+//	@Summary	Create recipe instruction
+//	@Tags		recipes, instructions
+//	@Accept		json
+//	@Produce	json
+//	@Success	201		{object}	db.Recipe
+//	@Param		message	body		createInstructionRequest	true	"Instruction data"
+//	@Param		id		path		int							true	"Recipe ID"
+//	@Router		/api/v1/recipes/{id}/instructions [post]
 func (h *Handler) CreateRecipeInstructionHandler(w http.ResponseWriter, r *http.Request) {
 	recipeID, err := parseIDParam(r, "id")
 	if err != nil {
@@ -341,6 +397,16 @@ type updateInstructionRequest struct {
 	SortOrder float64 `json:"sort_order"`
 }
 
+// UpdateRecipeInstructionHandler godoc
+//
+//	@Summary	Update recipe instruction
+//	@Tags		recipes, instructions
+//	@Accept		json
+//	@Produce	json
+//	@Success	201		{object}	db.Recipe
+//	@Param		message	body		updateInstructionRequest	true	"Instruction data"
+//	@Param		id		path		int							true	"Recipe ID"
+//	@Router		/api/v1/recipes/{id}/instruction [put]
 func (h *Handler) UpdateRecipeInstructionHandler(w http.ResponseWriter, r *http.Request) {
 	instructionID, err := parseIDParam(r, "instructionID")
 	if err != nil {
@@ -375,6 +441,15 @@ func (h *Handler) UpdateRecipeInstructionHandler(w http.ResponseWriter, r *http.
 	w.WriteHeader(http.StatusNoContent)
 }
 
+// DeleteRecipeInstructionHandler godoc
+//
+//	@Summary	Delete recipe instruction
+//	@Tags		recipes, instructions
+//	@Accept		json
+//	@Produce	json
+//	@Success	204	{object}	db.Recipe
+//	@Param		id	path		int	true	"Recipe ID"
+//	@Router		/api/v1/recipes/{id}/instruction [delete]
 func (h *Handler) DeleteRecipeInstructionHandler(w http.ResponseWriter, r *http.Request) {
 	instructionID, err := parseIDParam(r, "instructionID")
 	if err != nil {
@@ -393,11 +468,4 @@ func (h *Handler) DeleteRecipeInstructionHandler(w http.ResponseWriter, r *http.
 
 func parseIDParam(r *http.Request, key string) (int64, error) {
 	return strconv.ParseInt(chi.URLParam(r, key), 10, 64)
-}
-
-func toNullString(s string) pgtype.Text {
-	if s == "" {
-		return pgtype.Text{}
-	}
-	return pgtype.Text{String: s, Valid: true}
 }

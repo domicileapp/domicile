@@ -97,7 +97,46 @@ definitions:
       updated_at:
         type: string
     type: object
+  recipes.createIngredientRequest:
+    properties:
+      group_name:
+        type: string
+      raw_text:
+        type: string
+      sort_order:
+        type: number
+    type: object
+  recipes.createInstructionRequest:
+    properties:
+      content:
+        type: string
+      group_name:
+        type: string
+      sort_order:
+        type: number
+    type: object
   recipes.createRecipeRequest:
+    properties:
+      name:
+        type: string
+      short_description:
+        type: string
+    type: object
+  recipes.updateIngredientRequest:
+    properties:
+      raw_text:
+        type: string
+      sort_order:
+        type: number
+    type: object
+  recipes.updateInstructionRequest:
+    properties:
+      content:
+        type: string
+      sort_order:
+        type: number
+    type: object
+  recipes.updateRecipeRequest:
     properties:
       name:
         type: string
@@ -110,6 +149,23 @@ info:
   version: "0.1"
 paths:
   /api/v1/recipes:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Recipe ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: Delete recipe
+      tags:
+      - recipes
     get:
       consumes:
       - application/json
@@ -166,4 +222,172 @@ paths:
       summary: Get recipe by ID
       tags:
       - recipes
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Recipe data
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/recipes.updateRecipeRequest'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/github_com_domicileapp_domicile_internal_db.Recipe'
+      summary: Update recipe
+      tags:
+      - recipes
+  /api/v1/recipes/{id}/ingredient:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Recipe ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/github_com_domicileapp_domicile_internal_db.Recipe'
+      summary: Delete recipe ingredient
+      tags:
+      - recipes
+      - ingredients
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Ingredient data
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/recipes.updateIngredientRequest'
+      - description: Recipe ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/github_com_domicileapp_domicile_internal_db.Recipe'
+      summary: Update recipe ingredient
+      tags:
+      - recipes
+      - ingredients
+  /api/v1/recipes/{id}/ingredients:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Ingredient data
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/recipes.createIngredientRequest'
+      - description: Recipe ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/github_com_domicileapp_domicile_internal_db.Recipe'
+      summary: Create recipe ingredient
+      tags:
+      - recipes
+      - ingredients
+  /api/v1/recipes/{id}/instruction:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Recipe ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/github_com_domicileapp_domicile_internal_db.Recipe'
+      summary: Delete recipe instruction
+      tags:
+      - recipes
+      - instructions
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Instruction data
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/recipes.updateInstructionRequest'
+      - description: Recipe ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/github_com_domicileapp_domicile_internal_db.Recipe'
+      summary: Update recipe instruction
+      tags:
+      - recipes
+      - instructions
+  /api/v1/recipes/{id}/instructions:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Instruction data
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/recipes.createInstructionRequest'
+      - description: Recipe ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/github_com_domicileapp_domicile_internal_db.Recipe'
+      summary: Create recipe instruction
+      tags:
+      - recipes
+      - instructions
 swagger: "2.0"
