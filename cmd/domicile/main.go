@@ -14,6 +14,7 @@ import (
 	"github.com/domicileapp/domicile/pkg/logger"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
 	"github.com/go-chi/httplog/v3"
 	"github.com/jackc/pgx/v5/pgxpool"
 	httpSwagger "github.com/swaggo/http-swagger/v2"
@@ -70,6 +71,10 @@ func main() {
 			next.ServeHTTP(w, r.WithContext(ctx))
 		})
 	})
+
+	r.Use(cors.Handler(cors.Options{
+		AllowedOrigins: []string{"http://*", "https://*"},
+	}))
 
 	r.Get("/swagger/*", httpSwagger.Handler(
 		httpSwagger.URL("http://localhost:8080/swagger/doc.json"),
