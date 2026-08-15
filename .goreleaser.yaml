@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+# vim: set ts=2 sw=2 tw=0 fo=cnqoj
+
+version: 2
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    main: ./cmd/prow
+
+changelog:
+  use: github
+  sort: asc
+  abbrev: 0
+  groups: # Regex use RE2 syntax as defined here: https://github.com/google/re2/wiki/Syntax.
+    - title: "Breaking changes"
+      regexp: '^.*?(\([^)]+\))??!:.+$'
+      order: 0
+    - title: "Features"
+      regexp: '^.*?feat(\([^)]+\))??!?:.+$'
+      order: 100
+    - title: "Bug fixes"
+      regexp: '^.*?fix(\([^)]+\))??!?:.+$'
+      order: 200
+    - title: "Documentation"
+      regexp: '^.*?docs(\([^)]+\))??!?:.+$'
+      order: 300
+    - title: "Dependency updates"
+      regexp: '^.*?(feat|fix|chore)\(deps?.+\)!?:.+$'
+      order: 400
+    - title: "Other work"
+      order: 999
+  format: "{{.Message}} ({{.SHA}} by @{{.AuthorUsername}})"
+  filters:
+    exclude:
+      - "^test:"
+      - '^.*?Bump(\([^)]+\))?.+$'
+      - '^.*?\[Bot\](\([^)]+\))?.+$'

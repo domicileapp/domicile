@@ -71,6 +71,32 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipes"
+                ],
+                "summary": "Delete recipe",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Recipe ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
             }
         },
         "/api/v1/recipes/{id}": {
@@ -99,6 +125,261 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/recipes.RecipeResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipes"
+                ],
+                "summary": "Update recipe",
+                "parameters": [
+                    {
+                        "description": "Recipe data",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/recipes.updateRecipeRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_domicileapp_domicile_internal_db.Recipe"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/recipes/{id}/ingredient": {
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipes",
+                    "ingredients"
+                ],
+                "summary": "Update recipe ingredient",
+                "parameters": [
+                    {
+                        "description": "Ingredient data",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/recipes.updateIngredientRequest"
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Recipe ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_domicileapp_domicile_internal_db.Recipe"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipes",
+                    "ingredients"
+                ],
+                "summary": "Delete recipe ingredient",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Recipe ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_domicileapp_domicile_internal_db.Recipe"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/recipes/{id}/ingredients": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipes",
+                    "ingredients"
+                ],
+                "summary": "Create recipe ingredient",
+                "parameters": [
+                    {
+                        "description": "Ingredient data",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/recipes.createIngredientRequest"
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Recipe ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_domicileapp_domicile_internal_db.Recipe"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/recipes/{id}/instruction": {
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipes",
+                    "instructions"
+                ],
+                "summary": "Update recipe instruction",
+                "parameters": [
+                    {
+                        "description": "Instruction data",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/recipes.updateInstructionRequest"
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Recipe ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_domicileapp_domicile_internal_db.Recipe"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipes",
+                    "instructions"
+                ],
+                "summary": "Delete recipe instruction",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Recipe ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_domicileapp_domicile_internal_db.Recipe"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/recipes/{id}/instructions": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "recipes",
+                    "instructions"
+                ],
+                "summary": "Create recipe instruction",
+                "parameters": [
+                    {
+                        "description": "Instruction data",
+                        "name": "message",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/recipes.createInstructionRequest"
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Recipe ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_domicileapp_domicile_internal_db.Recipe"
                         }
                     }
                 }
@@ -255,7 +536,68 @@ const docTemplate = `{
                 }
             }
         },
+        "recipes.createIngredientRequest": {
+            "type": "object",
+            "properties": {
+                "group_name": {
+                    "type": "string"
+                },
+                "raw_text": {
+                    "type": "string"
+                },
+                "sort_order": {
+                    "type": "number"
+                }
+            }
+        },
+        "recipes.createInstructionRequest": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "group_name": {
+                    "type": "string"
+                },
+                "sort_order": {
+                    "type": "number"
+                }
+            }
+        },
         "recipes.createRecipeRequest": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "short_description": {
+                    "type": "string"
+                }
+            }
+        },
+        "recipes.updateIngredientRequest": {
+            "type": "object",
+            "properties": {
+                "raw_text": {
+                    "type": "string"
+                },
+                "sort_order": {
+                    "type": "number"
+                }
+            }
+        },
+        "recipes.updateInstructionRequest": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "sort_order": {
+                    "type": "number"
+                }
+            }
+        },
+        "recipes.updateRecipeRequest": {
             "type": "object",
             "properties": {
                 "name": {
