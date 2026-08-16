@@ -25,6 +25,7 @@ jobs:
         with:
           version: "11"
           cache: true
+          cache-dependency-path: web
 
       - name: Install Taskfile
         uses: go-task/setup-task@a00fbb05ce67b35648be3c78cbc9fd85354c757e # v2.2.0
