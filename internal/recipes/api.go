@@ -117,6 +117,7 @@ func (h *Handler) GetRecipeByIDHandler(w http.ResponseWriter, r *http.Request) {
 type createRecipeRequest struct {
 	Name             string `json:"name"`
 	ShortDescription string `json:"short_description"`
+	PhotoUrl         string `json:"photo_url"`
 }
 
 // CreateRecipeHandler godoc
@@ -141,7 +142,7 @@ func (h *Handler) CreateRecipeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	recipe, err := h.Store.CreateRecipe(r.Context(), req.Name, req.ShortDescription)
+	recipe, err := h.Store.CreateRecipe(r.Context(), req)
 	if err != nil {
 		http.Error(w, "Failed to create recipe", http.StatusInternalServerError)
 		log.Error(err.Error())
@@ -186,7 +187,7 @@ func (h *Handler) UpdateRecipeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	recipe, err := h.Store.UpdateRecipe(r.Context(), recipeID, req.Name, req.ShortDescription)
+	recipe, err := h.Store.UpdateRecipe(r.Context(), recipeID, req)
 	if err != nil {
 		http.Error(w, "Failed to update recipe", http.StatusInternalServerError)
 		log.Error(err.Error())
@@ -260,7 +261,7 @@ func (h *Handler) CreateRecipeIngredientHandler(w http.ResponseWriter, r *http.R
 		return
 	}
 
-	ingredient, err := h.Store.CreateRecipeIngredient(r.Context(), recipeID, req.GroupName, req.SortOrder, req.RawText)
+	ingredient, err := h.Store.CreateRecipeIngredient(r.Context(), recipeID, req)
 	if err != nil {
 		http.Error(w, "Failed to create ingredient", http.StatusInternalServerError)
 		log.Error(err.Error())
@@ -275,6 +276,7 @@ func (h *Handler) CreateRecipeIngredientHandler(w http.ResponseWriter, r *http.R
 type updateIngredientRequest struct {
 	RawText   string  `json:"raw_text"`
 	SortOrder float64 `json:"sort_order"`
+	GroupName string  `json:"group_name"`
 }
 
 // UpdateRecipeIngredientHandler godoc
@@ -302,7 +304,7 @@ func (h *Handler) UpdateRecipeIngredientHandler(w http.ResponseWriter, r *http.R
 		return
 	}
 
-	if err := h.Store.UpdateRecipeIngredientSortOrder(r.Context(), ingredientID, req.SortOrder); err != nil {
+	if err := h.Store.UpdateRecipeIngredient(r.Context(), ingredientID, req); err != nil {
 		http.Error(w, "Failed to update ingredient", http.StatusInternalServerError)
 		log.Error(err.Error())
 		return
@@ -372,7 +374,7 @@ func (h *Handler) CreateRecipeInstructionHandler(w http.ResponseWriter, r *http.
 		return
 	}
 
-	instruction, err := h.Store.CreateRecipeInstruction(r.Context(), recipeID, req.GroupName, req.SortOrder, req.Content)
+	instruction, err := h.Store.CreateRecipeInstruction(r.Context(), recipeID, req)
 	if err != nil {
 		http.Error(w, "Failed to create instruction", http.StatusInternalServerError)
 		log.Error(err.Error())
@@ -414,7 +416,7 @@ func (h *Handler) UpdateRecipeInstructionHandler(w http.ResponseWriter, r *http.
 		return
 	}
 
-	if err := h.Store.UpdateRecipeInstruction(r.Context(), instructionID, req.Content, req.SortOrder); err != nil {
+	if err := h.Store.UpdateRecipeInstruction(r.Context(), instructionID, req); err != nil {
 		http.Error(w, "Failed to update instruction", http.StatusInternalServerError)
 		log.Error(err.Error())
 		return

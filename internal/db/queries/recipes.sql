@@ -13,6 +13,7 @@ select
     notes,
     nutrition,
     source,
+    photo_url,
     created_at,
     updated_at
 from recipes
@@ -22,9 +23,10 @@ order by updated_at desc;
 -- name: CreateRecipe :one
 insert into recipes (
     name,
-    short_description
+    short_description,
+    photo_url
 )
-values ($1, $2)
+values ($1, $2, $3)
 returning *;
 
 -- name: UpdateRecipe :one
@@ -32,6 +34,7 @@ update recipes
 set
     name = $2,
     short_description = $3,
+    photo_url = $4,
     updated_at = now()
 where id = $1
 returning *;
@@ -67,20 +70,11 @@ insert into recipe_ingredients (
 values ($1, $2, $3, $4)
 returning *;
 
--- name: UpdateRecipeIngredientSortOrder :exec
+-- name: UpdateRecipeIngredient :exec
 update recipe_ingredients
-set sort_order = $2, updated_at = now()
-where id = $1;
-
--- name: UpdateRecipeIngredientParsed :exec
-update recipe_ingredients
-set
-    quantity = $2,
-    unit = $3,
-    ingredient_name = $4,
-    preparation = $5,
-    parse_status = $6,
-    parsed_at = now(),
+set group_name = $2,
+    sort_order = $3,
+    raw_text = $4,
     updated_at = now()
 where id = $1;
 
@@ -109,14 +103,11 @@ insert into recipe_instructions (
 values ($1, $2, $3, $4)
 returning *;
 
--- name: UpdateRecipeInstructionSortOrder :exec
+-- name: UpdateRecipeInstruction :exec
 update recipe_instructions
-set sort_order = $2, updated_at = now()
-where id = $1;
-
--- name: UpdateRecipeInstructionContent :exec
-update recipe_instructions
-set content = $2, updated_at = now()
+set sort_order = $2,
+    content = $3,
+    updated_at = now()
 where id = $1;
 
 -- name: DeleteRecipeInstruction :exec

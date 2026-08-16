@@ -21,6 +21,7 @@ export const internalRecipesRecipeResponseSchema = z.object({
   name: z.string().optional(),
   notes: z.string().optional(),
   nutrition: z.string().optional(),
+  photo_url: z.string().optional(),
   prep_time: z.string().optional(),
   servings: z.string().optional(),
   short_description: z.string().optional(),

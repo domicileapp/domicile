@@ -3,14 +3,56 @@ name: Tests
 on:
   pull_request:
     types: [opened, reopened, synchronize]
-  push:
-    branches:
-      - "main"
 
 permissions:
   contents: read
 
 jobs:
+  verify-generated-code:
+    name: Verify generated code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: "1.26.6"
+
+      - name: Setup pnpm
+        uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2.0.2
+        with:
+          version: "11"
+          cache: true
+          cache-dependency-path: web/pnpm-lock.yaml
+          package-json-file: web/package.json
+          install: false
+
+      - name: Install Taskfile
+        uses: go-task/setup-task@a00fbb05ce67b35648be3c78cbc9fd85354c757e # v2.2.0
+
+      - name: Verify SQLC diffs
+        run: task gen:sql:diff
+
+      - name: Verify Swagger diffs
+        run: |
+          task gen:docs
+          # Fail if there are any changes
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "Error: Uncommitted or untracked changes found"
+            exit 1
+          fi
+
+      - name: Verify webapp generated clients
+        run: |
+          task gen:web
+          # Fail if there are any changes
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "Error: Uncommitted or untracked changes found"
+            exit 1
+          fi
+
   test:
     name: Run tests
     runs-on: ubuntu-latest

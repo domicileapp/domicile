@@ -86,6 +86,9 @@ const docTemplate = `{
                     "nutrition": {
                         "type": "string"
                     },
+                    "photo_url": {
+                        "type": "string"
+                    },
                     "prep_time": {
                         "type": "string"
                     },
@@ -211,6 +214,9 @@ const docTemplate = `{
                     "nutrition": {
                         "type": "string"
                     },
+                    "photo_url": {
+                        "type": "string"
+                    },
                     "prep_time": {
                         "type": "string"
                     },
@@ -262,6 +268,9 @@ const docTemplate = `{
                     "name": {
                         "type": "string"
                     },
+                    "photo_url": {
+                        "type": "string"
+                    },
                     "short_description": {
                         "type": "string"
                     }
@@ -270,6 +279,9 @@ const docTemplate = `{
             },
             "internal_recipes.updateIngredientRequest": {
                 "properties": {
+                    "group_name": {
+                        "type": "string"
+                    },
                     "raw_text": {
                         "type": "string"
                     },

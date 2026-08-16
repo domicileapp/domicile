@@ -5,5 +5,6 @@
 
 export type InternalRecipesCreateRecipeRequest = {
   name?: string;
+  photo_url?: string;
   short_description?: string;
 };

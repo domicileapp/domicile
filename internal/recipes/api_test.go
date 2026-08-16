@@ -18,18 +18,18 @@ type fakeStore struct {
 
 	listRecipesFn  func(ctx context.Context) ([]db.ListRecipesRow, error)
 	getRecipeFn    func(ctx context.Context, id int64) (db.Recipe, error)
-	createRecipeFn func(ctx context.Context, name, shortDescription string) (db.Recipe, error)
-	updateRecipeFn func(ctx context.Context, id int64, name, shortDescription string) (db.Recipe, error)
+	createRecipeFn func(ctx context.Context, params createRecipeRequest) (db.Recipe, error)
+	updateRecipeFn func(ctx context.Context, id int64, params updateRecipeRequest) (db.Recipe, error)
 	deleteRecipeFn func(ctx context.Context, id int64) error
 
-	listRecipeIngredientsFn  func(ctx context.Context, recipeIDs []int64) ([]db.ListRecipeIngredientsRow, error)
-	createRecipeIngredientFn func(ctx context.Context, recipeID int64, groupName string, sortOrder float64, rawText string) (db.RecipeIngredient, error)
-	updateIngredientSortFn   func(ctx context.Context, id int64, sortOrder float64) error
+	listRecipeIngredientsFn  func(ctx context.Context, recipeIds []int64) ([]db.ListRecipeIngredientsRow, error)
+	createRecipeIngredientFn func(ctx context.Context, recipeId int64, params createIngredientRequest) (db.RecipeIngredient, error)
+	updateIngredientSortFn   func(ctx context.Context, id int64, params updateIngredientRequest) error
 	deleteRecipeIngredientFn func(ctx context.Context, id int64) error
 
-	listRecipeInstructionsFn  func(ctx context.Context, recipeIDs []int64) ([]db.ListRecipeInstructionsRow, error)
-	createRecipeInstructionFn func(ctx context.Context, recipeID int64, groupName string, sortOrder float64, content string) (db.RecipeInstruction, error)
-	updateRecipeInstructionFn func(ctx context.Context, id int64, content string, sortOrder float64) error
+	listRecipeInstructionsFn  func(ctx context.Context, recipeIds []int64) ([]db.ListRecipeInstructionsRow, error)
+	createRecipeInstructionFn func(ctx context.Context, recipeId int64, params createInstructionRequest) (db.RecipeInstruction, error)
+	updateRecipeInstructionFn func(ctx context.Context, id int64, params updateInstructionRequest) error
 	deleteRecipeInstructionFn func(ctx context.Context, id int64) error
 }
 
@@ -47,18 +47,18 @@ func (f *fakeStore) GetRecipe(ctx context.Context, id int64) (db.Recipe, error) 
 	return f.getRecipeFn(ctx, id)
 }
 
-func (f *fakeStore) CreateRecipe(ctx context.Context, name, shortDescription string) (db.Recipe, error) {
+func (f *fakeStore) CreateRecipe(ctx context.Context, params createRecipeRequest) (db.Recipe, error) {
 	if f.createRecipeFn == nil {
 		f.t.Fatal("unexpected call to CreateRecipe")
 	}
-	return f.createRecipeFn(ctx, name, shortDescription)
+	return f.createRecipeFn(ctx, params)
 }
 
-func (f *fakeStore) UpdateRecipe(ctx context.Context, id int64, name, shortDescription string) (db.Recipe, error) {
+func (f *fakeStore) UpdateRecipe(ctx context.Context, id int64, params updateRecipeRequest) (db.Recipe, error) {
 	if f.updateRecipeFn == nil {
 		f.t.Fatal("unexpected call to UpdateRecipe")
 	}
-	return f.updateRecipeFn(ctx, id, name, shortDescription)
+	return f.updateRecipeFn(ctx, id, params)
 }
 
 func (f *fakeStore) DeleteRecipe(ctx context.Context, id int64) error {
@@ -75,18 +75,18 @@ func (f *fakeStore) ListRecipeIngredients(ctx context.Context, recipeIDs []int64
 	return f.listRecipeIngredientsFn(ctx, recipeIDs)
 }
 
-func (f *fakeStore) CreateRecipeIngredient(ctx context.Context, recipeID int64, groupName string, sortOrder float64, rawText string) (db.RecipeIngredient, error) {
+func (f *fakeStore) CreateRecipeIngredient(ctx context.Context, recipeID int64, params createIngredientRequest) (db.RecipeIngredient, error) {
 	if f.createRecipeIngredientFn == nil {
 		f.t.Fatal("unexpected call to CreateRecipeIngredient")
 	}
-	return f.createRecipeIngredientFn(ctx, recipeID, groupName, sortOrder, rawText)
+	return f.createRecipeIngredientFn(ctx, recipeID, params)
 }
 
-func (f *fakeStore) UpdateRecipeIngredientSortOrder(ctx context.Context, id int64, sortOrder float64) error {
+func (f *fakeStore) UpdateRecipeIngredient(ctx context.Context, id int64, params updateIngredientRequest) error {
 	if f.updateIngredientSortFn == nil {
-		f.t.Fatal("unexpected call to UpdateRecipeIngredientSortOrder")
+		f.t.Fatal("unexpected call to UpdateRecipeIngredient")
 	}
-	return f.updateIngredientSortFn(ctx, id, sortOrder)
+	return f.updateIngredientSortFn(ctx, id, params)
 }
 
 func (f *fakeStore) DeleteRecipeIngredient(ctx context.Context, id int64) error {
@@ -103,18 +103,18 @@ func (f *fakeStore) ListRecipeInstructions(ctx context.Context, recipeIDs []int6
 	return f.listRecipeInstructionsFn(ctx, recipeIDs)
 }
 
-func (f *fakeStore) CreateRecipeInstruction(ctx context.Context, recipeID int64, groupName string, sortOrder float64, content string) (db.RecipeInstruction, error) {
+func (f *fakeStore) CreateRecipeInstruction(ctx context.Context, recipeID int64, params createInstructionRequest) (db.RecipeInstruction, error) {
 	if f.createRecipeInstructionFn == nil {
 		f.t.Fatal("unexpected call to CreateRecipeInstruction")
 	}
-	return f.createRecipeInstructionFn(ctx, recipeID, groupName, sortOrder, content)
+	return f.createRecipeInstructionFn(ctx, recipeID, params)
 }
 
-func (f *fakeStore) UpdateRecipeInstruction(ctx context.Context, id int64, content string, sortOrder float64) error {
+func (f *fakeStore) UpdateRecipeInstruction(ctx context.Context, id int64, params updateInstructionRequest) error {
 	if f.updateRecipeInstructionFn == nil {
 		f.t.Fatal("unexpected call to UpdateRecipeInstruction")
 	}
-	return f.updateRecipeInstructionFn(ctx, id, content, sortOrder)
+	return f.updateRecipeInstructionFn(ctx, id, params)
 }
 
 func (f *fakeStore) DeleteRecipeInstruction(ctx context.Context, id int64) error {
@@ -224,11 +224,11 @@ func TestGetRecipeByIDHandler_InvalidID(t *testing.T) {
 func TestCreateRecipeHandler(t *testing.T) {
 	store := &fakeStore{
 		t: t,
-		createRecipeFn: func(ctx context.Context, name, shortDescription string) (db.Recipe, error) {
-			if name != "Chili" {
-				t.Fatalf("expected name Chili, got %q", name)
+		createRecipeFn: func(ctx context.Context, params createRecipeRequest) (db.Recipe, error) {
+			if params.Name != "Chili" {
+				t.Fatalf("expected name Chili, got %q", params.Name)
 			}
-			return db.Recipe{ID: 1, Name: name}, nil
+			return db.Recipe{ID: 1, Name: params.Name}, nil
 		},
 	}
 
@@ -286,9 +286,9 @@ func TestDeleteRecipeHandler(t *testing.T) {
 func TestUpdateRecipeInstructionHandler(t *testing.T) {
 	store := &fakeStore{
 		t: t,
-		updateRecipeInstructionFn: func(ctx context.Context, id int64, content string, sortOrder float64) error {
-			if id != 9 || content != "Preheat oven" || sortOrder != 2 {
-				t.Fatalf("unexpected args: id=%d content=%q sortOrder=%v", id, content, sortOrder)
+		updateRecipeInstructionFn: func(ctx context.Context, id int64, params updateInstructionRequest) error {
+			if id != 9 || params.Content != "Preheat oven" || params.SortOrder != 2 {
+				t.Fatalf("unexpected args: id=%d content=%q sortOrder=%v", id, params.Content, params.SortOrder)
 			}
 			return nil
 		},

@@ -79,6 +79,9 @@
                     "nutrition": {
                         "type": "string"
                     },
+                    "photo_url": {
+                        "type": "string"
+                    },
                     "prep_time": {
                         "type": "string"
                     },
@@ -204,6 +207,9 @@
                     "nutrition": {
                         "type": "string"
                     },
+                    "photo_url": {
+                        "type": "string"
+                    },
                     "prep_time": {
                         "type": "string"
                     },
@@ -255,6 +261,9 @@
                     "name": {
                         "type": "string"
                     },
+                    "photo_url": {
+                        "type": "string"
+                    },
                     "short_description": {
                         "type": "string"
                     }
@@ -263,6 +272,9 @@
             },
             "internal_recipes.updateIngredientRequest": {
                 "properties": {
+                    "group_name": {
+                        "type": "string"
+                    },
                     "raw_text": {
                         "type": "string"
                     },

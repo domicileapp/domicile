@@ -7,5 +7,6 @@ import * as z from "zod";
 
 export const internalRecipesCreateRecipeRequestSchema = z.object({
   name: z.string().optional(),
+  photo_url: z.string().optional(),
   short_description: z.string().optional(),
 });

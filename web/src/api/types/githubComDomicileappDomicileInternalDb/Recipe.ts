@@ -11,6 +11,7 @@ export type GithubComDomicileappDomicileInternalDbRecipe = {
   name?: string;
   notes?: string;
   nutrition?: string;
+  photo_url?: string;
   prep_time?: string;
   servings?: string;
   short_description?: string;

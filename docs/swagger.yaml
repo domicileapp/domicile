@@ -52,6 +52,8 @@ components:
           type: string
         nutrition:
           type: string
+        photo_url:
+          type: string
         prep_time:
           type: string
         servings:
@@ -135,6 +137,8 @@ components:
           type: string
         nutrition:
           type: string
+        photo_url:
+          type: string
         prep_time:
           type: string
         servings:
@@ -168,11 +172,15 @@ components:
       properties:
         name:
           type: string
+        photo_url:
+          type: string
         short_description:
           type: string
       type: object
     internal_recipes.updateIngredientRequest:
       properties:
+        group_name:
+          type: string
         raw_text:
           type: string
         sort_order:
