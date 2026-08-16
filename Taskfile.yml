@@ -67,10 +67,15 @@ tasks:
 
   dev:db:
     cmds:
-      - docker compose -f compose.dev.yml up -d
+      - docker compose -f compose.dev.yml --profile pg-only up -d
+
+  dev:debug:
+    cmds:
+      - docker compose -f compose.dev.yml --profile debug-api up
 
   dev:
+    desc: "Start the app up in development mode. Press Ctrl+C to tear down."
     cmds:
-      - task: dev:db
       - task: gen:docs
-      - air
+      - docker compose -f compose.dev.yml --profile dev up
+      - docker compose -f compose.dev.yml --profile dev down
