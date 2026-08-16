@@ -39,6 +39,7 @@ changelog:
   format: "{{.Message}} ({{.SHA}} by @{{.AuthorUsername}})"
   filters:
     exclude:
+      - "^chore:"
       - "^test:"
       - '^.*?Bump(\([^)]+\))?.+$'
       - '^.*?\[Bot\](\([^)]+\))?.+$'
