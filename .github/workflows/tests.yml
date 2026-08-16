@@ -23,7 +23,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/setup@84cb39b217b10273981911c288cd62326dc7c6d2 # v2.0.2
         with:
-          version: "10"
+          version: "11"
           cache: true
 
       - name: Install Taskfile
@@ -43,8 +43,7 @@ jobs:
 
       - name: Verify webapp generated clients
         run: |
-          pnpm install
-          pnpm run gen:api
+          task gen:web
           # Fail if there are any changes
           if [ -n "$(git status --porcelain)" ]; then
             echo "Error: Uncommitted or untracked changes found"

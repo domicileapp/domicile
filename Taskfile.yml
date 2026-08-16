@@ -45,6 +45,12 @@ tasks:
     cmds:
       - sqlc generate
 
+  gen:web:
+    dir: web
+    cmds:
+      - pnpm install
+      - pnpm run gen:api
+
   gen:docs:
     cmds:
       - task: dev:setup
