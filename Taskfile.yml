@@ -51,8 +51,13 @@ tasks:
       - task: gen:sql
       - swag fmt
       - swag init -g cmd/domicile/main.go --parseInternal --parseFuncBody --parseDependency --v3.1
-      - cmd: sed -i '' 's|swag/v2|swag|' docs/docs.go # https://github.com/swaggo/http-swagger/issues/132
-        if: '[ ! "$GITHUB_ACTIONS" ]'
+      # https://github.com/swaggo/http-swagger/issues/132
+      - |
+        if [ "$(uname)" = "Darwin" ]; then
+          sed -i '' 's|swag/v2|swag|' docs/docs.go
+        else
+          sed -i 's|swag/v2|swag|' docs/docs.go
+        fi
 
   dev:db:
     cmds:
