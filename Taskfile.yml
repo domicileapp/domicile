@@ -36,6 +36,11 @@ tasks:
       - goose down
       - task: gen:sql
 
+  gen:sql:diff:
+    cmds:
+      - task: dev:setup
+      - sqlc diff
+
   gen:sql:
     cmds:
       - sqlc generate
