@@ -29,25 +29,22 @@ jobs:
 
       - name: Create tag
         if: github.event_name != 'pull_request'
+        id: tag
         run: |
           go install github.com/caarlos0/svu/v3@latest
           TAG=$(svu next)
-          HEAD_SHA=$(git rev-parse HEAD)
 
           if git rev-parse "refs/tags/$TAG" >/dev/null 2>&1; then
-            TAG_SHA=$(git rev-list -n 1 "$TAG")
-
-            if [ "$TAG_SHA" = "$HEAD_SHA" ]; then
-              echo "Tag $TAG already points to HEAD. Continuing."
-              exit 0
-            fi
-
-            echo "ERROR: Tag $TAG already exists at $TAG_SHA, but HEAD is $HEAD_SHA."
-            exit 1
+            echo "Tag $TAG already exists. No release needed."
+            echo "release=false" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
 
-          git tag "$TAG" "$HEAD_SHA"
+          git tag "$TAG"
           git push origin "$TAG"
+
+          echo "release=true" >> "$GITHUB_OUTPUT"
+          echo "Created $TAG"
 
       - name: Validate
         if: github.event_name == 'pull_request'
@@ -60,7 +57,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Release
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && steps.tag.outputs.release == 'true'
         uses: goreleaser/goreleaser-action@f06c13b6b1a9625abc9e6e439d9c05a8f2190e94 # v7.2.3
         with:
           distribution: goreleaser
