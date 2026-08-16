@@ -7,7 +7,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Outlet, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 
-import { AppShellLayout } from '@/components/AppShell/app-shell-layout'
+import { AppShellLayout } from '@/components/app-shell/app-shell-layout'
 
 export const Route = createRootRoute({
   component: RootComponent,
