@@ -1,8 +1,11 @@
 version: "3"
+dotenv:
+  - ".env"
+  - "web/.env"
 tasks:
-  load-env:
+  default:
     cmds:
-      - source .env
+      - task --list-all
 
   update:gha:
     cmds:
@@ -12,14 +15,34 @@ tasks:
     cmds:
       - go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
       - go install github.com/swaggo/swag/v2/cmd/swag@latest
+      - go install github.com/pressly/goose/v3/cmd/goose@latest
+
+  db:create-migration:
+    requires:
+      vars:
+        - MIGRATION_NAME
+    desc: Create a new migration file.
+    cmds:
+      - goose create "{{.MIGRATION_NAME}}" sql
+    interactive: true
+
+  db:up:
+    cmds:
+      - goose up
+      - task: gen:sql
+
+  db:down:
+    cmds:
+      - goose down
+      - task: gen:sql
 
   gen:sql:
     cmds:
-      - task: load-env
       - sqlc generate
 
   gen:docs:
     cmds:
+      - task: dev:setup
       - task: gen:sql
       - swag fmt
       - swag init -g cmd/domicile/main.go --parseInternal --parseFuncBody --parseDependency --v3.1

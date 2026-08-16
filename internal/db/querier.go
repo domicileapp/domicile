@@ -20,10 +20,8 @@ type Querier interface {
 	ListRecipeInstructions(ctx context.Context, dollar_1 []int64) ([]ListRecipeInstructionsRow, error)
 	ListRecipes(ctx context.Context) ([]ListRecipesRow, error)
 	UpdateRecipe(ctx context.Context, arg UpdateRecipeParams) (Recipe, error)
-	UpdateRecipeIngredientParsed(ctx context.Context, arg UpdateRecipeIngredientParsedParams) error
-	UpdateRecipeIngredientSortOrder(ctx context.Context, arg UpdateRecipeIngredientSortOrderParams) error
-	UpdateRecipeInstructionContent(ctx context.Context, arg UpdateRecipeInstructionContentParams) error
-	UpdateRecipeInstructionSortOrder(ctx context.Context, arg UpdateRecipeInstructionSortOrderParams) error
+	UpdateRecipeIngredient(ctx context.Context, arg UpdateRecipeIngredientParams) error
+	UpdateRecipeInstruction(ctx context.Context, arg UpdateRecipeInstructionParams) error
 }
 
 var _ Querier = (*Queries)(nil)
