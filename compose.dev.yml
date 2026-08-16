@@ -1,5 +1,11 @@
 services:
   db:
+    profiles:
+      - dev
+      - api-only
+      - ui-only
+      - debug-api
+      - pg-only
     image: postgres:18
     container_name: postgres
     restart: always
@@ -11,6 +17,78 @@ services:
       - "5432:5432"
     volumes:
       - domicile_db_data:/var/lib/postgresql
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-domicile} -d 'dbname=${POSTGRES_DB:-domicile}' -h 127.0.0.1 -p 5432",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  api-debug:
+    profiles:
+      - debug-api
+    build:
+      context: tools/docker-compose
+      dockerfile: api-dev.Dockerfile
+    container_name: domicile-api
+    command: air -c .air.debug.toml
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+      - "2345:2345"
+    volumes:
+      - .:/app
+      - go-pkg-mod:/go/pkg/mod
+    working_dir: /app
+    depends_on:
+      - db
+
+  api:
+    profiles:
+      - dev
+      - api-only
+    build:
+      context: tools/docker-compose
+      dockerfile: api-dev.Dockerfile
+    command: "air -c .air.toml"
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+      - go-pkg-mod:/go/pkg/mod
+    working_dir: /app
+    depends_on:
+      db:
+        condition: service_started
+
+  ui:
+    profiles:
+      - dev
+      - ui-only
+    build:
+      context: .
+      dockerfile: tools/docker-compose/ui-dev.Dockerfile
+    command: sh -c "pnpm install --config.confirmModulesPurge=false && pnpm dev"
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./web:/app
+      - ui_node_modules:/app/node_modules
+    working_dir: /app
+    depends_on:
+      api:
+        condition: service_started
+      db:
+        condition: service_healthy
 
 volumes:
   domicile_db_data:
+  go-pkg-mod:
+  ui_node_modules:
