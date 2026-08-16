@@ -11,7 +11,7 @@ tasks:
   dev:setup:
     cmds:
       - go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
-      - go install github.com/swaggo/swag/cmd/swag@latest
+      - go install github.com/swaggo/swag/v2/cmd/swag@latest
 
   gen:sql:
     cmds:
@@ -22,7 +22,7 @@ tasks:
     cmds:
       - task: gen:sql
       - swag fmt
-      - swag init -g cmd/domicile/main.go --parseInternal --parseFuncBody --parseDependency
+      - swag init -g cmd/domicile/main.go --parseInternal --parseFuncBody --parseDependency --v3.1
       - sed -i '' 's|swag/v2|swag|' docs/docs.go # https://github.com/swaggo/http-swagger/issues/132
 
   dev:db:

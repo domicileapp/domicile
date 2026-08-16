@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "golang.go",
+    "vivaxy.vscode-conventional-commits",
+    "oxc.oxc-vscode",
+    "vunguyentuan.vscode-css-variables",
+    "vunguyentuan.vscode-postcss"
+  ]
+}
