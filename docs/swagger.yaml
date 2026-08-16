@@ -111,7 +111,7 @@ components:
         updated_at:
           type: string
       type: object
-    internal_recipes.RecipeResponse:
+    recipes.RecipeResponse:
       properties:
         cook_time:
           type: string
@@ -150,7 +150,7 @@ components:
         updated_at:
           type: string
       type: object
-    internal_recipes.createIngredientRequest:
+    recipes.createIngredientRequest:
       properties:
         group_name:
           type: string
@@ -159,7 +159,7 @@ components:
         sort_order:
           type: number
       type: object
-    internal_recipes.createInstructionRequest:
+    recipes.createInstructionRequest:
       properties:
         content:
           type: string
@@ -168,7 +168,7 @@ components:
         sort_order:
           type: number
       type: object
-    internal_recipes.createRecipeRequest:
+    recipes.createRecipeRequest:
       properties:
         name:
           type: string
@@ -177,7 +177,7 @@ components:
         short_description:
           type: string
       type: object
-    internal_recipes.updateIngredientRequest:
+    recipes.updateIngredientRequest:
       properties:
         group_name:
           type: string
@@ -186,14 +186,14 @@ components:
         sort_order:
           type: number
       type: object
-    internal_recipes.updateInstructionRequest:
+    recipes.updateInstructionRequest:
       properties:
         content:
           type: string
         sort_order:
           type: number
       type: object
-    internal_recipes.updateRecipeRequest:
+    recipes.updateRecipeRequest:
       properties:
         name:
           type: string
@@ -210,26 +210,6 @@ info:
 openapi: 3.1.0
 paths:
   /api/v1/recipes:
-    delete:
-      operationId: delete-recipe
-      parameters:
-      - description: Recipe ID
-        in: path
-        name: id
-        required: true
-        schema:
-          type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-      responses:
-        "204":
-          description: No Content
-      summary: Delete recipe
-      tags:
-      - recipes
     get:
       description: Get list of all recipes
       operationId: list-recipes
@@ -258,7 +238,7 @@ paths:
             schema:
               oneOf:
               - type: object
-              - $ref: '#/components/schemas/internal_recipes.createRecipeRequest'
+              - $ref: '#/components/schemas/recipes.createRecipeRequest'
                 description: Recipe data
                 summary: message
         description: Recipe data
@@ -274,6 +254,26 @@ paths:
       tags:
       - recipes
   /api/v1/recipes/{id}:
+    delete:
+      operationId: delete-recipe
+      parameters:
+      - description: Recipe ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "204":
+          description: No Content
+      summary: Delete recipe
+      tags:
+      - recipes
     get:
       operationId: get-recipe
       parameters:
@@ -293,20 +293,27 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/internal_recipes.RecipeResponse'
+                $ref: '#/components/schemas/recipes.RecipeResponse'
           description: OK
       summary: Get recipe by ID
       tags:
       - recipes
     put:
       operationId: update-recipe
+      parameters:
+      - description: Recipe ID
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
       requestBody:
         content:
           application/json:
             schema:
               oneOf:
               - type: object
-              - $ref: '#/components/schemas/internal_recipes.updateRecipeRequest'
+              - $ref: '#/components/schemas/recipes.updateRecipeRequest'
                 description: Recipe data
                 summary: message
         description: Recipe data
@@ -361,7 +368,7 @@ paths:
             schema:
               oneOf:
               - type: object
-              - $ref: '#/components/schemas/internal_recipes.updateIngredientRequest'
+              - $ref: '#/components/schemas/recipes.updateIngredientRequest'
                 description: Ingredient data
                 summary: message
         description: Ingredient data
@@ -393,7 +400,7 @@ paths:
             schema:
               oneOf:
               - type: object
-              - $ref: '#/components/schemas/internal_recipes.createIngredientRequest'
+              - $ref: '#/components/schemas/recipes.createIngredientRequest'
                 description: Ingredient data
                 summary: message
         description: Ingredient data
@@ -450,7 +457,7 @@ paths:
             schema:
               oneOf:
               - type: object
-              - $ref: '#/components/schemas/internal_recipes.updateInstructionRequest'
+              - $ref: '#/components/schemas/recipes.updateInstructionRequest'
                 description: Instruction data
                 summary: message
         description: Instruction data
@@ -482,7 +489,7 @@ paths:
             schema:
               oneOf:
               - type: object
-              - $ref: '#/components/schemas/internal_recipes.createInstructionRequest'
+              - $ref: '#/components/schemas/recipes.createInstructionRequest'
                 description: Instruction data
                 summary: message
         description: Instruction data

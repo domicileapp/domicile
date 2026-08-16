@@ -177,7 +177,7 @@ const docTemplate = `{
                 },
                 "type": "object"
             },
-            "internal_recipes.RecipeResponse": {
+            "recipes.RecipeResponse": {
                 "properties": {
                     "cook_time": {
                         "type": "string"
@@ -235,7 +235,7 @@ const docTemplate = `{
                 },
                 "type": "object"
             },
-            "internal_recipes.createIngredientRequest": {
+            "recipes.createIngredientRequest": {
                 "properties": {
                     "group_name": {
                         "type": "string"
@@ -249,7 +249,7 @@ const docTemplate = `{
                 },
                 "type": "object"
             },
-            "internal_recipes.createInstructionRequest": {
+            "recipes.createInstructionRequest": {
                 "properties": {
                     "content": {
                         "type": "string"
@@ -263,7 +263,7 @@ const docTemplate = `{
                 },
                 "type": "object"
             },
-            "internal_recipes.createRecipeRequest": {
+            "recipes.createRecipeRequest": {
                 "properties": {
                     "name": {
                         "type": "string"
@@ -277,7 +277,7 @@ const docTemplate = `{
                 },
                 "type": "object"
             },
-            "internal_recipes.updateIngredientRequest": {
+            "recipes.updateIngredientRequest": {
                 "properties": {
                     "group_name": {
                         "type": "string"
@@ -291,7 +291,7 @@ const docTemplate = `{
                 },
                 "type": "object"
             },
-            "internal_recipes.updateInstructionRequest": {
+            "recipes.updateInstructionRequest": {
                 "properties": {
                     "content": {
                         "type": "string"
@@ -302,7 +302,7 @@ const docTemplate = `{
                 },
                 "type": "object"
             },
-            "internal_recipes.updateRecipeRequest": {
+            "recipes.updateRecipeRequest": {
                 "properties": {
                     "name": {
                         "type": "string"
@@ -326,38 +326,6 @@ const docTemplate = `{
     },
     "paths": {
         "/api/v1/recipes": {
-            "delete": {
-                "operationId": "delete-recipe",
-                "parameters": [
-                    {
-                        "description": "Recipe ID",
-                        "in": "path",
-                        "name": "id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "204": {
-                        "description": "No Content"
-                    }
-                },
-                "summary": "Delete recipe",
-                "tags": [
-                    "recipes"
-                ]
-            },
             "get": {
                 "description": "Get list of all recipes",
                 "operationId": "list-recipes",
@@ -401,7 +369,7 @@ const docTemplate = `{
                                         "type": "object"
                                     },
                                     {
-                                        "$ref": "#/components/schemas/internal_recipes.createRecipeRequest",
+                                        "$ref": "#/components/schemas/recipes.createRecipeRequest",
                                         "summary": "message",
                                         "description": "Recipe data"
                                     }
@@ -431,6 +399,38 @@ const docTemplate = `{
             }
         },
         "/api/v1/recipes/{id}": {
+            "delete": {
+                "operationId": "delete-recipe",
+                "parameters": [
+                    {
+                        "description": "Recipe ID",
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                },
+                "summary": "Delete recipe",
+                "tags": [
+                    "recipes"
+                ]
+            },
             "get": {
                 "operationId": "get-recipe",
                 "parameters": [
@@ -458,7 +458,7 @@ const docTemplate = `{
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/internal_recipes.RecipeResponse"
+                                    "$ref": "#/components/schemas/recipes.RecipeResponse"
                                 }
                             }
                         },
@@ -472,6 +472,17 @@ const docTemplate = `{
             },
             "put": {
                 "operationId": "update-recipe",
+                "parameters": [
+                    {
+                        "description": "Recipe ID",
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -481,7 +492,7 @@ const docTemplate = `{
                                         "type": "object"
                                     },
                                     {
-                                        "$ref": "#/components/schemas/internal_recipes.updateRecipeRequest",
+                                        "$ref": "#/components/schemas/recipes.updateRecipeRequest",
                                         "summary": "message",
                                         "description": "Recipe data"
                                     }
@@ -572,7 +583,7 @@ const docTemplate = `{
                                         "type": "object"
                                     },
                                     {
-                                        "$ref": "#/components/schemas/internal_recipes.updateIngredientRequest",
+                                        "$ref": "#/components/schemas/recipes.updateIngredientRequest",
                                         "summary": "message",
                                         "description": "Ingredient data"
                                     }
@@ -625,7 +636,7 @@ const docTemplate = `{
                                         "type": "object"
                                     },
                                     {
-                                        "$ref": "#/components/schemas/internal_recipes.createIngredientRequest",
+                                        "$ref": "#/components/schemas/recipes.createIngredientRequest",
                                         "summary": "message",
                                         "description": "Ingredient data"
                                     }
@@ -718,7 +729,7 @@ const docTemplate = `{
                                         "type": "object"
                                     },
                                     {
-                                        "$ref": "#/components/schemas/internal_recipes.updateInstructionRequest",
+                                        "$ref": "#/components/schemas/recipes.updateInstructionRequest",
                                         "summary": "message",
                                         "description": "Instruction data"
                                     }
@@ -771,7 +782,7 @@ const docTemplate = `{
                                         "type": "object"
                                     },
                                     {
-                                        "$ref": "#/components/schemas/internal_recipes.createInstructionRequest",
+                                        "$ref": "#/components/schemas/recipes.createInstructionRequest",
                                         "summary": "message",
                                         "description": "Instruction data"
                                     }

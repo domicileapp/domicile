@@ -1,9 +1,18 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { Welcome } from '@/components/Welcome/Welcome'
+import { useListRecipes } from '@/api/client/recipes/recipes'
+import { RecipeGrid } from '@/components/recipes/recipes-grid'
 
-export const Route = createFileRoute('/')({ component: Home })
+export const Route = createFileRoute('/')({
+  component: RouteComponent,
+})
 
-function Home() {
-  return <Welcome />
+function RouteComponent() {
+  const { data: recipes, isLoading, error } = useListRecipes()
+
+  return (
+    <div>
+      <RecipeGrid recipes={recipes?.data} isLoading={isLoading} error={error} />
+    </div>
+  )
 }
