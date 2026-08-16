@@ -7,6 +7,8 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Outlet, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 
+import { AppShellLayout } from '@/components/AppShell/app-shell-layout'
+
 export const Route = createRootRoute({
   component: RootComponent,
 })
@@ -18,7 +20,9 @@ function RootComponent() {
     <>
       <MantineProvider>
         <QueryClientProvider client={queryClient}>
-          <Outlet />
+          <AppShellLayout>
+            <Outlet />
+          </AppShellLayout>
           <TanStackDevtools
             config={{
               position: 'bottom-right',

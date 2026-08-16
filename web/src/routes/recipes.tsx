@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 
+import type { InternalRecipesRecipeResponse } from '@/api/types'
+
 export const Route = createFileRoute('/recipes')({
   component: RouteComponent,
 })
@@ -24,8 +26,8 @@ function RouteComponent() {
 
   return (
     <div>
-      {data.map((recipe) => (
-        <h1 key={recipe.id}>{recipe.name}</h1>
+      {data.map((recipe: InternalRecipesRecipeResponse) => (
+        <li key={recipe.id}>{recipe.name}</li>
       ))}
     </div>
   )

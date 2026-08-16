@@ -64,6 +64,7 @@ type RecipeResponse struct {
 // GetRecipeByIDHandler godoc
 //
 //	@Summary	Get recipe by ID
+//	@Id			get-recipe
 //	@Tags		recipes
 //	@Accept		json
 //	@Produce	json
@@ -121,6 +122,7 @@ type createRecipeRequest struct {
 // CreateRecipeHandler godoc
 //
 //	@Summary	Create recipe
+//	@Id			create-recipe
 //	@Tags		recipes
 //	@Accept		json
 //	@Produce	json
@@ -159,6 +161,7 @@ type updateRecipeRequest struct {
 // UpdateRecipeHandler godoc
 //
 //	@Summary	Update recipe
+//	@Id			update-recipe
 //	@Tags		recipes
 //	@Accept		json
 //	@Produce	json
@@ -198,6 +201,7 @@ func (h *Handler) UpdateRecipeHandler(w http.ResponseWriter, r *http.Request) {
 // DeleteRecipeHandler godoc
 //
 //	@Summary	Delete recipe
+//	@Id			delete-recipe
 //	@Tags		recipes
 //	@Accept		json
 //	@Produce	json
@@ -231,6 +235,7 @@ type createIngredientRequest struct {
 //
 //	@Summary	Create recipe ingredient
 //	@Tags		recipes, ingredients
+//	@Id			create-recipe-ingredient
 //	@Accept		json
 //	@Produce	json
 //	@Success	201		{object}	db.RecipeIngredient
@@ -275,6 +280,7 @@ type updateIngredientRequest struct {
 // UpdateRecipeIngredientHandler godoc
 //
 //	@Summary	Update recipe ingredient
+//	@Id			update-recipe-ingredient
 //	@Tags		recipes, ingredients
 //	@Accept		json
 //	@Produce	json
@@ -340,6 +346,7 @@ type createInstructionRequest struct {
 // CreateRecipeInstructionHandler godoc
 //
 //	@Summary	Create recipe instruction
+//	@Id			create-recipe-instruction
 //	@Tags		recipes, instructions
 //	@Accept		json
 //	@Produce	json
@@ -385,6 +392,7 @@ type updateInstructionRequest struct {
 // UpdateRecipeInstructionHandler godoc
 //
 //	@Summary	Update recipe instruction
+//	@Id			update-recipe-instruction
 //	@Tags		recipes, instructions
 //	@Accept		json
 //	@Produce	json
@@ -418,6 +426,7 @@ func (h *Handler) UpdateRecipeInstructionHandler(w http.ResponseWriter, r *http.
 // DeleteRecipeInstructionHandler godoc
 //
 //	@Summary	Delete recipe instruction
+//	@Id			delete-recipe-instruction
 //	@Tags		recipes, instructions
 //	@Accept		json
 //	@Produce	json

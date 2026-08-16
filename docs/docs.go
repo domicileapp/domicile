@@ -315,6 +315,7 @@ const docTemplate = `{
     "paths": {
         "/api/v1/recipes": {
             "delete": {
+                "operationId": "delete-recipe",
                 "parameters": [
                     {
                         "description": "Recipe ID",
@@ -378,6 +379,7 @@ const docTemplate = `{
                 ]
             },
             "post": {
+                "operationId": "create-recipe",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -418,6 +420,7 @@ const docTemplate = `{
         },
         "/api/v1/recipes/{id}": {
             "get": {
+                "operationId": "get-recipe",
                 "parameters": [
                     {
                         "description": "Recipe ID",
@@ -456,6 +459,7 @@ const docTemplate = `{
                 ]
             },
             "put": {
+                "operationId": "update-recipe",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -535,6 +539,7 @@ const docTemplate = `{
                 ]
             },
             "put": {
+                "operationId": "update-recipe-ingredient",
                 "parameters": [
                     {
                         "description": "Recipe ID",
@@ -587,6 +592,7 @@ const docTemplate = `{
         },
         "/api/v1/recipes/{id}/ingredients": {
             "post": {
+                "operationId": "create-recipe-ingredient",
                 "parameters": [
                     {
                         "description": "Recipe ID",
@@ -639,6 +645,7 @@ const docTemplate = `{
         },
         "/api/v1/recipes/{id}/instruction": {
             "delete": {
+                "operationId": "delete-recipe-instruction",
                 "parameters": [
                     {
                         "description": "Recipe ID",
@@ -678,6 +685,7 @@ const docTemplate = `{
                 ]
             },
             "put": {
+                "operationId": "update-recipe-instruction",
                 "parameters": [
                     {
                         "description": "Recipe ID",
@@ -730,6 +738,7 @@ const docTemplate = `{
         },
         "/api/v1/recipes/{id}/instructions": {
             "post": {
+                "operationId": "create-recipe-instruction",
                 "parameters": [
                     {
                         "description": "Recipe ID",
