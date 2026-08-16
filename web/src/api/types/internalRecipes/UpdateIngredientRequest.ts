@@ -4,6 +4,7 @@
  */
 
 export type InternalRecipesUpdateIngredientRequest = {
+  group_name?: string;
   raw_text?: string;
   sort_order?: number;
 };

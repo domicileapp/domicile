@@ -6,6 +6,7 @@
 import * as z from "zod";
 
 export const internalRecipesUpdateIngredientRequestSchema = z.object({
+  group_name: z.string().optional(),
   raw_text: z.string().optional(),
   sort_order: z.number().optional(),
 });
