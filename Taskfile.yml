@@ -51,7 +51,8 @@ tasks:
       - task: gen:sql
       - swag fmt
       - swag init -g cmd/domicile/main.go --parseInternal --parseFuncBody --parseDependency --v3.1
-      - sed -i '' 's|swag/v2|swag|' docs/docs.go # https://github.com/swaggo/http-swagger/issues/132
+      - cmd: sed -i '' 's|swag/v2|swag|' docs/docs.go # https://github.com/swaggo/http-swagger/issues/132
+        if: '[ ! "$GITHUB_ACTIONS" ]'
 
   dev:db:
     cmds:
