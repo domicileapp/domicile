@@ -32,12 +32,22 @@ jobs:
         run: |
           go install github.com/caarlos0/svu/v3@latest
           TAG=$(svu next)
+          HEAD_SHA=$(git rev-parse HEAD)
+
           if git rev-parse "refs/tags/$TAG" >/dev/null 2>&1; then
-            echo "Tag $TAG already exists. Exiting."
-            exit 0
+            TAG_SHA=$(git rev-list -n 1 "$TAG")
+
+            if [ "$TAG_SHA" = "$HEAD_SHA" ]; then
+              echo "Tag $TAG already points to HEAD. Continuing."
+              exit 0
+            fi
+
+            echo "ERROR: Tag $TAG already exists at $TAG_SHA, but HEAD is $HEAD_SHA."
+            exit 1
           fi
-          git tag "$TAG"
-          git push --tags
+
+          git tag "$TAG" "$HEAD_SHA"
+          git push origin "$TAG"
 
       - name: Validate
         if: github.event_name == 'pull_request'
