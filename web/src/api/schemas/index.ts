@@ -18,6 +18,7 @@ export * from './githubComDomicileappDomicileInternalDbRecipe.ts';
 export * from './githubComDomicileappDomicileInternalDbRecipeIngredient.ts';
 export * from './githubComDomicileappDomicileInternalDbRecipeInstruction.ts';
 export * from './listRecipesBody.ts';
+export * from './listRecipesParams.ts';
 export * from './recipesCreateIngredientRequest.ts';
 export * from './recipesCreateInstructionRequest.ts';
 export * from './recipesCreateRecipeRequest.ts';

@@ -11,6 +11,11 @@ import * as zod from 'zod';
  * Get list of all recipes
  * @summary List recipes
  */
+export const ListRecipesQueryParams = zod.object({
+  "page": zod.int().optional().describe('Page number (default: 1)'),
+  "size": zod.int().optional().describe('Page size (default: 12)')
+})
+
 export const ListRecipesBody = zod.looseObject({
 
 })

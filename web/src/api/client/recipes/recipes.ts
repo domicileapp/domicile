@@ -35,6 +35,7 @@ import type {
   GithubComDomicileappDomicileInternalDbRecipeIngredient,
   GithubComDomicileappDomicileInternalDbRecipeInstruction,
   ListRecipesBody,
+  ListRecipesParams,
   RecipesRecipeResponse,
   UpdateRecipeBody,
   UpdateRecipeIngredientBody,
@@ -72,21 +73,29 @@ export type listRecipesResponseSuccess = (listRecipesResponse200) & {
 
 export type listRecipesResponse = (listRecipesResponseSuccess)
 
-export const getListRecipesUrl = () => {
+export const getListRecipesUrl = (params?: ListRecipesParams,) => {
+  const normalizedParams = new URLSearchParams();
 
+  Object.entries(params || {}).forEach(([key, value]) => {
 
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
 
+  const stringifiedParams = normalizedParams.toString();
 
-  return `/api/v1/recipes`
+  return stringifiedParams.length > 0 ? `/api/v1/recipes?${stringifiedParams}` : `/api/v1/recipes`
 }
 
 /**
  * Get list of all recipes
  * @summary List recipes
  */
-export const listRecipes = async (listRecipesBody?: ListRecipesBody, options?: RequestInit): Promise<listRecipesResponse> => {
+export const listRecipes = async (listRecipesBody?: ListRecipesBody,
+    params?: ListRecipesParams, options?: RequestInit): Promise<listRecipesResponse> => {
 
-  const res = await fetch(getListRecipesUrl(),
+  const res = await fetch(getListRecipesUrl(params),
   {
     ...options,
     method: 'GET',
@@ -106,23 +115,25 @@ export const listRecipes = async (listRecipesBody?: ListRecipesBody, options?: R
 
 
 
-export const getListRecipesQueryKey = (listRecipesBody?: ListRecipesBody,) => {
+export const getListRecipesQueryKey = (listRecipesBody?: ListRecipesBody,
+    params?: ListRecipesParams,) => {
     return [
-    `/api/v1/recipes`, listRecipesBody
+    `/api/v1/recipes`, ...(params ? [params] : []), listRecipesBody
     ] as const;
     }
 
 
-export const getListRecipesQueryOptions = <TData = Awaited<ReturnType<typeof listRecipes>>, TError = unknown>(listRecipesBody?: ListRecipesBody, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>>, fetch?: RequestInit}
+export const getListRecipesQueryOptions = <TData = Awaited<ReturnType<typeof listRecipes>>, TError = unknown>(listRecipesBody?: ListRecipesBody,
+    params?: ListRecipesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>>, fetch?: RequestInit}
 ) => {
 
 const {query: queryOptions, fetch: fetchOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getListRecipesQueryKey(listRecipesBody);
+  const queryKey =  queryOptions?.queryKey ?? getListRecipesQueryKey(listRecipesBody,params);
 
 
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listRecipes>>> = ({ signal }) => listRecipes(listRecipesBody, { signal, ...fetchOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listRecipes>>> = ({ signal }) => listRecipes(listRecipesBody,params, { signal, ...fetchOptions });
 
 
 
@@ -136,7 +147,8 @@ export type ListRecipesQueryError = unknown
 
 
 export function useListRecipes<TData = Awaited<ReturnType<typeof listRecipes>>, TError = unknown>(
- listRecipesBody: undefined |  ListRecipesBody, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>> & Pick<
+ listRecipesBody: undefined |  ListRecipesBody,
+    params: undefined |  ListRecipesParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof listRecipes>>,
           TError,
@@ -146,7 +158,8 @@ export function useListRecipes<TData = Awaited<ReturnType<typeof listRecipes>>, 
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useListRecipes<TData = Awaited<ReturnType<typeof listRecipes>>, TError = unknown>(
- listRecipesBody?: ListRecipesBody, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>> & Pick<
+ listRecipesBody?: ListRecipesBody,
+    params?: ListRecipesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof listRecipes>>,
           TError,
@@ -156,7 +169,8 @@ export function useListRecipes<TData = Awaited<ReturnType<typeof listRecipes>>, 
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useListRecipes<TData = Awaited<ReturnType<typeof listRecipes>>, TError = unknown>(
- listRecipesBody?: ListRecipesBody, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>>, fetch?: RequestInit}
+ listRecipesBody?: ListRecipesBody,
+    params?: ListRecipesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>>, fetch?: RequestInit}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
@@ -164,11 +178,12 @@ export function useListRecipes<TData = Awaited<ReturnType<typeof listRecipes>>, 
  */
 
 export function useListRecipes<TData = Awaited<ReturnType<typeof listRecipes>>, TError = unknown>(
- listRecipesBody?: ListRecipesBody, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>>, fetch?: RequestInit}
+ listRecipesBody?: ListRecipesBody,
+    params?: ListRecipesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>>, fetch?: RequestInit}
  , queryClient?: QueryClient
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const queryOptions = getListRecipesQueryOptions(listRecipesBody,options)
+  const queryOptions = getListRecipesQueryOptions(listRecipesBody,params,options)
 
   const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
