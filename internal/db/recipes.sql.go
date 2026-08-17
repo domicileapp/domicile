@@ -10,6 +10,17 @@ import (
 	"time"
 )
 
+const countRecipes = `-- name: CountRecipes :one
+select count(*) from recipes
+`
+
+func (q *Queries) CountRecipes(ctx context.Context) (int64, error) {
+	row := q.db.QueryRow(ctx, countRecipes)
+	var count int64
+	err := row.Scan(&count)
+	return count, err
+}
+
 const createRecipe = `-- name: CreateRecipe :one
 insert into recipes (
     name,
@@ -310,7 +321,13 @@ select
 from recipes
 where deleted_at is null
 order by updated_at desc
+limit $1 offset $2
 `
+
+type ListRecipesParams struct {
+	Limit  int32 `json:"limit"`
+	Offset int32 `json:"offset"`
+}
 
 type ListRecipesRow struct {
 	ID               int64     `json:"id"`
@@ -327,8 +344,8 @@ type ListRecipesRow struct {
 	UpdatedAt        time.Time `json:"updated_at"`
 }
 
-func (q *Queries) ListRecipes(ctx context.Context) ([]ListRecipesRow, error) {
-	rows, err := q.db.Query(ctx, listRecipes)
+func (q *Queries) ListRecipes(ctx context.Context, arg ListRecipesParams) ([]ListRecipesRow, error) {
+	rows, err := q.db.Query(ctx, listRecipes, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}

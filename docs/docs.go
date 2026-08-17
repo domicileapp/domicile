@@ -329,6 +329,24 @@ const docTemplate = `{
             "get": {
                 "description": "Get list of all recipes",
                 "operationId": "list-recipes",
+                "parameters": [
+                    {
+                        "description": "Page number (default: 1)",
+                        "in": "query",
+                        "name": "page",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "description": "Page size (default: 12)",
+                        "in": "query",
+                        "name": "size",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {

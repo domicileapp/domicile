@@ -2,6 +2,7 @@ package recipes
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 	"strconv"
 
@@ -10,6 +11,7 @@ import (
 	"github.com/domicileapp/domicile/pkg/encode"
 	"github.com/domicileapp/domicile/pkg/logger"
 	"github.com/go-chi/chi/v5"
+	"github.com/jackc/pgx/v5"
 )
 
 func Routes(store RecipeStore) chi.Router {
@@ -33,6 +35,13 @@ func Routes(store RecipeStore) chi.Router {
 	return r
 }
 
+type PaginatedResponse struct {
+	TotalItems int64               `json:"total_items"`
+	Page       int32               `json:"page"`
+	Size       int32               `json:"size"`
+	Items      []db.ListRecipesRow `json:"items"`
+}
+
 // ListRecipesHandler godoc
 //
 //	@Summary		List recipes
@@ -41,16 +50,35 @@ func Routes(store RecipeStore) chi.Router {
 //	@Description	Get list of all recipes
 //	@Accept			json
 //	@Produce		json
-//	@Success		200	{array}	db.Recipe
+//	@Param			page	query	int	false	"Page number (default: 1)"
+//	@Param			size	query	int	false	"Page size (default: 12)"
+//	@Success		200		{array}	db.Recipe
 //	@Router			/api/v1/recipes [get]
 func (h *Handler) ListRecipesHandler(w http.ResponseWriter, r *http.Request) {
-	recipes, err := h.Store.ListRecipes(r.Context())
+	page := parseIntParam(r, "page", 1)
+	size := parseIntParam(r, "size", 12)
+	offset := (page - 1) * size
+
+	totalRecipes, err := h.Store.CountRecipes(r.Context())
+	if err != nil {
+		http.Error(w, "Failed to retrieve recipe count", http.StatusInternalServerError)
+		return
+	}
+
+	recipes, err := h.Store.ListRecipes(r.Context(), size, offset)
 	if err != nil {
 		http.Error(w, "Failed to retrieve recipes", http.StatusInternalServerError)
 		return
 	}
 
-	if err := encode.ResponseJSON(w, http.StatusOK, recipes); err != nil {
+	response := PaginatedResponse{
+		TotalItems: totalRecipes,
+		Page:       page,
+		Size:       size,
+		Items:      recipes,
+	}
+
+	if err := encode.ResponseJSON(w, http.StatusOK, response); err != nil {
 		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
 	}
 }
@@ -81,7 +109,11 @@ func (h *Handler) GetRecipeByIDHandler(w http.ResponseWriter, r *http.Request) {
 
 	recipe, err := h.Store.GetRecipe(r.Context(), recipeID)
 	if err != nil {
-		http.Error(w, "No recipe found for ID", http.StatusNotFound)
+		if errors.Is(err, pgx.ErrNoRows) {
+			http.Error(w, "No recipe found for ID", http.StatusNotFound)
+		} else {
+			http.Error(w, "Failed to retrieve recipe", http.StatusInternalServerError)
+		}
 		log.Error(err.Error())
 		return
 	}
@@ -455,4 +487,18 @@ func (h *Handler) DeleteRecipeInstructionHandler(w http.ResponseWriter, r *http.
 
 func parseIDParam(r *http.Request, key string) (int64, error) {
 	return strconv.ParseInt(chi.URLParam(r, key), 10, 64)
+}
+
+func parseIntParam(r *http.Request, key string, defaultVal int32) int32 {
+	valStr := r.URL.Query().Get(key)
+	if valStr == "" {
+		return defaultVal
+	}
+
+	val, err := strconv.ParseInt(valStr, 10, 32)
+	if err != nil || val <= 0 {
+		return defaultVal
+	}
+
+	return int32(val)
 }

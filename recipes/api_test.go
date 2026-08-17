@@ -3,307 +3,312 @@ package recipes
 import (
 	"bytes"
 	"context"
-	"database/sql"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
 	"github.com/domicileapp/domicile/internal/db"
-	"github.com/go-chi/chi/v5"
+	"github.com/jackc/pgx/v5"
 )
 
-type fakeStore struct {
-	t *testing.T
+type apiTestCase struct {
+	name   string
+	method string
+	path   string
+	body   string
 
-	listRecipesFn  func(ctx context.Context) ([]db.ListRecipesRow, error)
-	getRecipeFn    func(ctx context.Context, id int64) (db.Recipe, error)
-	createRecipeFn func(ctx context.Context, params createRecipeRequest) (db.Recipe, error)
-	updateRecipeFn func(ctx context.Context, id int64, params updateRecipeRequest) (db.Recipe, error)
-	deleteRecipeFn func(ctx context.Context, id int64) error
+	setup func(s *RecipeStoreMock)
 
-	listRecipeIngredientsFn  func(ctx context.Context, recipeIds []int64) ([]db.ListRecipeIngredientsRow, error)
-	createRecipeIngredientFn func(ctx context.Context, recipeId int64, params createIngredientRequest) (db.RecipeIngredient, error)
-	updateIngredientSortFn   func(ctx context.Context, id int64, params updateIngredientRequest) error
-	deleteRecipeIngredientFn func(ctx context.Context, id int64) error
-
-	listRecipeInstructionsFn  func(ctx context.Context, recipeIds []int64) ([]db.ListRecipeInstructionsRow, error)
-	createRecipeInstructionFn func(ctx context.Context, recipeId int64, params createInstructionRequest) (db.RecipeInstruction, error)
-	updateRecipeInstructionFn func(ctx context.Context, id int64, params updateInstructionRequest) error
-	deleteRecipeInstructionFn func(ctx context.Context, id int64) error
+	wantStatus int
+	checkBody  func(t *testing.T, rec *httptest.ResponseRecorder)
 }
 
-func (f *fakeStore) ListRecipes(ctx context.Context) ([]db.ListRecipesRow, error) {
-	if f.listRecipesFn == nil {
-		f.t.Fatal("unexpected call to ListRecipes")
-	}
-	return f.listRecipesFn(ctx)
-}
+func runAPITest(t *testing.T, tc apiTestCase) {
+	t.Helper()
 
-func (f *fakeStore) GetRecipe(ctx context.Context, id int64) (db.Recipe, error) {
-	if f.getRecipeFn == nil {
-		f.t.Fatal("unexpected call to GetRecipe")
-	}
-	return f.getRecipeFn(ctx, id)
-}
-
-func (f *fakeStore) CreateRecipe(ctx context.Context, params createRecipeRequest) (db.Recipe, error) {
-	if f.createRecipeFn == nil {
-		f.t.Fatal("unexpected call to CreateRecipe")
-	}
-	return f.createRecipeFn(ctx, params)
-}
-
-func (f *fakeStore) UpdateRecipe(ctx context.Context, id int64, params updateRecipeRequest) (db.Recipe, error) {
-	if f.updateRecipeFn == nil {
-		f.t.Fatal("unexpected call to UpdateRecipe")
-	}
-	return f.updateRecipeFn(ctx, id, params)
-}
-
-func (f *fakeStore) DeleteRecipe(ctx context.Context, id int64) error {
-	if f.deleteRecipeFn == nil {
-		f.t.Fatal("unexpected call to DeleteRecipe")
-	}
-	return f.deleteRecipeFn(ctx, id)
-}
-
-func (f *fakeStore) ListRecipeIngredients(ctx context.Context, recipeIDs []int64) ([]db.ListRecipeIngredientsRow, error) {
-	if f.listRecipeIngredientsFn == nil {
-		f.t.Fatal("unexpected call to ListRecipeIngredients")
-	}
-	return f.listRecipeIngredientsFn(ctx, recipeIDs)
-}
-
-func (f *fakeStore) CreateRecipeIngredient(ctx context.Context, recipeID int64, params createIngredientRequest) (db.RecipeIngredient, error) {
-	if f.createRecipeIngredientFn == nil {
-		f.t.Fatal("unexpected call to CreateRecipeIngredient")
-	}
-	return f.createRecipeIngredientFn(ctx, recipeID, params)
-}
-
-func (f *fakeStore) UpdateRecipeIngredient(ctx context.Context, id int64, params updateIngredientRequest) error {
-	if f.updateIngredientSortFn == nil {
-		f.t.Fatal("unexpected call to UpdateRecipeIngredient")
-	}
-	return f.updateIngredientSortFn(ctx, id, params)
-}
-
-func (f *fakeStore) DeleteRecipeIngredient(ctx context.Context, id int64) error {
-	if f.deleteRecipeIngredientFn == nil {
-		f.t.Fatal("unexpected call to DeleteRecipeIngredient")
-	}
-	return f.deleteRecipeIngredientFn(ctx, id)
-}
-
-func (f *fakeStore) ListRecipeInstructions(ctx context.Context, recipeIDs []int64) ([]db.ListRecipeInstructionsRow, error) {
-	if f.listRecipeInstructionsFn == nil {
-		f.t.Fatal("unexpected call to ListRecipeInstructions")
-	}
-	return f.listRecipeInstructionsFn(ctx, recipeIDs)
-}
-
-func (f *fakeStore) CreateRecipeInstruction(ctx context.Context, recipeID int64, params createInstructionRequest) (db.RecipeInstruction, error) {
-	if f.createRecipeInstructionFn == nil {
-		f.t.Fatal("unexpected call to CreateRecipeInstruction")
-	}
-	return f.createRecipeInstructionFn(ctx, recipeID, params)
-}
-
-func (f *fakeStore) UpdateRecipeInstruction(ctx context.Context, id int64, params updateInstructionRequest) error {
-	if f.updateRecipeInstructionFn == nil {
-		f.t.Fatal("unexpected call to UpdateRecipeInstruction")
-	}
-	return f.updateRecipeInstructionFn(ctx, id, params)
-}
-
-func (f *fakeStore) DeleteRecipeInstruction(ctx context.Context, id int64) error {
-	if f.deleteRecipeInstructionFn == nil {
-		f.t.Fatal("unexpected call to DeleteRecipeInstruction")
-	}
-	return f.deleteRecipeInstructionFn(ctx, id)
-}
-
-func TestListRecipesHandler(t *testing.T) {
-	store := &fakeStore{
-		t: t,
-		listRecipesFn: func(ctx context.Context) ([]db.ListRecipesRow, error) {
-			return []db.ListRecipesRow{
-				{ID: 1, Name: "Chili"},
-				{ID: 2, Name: "Pancakes"},
-			}, nil
-		},
+	store := &RecipeStoreMock{}
+	if tc.setup != nil {
+		tc.setup(store)
 	}
 
-	h := &Handler{Store: store}
-	req := httptest.NewRequest(http.MethodGet, "/", nil)
-	rec := httptest.NewRecorder()
+	r := Routes(store)
 
-	h.ListRecipesHandler(rec, req)
-
-	if rec.Code != http.StatusOK {
-		t.Fatalf("expected 200, got %d", rec.Code)
+	var body *bytes.Buffer
+	if tc.body != "" {
+		body = bytes.NewBufferString(tc.body)
+	} else {
+		body = bytes.NewBufferString("")
 	}
 
-	var got []db.ListRecipesRow
-	if err := json.NewDecoder(rec.Body).Decode(&got); err != nil {
-		t.Fatalf("failed to decode response: %v", err)
-	}
-	if len(got) != 2 {
-		t.Fatalf("expected 2 recipes, got %d", len(got))
-	}
-}
-
-func TestGetRecipeByIDHandler_NotFound(t *testing.T) {
-	store := &fakeStore{
-		t: t,
-		getRecipeFn: func(ctx context.Context, id int64) (db.Recipe, error) {
-			if id != 42 {
-				t.Fatalf("expected id 42, got %d", id)
-			}
-			return db.Recipe{}, sql.ErrNoRows
-		},
-	}
-
-	h := &Handler{Store: store}
-	r := chi.NewRouter()
-	r.Get("/{id}", h.GetRecipeByIDHandler)
-
-	req := httptest.NewRequest(http.MethodGet, "/42", nil)
+	req := httptest.NewRequest(tc.method, tc.path, body)
 	rec := httptest.NewRecorder()
 	r.ServeHTTP(rec, req)
 
-	if rec.Code != http.StatusNotFound {
-		t.Fatalf("expected 404, got %d", rec.Code)
+	if rec.Code != tc.wantStatus {
+		t.Fatalf("expected status %d, got %d: %s", tc.wantStatus, rec.Code, rec.Body.String())
+	}
+
+	if tc.checkBody != nil {
+		tc.checkBody(t, rec)
 	}
 }
 
-func TestGetRecipeByIDHandler_Success(t *testing.T) {
-	store := &fakeStore{
-		t: t,
-		getRecipeFn: func(ctx context.Context, id int64) (db.Recipe, error) {
-			return db.Recipe{ID: 42, Name: "Chili"}, nil
+func TestRecipeHandlers(t *testing.T) {
+	cases := []apiTestCase{
+		{
+			name:   "list recipes",
+			method: http.MethodGet,
+			path:   "/",
+			setup: func(s *RecipeStoreMock) {
+				s.CountRecipesFunc = func(ctx context.Context) (int64, error) {
+					return 2, nil
+				}
+				s.ListRecipesFunc = func(ctx context.Context, limit, offset int32) ([]db.ListRecipesRow, error) {
+					if limit != 12 || offset != 0 {
+						t.Fatalf("expected default limit=12 offset=0, got limit=%d offset=%d", limit, offset)
+					}
+					return []db.ListRecipesRow{
+						{ID: 1, Name: "Chili"},
+						{ID: 2, Name: "Pancakes"},
+					}, nil
+				}
+			},
+			wantStatus: http.StatusOK,
+			checkBody: func(t *testing.T, rec *httptest.ResponseRecorder) {
+				var got PaginatedResponse
+				if err := json.NewDecoder(rec.Body).Decode(&got); err != nil {
+					t.Fatalf("failed to decode response: %v", err)
+				}
+				if got.TotalItems != 2 || len(got.Items) != 2 {
+					t.Fatalf("expected 2 total/2 items, got total=%d items=%d", got.TotalItems, len(got.Items))
+				}
+			},
 		},
-		listRecipeIngredientsFn: func(ctx context.Context, recipeIDs []int64) ([]db.ListRecipeIngredientsRow, error) {
-			return []db.ListRecipeIngredientsRow{}, nil
+		{
+			name:   "get recipe not found",
+			method: http.MethodGet,
+			path:   "/42",
+			setup: func(s *RecipeStoreMock) {
+				s.GetRecipeFunc = func(ctx context.Context, id int64) (db.Recipe, error) {
+					if id != 42 {
+						t.Fatalf("expected id 42, got %d", id)
+					}
+					return db.Recipe{}, pgx.ErrNoRows
+				}
+			},
+			wantStatus: http.StatusNotFound,
 		},
-		listRecipeInstructionsFn: func(ctx context.Context, recipeIDs []int64) ([]db.ListRecipeInstructionsRow, error) {
-			return []db.ListRecipeInstructionsRow{}, nil
+		{
+			name:   "get recipe database error",
+			method: http.MethodGet,
+			path:   "/42",
+			setup: func(s *RecipeStoreMock) {
+				s.GetRecipeFunc = func(ctx context.Context, id int64) (db.Recipe, error) {
+					return db.Recipe{}, errors.New("connection pool exhausted")
+				}
+			},
+			wantStatus: http.StatusInternalServerError,
+		},
+		{
+			name:   "get recipe success",
+			method: http.MethodGet,
+			path:   "/42",
+			setup: func(s *RecipeStoreMock) {
+				s.GetRecipeFunc = func(ctx context.Context, id int64) (db.Recipe, error) {
+					return db.Recipe{ID: 42, Name: "Chili"}, nil
+				}
+				s.ListRecipeIngredientsFunc = func(ctx context.Context, recipeIDs []int64) ([]db.ListRecipeIngredientsRow, error) {
+					return []db.ListRecipeIngredientsRow{}, nil
+				}
+				s.ListRecipeInstructionsFunc = func(ctx context.Context, recipeIDs []int64) ([]db.ListRecipeInstructionsRow, error) {
+					return []db.ListRecipeInstructionsRow{}, nil
+				}
+			},
+			wantStatus: http.StatusOK,
+		},
+		{
+			name:       "get recipe invalid id",
+			method:     http.MethodGet,
+			path:       "/not-a-number",
+			wantStatus: http.StatusBadRequest,
+		},
+		{
+			name:   "create recipe",
+			method: http.MethodPost,
+			path:   "/",
+			body:   `{"name":"Chili"}`,
+			setup: func(s *RecipeStoreMock) {
+				s.CreateRecipeFunc = func(ctx context.Context, params createRecipeRequest) (db.Recipe, error) {
+					if params.Name != "Chili" {
+						t.Fatalf("expected name Chili, got %q", params.Name)
+					}
+					return db.Recipe{ID: 1, Name: params.Name}, nil
+				}
+			},
+			wantStatus: http.StatusCreated,
+			checkBody: func(t *testing.T, rec *httptest.ResponseRecorder) {
+				var got db.Recipe
+				if err := json.NewDecoder(rec.Body).Decode(&got); err != nil {
+					t.Fatalf("failed to decode response: %v", err)
+				}
+				if got.ID != 1 {
+					t.Fatalf("expected id 1, got %d", got.ID)
+				}
+			},
+		},
+		{
+			name:       "create recipe missing name",
+			method:     http.MethodPost,
+			path:       "/",
+			body:       `{"name":""}`,
+			wantStatus: http.StatusBadRequest,
+		},
+		{
+			name:   "update recipe",
+			method: http.MethodPut,
+			path:   "/7",
+			body:   `{"name":"Chili v2"}`,
+			setup: func(s *RecipeStoreMock) {
+				s.UpdateRecipeFunc = func(ctx context.Context, id int64, params updateRecipeRequest) (db.Recipe, error) {
+					if id != 7 || params.Name != "Chili v2" {
+						t.Fatalf("unexpected args: id=%d name=%q", id, params.Name)
+					}
+					return db.Recipe{ID: 7, Name: params.Name}, nil
+				}
+			},
+			wantStatus: http.StatusOK,
+		},
+		{
+			name:       "update recipe missing name",
+			method:     http.MethodPut,
+			path:       "/7",
+			body:       `{"name":""}`,
+			wantStatus: http.StatusBadRequest,
+		},
+		{
+			name:   "delete recipe",
+			method: http.MethodDelete,
+			path:   "/7",
+			setup: func(s *RecipeStoreMock) {
+				s.DeleteRecipeFunc = func(ctx context.Context, id int64) error {
+					if id != 7 {
+						t.Fatalf("expected id 7, got %d", id)
+					}
+					return nil
+				}
+			},
+			wantStatus: http.StatusNoContent,
+		},
+		{
+			name:   "create ingredient",
+			method: http.MethodPost,
+			path:   "/7/ingredients",
+			body:   `{"raw_text":"1 cup flour","sort_order":1}`,
+			setup: func(s *RecipeStoreMock) {
+				s.CreateRecipeIngredientFunc = func(ctx context.Context, recipeID int64, params createIngredientRequest) (db.RecipeIngredient, error) {
+					if recipeID != 7 || params.RawText != "1 cup flour" {
+						t.Fatalf("unexpected args: recipeID=%d rawText=%q", recipeID, params.RawText)
+					}
+					return db.RecipeIngredient{ID: 100, RecipeID: recipeID, RawText: params.RawText}, nil
+				}
+			},
+			wantStatus: http.StatusCreated,
+		},
+		{
+			name:       "create ingredient missing raw_text",
+			method:     http.MethodPost,
+			path:       "/7/ingredients",
+			body:       `{"raw_text":""}`,
+			wantStatus: http.StatusBadRequest,
+		},
+		{
+			name:   "update ingredient",
+			method: http.MethodPut,
+			path:   "/7/ingredients/55",
+			body:   `{"raw_text":"2 cups flour","sort_order":1,"group_name":"Dry"}`,
+			setup: func(s *RecipeStoreMock) {
+				s.UpdateRecipeIngredientFunc = func(ctx context.Context, id int64, params updateIngredientRequest) error {
+					if id != 55 || params.RawText != "2 cups flour" || params.GroupName != "Dry" {
+						t.Fatalf("unexpected args: id=%d rawText=%q groupName=%q", id, params.RawText, params.GroupName)
+					}
+					return nil
+				}
+			},
+			wantStatus: http.StatusNoContent,
+		},
+		{
+			name:   "delete ingredient",
+			method: http.MethodDelete,
+			path:   "/7/ingredients/55",
+			setup: func(s *RecipeStoreMock) {
+				s.DeleteRecipeIngredientFunc = func(ctx context.Context, id int64) error {
+					if id != 55 {
+						t.Fatalf("expected id 55, got %d", id)
+					}
+					return nil
+				}
+			},
+			wantStatus: http.StatusNoContent,
+		},
+		{
+			name:   "create instruction",
+			method: http.MethodPost,
+			path:   "/7/instructions",
+			body:   `{"content":"Preheat oven","sort_order":1}`,
+			setup: func(s *RecipeStoreMock) {
+				s.CreateRecipeInstructionFunc = func(ctx context.Context, recipeID int64, params createInstructionRequest) (db.RecipeInstruction, error) {
+					if recipeID != 7 || params.Content != "Preheat oven" {
+						t.Fatalf("unexpected args: recipeID=%d content=%q", recipeID, params.Content)
+					}
+					return db.RecipeInstruction{ID: 200, RecipeID: recipeID, Content: params.Content}, nil
+				}
+			},
+			wantStatus: http.StatusCreated,
+		},
+		{
+			name:       "create instruction missing content",
+			method:     http.MethodPost,
+			path:       "/7/instructions",
+			body:       `{"content":""}`,
+			wantStatus: http.StatusBadRequest,
+		},
+		{
+			name:   "update instruction",
+			method: http.MethodPut,
+			path:   "/7/instructions/9",
+			body:   `{"content":"Preheat oven","sort_order":2}`,
+			setup: func(s *RecipeStoreMock) {
+				s.UpdateRecipeInstructionFunc = func(ctx context.Context, id int64, params updateInstructionRequest) error {
+					if id != 9 || params.Content != "Preheat oven" || params.SortOrder != 2 {
+						t.Fatalf("unexpected args: id=%d content=%q sortOrder=%v", id, params.Content, params.SortOrder)
+					}
+					return nil
+				}
+			},
+			wantStatus: http.StatusNoContent,
+		},
+		{
+			name:   "delete instruction",
+			method: http.MethodDelete,
+			path:   "/7/instructions/9",
+			setup: func(s *RecipeStoreMock) {
+				s.DeleteRecipeInstructionFunc = func(ctx context.Context, id int64) error {
+					if id != 9 {
+						t.Fatalf("expected id 9, got %d", id)
+					}
+					return nil
+				}
+			},
+			wantStatus: http.StatusNoContent,
 		},
 	}
 
-	h := &Handler{Store: store}
-	r := chi.NewRouter()
-	r.Get("/{id}", h.GetRecipeByIDHandler)
-
-	req := httptest.NewRequest(http.MethodGet, "/42", nil)
-	rec := httptest.NewRecorder()
-	r.ServeHTTP(rec, req)
-
-	if rec.Code != http.StatusOK {
-		t.Fatalf("expected 200, got %d: %s", rec.Code, rec.Body.String())
-	}
-}
-
-func TestGetRecipeByIDHandler_InvalidID(t *testing.T) {
-	store := &fakeStore{t: t}
-
-	h := &Handler{Store: store}
-	r := chi.NewRouter()
-	r.Get("/{id}", h.GetRecipeByIDHandler)
-
-	req := httptest.NewRequest(http.MethodGet, "/not-a-number", nil)
-	rec := httptest.NewRecorder()
-	r.ServeHTTP(rec, req)
-
-	if rec.Code != http.StatusBadRequest {
-		t.Fatalf("expected 400, got %d", rec.Code)
-	}
-}
-
-func TestCreateRecipeHandler(t *testing.T) {
-	store := &fakeStore{
-		t: t,
-		createRecipeFn: func(ctx context.Context, params createRecipeRequest) (db.Recipe, error) {
-			if params.Name != "Chili" {
-				t.Fatalf("expected name Chili, got %q", params.Name)
-			}
-			return db.Recipe{ID: 1, Name: params.Name}, nil
-		},
-	}
-
-	h := &Handler{Store: store}
-	body := bytes.NewBufferString(`{"name":"Chili"}`)
-	req := httptest.NewRequest(http.MethodPost, "/", body)
-	rec := httptest.NewRecorder()
-
-	h.CreateRecipeHandler(rec, req)
-
-	if rec.Code != http.StatusCreated {
-		t.Fatalf("expected 201, got %d: %s", rec.Code, rec.Body.String())
-	}
-}
-
-func TestCreateRecipeHandler_MissingName(t *testing.T) {
-	store := &fakeStore{t: t}
-
-	h := &Handler{Store: store}
-	body := bytes.NewBufferString(`{"name":""}`)
-	req := httptest.NewRequest(http.MethodPost, "/", body)
-	rec := httptest.NewRecorder()
-
-	h.CreateRecipeHandler(rec, req)
-
-	if rec.Code != http.StatusBadRequest {
-		t.Fatalf("expected 400, got %d", rec.Code)
-	}
-}
-
-func TestDeleteRecipeHandler(t *testing.T) {
-	store := &fakeStore{
-		t: t,
-		deleteRecipeFn: func(ctx context.Context, id int64) error {
-			if id != 7 {
-				t.Fatalf("expected id 7, got %d", id)
-			}
-			return nil
-		},
-	}
-
-	h := &Handler{Store: store}
-	r := chi.NewRouter()
-	r.Delete("/{id}", h.DeleteRecipeHandler)
-
-	req := httptest.NewRequest(http.MethodDelete, "/7", nil)
-	rec := httptest.NewRecorder()
-	r.ServeHTTP(rec, req)
-
-	if rec.Code != http.StatusNoContent {
-		t.Fatalf("expected 204, got %d", rec.Code)
-	}
-}
-
-func TestUpdateRecipeInstructionHandler(t *testing.T) {
-	store := &fakeStore{
-		t: t,
-		updateRecipeInstructionFn: func(ctx context.Context, id int64, params updateInstructionRequest) error {
-			if id != 9 || params.Content != "Preheat oven" || params.SortOrder != 2 {
-				t.Fatalf("unexpected args: id=%d content=%q sortOrder=%v", id, params.Content, params.SortOrder)
-			}
-			return nil
-		},
-	}
-
-	h := &Handler{Store: store}
-	r := chi.NewRouter()
-	r.Put("/{instructionID}", h.UpdateRecipeInstructionHandler)
-
-	body := bytes.NewBufferString(`{"content":"Preheat oven","sort_order":2}`)
-	req := httptest.NewRequest(http.MethodPut, "/9", body)
-	rec := httptest.NewRecorder()
-	r.ServeHTTP(rec, req)
-
-	if rec.Code != http.StatusNoContent {
-		t.Fatalf("expected 204, got %d: %s", rec.Code, rec.Body.String())
+	for _, tc := range cases {
+		tc := tc
+		t.Run(tc.name, func(t *testing.T) {
+			runAPITest(t, tc)
+		})
 	}
 }

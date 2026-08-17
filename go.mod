@@ -2,6 +2,8 @@ module github.com/domicileapp/domicile
 
 go 1.26.6
 
+tool github.com/matryer/moq
+
 require (
 	github.com/go-chi/chi/v5 v5.3.1
 	github.com/go-chi/cors v1.2.2
@@ -27,6 +29,7 @@ require (
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
+	github.com/matryer/moq v0.7.1 // indirect
 	github.com/swaggo/files/v2 v2.0.0 // indirect
 	go.yaml.in/yaml/v3 v3.0.5 // indirect
 	golang.org/x/mod v0.40.0 // indirect

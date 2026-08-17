@@ -9,6 +9,7 @@ import (
 )
 
 type Querier interface {
+	CountRecipes(ctx context.Context) (int64, error)
 	CreateRecipe(ctx context.Context, arg CreateRecipeParams) (Recipe, error)
 	CreateRecipeIngredient(ctx context.Context, arg CreateRecipeIngredientParams) (RecipeIngredient, error)
 	CreateRecipeInstruction(ctx context.Context, arg CreateRecipeInstructionParams) (RecipeInstruction, error)
@@ -18,7 +19,7 @@ type Querier interface {
 	GetRecipe(ctx context.Context, id int64) (Recipe, error)
 	ListRecipeIngredients(ctx context.Context, dollar_1 []int64) ([]ListRecipeIngredientsRow, error)
 	ListRecipeInstructions(ctx context.Context, dollar_1 []int64) ([]ListRecipeInstructionsRow, error)
-	ListRecipes(ctx context.Context) ([]ListRecipesRow, error)
+	ListRecipes(ctx context.Context, arg ListRecipesParams) ([]ListRecipesRow, error)
 	UpdateRecipe(ctx context.Context, arg UpdateRecipeParams) (Recipe, error)
 	UpdateRecipeIngredient(ctx context.Context, arg UpdateRecipeIngredientParams) error
 	UpdateRecipeInstruction(ctx context.Context, arg UpdateRecipeInstructionParams) error
