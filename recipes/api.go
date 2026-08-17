@@ -495,7 +495,7 @@ func parseIntParam(r *http.Request, key string, defaultVal int32) int32 {
 		return defaultVal
 	}
 
-	val, err := strconv.Atoi(valStr)
+	val, err := strconv.ParseInt(valStr, 10, 32)
 	if err != nil || val <= 0 {
 		return defaultVal
 	}
