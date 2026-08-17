@@ -18,7 +18,11 @@ select
     updated_at
 from recipes
 where deleted_at is null
-order by updated_at desc;
+order by updated_at desc
+limit $1 offset $2;
+
+-- name: CountRecipes :one
+select count(*) from recipes;
 
 -- name: CreateRecipe :one
 insert into recipes (
