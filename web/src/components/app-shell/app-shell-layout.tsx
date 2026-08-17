@@ -1,5 +1,6 @@
 import { AppShell, Burger, Container, Group } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { Link } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
 
 interface AppShellLayoutProps {
@@ -24,7 +25,7 @@ export function AppShellLayout(props: AppShellLayoutProps) {
         <Group h="100%" px="md">
           <Burger opened={mobileOpened} onClick={toggleMobile} hiddenFrom="sm" size="sm" />
           <Burger opened={desktopOpened} onClick={toggleDesktop} visibleFrom="sm" size="sm" />
-          Domicile
+          <Link to="/">Domicile</Link>
         </Group>
       </AppShell.Header>
       <AppShell.Navbar p="md">Nav here</AppShell.Navbar>

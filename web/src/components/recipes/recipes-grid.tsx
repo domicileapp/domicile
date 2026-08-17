@@ -1,31 +1,20 @@
-import { Alert, Grid } from '@mantine/core'
+import { Grid } from '@mantine/core'
 
 import type { GithubComDomicileappDomicileInternalDbRecipe } from '@/api/schemas'
 
+import { ErrorCard } from '../ui/error-card'
 import { RecipeCard } from './recipe-card'
 import { RecipesGridLoader } from './recipes-grid-loader'
 
 interface RecipeGridProps {
   recipes?: GithubComDomicileappDomicileInternalDbRecipe[]
-  error: unknown
+  error: unknown | Error
   isLoading: boolean
 }
 
 export function RecipeGrid(props: RecipeGridProps) {
   if (props.error) {
-    const message =
-      props.error instanceof Error
-        ? props.error.message
-        : 'An unknown error occured. Check API logs.'
-    return (
-      <Grid>
-        <Grid.Col span={12}>
-          <Alert variant="light" color="red" title="Error loading recipes">
-            {message}
-          </Alert>
-        </Grid.Col>
-      </Grid>
-    )
+    return <ErrorCard error={props.error} title="Unable to load recipes" />
   }
 
   if (props.isLoading) {
