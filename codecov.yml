@@ -1,0 +1,9 @@
+coverage:
+  status:
+    patch: true
+    project:
+      default:
+        target: auto
+        threshold: 1%
+comment:
+  layout: "condensed_header, condensed_files, condensed_footer"
