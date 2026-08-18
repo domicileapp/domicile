@@ -14,8 +14,8 @@ export const Route = createFileRoute('/')({
     return {
       // TODO: Don't love that this shows in the URL always just because it'll
       // make the links a bit ugly, but a problem to solve later I suppose.
-      page: Number(search?.page ?? 1),
-      size: Number(search?.size ?? 12),
+      page: Number(search.page ?? 1),
+      size: Number(search.size ?? 12),
     }
   },
 })
