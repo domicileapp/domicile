@@ -3,8 +3,8 @@ package recipes
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
-	"strconv"
 
 	_ "github.com/domicileapp/domicile/docs"
 	"github.com/domicileapp/domicile/internal/db"
@@ -36,13 +36,11 @@ func Routes(store RecipeStore) chi.Router {
 }
 
 type ErrorResponse struct {
-	Status  int    `json:"status"`
 	Message string `json:"message"`
 }
 
 func writeError(w http.ResponseWriter, status int, message string) {
 	response := ErrorResponse{
-		Status:  status,
 		Message: message,
 	}
 
@@ -67,78 +65,53 @@ type PaginatedResponse struct {
 //	@Description	Get list of all recipes
 //	@Accept			json
 //	@Produce		json
-//	@Param			page		query		int	false	"Page number (default: 1)"
-//	@Param			size		query		int	false	"Page size (default: 12)"
-//	@Param			search		query		int	false	"Search params"
-//	@Param			sort		query		int	false	"Sort field"
-//	@Param			direction	query		int	false	"Sort direction"
+//	@Param			page		query		int		false	"Page number"	minimum(1)
+//	@Param			size		query		int		false	"Page size"		minimum(1)	maximum(120)
+//	@Param			search		query		string	false	"Search params"
+//	@Param			sort		query		string	false	"Sort field"		Enums(id, name, created_at, updated_at)
+//	@Param			direction	query		string	false	"Sort direction"	Enums(asc, desc)	default(desc)
 //	@Success		200			{object}	PaginatedResponse
+//	@Failure		400			{object}	ErrorResponse
 //	@Router			/api/v1/recipes [get]
 func (h *Handler) ListRecipesHandler(w http.ResponseWriter, r *http.Request) {
-	search := r.URL.Query().Get("search")
-	sort := r.URL.Query().Get("sort")
-	direction := r.URL.Query().Get("direction")
-
-	page, err := parseIntParam(r, "page", 1)
+	params, err := parseListRecipesParams(r)
 	if err != nil {
-		writeError(w, http.StatusBadRequest, "Page must be a valid integer")
+		writeError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	size, err := parseIntParam(r, "size", 12)
+	total, err := h.Store.CountRecipes(r.Context(), params.search)
 	if err != nil {
-		writeError(w, http.StatusBadRequest, "Size must be a valid integer")
+		writeError(w, http.StatusInternalServerError, "Failed to retrieve recipe count")
 		return
 	}
 
-	if page < 1 {
-		writeError(w, http.StatusBadRequest, "Page must be greater than 0")
+	totalPages := (total + int64(params.size) - 1) / int64(params.size)
+	if totalPages > 0 && int64(params.page) > totalPages {
+		writeError(w, http.StatusBadRequest, fmt.Sprintf("Page is out of bounds. There are only %v pages.", totalPages))
 		return
 	}
 
-	if size < 1 {
-		writeError(w, http.StatusBadRequest, "Size must be greater than 0")
-		return
-	}
-
-	if direction != "asc" && direction != "desc" {
-		writeError(w, http.StatusBadRequest, "Direction parameter must be either 'asc' or 'desc'")
-		return
-	}
-
-	if sort != "name" && sort != "created_at" {
-		writeError(w, http.StatusBadRequest, "Sort parameter must be either 'name' or 'created_at'")
-		return
-	}
-
-	offset := (page - 1) * size
+	offset := (params.page - 1) * params.size
 
 	recipes, err := h.Store.ListRecipes(
 		r.Context(),
-		size,
+		params.size,
 		offset,
-		search,
-		sort,
-		direction,
+		params.search,
+		params.sort,
+		params.direction,
 	)
 	if err != nil {
 		writeError(w, http.StatusInternalServerError, "Failed to retrieve recipes")
 		return
 	}
 
-	totalRecipes, err := h.Store.CountRecipes(r.Context(), search)
-	if err != nil {
-		writeError(w, http.StatusInternalServerError, "Failed to retrieve recipe count")
-		return
-	}
-
-	totalPages := (totalRecipes + int64(size) - 1) / int64(size)
-
 	response := PaginatedResponse{
-		TotalItems: totalRecipes,
+		TotalItems: total,
 		TotalPages: totalPages,
-		Page:       page,
-		Size:       size,
+		Page:       params.page,
+		Size:       params.size,
 		Items:      recipes,
 	}
 
@@ -547,22 +520,4 @@ func (h *Handler) DeleteRecipeInstructionHandler(w http.ResponseWriter, r *http.
 	}
 
 	w.WriteHeader(http.StatusNoContent)
-}
-
-func parseIDParam(r *http.Request, key string) (int64, error) {
-	return strconv.ParseInt(chi.URLParam(r, key), 10, 64)
-}
-
-func parseIntParam(r *http.Request, key string, defaultVal int32) (int32, error) {
-	valStr := r.URL.Query().Get(key)
-	if valStr == "" {
-		return defaultVal, nil
-	}
-
-	val, err := strconv.ParseInt(valStr, 10, 32)
-	if err != nil {
-		return 0, err
-	}
-
-	return int32(val), nil
 }

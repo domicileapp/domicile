@@ -60,7 +60,7 @@ func TestRecipeHandlers(t *testing.T) {
 		{
 			name:   "list recipes",
 			method: http.MethodGet,
-			path:   "/?sort=name&direction=asc",
+			path:   "/?sort=name",
 			setup: func(s *RecipeStoreMock) {
 				s.CountRecipesFunc = func(ctx context.Context, search string) (int64, error) {
 					if search != "" {
@@ -89,8 +89,8 @@ func TestRecipeHandlers(t *testing.T) {
 					if sort != "name" {
 						t.Fatalf("expected sort=name, got %q", sort)
 					}
-					if direction != "asc" {
-						t.Fatalf("expected direction=asc, got %q", direction)
+					if direction != "desc" {
+						t.Fatalf("expected direction=desc, got %q", direction)
 					}
 
 					return []db.ListRecipesRow{
@@ -124,6 +124,172 @@ func TestRecipeHandlers(t *testing.T) {
 
 				if len(got.Items) != 2 {
 					t.Fatalf("expected 2 items, got %d", len(got.Items))
+				}
+			},
+		},
+		{
+			name:       "list recipes - invalid sort",
+			method:     http.MethodGet,
+			path:       "/?sort=bogus&direction=asc",
+			wantStatus: http.StatusBadRequest,
+		},
+		{
+			name:       "list recipes - non-numeric page",
+			method:     http.MethodGet,
+			path:       "/?page=abc&sort=name&direction=asc",
+			wantStatus: http.StatusBadRequest,
+		},
+		{
+			name:       "list recipes - non-numeric size",
+			method:     http.MethodGet,
+			path:       "/?size=xyz&sort=name&direction=asc",
+			wantStatus: http.StatusBadRequest,
+		},
+		{
+			name:       "list recipes - size exceeds max",
+			method:     http.MethodGet,
+			path:       "/?size=121&sort=name&direction=asc",
+			wantStatus: http.StatusBadRequest,
+		},
+		{
+			name:   "list recipes - size at max boundary",
+			method: http.MethodGet,
+			path:   "/?size=120&sort=name&direction=asc",
+			setup: func(s *RecipeStoreMock) {
+				s.CountRecipesFunc = func(ctx context.Context, search string) (int64, error) {
+					return 0, nil
+				}
+				s.ListRecipesFunc = func(
+					ctx context.Context,
+					limit int32,
+					offset int32,
+					search string,
+					sort string,
+					direction string,
+				) ([]db.ListRecipesRow, error) {
+					if limit != 120 {
+						t.Fatalf("expected limit=120, got %d", limit)
+					}
+					return []db.ListRecipesRow{}, nil
+				}
+			},
+			wantStatus: http.StatusOK,
+		},
+		{
+			name:       "list recipes - negative page",
+			method:     http.MethodGet,
+			path:       "/?page=-1&sort=name&direction=asc",
+			wantStatus: http.StatusBadRequest,
+		},
+		{
+			name:       "list recipes - negative size",
+			method:     http.MethodGet,
+			path:       "/?size=-1&sort=name&direction=asc",
+			wantStatus: http.StatusBadRequest,
+		},
+		{
+			name:   "list recipes - page out of bounds",
+			method: http.MethodGet,
+			path:   "/?page=999&sort=name&direction=asc",
+			setup: func(s *RecipeStoreMock) {
+				s.CountRecipesFunc = func(ctx context.Context, search string) (int64, error) {
+					return 25, nil
+				}
+				s.ListRecipesFunc = func(
+					ctx context.Context,
+					limit int32,
+					offset int32,
+					search string,
+					sort string,
+					direction string,
+				) ([]db.ListRecipesRow, error) {
+					t.Fatalf("ListRecipes should not be called when page is out of bounds")
+					return nil, nil
+				}
+			},
+			wantStatus: http.StatusBadRequest,
+		},
+		{
+			name:   "list recipes - zero results",
+			method: http.MethodGet,
+			path:   "/?search=nomatch&sort=name&direction=asc",
+			setup: func(s *RecipeStoreMock) {
+				s.CountRecipesFunc = func(ctx context.Context, search string) (int64, error) {
+					return 0, nil
+				}
+				s.ListRecipesFunc = func(
+					ctx context.Context,
+					limit int32,
+					offset int32,
+					search string,
+					sort string,
+					direction string,
+				) ([]db.ListRecipesRow, error) {
+					return []db.ListRecipesRow{}, nil
+				}
+			},
+			wantStatus: http.StatusOK,
+			checkBody: func(t *testing.T, rec *httptest.ResponseRecorder) {
+				var got PaginatedResponse
+				if err := json.NewDecoder(rec.Body).Decode(&got); err != nil {
+					t.Fatalf("failed to decode response: %v", err)
+				}
+				if got.TotalItems != 0 {
+					t.Fatalf("expected total_items=0, got %d", got.TotalItems)
+				}
+				if got.TotalPages != 0 {
+					t.Fatalf("expected total_pages=0, got %d", got.TotalPages)
+				}
+				if len(got.Items) != 0 {
+					t.Fatalf("expected 0 items, got %d", len(got.Items))
+				}
+			},
+		},
+		{
+			name:   "list recipes - no query params, all defaults",
+			method: http.MethodGet,
+			path:   "/",
+			setup: func(s *RecipeStoreMock) {
+				s.CountRecipesFunc = func(ctx context.Context, search string) (int64, error) {
+					return 1, nil
+				}
+				s.ListRecipesFunc = func(
+					ctx context.Context,
+					limit int32,
+					offset int32,
+					search string,
+					sort string,
+					direction string,
+				) ([]db.ListRecipesRow, error) {
+					if limit != 12 {
+						t.Fatalf("expected default limit=12, got %d", limit)
+					}
+					if offset != 0 {
+						t.Fatalf("expected default offset=0, got %d", offset)
+					}
+					if search != "" {
+						t.Fatalf("expected empty search, got %q", search)
+					}
+					if sort != "updated_at" {
+						t.Fatalf("expected default sort=updated_at, got %q", sort)
+					}
+					if direction != "desc" {
+						t.Fatalf("expected default direction=desc, got %q", direction)
+					}
+					return []db.ListRecipesRow{{ID: 1, Name: "Chili"}}, nil
+				}
+			},
+			wantStatus: http.StatusOK,
+			checkBody: func(t *testing.T, rec *httptest.ResponseRecorder) {
+				var got PaginatedResponse
+				if err := json.NewDecoder(rec.Body).Decode(&got); err != nil {
+					t.Fatalf("failed to decode response: %v", err)
+				}
+				if got.Page != 1 {
+					t.Fatalf("expected page=1, got %d", got.Page)
+				}
+				if got.Size != 12 {
+					t.Fatalf("expected size=12, got %d", got.Size)
 				}
 			},
 		},

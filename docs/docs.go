@@ -218,6 +218,14 @@ const docTemplate = `{
                 },
                 "type": "object"
             },
+            "recipes.ErrorResponse": {
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "recipes.PaginatedResponse": {
                 "properties": {
                     "items": {
@@ -396,18 +404,21 @@ const docTemplate = `{
                 "operationId": "list-recipes",
                 "parameters": [
                     {
-                        "description": "Page number (default: 1)",
+                        "description": "Page number",
                         "in": "query",
                         "name": "page",
                         "schema": {
+                            "minimum": 1,
                             "type": "integer"
                         }
                     },
                     {
-                        "description": "Page size (default: 12)",
+                        "description": "Page size",
                         "in": "query",
                         "name": "size",
                         "schema": {
+                            "maximum": 120,
+                            "minimum": 1,
                             "type": "integer"
                         }
                     },
@@ -416,7 +427,7 @@ const docTemplate = `{
                         "in": "query",
                         "name": "search",
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     },
                     {
@@ -424,7 +435,13 @@ const docTemplate = `{
                         "in": "query",
                         "name": "sort",
                         "schema": {
-                            "type": "integer"
+                            "enum": [
+                                "id",
+                                "name",
+                                "created_at",
+                                "updated_at"
+                            ],
+                            "type": "string"
                         }
                     },
                     {
@@ -432,7 +449,12 @@ const docTemplate = `{
                         "in": "query",
                         "name": "direction",
                         "schema": {
-                            "type": "integer"
+                            "default": "desc",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "type": "string"
                         }
                     }
                 ],
@@ -455,6 +477,16 @@ const docTemplate = `{
                             }
                         },
                         "description": "OK"
+                    },
+                    "400": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/recipes.ErrorResponse"
+                                }
+                            }
+                        },
+                        "description": "Bad Request"
                     }
                 },
                 "summary": "List recipes",

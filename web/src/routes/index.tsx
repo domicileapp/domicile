@@ -24,7 +24,12 @@ function RouteComponent() {
   const { page, size } = Route.useSearch()
   const navigate = Route.useNavigate()
 
-  const { data: recipes, isLoading, error } = useListRecipes(undefined, { page, size })
+  const {
+    data: recipes,
+    isLoading,
+    error,
+    failureReason,
+  } = useListRecipes(undefined, { page, size })
 
   const handlePageChange = (page: number) => {
     navigate({
@@ -41,7 +46,7 @@ function RouteComponent() {
         totalRecipes={recipes && recipes.data.total_items}
         recipes={recipes?.data.items}
         isLoading={isLoading}
-        error={error}
+        error={failureReason?.response?.data.message || error?.response?.data.message || error}
         page={page}
         size={size}
         onPageChange={handlePageChange}

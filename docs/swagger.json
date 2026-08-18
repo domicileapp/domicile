@@ -211,6 +211,14 @@
                 },
                 "type": "object"
             },
+            "recipes.ErrorResponse": {
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "recipes.PaginatedResponse": {
                 "properties": {
                     "items": {
@@ -389,18 +397,21 @@
                 "operationId": "list-recipes",
                 "parameters": [
                     {
-                        "description": "Page number (default: 1)",
+                        "description": "Page number",
                         "in": "query",
                         "name": "page",
                         "schema": {
+                            "minimum": 1,
                             "type": "integer"
                         }
                     },
                     {
-                        "description": "Page size (default: 12)",
+                        "description": "Page size",
                         "in": "query",
                         "name": "size",
                         "schema": {
+                            "maximum": 120,
+                            "minimum": 1,
                             "type": "integer"
                         }
                     },
@@ -409,7 +420,7 @@
                         "in": "query",
                         "name": "search",
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     },
                     {
@@ -417,7 +428,13 @@
                         "in": "query",
                         "name": "sort",
                         "schema": {
-                            "type": "integer"
+                            "enum": [
+                                "id",
+                                "name",
+                                "created_at",
+                                "updated_at"
+                            ],
+                            "type": "string"
                         }
                     },
                     {
@@ -425,7 +442,12 @@
                         "in": "query",
                         "name": "direction",
                         "schema": {
-                            "type": "integer"
+                            "default": "desc",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "type": "string"
                         }
                     }
                 ],
@@ -448,6 +470,16 @@
                             }
                         },
                         "description": "OK"
+                    },
+                    "400": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/recipes.ErrorResponse"
+                                }
+                            }
+                        },
+                        "description": "Bad Request"
                     }
                 },
                 "summary": "List recipes",

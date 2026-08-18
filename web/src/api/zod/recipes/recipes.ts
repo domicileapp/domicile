@@ -11,12 +11,17 @@ import * as zod from 'zod';
  * Get list of all recipes
  * @summary List recipes
  */
+
+export const listRecipesQuerySizeMax = 120;
+
+export const listRecipesQueryDirectionDefault = `desc`;
+
 export const ListRecipesQueryParams = zod.object({
-  "page": zod.int().optional().describe('Page number (default: 1)'),
-  "size": zod.int().optional().describe('Page size (default: 12)'),
-  "search": zod.int().optional().describe('Search params'),
-  "sort": zod.int().optional().describe('Sort field'),
-  "direction": zod.int().optional().describe('Sort direction')
+  "page": zod.int().min(1).optional().describe('Page number'),
+  "size": zod.int().min(1).max(listRecipesQuerySizeMax).optional().describe('Page size'),
+  "search": zod.string().optional().describe('Search params'),
+  "sort": zod.enum(['id', 'name', 'created_at', 'updated_at']).optional().describe('Sort field'),
+  "direction": zod.enum(['asc', 'desc']).default(listRecipesQueryDirectionDefault).describe('Sort direction')
 })
 
 export const ListRecipesBody = zod.looseObject({
