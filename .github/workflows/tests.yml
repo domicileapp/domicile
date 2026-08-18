@@ -9,6 +9,7 @@ permissions:
 
 jobs:
   verify-generated-code:
+    if: github.event_name == 'pull_request'
     name: Verify generated code
     runs-on: ubuntu-latest
     steps:
@@ -108,7 +109,6 @@ jobs:
   #         path: coverage.txt
 
   go-upload-coverage:
-    if: github.event_name == 'pull_request'
     name: Upload test coverage report
     needs: go-test
     runs-on: ubuntu-latest
