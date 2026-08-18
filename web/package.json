@@ -30,12 +30,14 @@
     "@tanstack/react-query": "^5.101.4",
     "@tanstack/react-router": "latest",
     "@tanstack/react-router-devtools": "latest",
+    "axios": "^1.19.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.4",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
+    "@faker-js/faker": "^10.6.0",
     "@storybook/addon-themes": "^10.0.0",
     "@storybook/react": "^10.0.0",
     "@storybook/react-vite": "^10.0.0",
@@ -53,6 +55,7 @@
     "@vitejs/plugin-react": "^6.0.0",
     "identity-obj-proxy": "^3.0.0",
     "jsdom": "^30.0.0",
+    "msw": "^2.15.0",
     "orval": "^8.24.0",
     "oxc-config-mantine": "^1.0.0",
     "oxfmt": "^0.63.0",

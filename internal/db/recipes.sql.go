@@ -11,11 +11,19 @@ import (
 )
 
 const countRecipes = `-- name: CountRecipes :one
-select count(*) from recipes
+SELECT count(*)
+FROM recipes
+WHERE deleted_at IS NULL
+  AND (
+    $1::text = ''
+    OR name ILIKE '%' || $1::text || '%'
+    OR short_description ILIKE '%' || $1::text || '%'
+    OR notes ILIKE '%' || $1::text || '%'
+  )
 `
 
-func (q *Queries) CountRecipes(ctx context.Context) (int64, error) {
-	row := q.db.QueryRow(ctx, countRecipes)
+func (q *Queries) CountRecipes(ctx context.Context, search string) (int64, error) {
+	row := q.db.QueryRow(ctx, countRecipes, search)
 	var count int64
 	err := row.Scan(&count)
 	return count, err
@@ -305,7 +313,7 @@ func (q *Queries) ListRecipeInstructions(ctx context.Context, dollar_1 []int64) 
 }
 
 const listRecipes = `-- name: ListRecipes :many
-select
+SELECT
     id,
     name,
     short_description,
@@ -318,15 +326,32 @@ select
     photo_url,
     created_at,
     updated_at
-from recipes
-where deleted_at is null
-order by updated_at desc
-limit $1 offset $2
+FROM recipes
+WHERE deleted_at IS NULL
+  AND (
+    $3::text = ''
+    OR name ILIKE '%' || $3::text || '%'
+    OR short_description ILIKE '%' || $3::text || '%'
+    OR notes ILIKE '%' || $3::text || '%'
+  )
+ORDER BY
+    CASE WHEN $4::text = 'name' AND $5::text = 'asc'
+         THEN name END ASC,
+    CASE WHEN $4::text = 'name' AND $5::text = 'desc'
+         THEN name END DESC,
+    CASE WHEN $4::text = 'created_at' AND $5::text = 'asc'
+         THEN created_at END ASC,
+    CASE WHEN $4::text = 'created_at' AND $5::text = 'desc'
+         THEN created_at END DESC
+LIMIT $1 OFFSET $2
 `
 
 type ListRecipesParams struct {
-	Limit  int32 `json:"limit"`
-	Offset int32 `json:"offset"`
+	Limit     int32  `json:"limit"`
+	Offset    int32  `json:"offset"`
+	Search    string `json:"search"`
+	Sort      string `json:"sort"`
+	Direction string `json:"direction"`
 }
 
 type ListRecipesRow struct {
@@ -345,7 +370,13 @@ type ListRecipesRow struct {
 }
 
 func (q *Queries) ListRecipes(ctx context.Context, arg ListRecipesParams) ([]ListRecipesRow, error) {
-	rows, err := q.db.Query(ctx, listRecipes, arg.Limit, arg.Offset)
+	rows, err := q.db.Query(ctx, listRecipes,
+		arg.Limit,
+		arg.Offset,
+		arg.Search,
+		arg.Sort,
+		arg.Direction,
+	)
 	if err != nil {
 		return nil, err
 	}

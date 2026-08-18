@@ -63,6 +63,47 @@ const docTemplate = `{
                 },
                 "type": "object"
             },
+            "github_com_domicileapp_domicile_internal_db.ListRecipesRow": {
+                "properties": {
+                    "cook_time": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "notes": {
+                        "type": "string"
+                    },
+                    "nutrition": {
+                        "type": "string"
+                    },
+                    "photo_url": {
+                        "type": "string"
+                    },
+                    "prep_time": {
+                        "type": "string"
+                    },
+                    "servings": {
+                        "type": "string"
+                    },
+                    "short_description": {
+                        "type": "string"
+                    },
+                    "source": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "github_com_domicileapp_domicile_internal_db.Recipe": {
                 "properties": {
                     "cook_time": {
@@ -173,6 +214,38 @@ const docTemplate = `{
                     },
                     "updated_at": {
                         "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "recipes.ErrorResponse": {
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "recipes.PaginatedResponse": {
+                "properties": {
+                    "items": {
+                        "items": {
+                            "$ref": "#/components/schemas/github_com_domicileapp_domicile_internal_db.ListRecipesRow"
+                        },
+                        "type": "array",
+                        "uniqueItems": false
+                    },
+                    "page": {
+                        "type": "integer"
+                    },
+                    "size": {
+                        "type": "integer"
+                    },
+                    "total_items": {
+                        "type": "integer"
+                    },
+                    "total_pages": {
+                        "type": "integer"
                     }
                 },
                 "type": "object"
@@ -331,19 +404,57 @@ const docTemplate = `{
                 "operationId": "list-recipes",
                 "parameters": [
                     {
-                        "description": "Page number (default: 1)",
+                        "description": "Page number",
                         "in": "query",
                         "name": "page",
                         "schema": {
+                            "minimum": 1,
                             "type": "integer"
                         }
                     },
                     {
-                        "description": "Page size (default: 12)",
+                        "description": "Page size",
                         "in": "query",
                         "name": "size",
                         "schema": {
+                            "maximum": 120,
+                            "minimum": 1,
                             "type": "integer"
+                        }
+                    },
+                    {
+                        "description": "Search params",
+                        "in": "query",
+                        "name": "search",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Sort field",
+                        "in": "query",
+                        "name": "sort",
+                        "schema": {
+                            "enum": [
+                                "id",
+                                "name",
+                                "created_at",
+                                "updated_at"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "Sort direction",
+                        "in": "query",
+                        "name": "direction",
+                        "schema": {
+                            "default": "desc",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "type": "string"
                         }
                     }
                 ],
@@ -361,14 +472,21 @@ const docTemplate = `{
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "items": {
-                                        "$ref": "#/components/schemas/github_com_domicileapp_domicile_internal_db.Recipe"
-                                    },
-                                    "type": "array"
+                                    "$ref": "#/components/schemas/recipes.PaginatedResponse"
                                 }
                             }
                         },
                         "description": "OK"
+                    },
+                    "400": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/recipes.ErrorResponse"
+                                }
+                            }
+                        },
+                        "description": "Bad Request"
                     }
                 },
                 "summary": "List recipes",

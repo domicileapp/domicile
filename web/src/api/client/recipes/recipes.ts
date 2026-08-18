@@ -23,6 +23,13 @@ import type {
   UseQueryResult
 } from '@tanstack/react-query';
 
+import axios from 'axios';
+import type {
+  AxiosError,
+  AxiosRequestConfig,
+  AxiosResponse
+} from 'axios';
+
 import type {
   CreateRecipeBody,
   CreateRecipeIngredientBody,
@@ -36,6 +43,8 @@ import type {
   GithubComDomicileappDomicileInternalDbRecipeInstruction,
   ListRecipesBody,
   ListRecipesParams,
+  RecipesErrorResponse,
+  RecipesPaginatedResponse,
   RecipesRecipeResponse,
   UpdateRecipeBody,
   UpdateRecipeIngredientBody,
@@ -61,56 +70,22 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
   return result;
 };
 
-export type listRecipesResponse200 = {
-  data: GithubComDomicileappDomicileInternalDbRecipe[]
-  status: 200
-}
-
-export type listRecipesResponseSuccess = (listRecipesResponse200) & {
-  headers: Headers;
-};
-;
-
-export type listRecipesResponse = (listRecipesResponseSuccess)
-
-export const getListRecipesUrl = (params?: ListRecipesParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/api/v1/recipes?${stringifiedParams}` : `/api/v1/recipes`
-}
-
 /**
  * Get list of all recipes
  * @summary List recipes
  */
-export const listRecipes = async (listRecipesBody?: ListRecipesBody,
-    params?: ListRecipesParams, options?: RequestInit): Promise<listRecipesResponse> => {
+export const listRecipes = (
+    listRecipesBody?: ListRecipesBody,
+    params?: ListRecipesParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<RecipesPaginatedResponse>> => {
 
-  const res = await fetch(getListRecipesUrl(params),
-  {
+
+    return axios.get(
+      `/api/v1/recipes`,{
     ...options,
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(listRecipesBody)
+        params: {...params, ...options?.params},}
+    );
   }
-)
-
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: listRecipesResponse['data'] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as listRecipesResponse
-}
-
 
 
 
@@ -123,17 +98,17 @@ export const getListRecipesQueryKey = (listRecipesBody?: ListRecipesBody,
     }
 
 
-export const getListRecipesQueryOptions = <TData = Awaited<ReturnType<typeof listRecipes>>, TError = unknown>(listRecipesBody?: ListRecipesBody,
-    params?: ListRecipesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>>, fetch?: RequestInit}
+export const getListRecipesQueryOptions = <TData = Awaited<ReturnType<typeof listRecipes>>, TError = AxiosError<RecipesErrorResponse>>(listRecipesBody?: ListRecipesBody,
+    params?: ListRecipesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>>, axios?: AxiosRequestConfig}
 ) => {
 
-const {query: queryOptions, fetch: fetchOptions} = options ?? {};
+const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getListRecipesQueryKey(listRecipesBody,params);
 
 
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listRecipes>>> = ({ signal }) => listRecipes(listRecipesBody,params, { signal, ...fetchOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listRecipes>>> = ({ signal }) => listRecipes(listRecipesBody,params, { signal, ...axiosOptions });
 
 
 
@@ -143,10 +118,10 @@ const {query: queryOptions, fetch: fetchOptions} = options ?? {};
 }
 
 export type ListRecipesQueryResult = NonNullable<Awaited<ReturnType<typeof listRecipes>>>
-export type ListRecipesQueryError = unknown
+export type ListRecipesQueryError = AxiosError<RecipesErrorResponse>
 
 
-export function useListRecipes<TData = Awaited<ReturnType<typeof listRecipes>>, TError = unknown>(
+export function useListRecipes<TData = Awaited<ReturnType<typeof listRecipes>>, TError = AxiosError<RecipesErrorResponse>>(
  listRecipesBody: undefined |  ListRecipesBody,
     params: undefined |  ListRecipesParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
@@ -154,10 +129,10 @@ export function useListRecipes<TData = Awaited<ReturnType<typeof listRecipes>>, 
           TError,
           Awaited<ReturnType<typeof listRecipes>>
         > , 'initialData'
-      >, fetch?: RequestInit}
+      >, axios?: AxiosRequestConfig}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListRecipes<TData = Awaited<ReturnType<typeof listRecipes>>, TError = unknown>(
+export function useListRecipes<TData = Awaited<ReturnType<typeof listRecipes>>, TError = AxiosError<RecipesErrorResponse>>(
  listRecipesBody?: ListRecipesBody,
     params?: ListRecipesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
@@ -165,21 +140,21 @@ export function useListRecipes<TData = Awaited<ReturnType<typeof listRecipes>>, 
           TError,
           Awaited<ReturnType<typeof listRecipes>>
         > , 'initialData'
-      >, fetch?: RequestInit}
+      >, axios?: AxiosRequestConfig}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListRecipes<TData = Awaited<ReturnType<typeof listRecipes>>, TError = unknown>(
+export function useListRecipes<TData = Awaited<ReturnType<typeof listRecipes>>, TError = AxiosError<RecipesErrorResponse>>(
  listRecipesBody?: ListRecipesBody,
-    params?: ListRecipesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>>, fetch?: RequestInit}
+    params?: ListRecipesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>>, axios?: AxiosRequestConfig}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
  * @summary List recipes
  */
 
-export function useListRecipes<TData = Awaited<ReturnType<typeof listRecipes>>, TError = unknown>(
+export function useListRecipes<TData = Awaited<ReturnType<typeof listRecipes>>, TError = AxiosError<RecipesErrorResponse>>(
  listRecipesBody?: ListRecipesBody,
-    params?: ListRecipesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>>, fetch?: RequestInit}
+    params?: ListRecipesParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRecipes>>, TError, TData>>, axios?: AxiosRequestConfig}
  , queryClient?: QueryClient
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
@@ -195,61 +170,33 @@ export function useListRecipes<TData = Awaited<ReturnType<typeof listRecipes>>, 
 
 
 
-export type createRecipeResponse200 = {
-  data: GithubComDomicileappDomicileInternalDbRecipe
-  status: 200
-}
-
-export type createRecipeResponseSuccess = (createRecipeResponse200) & {
-  headers: Headers;
-};
-;
-
-export type createRecipeResponse = (createRecipeResponseSuccess)
-
-export const getCreateRecipeUrl = () => {
-
-
-
-
-  return `/api/v1/recipes`
-}
-
 /**
  * @summary Create recipe
  */
-export const createRecipe = async (createRecipeBody: CreateRecipeBody, options?: RequestInit): Promise<createRecipeResponse> => {
+export const createRecipe = (
+    createRecipeBody: CreateRecipeBody, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<GithubComDomicileappDomicileInternalDbRecipe>> => {
 
-  const res = await fetch(getCreateRecipeUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(createRecipeBody)
+
+    return axios.post(
+      `/api/v1/recipes`,
+      createRecipeBody,options
+    );
   }
-)
-
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: createRecipeResponse['data'] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as createRecipeResponse
-}
 
 
 
 
-
-export const getCreateRecipeMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRecipe>>, TError,{data: CreateRecipeBody}, TContext>, fetch?: RequestInit}
+export const getCreateRecipeMutationOptions = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRecipe>>, TError,{data: CreateRecipeBody}, TContext>, axios?: AxiosRequestConfig}
 ): UseMutationOptions<Awaited<ReturnType<typeof createRecipe>>, TError,{data: CreateRecipeBody}, TContext> => {
 
 const mutationKey = ['createRecipe'];
-const {mutation: mutationOptions, fetch: fetchOptions} = options ?
+const {mutation: mutationOptions, axios: axiosOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
       : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, fetch: undefined};
+      : {mutation: { mutationKey, }, axios: undefined};
 
 
 
@@ -257,7 +204,7 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof createRecipe>>, {data: CreateRecipeBody}> = (props) => {
           const {data} = props ?? {};
 
-          return  createRecipe(data,fetchOptions)
+          return  createRecipe(data,axiosOptions)
         }
 
 
@@ -269,13 +216,13 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
 
     export type CreateRecipeMutationResult = NonNullable<Awaited<ReturnType<typeof createRecipe>>>
     export type CreateRecipeMutationBody = CreateRecipeBody
-    export type CreateRecipeMutationError = unknown
+    export type CreateRecipeMutationError = AxiosError<unknown>
 
     /**
  * @summary Create recipe
  */
-export const useCreateRecipe = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRecipe>>, TError,{data: CreateRecipeBody}, TContext>, fetch?: RequestInit}
+export const useCreateRecipe = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRecipe>>, TError,{data: CreateRecipeBody}, TContext>, axios?: AxiosRequestConfig}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof createRecipe>>,
         TError,
@@ -284,62 +231,33 @@ export const useCreateRecipe = <TError = unknown,
       > => {
       return useMutation(getCreateRecipeMutationOptions(options), queryClient);
     }
-    export type deleteRecipeResponse204 = {
-  data: void
-  status: 204
-}
-
-export type deleteRecipeResponseSuccess = (deleteRecipeResponse204) & {
-  headers: Headers;
-};
-;
-
-export type deleteRecipeResponse = (deleteRecipeResponseSuccess)
-
-export const getDeleteRecipeUrl = (id: number,) => {
-
-
-
-
-  return `/api/v1/recipes/${encodeURIComponent(String(id))}`
-}
-
-/**
+    /**
  * @summary Delete recipe
  */
-export const deleteRecipe = async (id: number,
-    deleteRecipeBody?: DeleteRecipeBody, options?: RequestInit): Promise<deleteRecipeResponse> => {
+export const deleteRecipe = (
+    id: number,
+    deleteRecipeBody?: DeleteRecipeBody, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<void>> => {
 
-  const res = await fetch(getDeleteRecipeUrl(id),
-  {
-    ...options,
-    method: 'DELETE',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(deleteRecipeBody)
+
+    return axios.delete(
+      `/api/v1/recipes/${encodeURIComponent(String(id))}`,{data: deleteRecipeBody,...options}
+    );
   }
-)
-
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: deleteRecipeResponse['data'] = body ? JSON.parse(body) : undefined
-  return { data, status: res.status, headers: res.headers } as deleteRecipeResponse
-}
 
 
 
 
-
-export const getDeleteRecipeMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteRecipe>>, TError,{id: number;data?: DeleteRecipeBody}, TContext>, fetch?: RequestInit}
+export const getDeleteRecipeMutationOptions = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteRecipe>>, TError,{id: number;data?: DeleteRecipeBody}, TContext>, axios?: AxiosRequestConfig}
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteRecipe>>, TError,{id: number;data?: DeleteRecipeBody}, TContext> => {
 
 const mutationKey = ['deleteRecipe'];
-const {mutation: mutationOptions, fetch: fetchOptions} = options ?
+const {mutation: mutationOptions, axios: axiosOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
       : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, fetch: undefined};
+      : {mutation: { mutationKey, }, axios: undefined};
 
 
 
@@ -347,7 +265,7 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteRecipe>>, {id: number;data?: DeleteRecipeBody}> = (props) => {
           const {id,data} = props ?? {};
 
-          return  deleteRecipe(id,data,fetchOptions)
+          return  deleteRecipe(id,data,axiosOptions)
         }
 
 
@@ -359,13 +277,13 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
 
     export type DeleteRecipeMutationResult = NonNullable<Awaited<ReturnType<typeof deleteRecipe>>>
     export type DeleteRecipeMutationBody = DeleteRecipeBody | undefined
-    export type DeleteRecipeMutationError = unknown
+    export type DeleteRecipeMutationError = AxiosError<unknown>
 
     /**
  * @summary Delete recipe
  */
-export const useDeleteRecipe = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteRecipe>>, TError,{id: number;data?: DeleteRecipeBody}, TContext>, fetch?: RequestInit}
+export const useDeleteRecipe = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteRecipe>>, TError,{id: number;data?: DeleteRecipeBody}, TContext>, axios?: AxiosRequestConfig}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof deleteRecipe>>,
         TError,
@@ -374,48 +292,19 @@ export const useDeleteRecipe = <TError = unknown,
       > => {
       return useMutation(getDeleteRecipeMutationOptions(options), queryClient);
     }
-    export type getRecipeResponse200 = {
-  data: RecipesRecipeResponse
-  status: 200
-}
-
-export type getRecipeResponseSuccess = (getRecipeResponse200) & {
-  headers: Headers;
-};
-;
-
-export type getRecipeResponse = (getRecipeResponseSuccess)
-
-export const getGetRecipeUrl = (id: number,) => {
-
-
-
-
-  return `/api/v1/recipes/${encodeURIComponent(String(id))}`
-}
-
-/**
+    /**
  * @summary Get recipe by ID
  */
-export const getRecipe = async (id: number,
-    getRecipeBody?: GetRecipeBody, options?: RequestInit): Promise<getRecipeResponse> => {
+export const getRecipe = (
+    id: number,
+    getRecipeBody?: GetRecipeBody, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<RecipesRecipeResponse>> => {
 
-  const res = await fetch(getGetRecipeUrl(id),
-  {
-    ...options,
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(getRecipeBody)
+
+    return axios.get(
+      `/api/v1/recipes/${encodeURIComponent(String(id))}`,options
+    );
   }
-)
-
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: getRecipeResponse['data'] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as getRecipeResponse
-}
-
 
 
 
@@ -428,17 +317,17 @@ export const getGetRecipeQueryKey = (id: number,
     }
 
 
-export const getGetRecipeQueryOptions = <TData = Awaited<ReturnType<typeof getRecipe>>, TError = unknown>(id: number,
-    getRecipeBody?: GetRecipeBody, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecipe>>, TError, TData>>, fetch?: RequestInit}
+export const getGetRecipeQueryOptions = <TData = Awaited<ReturnType<typeof getRecipe>>, TError = AxiosError<unknown>>(id: number,
+    getRecipeBody?: GetRecipeBody, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecipe>>, TError, TData>>, axios?: AxiosRequestConfig}
 ) => {
 
-const {query: queryOptions, fetch: fetchOptions} = options ?? {};
+const {query: queryOptions, axios: axiosOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetRecipeQueryKey(id,getRecipeBody);
 
 
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRecipe>>> = ({ signal }) => getRecipe(id,getRecipeBody, { signal, ...fetchOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRecipe>>> = ({ signal }) => getRecipe(id,getRecipeBody, { signal, ...axiosOptions });
 
 
 
@@ -448,10 +337,10 @@ const {query: queryOptions, fetch: fetchOptions} = options ?? {};
 }
 
 export type GetRecipeQueryResult = NonNullable<Awaited<ReturnType<typeof getRecipe>>>
-export type GetRecipeQueryError = unknown
+export type GetRecipeQueryError = AxiosError<unknown>
 
 
-export function useGetRecipe<TData = Awaited<ReturnType<typeof getRecipe>>, TError = unknown>(
+export function useGetRecipe<TData = Awaited<ReturnType<typeof getRecipe>>, TError = AxiosError<unknown>>(
  id: number,
     getRecipeBody: undefined |  GetRecipeBody, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecipe>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
@@ -459,10 +348,10 @@ export function useGetRecipe<TData = Awaited<ReturnType<typeof getRecipe>>, TErr
           TError,
           Awaited<ReturnType<typeof getRecipe>>
         > , 'initialData'
-      >, fetch?: RequestInit}
+      >, axios?: AxiosRequestConfig}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetRecipe<TData = Awaited<ReturnType<typeof getRecipe>>, TError = unknown>(
+export function useGetRecipe<TData = Awaited<ReturnType<typeof getRecipe>>, TError = AxiosError<unknown>>(
  id: number,
     getRecipeBody?: GetRecipeBody, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecipe>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
@@ -470,21 +359,21 @@ export function useGetRecipe<TData = Awaited<ReturnType<typeof getRecipe>>, TErr
           TError,
           Awaited<ReturnType<typeof getRecipe>>
         > , 'initialData'
-      >, fetch?: RequestInit}
+      >, axios?: AxiosRequestConfig}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetRecipe<TData = Awaited<ReturnType<typeof getRecipe>>, TError = unknown>(
+export function useGetRecipe<TData = Awaited<ReturnType<typeof getRecipe>>, TError = AxiosError<unknown>>(
  id: number,
-    getRecipeBody?: GetRecipeBody, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecipe>>, TError, TData>>, fetch?: RequestInit}
+    getRecipeBody?: GetRecipeBody, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecipe>>, TError, TData>>, axios?: AxiosRequestConfig}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
  * @summary Get recipe by ID
  */
 
-export function useGetRecipe<TData = Awaited<ReturnType<typeof getRecipe>>, TError = unknown>(
+export function useGetRecipe<TData = Awaited<ReturnType<typeof getRecipe>>, TError = AxiosError<unknown>>(
  id: number,
-    getRecipeBody?: GetRecipeBody, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecipe>>, TError, TData>>, fetch?: RequestInit}
+    getRecipeBody?: GetRecipeBody, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecipe>>, TError, TData>>, axios?: AxiosRequestConfig}
  , queryClient?: QueryClient
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
@@ -500,62 +389,34 @@ export function useGetRecipe<TData = Awaited<ReturnType<typeof getRecipe>>, TErr
 
 
 
-export type updateRecipeResponse204 = {
-  data: GithubComDomicileappDomicileInternalDbRecipe
-  status: 204
-}
-
-export type updateRecipeResponseSuccess = (updateRecipeResponse204) & {
-  headers: Headers;
-};
-;
-
-export type updateRecipeResponse = (updateRecipeResponseSuccess)
-
-export const getUpdateRecipeUrl = (id: number,) => {
-
-
-
-
-  return `/api/v1/recipes/${encodeURIComponent(String(id))}`
-}
-
 /**
  * @summary Update recipe
  */
-export const updateRecipe = async (id: number,
-    updateRecipeBody: UpdateRecipeBody, options?: RequestInit): Promise<updateRecipeResponse> => {
+export const updateRecipe = (
+    id: number,
+    updateRecipeBody: UpdateRecipeBody, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<GithubComDomicileappDomicileInternalDbRecipe>> => {
 
-  const res = await fetch(getUpdateRecipeUrl(id),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(updateRecipeBody)
+
+    return axios.put(
+      `/api/v1/recipes/${encodeURIComponent(String(id))}`,
+      updateRecipeBody,options
+    );
   }
-)
-
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: updateRecipeResponse['data'] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as updateRecipeResponse
-}
 
 
 
 
-
-export const getUpdateRecipeMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRecipe>>, TError,{id: number;data: UpdateRecipeBody}, TContext>, fetch?: RequestInit}
+export const getUpdateRecipeMutationOptions = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRecipe>>, TError,{id: number;data: UpdateRecipeBody}, TContext>, axios?: AxiosRequestConfig}
 ): UseMutationOptions<Awaited<ReturnType<typeof updateRecipe>>, TError,{id: number;data: UpdateRecipeBody}, TContext> => {
 
 const mutationKey = ['updateRecipe'];
-const {mutation: mutationOptions, fetch: fetchOptions} = options ?
+const {mutation: mutationOptions, axios: axiosOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
       : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, fetch: undefined};
+      : {mutation: { mutationKey, }, axios: undefined};
 
 
 
@@ -563,7 +424,7 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateRecipe>>, {id: number;data: UpdateRecipeBody}> = (props) => {
           const {id,data} = props ?? {};
 
-          return  updateRecipe(id,data,fetchOptions)
+          return  updateRecipe(id,data,axiosOptions)
         }
 
 
@@ -575,13 +436,13 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
 
     export type UpdateRecipeMutationResult = NonNullable<Awaited<ReturnType<typeof updateRecipe>>>
     export type UpdateRecipeMutationBody = UpdateRecipeBody
-    export type UpdateRecipeMutationError = unknown
+    export type UpdateRecipeMutationError = AxiosError<unknown>
 
     /**
  * @summary Update recipe
  */
-export const useUpdateRecipe = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRecipe>>, TError,{id: number;data: UpdateRecipeBody}, TContext>, fetch?: RequestInit}
+export const useUpdateRecipe = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRecipe>>, TError,{id: number;data: UpdateRecipeBody}, TContext>, axios?: AxiosRequestConfig}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof updateRecipe>>,
         TError,
@@ -590,62 +451,33 @@ export const useUpdateRecipe = <TError = unknown,
       > => {
       return useMutation(getUpdateRecipeMutationOptions(options), queryClient);
     }
-    export type deleteApiV1RecipesIdIngredientResponse204 = {
-  data: GithubComDomicileappDomicileInternalDbRecipe
-  status: 204
-}
-
-export type deleteApiV1RecipesIdIngredientResponseSuccess = (deleteApiV1RecipesIdIngredientResponse204) & {
-  headers: Headers;
-};
-;
-
-export type deleteApiV1RecipesIdIngredientResponse = (deleteApiV1RecipesIdIngredientResponseSuccess)
-
-export const getDeleteApiV1RecipesIdIngredientUrl = (id: number,) => {
-
-
-
-
-  return `/api/v1/recipes/${encodeURIComponent(String(id))}/ingredient`
-}
-
-/**
+    /**
  * @summary Delete recipe ingredient
  */
-export const deleteApiV1RecipesIdIngredient = async (id: number,
-    deleteApiV1RecipesIdIngredientBody?: DeleteApiV1RecipesIdIngredientBody, options?: RequestInit): Promise<deleteApiV1RecipesIdIngredientResponse> => {
+export const deleteApiV1RecipesIdIngredient = (
+    id: number,
+    deleteApiV1RecipesIdIngredientBody?: DeleteApiV1RecipesIdIngredientBody, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<GithubComDomicileappDomicileInternalDbRecipe>> => {
 
-  const res = await fetch(getDeleteApiV1RecipesIdIngredientUrl(id),
-  {
-    ...options,
-    method: 'DELETE',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(deleteApiV1RecipesIdIngredientBody)
+
+    return axios.delete(
+      `/api/v1/recipes/${encodeURIComponent(String(id))}/ingredient`,{data: deleteApiV1RecipesIdIngredientBody,...options}
+    );
   }
-)
-
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: deleteApiV1RecipesIdIngredientResponse['data'] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as deleteApiV1RecipesIdIngredientResponse
-}
 
 
 
 
-
-export const getDeleteApiV1RecipesIdIngredientMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteApiV1RecipesIdIngredient>>, TError,{id: number;data?: DeleteApiV1RecipesIdIngredientBody}, TContext>, fetch?: RequestInit}
+export const getDeleteApiV1RecipesIdIngredientMutationOptions = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteApiV1RecipesIdIngredient>>, TError,{id: number;data?: DeleteApiV1RecipesIdIngredientBody}, TContext>, axios?: AxiosRequestConfig}
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteApiV1RecipesIdIngredient>>, TError,{id: number;data?: DeleteApiV1RecipesIdIngredientBody}, TContext> => {
 
 const mutationKey = ['deleteApiV1RecipesIdIngredient'];
-const {mutation: mutationOptions, fetch: fetchOptions} = options ?
+const {mutation: mutationOptions, axios: axiosOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
       : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, fetch: undefined};
+      : {mutation: { mutationKey, }, axios: undefined};
 
 
 
@@ -653,7 +485,7 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteApiV1RecipesIdIngredient>>, {id: number;data?: DeleteApiV1RecipesIdIngredientBody}> = (props) => {
           const {id,data} = props ?? {};
 
-          return  deleteApiV1RecipesIdIngredient(id,data,fetchOptions)
+          return  deleteApiV1RecipesIdIngredient(id,data,axiosOptions)
         }
 
 
@@ -665,13 +497,13 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
 
     export type DeleteApiV1RecipesIdIngredientMutationResult = NonNullable<Awaited<ReturnType<typeof deleteApiV1RecipesIdIngredient>>>
     export type DeleteApiV1RecipesIdIngredientMutationBody = DeleteApiV1RecipesIdIngredientBody | undefined
-    export type DeleteApiV1RecipesIdIngredientMutationError = unknown
+    export type DeleteApiV1RecipesIdIngredientMutationError = AxiosError<unknown>
 
     /**
  * @summary Delete recipe ingredient
  */
-export const useDeleteApiV1RecipesIdIngredient = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteApiV1RecipesIdIngredient>>, TError,{id: number;data?: DeleteApiV1RecipesIdIngredientBody}, TContext>, fetch?: RequestInit}
+export const useDeleteApiV1RecipesIdIngredient = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteApiV1RecipesIdIngredient>>, TError,{id: number;data?: DeleteApiV1RecipesIdIngredientBody}, TContext>, axios?: AxiosRequestConfig}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof deleteApiV1RecipesIdIngredient>>,
         TError,
@@ -680,62 +512,34 @@ export const useDeleteApiV1RecipesIdIngredient = <TError = unknown,
       > => {
       return useMutation(getDeleteApiV1RecipesIdIngredientMutationOptions(options), queryClient);
     }
-    export type updateRecipeIngredientResponse201 = {
-  data: GithubComDomicileappDomicileInternalDbRecipe
-  status: 201
-}
-
-export type updateRecipeIngredientResponseSuccess = (updateRecipeIngredientResponse201) & {
-  headers: Headers;
-};
-;
-
-export type updateRecipeIngredientResponse = (updateRecipeIngredientResponseSuccess)
-
-export const getUpdateRecipeIngredientUrl = (id: number,) => {
-
-
-
-
-  return `/api/v1/recipes/${encodeURIComponent(String(id))}/ingredient`
-}
-
-/**
+    /**
  * @summary Update recipe ingredient
  */
-export const updateRecipeIngredient = async (id: number,
-    updateRecipeIngredientBody: UpdateRecipeIngredientBody, options?: RequestInit): Promise<updateRecipeIngredientResponse> => {
+export const updateRecipeIngredient = (
+    id: number,
+    updateRecipeIngredientBody: UpdateRecipeIngredientBody, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<GithubComDomicileappDomicileInternalDbRecipe>> => {
 
-  const res = await fetch(getUpdateRecipeIngredientUrl(id),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(updateRecipeIngredientBody)
+
+    return axios.put(
+      `/api/v1/recipes/${encodeURIComponent(String(id))}/ingredient`,
+      updateRecipeIngredientBody,options
+    );
   }
-)
-
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: updateRecipeIngredientResponse['data'] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as updateRecipeIngredientResponse
-}
 
 
 
 
-
-export const getUpdateRecipeIngredientMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRecipeIngredient>>, TError,{id: number;data: UpdateRecipeIngredientBody}, TContext>, fetch?: RequestInit}
+export const getUpdateRecipeIngredientMutationOptions = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRecipeIngredient>>, TError,{id: number;data: UpdateRecipeIngredientBody}, TContext>, axios?: AxiosRequestConfig}
 ): UseMutationOptions<Awaited<ReturnType<typeof updateRecipeIngredient>>, TError,{id: number;data: UpdateRecipeIngredientBody}, TContext> => {
 
 const mutationKey = ['updateRecipeIngredient'];
-const {mutation: mutationOptions, fetch: fetchOptions} = options ?
+const {mutation: mutationOptions, axios: axiosOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
       : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, fetch: undefined};
+      : {mutation: { mutationKey, }, axios: undefined};
 
 
 
@@ -743,7 +547,7 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateRecipeIngredient>>, {id: number;data: UpdateRecipeIngredientBody}> = (props) => {
           const {id,data} = props ?? {};
 
-          return  updateRecipeIngredient(id,data,fetchOptions)
+          return  updateRecipeIngredient(id,data,axiosOptions)
         }
 
 
@@ -755,13 +559,13 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
 
     export type UpdateRecipeIngredientMutationResult = NonNullable<Awaited<ReturnType<typeof updateRecipeIngredient>>>
     export type UpdateRecipeIngredientMutationBody = UpdateRecipeIngredientBody
-    export type UpdateRecipeIngredientMutationError = unknown
+    export type UpdateRecipeIngredientMutationError = AxiosError<unknown>
 
     /**
  * @summary Update recipe ingredient
  */
-export const useUpdateRecipeIngredient = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRecipeIngredient>>, TError,{id: number;data: UpdateRecipeIngredientBody}, TContext>, fetch?: RequestInit}
+export const useUpdateRecipeIngredient = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRecipeIngredient>>, TError,{id: number;data: UpdateRecipeIngredientBody}, TContext>, axios?: AxiosRequestConfig}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof updateRecipeIngredient>>,
         TError,
@@ -770,62 +574,34 @@ export const useUpdateRecipeIngredient = <TError = unknown,
       > => {
       return useMutation(getUpdateRecipeIngredientMutationOptions(options), queryClient);
     }
-    export type createRecipeIngredientResponse201 = {
-  data: GithubComDomicileappDomicileInternalDbRecipeIngredient
-  status: 201
-}
-
-export type createRecipeIngredientResponseSuccess = (createRecipeIngredientResponse201) & {
-  headers: Headers;
-};
-;
-
-export type createRecipeIngredientResponse = (createRecipeIngredientResponseSuccess)
-
-export const getCreateRecipeIngredientUrl = (id: number,) => {
-
-
-
-
-  return `/api/v1/recipes/${encodeURIComponent(String(id))}/ingredients`
-}
-
-/**
+    /**
  * @summary Create recipe ingredient
  */
-export const createRecipeIngredient = async (id: number,
-    createRecipeIngredientBody: CreateRecipeIngredientBody, options?: RequestInit): Promise<createRecipeIngredientResponse> => {
+export const createRecipeIngredient = (
+    id: number,
+    createRecipeIngredientBody: CreateRecipeIngredientBody, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<GithubComDomicileappDomicileInternalDbRecipeIngredient>> => {
 
-  const res = await fetch(getCreateRecipeIngredientUrl(id),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(createRecipeIngredientBody)
+
+    return axios.post(
+      `/api/v1/recipes/${encodeURIComponent(String(id))}/ingredients`,
+      createRecipeIngredientBody,options
+    );
   }
-)
-
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: createRecipeIngredientResponse['data'] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as createRecipeIngredientResponse
-}
 
 
 
 
-
-export const getCreateRecipeIngredientMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRecipeIngredient>>, TError,{id: number;data: CreateRecipeIngredientBody}, TContext>, fetch?: RequestInit}
+export const getCreateRecipeIngredientMutationOptions = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRecipeIngredient>>, TError,{id: number;data: CreateRecipeIngredientBody}, TContext>, axios?: AxiosRequestConfig}
 ): UseMutationOptions<Awaited<ReturnType<typeof createRecipeIngredient>>, TError,{id: number;data: CreateRecipeIngredientBody}, TContext> => {
 
 const mutationKey = ['createRecipeIngredient'];
-const {mutation: mutationOptions, fetch: fetchOptions} = options ?
+const {mutation: mutationOptions, axios: axiosOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
       : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, fetch: undefined};
+      : {mutation: { mutationKey, }, axios: undefined};
 
 
 
@@ -833,7 +609,7 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof createRecipeIngredient>>, {id: number;data: CreateRecipeIngredientBody}> = (props) => {
           const {id,data} = props ?? {};
 
-          return  createRecipeIngredient(id,data,fetchOptions)
+          return  createRecipeIngredient(id,data,axiosOptions)
         }
 
 
@@ -845,13 +621,13 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
 
     export type CreateRecipeIngredientMutationResult = NonNullable<Awaited<ReturnType<typeof createRecipeIngredient>>>
     export type CreateRecipeIngredientMutationBody = CreateRecipeIngredientBody
-    export type CreateRecipeIngredientMutationError = unknown
+    export type CreateRecipeIngredientMutationError = AxiosError<unknown>
 
     /**
  * @summary Create recipe ingredient
  */
-export const useCreateRecipeIngredient = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRecipeIngredient>>, TError,{id: number;data: CreateRecipeIngredientBody}, TContext>, fetch?: RequestInit}
+export const useCreateRecipeIngredient = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRecipeIngredient>>, TError,{id: number;data: CreateRecipeIngredientBody}, TContext>, axios?: AxiosRequestConfig}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof createRecipeIngredient>>,
         TError,
@@ -860,62 +636,33 @@ export const useCreateRecipeIngredient = <TError = unknown,
       > => {
       return useMutation(getCreateRecipeIngredientMutationOptions(options), queryClient);
     }
-    export type deleteRecipeInstructionResponse204 = {
-  data: GithubComDomicileappDomicileInternalDbRecipe
-  status: 204
-}
-
-export type deleteRecipeInstructionResponseSuccess = (deleteRecipeInstructionResponse204) & {
-  headers: Headers;
-};
-;
-
-export type deleteRecipeInstructionResponse = (deleteRecipeInstructionResponseSuccess)
-
-export const getDeleteRecipeInstructionUrl = (id: number,) => {
-
-
-
-
-  return `/api/v1/recipes/${encodeURIComponent(String(id))}/instruction`
-}
-
-/**
+    /**
  * @summary Delete recipe instruction
  */
-export const deleteRecipeInstruction = async (id: number,
-    deleteRecipeInstructionBody?: DeleteRecipeInstructionBody, options?: RequestInit): Promise<deleteRecipeInstructionResponse> => {
+export const deleteRecipeInstruction = (
+    id: number,
+    deleteRecipeInstructionBody?: DeleteRecipeInstructionBody, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<GithubComDomicileappDomicileInternalDbRecipe>> => {
 
-  const res = await fetch(getDeleteRecipeInstructionUrl(id),
-  {
-    ...options,
-    method: 'DELETE',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(deleteRecipeInstructionBody)
+
+    return axios.delete(
+      `/api/v1/recipes/${encodeURIComponent(String(id))}/instruction`,{data: deleteRecipeInstructionBody,...options}
+    );
   }
-)
-
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: deleteRecipeInstructionResponse['data'] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as deleteRecipeInstructionResponse
-}
 
 
 
 
-
-export const getDeleteRecipeInstructionMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteRecipeInstruction>>, TError,{id: number;data?: DeleteRecipeInstructionBody}, TContext>, fetch?: RequestInit}
+export const getDeleteRecipeInstructionMutationOptions = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteRecipeInstruction>>, TError,{id: number;data?: DeleteRecipeInstructionBody}, TContext>, axios?: AxiosRequestConfig}
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteRecipeInstruction>>, TError,{id: number;data?: DeleteRecipeInstructionBody}, TContext> => {
 
 const mutationKey = ['deleteRecipeInstruction'];
-const {mutation: mutationOptions, fetch: fetchOptions} = options ?
+const {mutation: mutationOptions, axios: axiosOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
       : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, fetch: undefined};
+      : {mutation: { mutationKey, }, axios: undefined};
 
 
 
@@ -923,7 +670,7 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteRecipeInstruction>>, {id: number;data?: DeleteRecipeInstructionBody}> = (props) => {
           const {id,data} = props ?? {};
 
-          return  deleteRecipeInstruction(id,data,fetchOptions)
+          return  deleteRecipeInstruction(id,data,axiosOptions)
         }
 
 
@@ -935,13 +682,13 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
 
     export type DeleteRecipeInstructionMutationResult = NonNullable<Awaited<ReturnType<typeof deleteRecipeInstruction>>>
     export type DeleteRecipeInstructionMutationBody = DeleteRecipeInstructionBody | undefined
-    export type DeleteRecipeInstructionMutationError = unknown
+    export type DeleteRecipeInstructionMutationError = AxiosError<unknown>
 
     /**
  * @summary Delete recipe instruction
  */
-export const useDeleteRecipeInstruction = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteRecipeInstruction>>, TError,{id: number;data?: DeleteRecipeInstructionBody}, TContext>, fetch?: RequestInit}
+export const useDeleteRecipeInstruction = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteRecipeInstruction>>, TError,{id: number;data?: DeleteRecipeInstructionBody}, TContext>, axios?: AxiosRequestConfig}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof deleteRecipeInstruction>>,
         TError,
@@ -950,62 +697,34 @@ export const useDeleteRecipeInstruction = <TError = unknown,
       > => {
       return useMutation(getDeleteRecipeInstructionMutationOptions(options), queryClient);
     }
-    export type updateRecipeInstructionResponse201 = {
-  data: GithubComDomicileappDomicileInternalDbRecipe
-  status: 201
-}
-
-export type updateRecipeInstructionResponseSuccess = (updateRecipeInstructionResponse201) & {
-  headers: Headers;
-};
-;
-
-export type updateRecipeInstructionResponse = (updateRecipeInstructionResponseSuccess)
-
-export const getUpdateRecipeInstructionUrl = (id: number,) => {
-
-
-
-
-  return `/api/v1/recipes/${encodeURIComponent(String(id))}/instruction`
-}
-
-/**
+    /**
  * @summary Update recipe instruction
  */
-export const updateRecipeInstruction = async (id: number,
-    updateRecipeInstructionBody: UpdateRecipeInstructionBody, options?: RequestInit): Promise<updateRecipeInstructionResponse> => {
+export const updateRecipeInstruction = (
+    id: number,
+    updateRecipeInstructionBody: UpdateRecipeInstructionBody, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<GithubComDomicileappDomicileInternalDbRecipe>> => {
 
-  const res = await fetch(getUpdateRecipeInstructionUrl(id),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(updateRecipeInstructionBody)
+
+    return axios.put(
+      `/api/v1/recipes/${encodeURIComponent(String(id))}/instruction`,
+      updateRecipeInstructionBody,options
+    );
   }
-)
-
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: updateRecipeInstructionResponse['data'] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as updateRecipeInstructionResponse
-}
 
 
 
 
-
-export const getUpdateRecipeInstructionMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRecipeInstruction>>, TError,{id: number;data: UpdateRecipeInstructionBody}, TContext>, fetch?: RequestInit}
+export const getUpdateRecipeInstructionMutationOptions = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRecipeInstruction>>, TError,{id: number;data: UpdateRecipeInstructionBody}, TContext>, axios?: AxiosRequestConfig}
 ): UseMutationOptions<Awaited<ReturnType<typeof updateRecipeInstruction>>, TError,{id: number;data: UpdateRecipeInstructionBody}, TContext> => {
 
 const mutationKey = ['updateRecipeInstruction'];
-const {mutation: mutationOptions, fetch: fetchOptions} = options ?
+const {mutation: mutationOptions, axios: axiosOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
       : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, fetch: undefined};
+      : {mutation: { mutationKey, }, axios: undefined};
 
 
 
@@ -1013,7 +732,7 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateRecipeInstruction>>, {id: number;data: UpdateRecipeInstructionBody}> = (props) => {
           const {id,data} = props ?? {};
 
-          return  updateRecipeInstruction(id,data,fetchOptions)
+          return  updateRecipeInstruction(id,data,axiosOptions)
         }
 
 
@@ -1025,13 +744,13 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
 
     export type UpdateRecipeInstructionMutationResult = NonNullable<Awaited<ReturnType<typeof updateRecipeInstruction>>>
     export type UpdateRecipeInstructionMutationBody = UpdateRecipeInstructionBody
-    export type UpdateRecipeInstructionMutationError = unknown
+    export type UpdateRecipeInstructionMutationError = AxiosError<unknown>
 
     /**
  * @summary Update recipe instruction
  */
-export const useUpdateRecipeInstruction = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRecipeInstruction>>, TError,{id: number;data: UpdateRecipeInstructionBody}, TContext>, fetch?: RequestInit}
+export const useUpdateRecipeInstruction = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateRecipeInstruction>>, TError,{id: number;data: UpdateRecipeInstructionBody}, TContext>, axios?: AxiosRequestConfig}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof updateRecipeInstruction>>,
         TError,
@@ -1040,62 +759,34 @@ export const useUpdateRecipeInstruction = <TError = unknown,
       > => {
       return useMutation(getUpdateRecipeInstructionMutationOptions(options), queryClient);
     }
-    export type createRecipeInstructionResponse201 = {
-  data: GithubComDomicileappDomicileInternalDbRecipeInstruction
-  status: 201
-}
-
-export type createRecipeInstructionResponseSuccess = (createRecipeInstructionResponse201) & {
-  headers: Headers;
-};
-;
-
-export type createRecipeInstructionResponse = (createRecipeInstructionResponseSuccess)
-
-export const getCreateRecipeInstructionUrl = (id: number,) => {
-
-
-
-
-  return `/api/v1/recipes/${encodeURIComponent(String(id))}/instructions`
-}
-
-/**
+    /**
  * @summary Create recipe instruction
  */
-export const createRecipeInstruction = async (id: number,
-    createRecipeInstructionBody: CreateRecipeInstructionBody, options?: RequestInit): Promise<createRecipeInstructionResponse> => {
+export const createRecipeInstruction = (
+    id: number,
+    createRecipeInstructionBody: CreateRecipeInstructionBody, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<GithubComDomicileappDomicileInternalDbRecipeInstruction>> => {
 
-  const res = await fetch(getCreateRecipeInstructionUrl(id),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(createRecipeInstructionBody)
+
+    return axios.post(
+      `/api/v1/recipes/${encodeURIComponent(String(id))}/instructions`,
+      createRecipeInstructionBody,options
+    );
   }
-)
-
-
-  const body = [204, 205, 304].includes(res.status) ? null : await res.text();
-
-  const data: createRecipeInstructionResponse['data'] = body ? JSON.parse(body) : {}
-  return { data, status: res.status, headers: res.headers } as createRecipeInstructionResponse
-}
 
 
 
 
-
-export const getCreateRecipeInstructionMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRecipeInstruction>>, TError,{id: number;data: CreateRecipeInstructionBody}, TContext>, fetch?: RequestInit}
+export const getCreateRecipeInstructionMutationOptions = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRecipeInstruction>>, TError,{id: number;data: CreateRecipeInstructionBody}, TContext>, axios?: AxiosRequestConfig}
 ): UseMutationOptions<Awaited<ReturnType<typeof createRecipeInstruction>>, TError,{id: number;data: CreateRecipeInstructionBody}, TContext> => {
 
 const mutationKey = ['createRecipeInstruction'];
-const {mutation: mutationOptions, fetch: fetchOptions} = options ?
+const {mutation: mutationOptions, axios: axiosOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
       : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, fetch: undefined};
+      : {mutation: { mutationKey, }, axios: undefined};
 
 
 
@@ -1103,7 +794,7 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof createRecipeInstruction>>, {id: number;data: CreateRecipeInstructionBody}> = (props) => {
           const {id,data} = props ?? {};
 
-          return  createRecipeInstruction(id,data,fetchOptions)
+          return  createRecipeInstruction(id,data,axiosOptions)
         }
 
 
@@ -1115,13 +806,13 @@ const {mutation: mutationOptions, fetch: fetchOptions} = options ?
 
     export type CreateRecipeInstructionMutationResult = NonNullable<Awaited<ReturnType<typeof createRecipeInstruction>>>
     export type CreateRecipeInstructionMutationBody = CreateRecipeInstructionBody
-    export type CreateRecipeInstructionMutationError = unknown
+    export type CreateRecipeInstructionMutationError = AxiosError<unknown>
 
     /**
  * @summary Create recipe instruction
  */
-export const useCreateRecipeInstruction = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRecipeInstruction>>, TError,{id: number;data: CreateRecipeInstructionBody}, TContext>, fetch?: RequestInit}
+export const useCreateRecipeInstruction = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRecipeInstruction>>, TError,{id: number;data: CreateRecipeInstructionBody}, TContext>, axios?: AxiosRequestConfig}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof createRecipeInstruction>>,
         TError,

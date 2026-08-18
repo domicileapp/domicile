@@ -11,7 +11,7 @@ export default defineConfig({
       target: './src/api/client',
       schemas: './src/api/schemas',
       client: 'react-query',
-      httpClient: 'fetch',
+      httpClient: 'axios',
       mock: true,
       clean: ['./src/api/client/**', './src/api/schemas/**'],
       urlEncodeParameters: true,

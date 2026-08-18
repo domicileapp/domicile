@@ -3,7 +3,7 @@ select * from recipes
 where id = $1 and deleted_at is null limit 1;
 
 -- name: ListRecipes :many
-select
+SELECT
     id,
     name,
     short_description,
@@ -16,13 +16,35 @@ select
     photo_url,
     created_at,
     updated_at
-from recipes
-where deleted_at is null
-order by updated_at desc
-limit $1 offset $2;
+FROM recipes
+WHERE deleted_at IS NULL
+  AND (
+    @search::text = ''
+    OR name ILIKE '%' || @search::text || '%'
+    OR short_description ILIKE '%' || @search::text || '%'
+    OR notes ILIKE '%' || @search::text || '%'
+  )
+ORDER BY
+    CASE WHEN @sort::text = 'name' AND @direction::text = 'asc'
+         THEN name END ASC,
+    CASE WHEN @sort::text = 'name' AND @direction::text = 'desc'
+         THEN name END DESC,
+    CASE WHEN @sort::text = 'created_at' AND @direction::text = 'asc'
+         THEN created_at END ASC,
+    CASE WHEN @sort::text = 'created_at' AND @direction::text = 'desc'
+         THEN created_at END DESC
+LIMIT $1 OFFSET $2;
 
 -- name: CountRecipes :one
-select count(*) from recipes;
+SELECT count(*)
+FROM recipes
+WHERE deleted_at IS NULL
+  AND (
+    @search::text = ''
+    OR name ILIKE '%' || @search::text || '%'
+    OR short_description ILIKE '%' || @search::text || '%'
+    OR notes ILIKE '%' || @search::text || '%'
+  );
 
 -- name: CreateRecipe :one
 insert into recipes (

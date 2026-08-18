@@ -8,12 +8,12 @@ import (
 
 //go:generate go run github.com/matryer/moq@latest -out store_mock.go . RecipeStore
 type RecipeStore interface {
-	ListRecipes(ctx context.Context, limit int32, offset int32) ([]db.ListRecipesRow, error)
+	ListRecipes(ctx context.Context, limit int32, offset int32, search string, sort string, direction string) ([]db.ListRecipesRow, error)
 	GetRecipe(ctx context.Context, id int64) (db.Recipe, error)
 	CreateRecipe(ctx context.Context, params createRecipeRequest) (db.Recipe, error)
 	UpdateRecipe(ctx context.Context, id int64, params updateRecipeRequest) (db.Recipe, error)
 	DeleteRecipe(ctx context.Context, id int64) error
-	CountRecipes(ctx context.Context) (int64, error)
+	CountRecipes(ctx context.Context, search string) (int64, error)
 
 	ListRecipeIngredients(ctx context.Context, recipeIDs []int64) ([]db.ListRecipeIngredientsRow, error)
 	CreateRecipeIngredient(ctx context.Context, recipeID int64, params createIngredientRequest) (db.RecipeIngredient, error)
@@ -36,10 +36,13 @@ type sqlcStore struct {
 
 func NewSQLCStore(q *db.Queries) RecipeStore { return &sqlcStore{q: q} }
 
-func (s *sqlcStore) ListRecipes(ctx context.Context, limit int32, offset int32) ([]db.ListRecipesRow, error) {
+func (s *sqlcStore) ListRecipes(ctx context.Context, limit int32, offset int32, search string, sort string, direction string) ([]db.ListRecipesRow, error) {
 	return s.q.ListRecipes(ctx, db.ListRecipesParams{
-		Limit:  limit,
-		Offset: offset,
+		Limit:     limit,
+		Offset:    offset,
+		Search:    search,
+		Sort:      sort,
+		Direction: direction,
 	})
 }
 
@@ -67,8 +70,8 @@ func (s *sqlcStore) DeleteRecipe(ctx context.Context, id int64) error {
 	return s.q.DeleteRecipe(ctx, id)
 }
 
-func (s *sqlcStore) CountRecipes(ctx context.Context) (int64, error) {
-	return s.q.CountRecipes(ctx)
+func (s *sqlcStore) CountRecipes(ctx context.Context, search string) (int64, error) {
+	return s.q.CountRecipes(ctx, search)
 }
 
 func (s *sqlcStore) ListRecipeIngredients(ctx context.Context, recipeIDs []int64) ([]db.ListRecipeIngredientsRow, error) {

@@ -65,6 +65,11 @@ tasks:
           sed -i 's|swag/v2|swag|' docs/docs.go
         fi
 
+  gen:
+    cmds:
+      - task: gen:docs
+      - task: gen:web
+
   dev:db:
     cmds:
       - docker compose -f compose.dev.yml --profile pg-only up -d

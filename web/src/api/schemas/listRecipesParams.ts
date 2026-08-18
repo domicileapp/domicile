@@ -4,14 +4,31 @@
  * Domicile API
  * Domicile's REST API
  */
+import type { ListRecipesDirection } from './listRecipesDirection.ts';
+import type { ListRecipesSort } from './listRecipesSort.ts';
 
 export type ListRecipesParams = {
 /**
- * Page number (default: 1)
+ * Page number
+ * @minimum 1
  */
 page?: number;
 /**
- * Page size (default: 12)
+ * Page size
+ * @minimum 1
+ * @maximum 120
  */
 size?: number;
+/**
+ * Search params
+ */
+search?: string;
+/**
+ * Sort field
+ */
+sort?: ListRecipesSort;
+/**
+ * Sort direction
+ */
+direction?: ListRecipesDirection;
 };

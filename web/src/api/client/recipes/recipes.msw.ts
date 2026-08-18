@@ -16,6 +16,7 @@ import type {
   GithubComDomicileappDomicileInternalDbRecipe,
   GithubComDomicileappDomicileInternalDbRecipeIngredient,
   GithubComDomicileappDomicileInternalDbRecipeInstruction,
+  RecipesPaginatedResponse,
   RecipesRecipeResponse
 } from '../../schemas';
 
@@ -35,7 +36,7 @@ import {
 export { getListRecipesResponseMock, getCreateRecipeResponseMock, getGetRecipeResponseMock, getUpdateRecipeResponseMock, getDeleteApiV1RecipesIdIngredientResponseMock, getUpdateRecipeIngredientResponseMock, getCreateRecipeIngredientResponseMock, getDeleteRecipeInstructionResponseMock, getUpdateRecipeInstructionResponseMock, getCreateRecipeInstructionResponseMock } from './recipes.faker.ts';
 
 
-export const getListRecipesMockHandler = (overrideResponse?: GithubComDomicileappDomicileInternalDbRecipe[] | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<GithubComDomicileappDomicileInternalDbRecipe[]> | GithubComDomicileappDomicileInternalDbRecipe[]), options?: RequestHandlerOptions) => {
+export const getListRecipesMockHandler = (overrideResponse?: RecipesPaginatedResponse | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<RecipesPaginatedResponse> | RecipesPaginatedResponse), options?: RequestHandlerOptions) => {
   return http.get('*/api/v1/recipes', async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
 
 
