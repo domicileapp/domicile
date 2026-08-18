@@ -13,17 +13,20 @@ import * as zod from 'zod';
  */
 export const ListRecipesQueryParams = zod.object({
   "page": zod.int().optional().describe('Page number (default: 1)'),
-  "size": zod.int().optional().describe('Page size (default: 12)')
+  "size": zod.int().optional().describe('Page size (default: 12)'),
+  "search": zod.int().optional().describe('Search params'),
+  "sort": zod.int().optional().describe('Sort field'),
+  "direction": zod.int().optional().describe('Sort direction')
 })
 
 export const ListRecipesBody = zod.looseObject({
 
 })
 
-export const ListRecipesResponseItem = zod.object({
+export const ListRecipesResponse = zod.object({
+  "items": zod.array(zod.object({
   "cook_time": zod.string().optional(),
   "created_at": zod.string().optional(),
-  "deleted_at": zod.string().optional(),
   "id": zod.int().optional(),
   "name": zod.string().optional(),
   "notes": zod.string().optional(),
@@ -34,8 +37,12 @@ export const ListRecipesResponseItem = zod.object({
   "short_description": zod.string().optional(),
   "source": zod.string().optional(),
   "updated_at": zod.string().optional()
+})).optional(),
+  "page": zod.int().optional(),
+  "size": zod.int().optional(),
+  "total_items": zod.int().optional(),
+  "total_pages": zod.int().optional()
 })
-export const ListRecipesResponse = zod.array(ListRecipesResponseItem)
 
 /**
  * @summary Create recipe

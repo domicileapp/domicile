@@ -19,7 +19,7 @@ var _ RecipeStore = &RecipeStoreMock{}
 //
 //		// make and configure a mocked RecipeStore
 //		mockedRecipeStore := &RecipeStoreMock{
-//			CountRecipesFunc: func(ctx context.Context) (int64, error) {
+//			CountRecipesFunc: func(ctx context.Context, search string) (int64, error) {
 //				panic("mock out the CountRecipes method")
 //			},
 //			CreateRecipeFunc: func(ctx context.Context, params createRecipeRequest) (db.Recipe, error) {
@@ -49,7 +49,7 @@ var _ RecipeStore = &RecipeStoreMock{}
 //			ListRecipeInstructionsFunc: func(ctx context.Context, recipeIDs []int64) ([]db.ListRecipeInstructionsRow, error) {
 //				panic("mock out the ListRecipeInstructions method")
 //			},
-//			ListRecipesFunc: func(ctx context.Context, limit int32, offset int32) ([]db.ListRecipesRow, error) {
+//			ListRecipesFunc: func(ctx context.Context, limit int32, offset int32, search string, sort string, direction string) ([]db.ListRecipesRow, error) {
 //				panic("mock out the ListRecipes method")
 //			},
 //			UpdateRecipeFunc: func(ctx context.Context, id int64, params updateRecipeRequest) (db.Recipe, error) {
@@ -69,7 +69,7 @@ var _ RecipeStore = &RecipeStoreMock{}
 //	}
 type RecipeStoreMock struct {
 	// CountRecipesFunc mocks the CountRecipes method.
-	CountRecipesFunc func(ctx context.Context) (int64, error)
+	CountRecipesFunc func(ctx context.Context, search string) (int64, error)
 
 	// CreateRecipeFunc mocks the CreateRecipe method.
 	CreateRecipeFunc func(ctx context.Context, params createRecipeRequest) (db.Recipe, error)
@@ -99,7 +99,7 @@ type RecipeStoreMock struct {
 	ListRecipeInstructionsFunc func(ctx context.Context, recipeIDs []int64) ([]db.ListRecipeInstructionsRow, error)
 
 	// ListRecipesFunc mocks the ListRecipes method.
-	ListRecipesFunc func(ctx context.Context, limit int32, offset int32) ([]db.ListRecipesRow, error)
+	ListRecipesFunc func(ctx context.Context, limit int32, offset int32, search string, sort string, direction string) ([]db.ListRecipesRow, error)
 
 	// UpdateRecipeFunc mocks the UpdateRecipe method.
 	UpdateRecipeFunc func(ctx context.Context, id int64, params updateRecipeRequest) (db.Recipe, error)
@@ -116,6 +116,8 @@ type RecipeStoreMock struct {
 		CountRecipes []struct {
 			// Ctx is the ctx argument value.
 			Ctx context.Context
+			// Search is the search argument value.
+			Search string
 		}
 		// CreateRecipe holds details about calls to the CreateRecipe method.
 		CreateRecipe []struct {
@@ -192,6 +194,12 @@ type RecipeStoreMock struct {
 			Limit int32
 			// Offset is the offset argument value.
 			Offset int32
+			// Search is the search argument value.
+			Search string
+			// Sort is the sort argument value.
+			Sort string
+			// Direction is the direction argument value.
+			Direction string
 		}
 		// UpdateRecipe holds details about calls to the UpdateRecipe method.
 		UpdateRecipe []struct {
@@ -238,19 +246,21 @@ type RecipeStoreMock struct {
 }
 
 // CountRecipes calls CountRecipesFunc.
-func (mock *RecipeStoreMock) CountRecipes(ctx context.Context) (int64, error) {
+func (mock *RecipeStoreMock) CountRecipes(ctx context.Context, search string) (int64, error) {
 	if mock.CountRecipesFunc == nil {
 		panic("RecipeStoreMock.CountRecipesFunc: method is nil but RecipeStore.CountRecipes was just called")
 	}
 	callInfo := struct {
-		Ctx context.Context
+		Ctx    context.Context
+		Search string
 	}{
-		Ctx: ctx,
+		Ctx:    ctx,
+		Search: search,
 	}
 	mock.lockCountRecipes.Lock()
 	mock.calls.CountRecipes = append(mock.calls.CountRecipes, callInfo)
 	mock.lockCountRecipes.Unlock()
-	return mock.CountRecipesFunc(ctx)
+	return mock.CountRecipesFunc(ctx, search)
 }
 
 // CountRecipesCalls gets all the calls that were made to CountRecipes.
@@ -258,10 +268,12 @@ func (mock *RecipeStoreMock) CountRecipes(ctx context.Context) (int64, error) {
 //
 //	len(mockedRecipeStore.CountRecipesCalls())
 func (mock *RecipeStoreMock) CountRecipesCalls() []struct {
-	Ctx context.Context
+	Ctx    context.Context
+	Search string
 } {
 	var calls []struct {
-		Ctx context.Context
+		Ctx    context.Context
+		Search string
 	}
 	mock.lockCountRecipes.RLock()
 	calls = mock.calls.CountRecipes
@@ -602,23 +614,29 @@ func (mock *RecipeStoreMock) ListRecipeInstructionsCalls() []struct {
 }
 
 // ListRecipes calls ListRecipesFunc.
-func (mock *RecipeStoreMock) ListRecipes(ctx context.Context, limit int32, offset int32) ([]db.ListRecipesRow, error) {
+func (mock *RecipeStoreMock) ListRecipes(ctx context.Context, limit int32, offset int32, search string, sort string, direction string) ([]db.ListRecipesRow, error) {
 	if mock.ListRecipesFunc == nil {
 		panic("RecipeStoreMock.ListRecipesFunc: method is nil but RecipeStore.ListRecipes was just called")
 	}
 	callInfo := struct {
-		Ctx    context.Context
-		Limit  int32
-		Offset int32
+		Ctx       context.Context
+		Limit     int32
+		Offset    int32
+		Search    string
+		Sort      string
+		Direction string
 	}{
-		Ctx:    ctx,
-		Limit:  limit,
-		Offset: offset,
+		Ctx:       ctx,
+		Limit:     limit,
+		Offset:    offset,
+		Search:    search,
+		Sort:      sort,
+		Direction: direction,
 	}
 	mock.lockListRecipes.Lock()
 	mock.calls.ListRecipes = append(mock.calls.ListRecipes, callInfo)
 	mock.lockListRecipes.Unlock()
-	return mock.ListRecipesFunc(ctx, limit, offset)
+	return mock.ListRecipesFunc(ctx, limit, offset, search, sort, direction)
 }
 
 // ListRecipesCalls gets all the calls that were made to ListRecipes.
@@ -626,14 +644,20 @@ func (mock *RecipeStoreMock) ListRecipes(ctx context.Context, limit int32, offse
 //
 //	len(mockedRecipeStore.ListRecipesCalls())
 func (mock *RecipeStoreMock) ListRecipesCalls() []struct {
-	Ctx    context.Context
-	Limit  int32
-	Offset int32
+	Ctx       context.Context
+	Limit     int32
+	Offset    int32
+	Search    string
+	Sort      string
+	Direction string
 } {
 	var calls []struct {
-		Ctx    context.Context
-		Limit  int32
-		Offset int32
+		Ctx       context.Context
+		Limit     int32
+		Offset    int32
+		Search    string
+		Sort      string
+		Direction string
 	}
 	mock.lockListRecipes.RLock()
 	calls = mock.calls.ListRecipes

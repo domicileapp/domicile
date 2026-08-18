@@ -63,6 +63,47 @@ const docTemplate = `{
                 },
                 "type": "object"
             },
+            "github_com_domicileapp_domicile_internal_db.ListRecipesRow": {
+                "properties": {
+                    "cook_time": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "notes": {
+                        "type": "string"
+                    },
+                    "nutrition": {
+                        "type": "string"
+                    },
+                    "photo_url": {
+                        "type": "string"
+                    },
+                    "prep_time": {
+                        "type": "string"
+                    },
+                    "servings": {
+                        "type": "string"
+                    },
+                    "short_description": {
+                        "type": "string"
+                    },
+                    "source": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "github_com_domicileapp_domicile_internal_db.Recipe": {
                 "properties": {
                     "cook_time": {
@@ -173,6 +214,30 @@ const docTemplate = `{
                     },
                     "updated_at": {
                         "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "recipes.PaginatedResponse": {
+                "properties": {
+                    "items": {
+                        "items": {
+                            "$ref": "#/components/schemas/github_com_domicileapp_domicile_internal_db.ListRecipesRow"
+                        },
+                        "type": "array",
+                        "uniqueItems": false
+                    },
+                    "page": {
+                        "type": "integer"
+                    },
+                    "size": {
+                        "type": "integer"
+                    },
+                    "total_items": {
+                        "type": "integer"
+                    },
+                    "total_pages": {
+                        "type": "integer"
                     }
                 },
                 "type": "object"
@@ -345,6 +410,30 @@ const docTemplate = `{
                         "schema": {
                             "type": "integer"
                         }
+                    },
+                    {
+                        "description": "Search params",
+                        "in": "query",
+                        "name": "search",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "description": "Sort field",
+                        "in": "query",
+                        "name": "sort",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "description": "Sort direction",
+                        "in": "query",
+                        "name": "direction",
+                        "schema": {
+                            "type": "integer"
+                        }
                     }
                 ],
                 "requestBody": {
@@ -361,10 +450,7 @@ const docTemplate = `{
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "items": {
-                                        "$ref": "#/components/schemas/github_com_domicileapp_domicile_internal_db.Recipe"
-                                    },
-                                    "type": "array"
+                                    "$ref": "#/components/schemas/recipes.PaginatedResponse"
                                 }
                             }
                         },

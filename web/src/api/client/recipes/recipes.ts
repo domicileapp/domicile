@@ -36,6 +36,7 @@ import type {
   GithubComDomicileappDomicileInternalDbRecipeInstruction,
   ListRecipesBody,
   ListRecipesParams,
+  RecipesPaginatedResponse,
   RecipesRecipeResponse,
   UpdateRecipeBody,
   UpdateRecipeIngredientBody,
@@ -62,7 +63,7 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
 };
 
 export type listRecipesResponse200 = {
-  data: GithubComDomicileappDomicileInternalDbRecipe[]
+  data: RecipesPaginatedResponse
   status: 200
 }
 

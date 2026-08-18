@@ -1,15 +1,19 @@
-import { Grid } from '@mantine/core'
+import { Center, Grid, Pagination } from '@mantine/core'
 
-import type { GithubComDomicileappDomicileInternalDbRecipe } from '@/api/schemas'
+import type { GithubComDomicileappDomicileInternalDbListRecipesRow } from '@/api/schemas'
 
 import { ErrorCard } from '../ui/error-card'
 import { RecipeCard } from './recipe-card'
 import { RecipesGridLoader } from './recipes-grid-loader'
 
 interface RecipeGridProps {
-  recipes?: GithubComDomicileappDomicileInternalDbRecipe[]
+  recipes?: GithubComDomicileappDomicileInternalDbListRecipesRow[]
   error: unknown | Error
   isLoading: boolean
+  page: number
+  size: number
+  totalRecipes: number | undefined
+  onPageChange: (page: number) => void
 }
 
 export function RecipeGrid(props: RecipeGridProps) {
@@ -25,11 +29,23 @@ export function RecipeGrid(props: RecipeGridProps) {
     )
   }
 
+  const totalPages = Math.ceil((props.totalRecipes ?? 12) / props.size)
+
   return (
     <Grid>
       {props.recipes?.map((recipe) => (
         <RecipeCard key={recipe.id} recipe={recipe} />
       ))}
+      <Grid.Col span={{ base: 12 }}>
+        <Center>
+          <Pagination
+            total={totalPages}
+            value={props.page}
+            onChange={props.onPageChange}
+            size="input-md"
+          />
+        </Center>
+      </Grid.Col>
     </Grid>
   )
 }

@@ -14,4 +14,16 @@ page?: number;
  * Page size (default: 12)
  */
 size?: number;
+/**
+ * Search params
+ */
+search?: number;
+/**
+ * Sort field
+ */
+sort?: number;
+/**
+ * Sort direction
+ */
+direction?: number;
 };
