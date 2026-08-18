@@ -18,7 +18,7 @@ interface RecipeGridProps {
 
 export function RecipeGrid(props: RecipeGridProps) {
   if (props.error) {
-    return <ErrorCard error={props.error || props.error} title="Unable to load recipes" />
+    return <ErrorCard error={props.error} title="Unable to load recipes" />
   }
 
   if (props.isLoading) {
