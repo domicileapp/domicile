@@ -10,6 +10,7 @@ import (
 
 type Querier interface {
 	CountRecipes(ctx context.Context, search string) (int64, error)
+	CreateFullRecipe(ctx context.Context, arg CreateFullRecipeParams) (Recipe, error)
 	CreateRecipe(ctx context.Context, arg CreateRecipeParams) (Recipe, error)
 	CreateRecipeIngredient(ctx context.Context, arg CreateRecipeIngredientParams) (RecipeIngredient, error)
 	CreateRecipeInstruction(ctx context.Context, arg CreateRecipeInstructionParams) (RecipeInstruction, error)

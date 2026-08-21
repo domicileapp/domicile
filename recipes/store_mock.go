@@ -22,6 +22,9 @@ var _ RecipeStore = &RecipeStoreMock{}
 //			CountRecipesFunc: func(ctx context.Context, search string) (int64, error) {
 //				panic("mock out the CountRecipes method")
 //			},
+//			CreateFullRecipeFunc: func(ctx context.Context, params createFullRecipeRequest) (db.Recipe, []db.RecipeIngredient, []db.RecipeInstruction, error) {
+//				panic("mock out the CreateFullRecipe method")
+//			},
 //			CreateRecipeFunc: func(ctx context.Context, params createRecipeRequest) (db.Recipe, error) {
 //				panic("mock out the CreateRecipe method")
 //			},
@@ -71,6 +74,9 @@ type RecipeStoreMock struct {
 	// CountRecipesFunc mocks the CountRecipes method.
 	CountRecipesFunc func(ctx context.Context, search string) (int64, error)
 
+	// CreateFullRecipeFunc mocks the CreateFullRecipe method.
+	CreateFullRecipeFunc func(ctx context.Context, params createFullRecipeRequest) (db.Recipe, []db.RecipeIngredient, []db.RecipeInstruction, error)
+
 	// CreateRecipeFunc mocks the CreateRecipe method.
 	CreateRecipeFunc func(ctx context.Context, params createRecipeRequest) (db.Recipe, error)
 
@@ -118,6 +124,13 @@ type RecipeStoreMock struct {
 			Ctx context.Context
 			// Search is the search argument value.
 			Search string
+		}
+		// CreateFullRecipe holds details about calls to the CreateFullRecipe method.
+		CreateFullRecipe []struct {
+			// Ctx is the ctx argument value.
+			Ctx context.Context
+			// Params is the params argument value.
+			Params createFullRecipeRequest
 		}
 		// CreateRecipe holds details about calls to the CreateRecipe method.
 		CreateRecipe []struct {
@@ -230,6 +243,7 @@ type RecipeStoreMock struct {
 		}
 	}
 	lockCountRecipes            sync.RWMutex
+	lockCreateFullRecipe        sync.RWMutex
 	lockCreateRecipe            sync.RWMutex
 	lockCreateRecipeIngredient  sync.RWMutex
 	lockCreateRecipeInstruction sync.RWMutex
@@ -278,6 +292,42 @@ func (mock *RecipeStoreMock) CountRecipesCalls() []struct {
 	mock.lockCountRecipes.RLock()
 	calls = mock.calls.CountRecipes
 	mock.lockCountRecipes.RUnlock()
+	return calls
+}
+
+// CreateFullRecipe calls CreateFullRecipeFunc.
+func (mock *RecipeStoreMock) CreateFullRecipe(ctx context.Context, params createFullRecipeRequest) (db.Recipe, []db.RecipeIngredient, []db.RecipeInstruction, error) {
+	if mock.CreateFullRecipeFunc == nil {
+		panic("RecipeStoreMock.CreateFullRecipeFunc: method is nil but RecipeStore.CreateFullRecipe was just called")
+	}
+	callInfo := struct {
+		Ctx    context.Context
+		Params createFullRecipeRequest
+	}{
+		Ctx:    ctx,
+		Params: params,
+	}
+	mock.lockCreateFullRecipe.Lock()
+	mock.calls.CreateFullRecipe = append(mock.calls.CreateFullRecipe, callInfo)
+	mock.lockCreateFullRecipe.Unlock()
+	return mock.CreateFullRecipeFunc(ctx, params)
+}
+
+// CreateFullRecipeCalls gets all the calls that were made to CreateFullRecipe.
+// Check the length with:
+//
+//	len(mockedRecipeStore.CreateFullRecipeCalls())
+func (mock *RecipeStoreMock) CreateFullRecipeCalls() []struct {
+	Ctx    context.Context
+	Params createFullRecipeRequest
+} {
+	var calls []struct {
+		Ctx    context.Context
+		Params createFullRecipeRequest
+	}
+	mock.lockCreateFullRecipe.RLock()
+	calls = mock.calls.CreateFullRecipe
+	mock.lockCreateFullRecipe.RUnlock()
 	return calls
 }
 

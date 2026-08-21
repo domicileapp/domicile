@@ -29,6 +29,65 @@ func (q *Queries) CountRecipes(ctx context.Context, search string) (int64, error
 	return count, err
 }
 
+const createFullRecipe = `-- name: CreateFullRecipe :one
+insert into recipes (
+    name,
+    short_description,
+    photo_url,
+    "source",
+    servings,
+    prep_time,
+    cook_time,
+    notes,
+    nutrition
+)
+values ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+returning id, name, short_description, servings, prep_time, cook_time, notes, nutrition, source, created_at, updated_at, deleted_at, photo_url
+`
+
+type CreateFullRecipeParams struct {
+	Name             string  `json:"name"`
+	ShortDescription *string `json:"short_description"`
+	PhotoUrl         *string `json:"photo_url"`
+	Source           *string `json:"source"`
+	Servings         *string `json:"servings"`
+	PrepTime         *string `json:"prep_time"`
+	CookTime         *string `json:"cook_time"`
+	Notes            *string `json:"notes"`
+	Nutrition        *string `json:"nutrition"`
+}
+
+func (q *Queries) CreateFullRecipe(ctx context.Context, arg CreateFullRecipeParams) (Recipe, error) {
+	row := q.db.QueryRow(ctx, createFullRecipe,
+		arg.Name,
+		arg.ShortDescription,
+		arg.PhotoUrl,
+		arg.Source,
+		arg.Servings,
+		arg.PrepTime,
+		arg.CookTime,
+		arg.Notes,
+		arg.Nutrition,
+	)
+	var i Recipe
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.ShortDescription,
+		&i.Servings,
+		&i.PrepTime,
+		&i.CookTime,
+		&i.Notes,
+		&i.Nutrition,
+		&i.Source,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.DeletedAt,
+		&i.PhotoUrl,
+	)
+	return i, err
+}
+
 const createRecipe = `-- name: CreateRecipe :one
 insert into recipes (
     name,

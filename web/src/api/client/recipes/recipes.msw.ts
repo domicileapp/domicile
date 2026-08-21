@@ -27,13 +27,14 @@ import {
   getDeleteApiV1RecipesIdIngredientResponseMock,
   getDeleteRecipeInstructionResponseMock,
   getGetRecipeResponseMock,
+  getImportRecipeResponseMock,
   getListRecipesResponseMock,
   getUpdateRecipeIngredientResponseMock,
   getUpdateRecipeInstructionResponseMock,
   getUpdateRecipeResponseMock
 } from './recipes.faker.ts';
 
-export { getListRecipesResponseMock, getCreateRecipeResponseMock, getGetRecipeResponseMock, getUpdateRecipeResponseMock, getDeleteApiV1RecipesIdIngredientResponseMock, getUpdateRecipeIngredientResponseMock, getCreateRecipeIngredientResponseMock, getDeleteRecipeInstructionResponseMock, getUpdateRecipeInstructionResponseMock, getCreateRecipeInstructionResponseMock } from './recipes.faker.ts';
+export { getListRecipesResponseMock, getCreateRecipeResponseMock, getImportRecipeResponseMock, getGetRecipeResponseMock, getUpdateRecipeResponseMock, getDeleteApiV1RecipesIdIngredientResponseMock, getUpdateRecipeIngredientResponseMock, getCreateRecipeIngredientResponseMock, getDeleteRecipeInstructionResponseMock, getUpdateRecipeInstructionResponseMock, getCreateRecipeInstructionResponseMock } from './recipes.faker.ts';
 
 
 export const getListRecipesMockHandler = (overrideResponse?: RecipesPaginatedResponse | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<RecipesPaginatedResponse> | RecipesPaginatedResponse), options?: RequestHandlerOptions) => {
@@ -56,6 +57,18 @@ export const getCreateRecipeMockHandler = (overrideResponse?: GithubComDomicilea
     ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse)
     : getCreateRecipeResponseMock(),
       { status: 200
+      })
+  }, options)
+}
+
+export const getImportRecipeMockHandler = (overrideResponse?: RecipesRecipeResponse | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<RecipesRecipeResponse> | RecipesRecipeResponse), options?: RequestHandlerOptions) => {
+  return http.post('*/api/v1/recipes/import', async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+
+
+    return HttpResponse.json(overrideResponse !== undefined
+    ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse)
+    : getImportRecipeResponseMock(),
+      { status: 201
       })
   }, options)
 }
@@ -168,6 +181,7 @@ export const getCreateRecipeInstructionMockHandler = (overrideResponse?: GithubC
 export const getRecipesMock = () => [
   getListRecipesMockHandler(),
   getCreateRecipeMockHandler(),
+  getImportRecipeMockHandler(),
   getDeleteRecipeMockHandler(),
   getGetRecipeMockHandler(),
   getUpdateRecipeMockHandler(),

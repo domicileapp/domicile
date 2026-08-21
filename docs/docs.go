@@ -350,6 +350,17 @@ const docTemplate = `{
                 },
                 "type": "object"
             },
+            "recipes.importRecipeRequest": {
+                "properties": {
+                    "html": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "recipes.updateIngredientRequest": {
                 "properties": {
                     "group_name": {
@@ -529,6 +540,48 @@ const docTemplate = `{
                     }
                 },
                 "summary": "Create recipe",
+                "tags": [
+                    "recipes"
+                ]
+            }
+        },
+        "/api/v1/recipes/import": {
+            "post": {
+                "description": "Scrape a recipe from the given HTML via the scraper and persist it.",
+                "operationId": "import-recipe",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "oneOf": [
+                                    {
+                                        "type": "object"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/recipes.importRecipeRequest",
+                                        "summary": "message",
+                                        "description": "Page URL and HTML returned by the browser extension"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "description": "Page URL and HTML returned by the browser extension",
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/recipes.RecipeResponse"
+                                }
+                            }
+                        },
+                        "description": "Created"
+                    }
+                },
+                "summary": "Import a recipe from a webpage",
                 "tags": [
                     "recipes"
                 ]
