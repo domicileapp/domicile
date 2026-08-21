@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log/slog"
 	"net/http"
 	"net/url"
 	"strings"
@@ -77,7 +78,11 @@ func (c *ScraperClient) Scrape(ctx context.Context, pageURL, html string) (*Reci
 	if err != nil {
 		return nil, fmt.Errorf("scraper: call sidecar: %w", err)
 	}
-	defer resp.Body.Close()
+	defer func() {
+		if cerr := resp.Body.Close(); cerr != nil {
+			slog.Error("scraper: failed to close sidecar response body", "error", cerr)
+		}
+	}()
 
 	raw, err := io.ReadAll(io.LimitReader(resp.Body, 2<<20))
 	if err != nil {
