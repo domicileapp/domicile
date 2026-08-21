@@ -68,6 +68,34 @@ services:
       db:
         condition: service_started
 
+  scraper:
+    profiles:
+      - dev
+      - api-only
+    build:
+      context: scraper
+      dockerfile: recipe-scraper-dev.Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./scraper:/app
+      - scraper-sidecar-venv:/app/.venv
+    command:
+      [
+        "uv",
+        "run",
+        "uvicorn",
+        "scraper:app",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000",
+        "--reload",
+      ]
+    depends_on:
+      db:
+        condition: service_started
+
   ui:
     profiles:
       - dev
@@ -92,3 +120,4 @@ volumes:
   domicile_db_data:
   go-pkg-mod:
   ui_node_modules:
+  scraper-sidecar-venv:

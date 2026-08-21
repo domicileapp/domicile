@@ -10,16 +10,18 @@ import (
 	"github.com/domicileapp/domicile/internal/db"
 	"github.com/domicileapp/domicile/pkg/encode"
 	"github.com/domicileapp/domicile/pkg/logger"
+	"github.com/domicileapp/domicile/pkg/scraper"
 	"github.com/go-chi/chi/v5"
 	"github.com/jackc/pgx/v5"
 )
 
-func Routes(store RecipeStore) chi.Router {
+func Routes(store RecipeStore, sc scraper.Scraper) chi.Router {
 	r := chi.NewRouter()
-	h := &Handler{Store: store}
+	h := &Handler{Store: store, Scraper: sc}
 
 	r.Get("/", h.ListRecipesHandler)
 	r.Post("/", h.CreateRecipeHandler)
+	r.Post("/import", h.ImportRecipeHandler)
 	r.Get("/{id}", h.GetRecipeByIDHandler)
 	r.Put("/{id}", h.UpdateRecipeHandler)
 	r.Delete("/{id}", h.DeleteRecipeHandler)
@@ -520,4 +522,134 @@ func (h *Handler) DeleteRecipeInstructionHandler(w http.ResponseWriter, r *http.
 	}
 
 	w.WriteHeader(http.StatusNoContent)
+}
+
+type importRecipeRequest struct {
+	URL  string `json:"url"`
+	HTML string `json:"html"`
+}
+
+// ImportRecipeHandler godoc
+//
+//	@Summary		Import a recipe from a webpage
+//	@Id				import-recipe
+//	@Tags			recipes
+//	@Description	Scrape a recipe from the given HTML via the scraper and persist it.
+//	@Accept			json
+//	@Produce		json
+//	@Success		201		{object}	recipes.RecipeResponse
+//	@Param			message	body		importRecipeRequest	true	"Page URL and HTML returned by the browser extension"
+//	@Router			/api/v1/recipes/import [post]
+func (h *Handler) ImportRecipeHandler(w http.ResponseWriter, r *http.Request) {
+	log, _ := logger.SetupLogging()
+
+	if h.Scraper == nil {
+		http.Error(w, "Scraper is not configured", http.StatusInternalServerError)
+		return
+	}
+
+	var req importRecipeRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		return
+	}
+	if req.URL == "" {
+		http.Error(w, "url is required", http.StatusBadRequest)
+		return
+	}
+	if req.HTML == "" {
+		http.Error(w, "html is required", http.StatusBadRequest)
+		return
+	}
+
+	scraped, err := h.Scraper.Scrape(r.Context(), req.URL, req.HTML)
+	if err != nil {
+		var sidecarErr *scraper.SidecarError
+		if errors.As(err, &sidecarErr) {
+			http.Error(w, sidecarErr.Message, http.StatusUnprocessableEntity)
+		} else {
+			http.Error(w, "Failed to scrape recipe", http.StatusBadGateway)
+		}
+		log.Error(err.Error())
+		return
+	}
+
+	params := createFullRecipeRequest{
+		Name:             scraped.Title,
+		ShortDescription: scraped.Description,
+		Source:           scraped.SourceURL,
+		Servings:         scraped.Servings,
+		PrepTime:         scraped.PrepTime,
+		CookTime:         scraped.CookTime,
+		Notes:            scraped.Notes,
+		Nutrition:        scraped.Nutrition,
+		Ingredients:      make([]createIngredientRequest, 0, len(scraped.Ingredients)),
+		Instructions:     make([]createInstructionRequest, 0, len(scraped.Steps)),
+	}
+	if len(scraped.Images) > 0 {
+		params.PhotoURL = scraped.Images[0]
+	}
+	for i, line := range scraped.Ingredients {
+		params.Ingredients = append(params.Ingredients, createIngredientRequest{
+			RawText:   line,
+			SortOrder: float64(i + 1),
+		})
+	}
+	for i, step := range scraped.Steps {
+		params.Instructions = append(params.Instructions, createInstructionRequest{
+			Content:   step,
+			SortOrder: float64(i + 1),
+		})
+	}
+
+	recipe, ingredients, instructions, err := h.Store.CreateFullRecipe(r.Context(), params)
+	if err != nil {
+		http.Error(w, "Failed to create recipe", http.StatusInternalServerError)
+		log.Error(err.Error())
+		return
+	}
+
+	resp := RecipeResponse{
+		Recipe:       recipe,
+		Ingredients:  ingredientsToListRows(ingredients),
+		Instructions: instructionsToListRows(instructions),
+	}
+
+	if err := encode.ResponseJSON(w, http.StatusCreated, resp); err != nil {
+		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
+		log.Error(err.Error())
+	}
+}
+
+func ingredientsToListRows(rows []db.RecipeIngredient) []db.ListRecipeIngredientsRow {
+	out := make([]db.ListRecipeIngredientsRow, len(rows))
+	for i, r := range rows {
+		out[i] = db.ListRecipeIngredientsRow{
+			ID:             r.ID,
+			RecipeID:       r.RecipeID,
+			GroupName:      r.GroupName,
+			SortOrder:      r.SortOrder,
+			RawText:        r.RawText,
+			Quantity:       r.Quantity,
+			Unit:           r.Unit,
+			IngredientName: r.IngredientName,
+			Preparation:    r.Preparation,
+			ParseStatus:    r.ParseStatus,
+		}
+	}
+	return out
+}
+
+func instructionsToListRows(rows []db.RecipeInstruction) []db.ListRecipeInstructionsRow {
+	out := make([]db.ListRecipeInstructionsRow, len(rows))
+	for i, r := range rows {
+		out[i] = db.ListRecipeInstructionsRow{
+			ID:        r.ID,
+			RecipeID:  r.RecipeID,
+			GroupName: r.GroupName,
+			SortOrder: r.SortOrder,
+			Content:   r.Content,
+		}
+	}
+	return out
 }

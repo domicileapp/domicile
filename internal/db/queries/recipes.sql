@@ -55,6 +55,21 @@ insert into recipes (
 values ($1, $2, $3)
 returning *;
 
+-- name: CreateFullRecipe :one
+insert into recipes (
+    name,
+    short_description,
+    photo_url,
+    "source",
+    servings,
+    prep_time,
+    cook_time,
+    notes,
+    nutrition
+)
+values ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+returning *;
+
 -- name: UpdateRecipe :one
 update recipes
 set

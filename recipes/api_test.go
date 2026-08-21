@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/domicileapp/domicile/internal/db"
+	"github.com/domicileapp/domicile/pkg/scraper"
 	"github.com/jackc/pgx/v5"
 )
 
@@ -33,7 +34,7 @@ func runAPITest(t *testing.T, tc apiTestCase) {
 		tc.setup(store)
 	}
 
-	r := Routes(store)
+	r := Routes(store, nil)
 
 	var body *bytes.Buffer
 	if tc.body != "" {
@@ -701,5 +702,111 @@ func TestRecipeHandlers(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			runAPITest(t, tc)
 		})
+	}
+}
+
+type mockScraper struct {
+	fn func(ctx context.Context, url, html string) (*scraper.Recipe, error)
+}
+
+func (m *mockScraper) Scrape(ctx context.Context, url, html string) (*scraper.Recipe, error) {
+	return m.fn(ctx, url, html)
+}
+
+func TestImportRecipeHandler(t *testing.T) {
+	store := &RecipeStoreMock{
+		CreateFullRecipeFunc: func(ctx context.Context, params createFullRecipeRequest) (db.Recipe, []db.RecipeIngredient, []db.RecipeInstruction, error) {
+			if params.Name != "Scraped Chili" {
+				t.Fatalf("expected name Scraped Chili, got %q", params.Name)
+			}
+			if params.Source != "https://example.com/chili" {
+				t.Fatalf("expected source https://example.com/chili, got %q", params.Source)
+			}
+			if params.Servings != "4 servings" {
+				t.Fatalf("expected servings 4 servings, got %q", params.Servings)
+			}
+			if params.PrepTime != "1" {
+				t.Fatalf("expected prep_time 1, got %q", params.PrepTime)
+			}
+			if params.CookTime != "2" {
+				t.Fatalf("expected cook_time 2, got %q", params.CookTime)
+			}
+			if params.Nutrition != "120 calories" {
+				t.Fatalf("expected nutrition 120 calories, got %q", params.Nutrition)
+			}
+			if len(params.Ingredients) != 2 {
+				t.Fatalf("expected 2 ingredients, got %d", len(params.Ingredients))
+			}
+			if len(params.Instructions) != 1 {
+				t.Fatalf("expected 1 instruction, got %d", len(params.Instructions))
+			}
+			recipe := db.Recipe{ID: 10, Name: params.Name, Source: &params.Source, Servings: &params.Servings, PrepTime: &params.PrepTime, CookTime: &params.CookTime, Nutrition: &params.Nutrition}
+			ingredients := []db.RecipeIngredient{
+				{ID: 1, RecipeID: 10, RawText: params.Ingredients[0].RawText, SortOrder: 1},
+				{ID: 2, RecipeID: 10, RawText: params.Ingredients[1].RawText, SortOrder: 2},
+			}
+			instructions := []db.RecipeInstruction{
+				{ID: 1, RecipeID: 10, Content: params.Instructions[0].Content, SortOrder: 1},
+			}
+			return recipe, ingredients, instructions, nil
+		},
+	}
+	sc := &mockScraper{
+		fn: func(ctx context.Context, url, html string) (*scraper.Recipe, error) {
+			return &scraper.Recipe{
+				Title:       "Scraped Chili",
+				Description: "Hearty",
+				Images:      []string{"https://example.com/photo.jpg"},
+				Ingredients: []string{"1 cup beans", "2 cups stock"},
+				Steps:       []string{"Simmer."},
+				SourceURL:   "https://example.com/chili",
+				Servings:    "4 servings",
+				PrepTime:    "1",
+				CookTime:    "2",
+				Nutrition:   "120 calories",
+			}, nil
+		},
+	}
+	h := &Handler{Store: store, Scraper: sc}
+	body := `{"url":"https://example.com/chili","html":"<html></html>"}`
+	req := httptest.NewRequest(http.MethodPost, "/import", bytes.NewBufferString(body))
+	req.Header.Set("Content-Type", "application/json")
+	rec := httptest.NewRecorder()
+	h.ImportRecipeHandler(rec, req)
+
+	if rec.Code != http.StatusCreated {
+		t.Fatalf("expected 201, got %d: %s", rec.Code, rec.Body.String())
+	}
+	var resp RecipeResponse
+	if err := json.NewDecoder(rec.Body).Decode(&resp); err != nil {
+		t.Fatalf("decode response: %v", err)
+	}
+	if resp.ID != 10 || resp.Name != "Scraped Chili" {
+		t.Fatalf("unexpected recipe: %+v", resp.Recipe)
+	}
+	if len(resp.Ingredients) != 2 || len(resp.Instructions) != 1 {
+		t.Fatalf("unexpected ingredients/instructions counts: %d / %d", len(resp.Ingredients), len(resp.Instructions))
+	}
+
+	// missing url
+	req2 := httptest.NewRequest(http.MethodPost, "/import", bytes.NewBufferString(`{"url":"","html":"<html>"}`))
+	rec2 := httptest.NewRecorder()
+	h.ImportRecipeHandler(rec2, req2)
+	if rec2.Code != http.StatusBadRequest {
+		t.Fatalf("expected 400 for missing url, got %d", rec2.Code)
+	}
+
+	// sidecar error maps to 422
+	scErr := &mockScraper{
+		fn: func(ctx context.Context, url, html string) (*scraper.Recipe, error) {
+			return nil, &scraper.SidecarError{Message: "no recipe found"}
+		},
+	}
+	h2 := &Handler{Store: store, Scraper: scErr}
+	req3 := httptest.NewRequest(http.MethodPost, "/import", bytes.NewBufferString(body))
+	rec3 := httptest.NewRecorder()
+	h2.ImportRecipeHandler(rec3, req3)
+	if rec3.Code != http.StatusUnprocessableEntity {
+		t.Fatalf("expected 422 for sidecar error, got %d", rec3.Code)
 	}
 }

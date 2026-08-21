@@ -11,6 +11,7 @@ import (
 	_ "github.com/domicileapp/domicile/docs"
 	"github.com/domicileapp/domicile/internal/db"
 	"github.com/domicileapp/domicile/pkg/logger"
+	"github.com/domicileapp/domicile/pkg/scraper"
 	"github.com/domicileapp/domicile/recipes"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -48,7 +49,11 @@ func main() {
 		log.Fatalf("Database ping failed: %v", err)
 	}
 
-	queries := db.New(pool)
+	scraperURL := os.Getenv("SCRAPER_URL")
+	if scraperURL == "" {
+		scraperURL = "http://scraper:8000"
+	}
+	scraperClient := scraper.NewScraperClient(scraperURL, nil)
 
 	r := chi.NewRouter()
 	r.Use(middleware.Recoverer)
@@ -81,7 +86,7 @@ func main() {
 	))
 
 	// Register all the routes
-	r.Mount("/api/v1/recipes", recipes.Routes(recipes.NewSQLCStore(queries)))
+	r.Mount("/api/v1/recipes", recipes.Routes(recipes.NewSQLCStore(pool), scraperClient))
 
 	log.Info("Domicile service starting", "url", "http://localhost:8080")
 	if err := http.ListenAndServe(":8080", r); err != nil {

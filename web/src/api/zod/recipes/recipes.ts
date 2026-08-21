@@ -77,6 +77,52 @@ export const CreateRecipeResponse = zod.object({
 })
 
 /**
+ * Scrape a recipe from the given HTML via the scraper and persist it.
+ * @summary Import a recipe from a webpage
+ */
+export const ImportRecipeBody = zod.union([zod.looseObject({
+
+}),zod.object({
+  "html": zod.string().optional(),
+  "url": zod.string().optional()
+}).describe('Page URL and HTML returned by the browser extension')])
+
+export const ImportRecipeResponse = zod.object({
+  "cook_time": zod.string().optional(),
+  "created_at": zod.string().optional(),
+  "deleted_at": zod.string().optional(),
+  "id": zod.int().optional(),
+  "ingredients": zod.array(zod.object({
+  "group_name": zod.string().optional(),
+  "id": zod.int().optional(),
+  "ingredient_name": zod.string().optional(),
+  "parse_status": zod.string().optional(),
+  "preparation": zod.string().optional(),
+  "quantity": zod.number().optional(),
+  "raw_text": zod.string().optional(),
+  "recipe_id": zod.int().optional(),
+  "sort_order": zod.number().optional(),
+  "unit": zod.string().optional()
+})).optional(),
+  "instructions": zod.array(zod.object({
+  "content": zod.string().optional(),
+  "group_name": zod.string().optional(),
+  "id": zod.int().optional(),
+  "recipe_id": zod.int().optional(),
+  "sort_order": zod.number().optional()
+})).optional(),
+  "name": zod.string().optional(),
+  "notes": zod.string().optional(),
+  "nutrition": zod.string().optional(),
+  "photo_url": zod.string().optional(),
+  "prep_time": zod.string().optional(),
+  "servings": zod.string().optional(),
+  "short_description": zod.string().optional(),
+  "source": zod.string().optional(),
+  "updated_at": zod.string().optional()
+})
+
+/**
  * @summary Delete recipe
  */
 export const DeleteRecipeParams = zod.object({

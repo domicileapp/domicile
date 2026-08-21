@@ -41,6 +41,7 @@ import type {
   GithubComDomicileappDomicileInternalDbRecipe,
   GithubComDomicileappDomicileInternalDbRecipeIngredient,
   GithubComDomicileappDomicileInternalDbRecipeInstruction,
+  ImportRecipeBody,
   ListRecipesBody,
   ListRecipesParams,
   RecipesErrorResponse,
@@ -230,6 +231,68 @@ export const useCreateRecipe = <TError = AxiosError<unknown>,
         TContext
       > => {
       return useMutation(getCreateRecipeMutationOptions(options), queryClient);
+    }
+    /**
+ * Scrape a recipe from the given HTML via the scraper and persist it.
+ * @summary Import a recipe from a webpage
+ */
+export const importRecipe = (
+    importRecipeBody: ImportRecipeBody, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<RecipesRecipeResponse>> => {
+
+
+    return axios.post(
+      `/api/v1/recipes/import`,
+      importRecipeBody,options
+    );
+  }
+
+
+
+
+export const getImportRecipeMutationOptions = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof importRecipe>>, TError,{data: ImportRecipeBody}, TContext>, axios?: AxiosRequestConfig}
+): UseMutationOptions<Awaited<ReturnType<typeof importRecipe>>, TError,{data: ImportRecipeBody}, TContext> => {
+
+const mutationKey = ['importRecipe'];
+const {mutation: mutationOptions, axios: axiosOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, axios: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof importRecipe>>, {data: ImportRecipeBody}> = (props) => {
+          const {data} = props ?? {};
+
+          return  importRecipe(data,axiosOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ImportRecipeMutationResult = NonNullable<Awaited<ReturnType<typeof importRecipe>>>
+    export type ImportRecipeMutationBody = ImportRecipeBody
+    export type ImportRecipeMutationError = AxiosError<unknown>
+
+    /**
+ * @summary Import a recipe from a webpage
+ */
+export const useImportRecipe = <TError = AxiosError<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof importRecipe>>, TError,{data: ImportRecipeBody}, TContext>, axios?: AxiosRequestConfig}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof importRecipe>>,
+        TError,
+        {data: ImportRecipeBody},
+        TContext
+      > => {
+      return useMutation(getImportRecipeMutationOptions(options), queryClient);
     }
     /**
  * @summary Delete recipe
