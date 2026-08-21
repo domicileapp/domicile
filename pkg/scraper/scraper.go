@@ -76,36 +76,36 @@ func (c *ScraperClient) Scrape(ctx context.Context, pageURL, html string) (*Reci
 
 	resp, err := c.http.Do(req)
 	if err != nil {
-		return nil, fmt.Errorf("scraper: call sidecar: %w", err)
+		return nil, fmt.Errorf("scraper: call scraper: %w", err)
 	}
 	defer func() {
 		if cerr := resp.Body.Close(); cerr != nil {
-			slog.Error("scraper: failed to close sidecar response body", "error", cerr)
+			slog.Error("scraper: failed to close scraper response body", "error", cerr)
 		}
 	}()
 
 	raw, err := io.ReadAll(io.LimitReader(resp.Body, 2<<20))
 	if err != nil {
-		return nil, fmt.Errorf("scraper: read sidecar response: %w", err)
+		return nil, fmt.Errorf("scraper: read scraper response: %w", err)
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("scraper: sidecar returned HTTP %d: %s", resp.StatusCode, string(raw))
+		return nil, fmt.Errorf("scraper: scraper returned HTTP %d: %s", resp.StatusCode, string(raw))
 	}
 
 	var decoded scrapeResponse
 	if err := json.Unmarshal(raw, &decoded); err != nil {
-		return nil, fmt.Errorf("scraper: decode sidecar response: %w", err)
+		return nil, fmt.Errorf("scraper: decode scraper response: %w", err)
 	}
 
 	if decoded.Error != "" {
-		return nil, &SidecarError{Message: decoded.Error}
+		return nil, &ScraperError{Message: decoded.Error}
 	}
 	if decoded.Recipe == nil {
-		return nil, &SidecarError{Message: "sidecar returned no recipe"}
+		return nil, &ScraperError{Message: "scraper returned no recipe"}
 	}
 	if decoded.Recipe.Title == "" {
-		return nil, &SidecarError{Message: "scraped recipe is missing a title"}
+		return nil, &ScraperError{Message: "scraped recipe is missing a title"}
 	}
 	if decoded.Recipe.SourceURL == "" {
 		decoded.Recipe.SourceURL = pageURL
@@ -114,8 +114,8 @@ func (c *ScraperClient) Scrape(ctx context.Context, pageURL, html string) (*Reci
 	return decoded.Recipe, nil
 }
 
-type SidecarError struct {
+type ScraperError struct {
 	Message string
 }
 
-func (e *SidecarError) Error() string { return "scraper: " + e.Message }
+func (e *ScraperError) Error() string { return "scraper: " + e.Message }

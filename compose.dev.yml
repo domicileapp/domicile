@@ -79,7 +79,7 @@ services:
       - "8000:8000"
     volumes:
       - ./scraper:/app
-      - scraper-sidecar-venv:/app/.venv
+      - scraper-venv:/app/.venv
     command:
       [
         "uv",
@@ -120,4 +120,4 @@ volumes:
   domicile_db_data:
   go-pkg-mod:
   ui_node_modules:
-  scraper-sidecar-venv:
+  scraper-venv:

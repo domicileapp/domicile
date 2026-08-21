@@ -7,3 +7,5 @@ coverage:
         threshold: 1%
 comment:
   layout: "condensed_header, condensed_files, condensed_footer"
+ignore:
+  - "**/store_mock.go"

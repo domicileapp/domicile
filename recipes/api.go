@@ -564,9 +564,9 @@ func (h *Handler) ImportRecipeHandler(w http.ResponseWriter, r *http.Request) {
 
 	scraped, err := h.Scraper.Scrape(r.Context(), req.URL, req.HTML)
 	if err != nil {
-		var sidecarErr *scraper.SidecarError
-		if errors.As(err, &sidecarErr) {
-			http.Error(w, sidecarErr.Message, http.StatusUnprocessableEntity)
+		var scraperErr *scraper.ScraperError
+		if errors.As(err, &scraperErr) {
+			http.Error(w, scraperErr.Message, http.StatusUnprocessableEntity)
 		} else {
 			http.Error(w, "Failed to scrape recipe", http.StatusBadGateway)
 		}

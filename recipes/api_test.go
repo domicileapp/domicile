@@ -796,10 +796,9 @@ func TestImportRecipeHandler(t *testing.T) {
 		t.Fatalf("expected 400 for missing url, got %d", rec2.Code)
 	}
 
-	// sidecar error maps to 422
 	scErr := &mockScraper{
 		fn: func(ctx context.Context, url, html string) (*scraper.Recipe, error) {
-			return nil, &scraper.SidecarError{Message: "no recipe found"}
+			return nil, &scraper.ScraperError{Message: "no recipe found"}
 		},
 	}
 	h2 := &Handler{Store: store, Scraper: scErr}
@@ -807,6 +806,6 @@ func TestImportRecipeHandler(t *testing.T) {
 	rec3 := httptest.NewRecorder()
 	h2.ImportRecipeHandler(rec3, req3)
 	if rec3.Code != http.StatusUnprocessableEntity {
-		t.Fatalf("expected 422 for sidecar error, got %d", rec3.Code)
+		t.Fatalf("expected 422 for scraper error, got %d", rec3.Code)
 	}
 }
