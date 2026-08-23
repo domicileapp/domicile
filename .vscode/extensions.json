@@ -4,6 +4,7 @@
     "vivaxy.vscode-conventional-commits",
     "oxc.oxc-vscode",
     "vunguyentuan.vscode-css-variables",
-    "vunguyentuan.vscode-postcss"
+    "vunguyentuan.vscode-postcss",
+    "codecov.codecov"
   ]
 }
