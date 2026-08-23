@@ -1,3 +1,7 @@
+ignore:
+  - "**/store_mock.go"
+  - "docs/**"
+
 coverage:
   status:
     patch: true
@@ -5,8 +9,26 @@ coverage:
       default:
         target: auto
         threshold: 1%
+
 comment:
-  layout: "condensed_header, condensed_files, condensed_footer"
-ignore:
-  - "**/store_mock.go"
-  - "docs/**"
+  layout: "header, diff, flags, components"
+
+component_management:
+  individual_components:
+    - component_id: web
+      name: Web app
+      paths:
+        - web/**
+    - component_id: scraper
+      name: Scraper
+      paths:
+        - scraper/**
+    - component_id: scraper_extension
+      name: Scraper chrome extension
+      paths:
+        - chrome-extension/**
+    - component_id: api
+      name: API
+      paths:
+        - "*.go"
+        - "**/*.go"
