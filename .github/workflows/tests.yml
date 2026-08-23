@@ -7,14 +7,13 @@ on:
     branches:
       - main
 
-permissions:
-  contents: read
-
 jobs:
   verify-generated-code:
     if: github.event_name == 'pull_request'
     name: Verify generated code
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
