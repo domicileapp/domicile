@@ -5,8 +5,6 @@ on:
   schedule:
     - cron: "0 0 * * 5"
 
-permissions: read-all
-
 jobs:
   analysis:
     name: Scorecard analysis
@@ -15,6 +13,20 @@ jobs:
     permissions:
       security-events: write
       id-token: write
+      vulnerability-alerts: read
+      actions: read
+      artifact-metadata: read
+      attestations: read
+      checks: read
+      code-quality: read
+      contents: read
+      deployments: read
+      issues: read
+      discussions: read
+      packages: read
+      pages: read
+      pull-requests: read
+      statuses: read
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

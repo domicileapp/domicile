@@ -2,8 +2,7 @@ name: "grype"
 on:
   push:
     branches: ["main"]
-permissions:
-  contents: read
+
 jobs:
   scan-source:
     name: scan-source
