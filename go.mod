@@ -5,7 +5,7 @@ go 1.26.6
 tool github.com/matryer/moq
 
 require (
-	github.com/go-chi/chi/v5 v5.3.1
+	github.com/go-chi/chi/v5 v5.4.0
 	github.com/go-chi/cors v1.2.2
 	github.com/go-chi/httplog/v3 v3.4.0
 	github.com/jackc/pgx/v5 v5.10.0
